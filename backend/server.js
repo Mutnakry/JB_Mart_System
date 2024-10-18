@@ -25,6 +25,14 @@ app.use('/api/auth', authRoutes);
 const categoryRoutes = require('./src/route/category.route');
 app.use('/categories', categoryRoutes); 
 
+// Import and use the brandsRoutes routes
+const brandsRoutes = require('./src/route/brands.router');
+app.use('/api/brands', brandsRoutes); 
+
+
+// Import and use the unit routes
+const UnitRoutes = require('./src/route/unit.router');
+app.use('/api/unit', UnitRoutes); 
 
 
 // Start the server

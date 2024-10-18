@@ -9,7 +9,6 @@ import { MdDelete, MdClose } from "react-icons/md";
 
 
 const Dashboard = () => {
-
   const [names, setNames] = useState('');
   const [detail, setDetail] = useState('');
   const [error, setError] = useState('');

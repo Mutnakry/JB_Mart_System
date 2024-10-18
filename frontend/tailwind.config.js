@@ -7,7 +7,12 @@ export default {
   ],
   darkMode: 'class',
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        KhmerMoul: 'Moul',
+        NotoSansKhmer: 'Noto Sans Khmer',
+      }
+    },
   },
   plugins: [],
 }
