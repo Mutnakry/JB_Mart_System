@@ -29,10 +29,19 @@ app.use('/categories', categoryRoutes);
 const brandsRoutes = require('./src/route/brands.router');
 app.use('/api/brands', brandsRoutes); 
 
-
 // Import and use the unit routes
 const UnitRoutes = require('./src/route/unit.router');
 app.use('/api/unit', UnitRoutes); 
+
+// Import and use the BankAount routes
+const BankRoutes = require('./src/route/bank.router');
+app.use('/api/bank', BankRoutes); 
+
+// Import and use the BankAount routes
+const AccountRoutes = require('./src/route/account.router');
+app.use('/api/account', AccountRoutes); 
+
+
 
 
 // Start the server

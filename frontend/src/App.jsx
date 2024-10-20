@@ -8,10 +8,10 @@ import Dashboard from './view/Dashboard';
 import Login from './component/Login';
 import Register from './component/Register';
 import Index from './view/Index';
-import Category from './view/Category';
-import Brands from './view/Brands';
-import Unit from './view/Ubit';
-import Acount from './view/Account';
+import Category from './view/product/Category';
+import Brands from './view/product/Brands';
+import Unit from './view/product/Unit';
+import Acount from './view/account/Account';
 
 
 function App() {

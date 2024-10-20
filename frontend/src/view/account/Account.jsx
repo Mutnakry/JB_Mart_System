@@ -1,10 +1,10 @@
 
 import React, { useState } from 'react';
-import Navbar from '../component/Navbar';
+import Navbar from '../../component/Navbar';
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
 import { RiContactsBook3Fill } from "react-icons/ri";
-import AccoutList from '../view/contact/acount/AccountList';
-import AccoutType from '../view/contact/acount/AcountType';
+import AccoutList from '../../component/acount/AccountList';
+import AccoutType from '../../component/acount/AcountType';
 
 const Account = () => {
     const [activeTabIndex, setActiveTabIndex] = useState(0);
@@ -44,7 +44,7 @@ const Account = () => {
 
                             <TabPanels className="mt-3">
                                 <TabPanel className="p-4 border">
-                                    <AccoutType />
+                                    <AccoutList />
                                 </TabPanel>
                                 <TabPanel className="p-4 border">
                                     <AccoutType />

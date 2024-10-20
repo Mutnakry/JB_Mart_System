@@ -1,22 +1,21 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Navbar from '../component/Navbar';
 import { toast } from 'react-toastify';
-import Pagination from './pagination/Pagination';
+import Pagination from '../pagination/Pagination';
 import { FaClipboardList, FaPencilAlt } from "react-icons/fa";
 import { MdDelete, MdClose } from "react-icons/md";
 
 
 
-const Brands = () => {
+const Unit = () => {
 
-    const [brand_names, setbrand_names] = useState('');
+    const [names, setnames] = useState('');
     const [description, setdescription] = useState('');
     const [error, setError] = useState('');
 
     //// paginate and search data
-    const [brands, setStudent] = useState([]);
+    const [Unit, setStudent] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [loading, setLoading] = useState(false);
     const [totalPages, setTotalPages] = useState(0);
@@ -27,18 +26,18 @@ const Brands = () => {
         getAllStudent();
     }, [page, limit, searchQuery]);
 
-    // get all brands add paginate and search
+    // get all Unit add paginate and search
     const getAllStudent = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:6700/api/brands', {
+            const response = await axios.get('http://localhost:6700/api/unit', {
                 params: {
                     page,
                     limit,
                     search_query: searchQuery
                 }
             });
-            setStudent(response.data.brands);
+            setStudent(response.data.unit);
             console.log(response.data)
             setTotalPages(response.data.totalPages);
             setError(null);
@@ -70,16 +69,16 @@ const Brands = () => {
     const [isInsertModalOpen, setIsInsertModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-    const [selectedBrandsId, setSelectedBrandsId] = useState(null);
+    const [selectedUnitId, setSelectedUnitId] = useState(null);
     // modal insert
     const openInsertModal = () => {
         setIsInsertModalOpen(true);
     };
     // modal update 
     const openUpdateModal = cat => {
-        setSelectedBrandsId(cat.id);
+        setSelectedUnitId(cat.id);
         setdescription(cat.description);
-        setbrand_names(cat.brand_names);
+        setnames(cat.names);
         setIsUpdateModalOpen(true);
     };
     // modal update 
@@ -87,20 +86,20 @@ const Brands = () => {
         e.preventDefault();
         setError('');
         const values = {
-            brand_names: brand_names,
+            names: names,
             description: description,
         }
         try {
-            await axios.put(`http://localhost:6700/api/brands/${selectedBrandsId}`, values);
-            toast.success('កែប្រែម៉ាក់យីយោបានដោយជោគជ័យ', { autoClose: 3000 });
+            await axios.put(`http://localhost:6700/api/unit/${selectedUnitId}`, values);
+            toast.success('កែប្រែឯកតាបានដោយជោគជ័យ', { autoClose: 3000 });
             getAllStudent();
             setIsUpdateModalOpen(false);
-            setSelectedBrandsId(null);
-            setbrand_names('');
+            setSelectedUnitId(null);
+            setnames('');
             setdescription('');
         } catch (err) {
             console.error(err);
-            setbrand_names('');
+            setnames('');
             setdescription('');
             toast.error('សូមលោកព្យាយាមម្ដងទៀត!', { autoClose: 3000 });
         }
@@ -109,19 +108,19 @@ const Brands = () => {
 
     // modal delete
     const openDeleteModal = cat => {
-        setSelectedBrandsId(cat.id);
+        setSelectedUnitId(cat.id);
         setIsDeleteModalOpen(true);
     };
 
     // modale delete
-    const deleteBrands = async () => {
-        if (selectedBrandsId) {
+    const deleteUnit = async () => {
+        if (selectedUnitId) {
             try {
-                await axios.delete(`http://localhost:6700/api/brands/${selectedBrandsId}`);
-                toast.success('លុបម៉ាក់យីយោបានដោយជោគជ័យ', { autoClose: 3000 });
+                await axios.delete(`http://localhost:6700/api/unit/${selectedUnitId}`);
+                toast.success('លុបឯកតាបានដោយជោគជ័យ', { autoClose: 3000 });
                 getAllStudent();
                 setIsDeleteModalOpen(false);
-                setSelectedBrandsId(null);
+                setSelectedUnitId(null);
             } catch (err) {
                 console.error(err);
                 toast.error('សូមលោកព្យាយាមម្ដងទៀត !', { autoClose: 3000 });
@@ -129,19 +128,19 @@ const Brands = () => {
         }
     };
 
-    // greate brands
-    const CreateBrands = async (e) => {
+    // greate unit
+    const CreateUnit = async (e) => {
         e.preventDefault();
         setError('');
         const values = {
-            brand_names: brand_names,
+            names: names,
             description: description,
         }
         try {
-            const res = await axios.post('http://localhost:6700/api/brands', values);
+            const res = await axios.post('http://localhost:6700/api/unit', values);
             console.log(res.data);
-            toast.success('បង្កើតម៉ាក់យីយោបានដោយជោគជ័យ ', { autoClose: 3000 });
-            setbrand_names('');
+            toast.success('បង្កើតឯកតាបានដោយជោគជ័យ ', { autoClose: 3000 });
+            setnames('');
             setdescription('');
             getAllStudent();
             setIsInsertModalOpen(false);
@@ -152,15 +151,13 @@ const Brands = () => {
     };
     return (
         <div>
-            <Navbar />
-            <div className='py-16 px-2 md:ml-64 bg-white dark:bg-gray-950'>
                 <div className='border-2 p-4 border-gray-200 dark:border-gray-700'>
                     <div className="flex items-center mb-3 gap-2 ">
                         <p><FaClipboardList className="text-lg " /></p>
-                        <p className="font-NotoSansKhmer font-bold ">តារាងបញ្ជីម៉ាកយីហោ</p>
+                        <p className="font-NotoSansKhmer font-bold ">តារាងបញ្ជីឈ្មោះឯកតា</p>
                     </div>
                     <div className="flex justify-end">
-                        <button className="button_only_submit" onClick={openInsertModal}>+ បង្កើតម៉ាកយីហោថ្មី</button>
+                        <button className="button_only_submit" onClick={openInsertModal}>+ បង្កើតឯកតា</button>
                     </div>
                     <div className="flex justify-between items-center my-3">
                         <div className="flex flex-col gap-2 font-bold font-NotoSansKhmer">
@@ -187,8 +184,9 @@ const Brands = () => {
                             <thead className="bg-blue-600/95 text-white">
                                 <tr className="font-NotoSansKhmer font-bold">
                                     <th className=" px-4 py-2">លេខរៀង</th>
-                                    <th className=" px-4 py-2">ឈ្មោះម៉ាកយីហោ</th>
+                                    <th className=" px-4 py-2">ឈ្មោះឯកតា</th>
                                     <th className=" px-4 py-2">ការណិពណ័នា</th>
+                                    <th className=" px-4 py-2">បង្កើត</th>
                                     <th className=" px-4 py-2">សកម្មភាព</th>
 
                                 </tr>
@@ -197,15 +195,17 @@ const Brands = () => {
                                 <p>Loading...</p>
                             ) : error ? (
                                 <p>{error}</p>
-                            ) : brands.length === 0 ? (
-                                <p className="text-start py-4 px-10 text-red-500">រកមិនឃើញប្រភេទ ? {searchQuery}</p>
+                            ) : Unit.length === 0 ? (
+                                <p className="text-start py-4 px-10 text-red-500">រកមិនឃើញប្រភេទឈ្មោះឯកតា ? {searchQuery}</p>
                             ) : (
                                 <tbody>
-                                    {brands.map((customer, index) => (
-                                        <tr key={customer.id} className="text-sm font-NotoSansKhmer">
+                                    {Unit.map((customer, index) => (
+                                        <tr key={customer.id} className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100">
                                             <td className=" px-4 py-1">{index + 1}</td>
-                                            <td className="px-4 py-1">{customer.brand_names}</td>
+                                            <td className="px-4 py-1">{customer.names}</td>
                                             <td className=" px-4 py-1">{customer.description || 'N/A'}</td>
+                                            <td className=" px-4 py-1">{customer.create_at}</td>
+
                                             <td className="px-4  space-x-2 flex">
                                                 <button
                                                     onClick={() => openDeleteModal(customer)}
@@ -235,7 +235,6 @@ const Brands = () => {
                     </div>
 
                 </div>
-            </div>
             {/* Insert Modal */}
             {isInsertModalOpen && (
                 <div
@@ -243,19 +242,19 @@ const Brands = () => {
                 >
                     <div className="modal_center max-w-sm">
                         <div className="modal_title">
-                            <h3 className="">ឈ្មោះម៉ាក់យីយោ</h3>
+                            <h3 className="">ឈ្មោះឯកតា</h3>
                             <MdClose className='text-2xl cursor-pointer' onClick={() => setIsInsertModalOpen(false)} />
                         </div>
                         <div className="modal_form">
-                            <form class="" onSubmit={CreateBrands}>
+                            <form class="" onSubmit={CreateUnit}>
                                 <div className="">
                                     <div class="grid gap-4 mb-4 grid-cols-2">
                                         <div class="col-span-2">
-                                            <label className="font-NotoSansKhmer font-bold">ឈ្មោះ: *</label>
+                                            <label className="font-NotoSansKhmer font-bold">ឈ្មោះឯកតា: *</label>
                                             <input
                                                 type="text"
-                                                value={brand_names}
-                                                onChange={e => setbrand_names(e.target.value)}
+                                                value={names}
+                                                onChange={e => setnames(e.target.value)}
                                                 id="price"
                                                 class="input_text "
                                                 placeholder="ឈ្មោះនៃប្រភេទទំនិញ" required
@@ -294,13 +293,13 @@ const Brands = () => {
                 >
                     <div className="modal_center max-w-sm">
                         <div className="modal_title">
-                            <h3 className="">លុបប្រម៉ាក់យីយោ</h3>
+                            <h3 className="">លុបប្រឈ្មោះឯកតា</h3>
 
                             <MdClose className='text-2xl cursor-pointer' onClick={() => setIsDeleteModalOpen(false)} />
                         </div>
                         <div className="p-4 space-y-4">
                             <p className="text-sm ">
-                                Are you sure you want to delete this Brands? This action cannot be undone.
+                                Are you sure you want to delete this Unit? This action cannot be undone.
                             </p>
                             <div className="flex justify-end space-x-2">
                                 <button
@@ -313,7 +312,7 @@ const Brands = () => {
                                 <button
                                     type="button"
                                     className="button_only_submit"
-                                    onClick={deleteBrands}
+                                    onClick={deleteUnit}
                                 >
                                     លុប
                                 </button>
@@ -329,7 +328,7 @@ const Brands = () => {
                 >
                     <div className="modal_center max-w-sm">
                         <div className="modal_title">
-                            <h3 className="">កែប្រែម៉ាក់យីយោ</h3>
+                            <h3 className="">កែប្រែឈ្មោះឯកតា</h3>
                             <MdClose className='text-2xl cursor-pointer' onClick={() => setIsUpdateModalOpen(false)} />
 
                         </div>
@@ -338,11 +337,11 @@ const Brands = () => {
 
                                 <div class="grid gap-4 mb-4 grid-cols-1">
                                     <div class="col-span-2">
-                                        <label className="font-NotoSansKhmer font-bold">ឈ្មោះ: *</label>
+                                        <label className="font-NotoSansKhmer font-bold">ឈ្មោះឯកតា: *</label>
                                         <input
                                             type="text"
-                                            value={brand_names}
-                                            onChange={e => setbrand_names(e.target.value)}
+                                            value={names}
+                                            onChange={e => setnames(e.target.value)}
                                             id="price"
                                             class="input_text "
                                             placeholder="ឈ្មោះនៃប្រភេទទំនិញ" required
@@ -377,4 +376,4 @@ const Brands = () => {
     );
 };
 
-export default Brands;
+export default Unit;

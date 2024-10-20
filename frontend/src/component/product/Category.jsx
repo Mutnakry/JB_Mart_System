@@ -1,15 +1,13 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Navbar from '../component/Navbar';
 import { toast } from 'react-toastify';
-import Pagination from './pagination/Pagination';
+import Pagination from '../pagination/Pagination';
 import { FaClipboardList, FaFileCsv, FaFileExcel, FaPencilAlt } from "react-icons/fa";
 import { MdDelete, MdClose } from "react-icons/md";
 
 
 const Dashboard = () => {
-
   const [names, setNames] = useState('');
   const [detail, setDetail] = useState('');
   const [error, setError] = useState('');
@@ -153,8 +151,6 @@ const Dashboard = () => {
 
   return (
     <div>
-      <Navbar />
-      <div className='py-16 px-2 md:ml-64 bg-white dark:bg-gray-950'>
         <div className='border p-4 border-gray-200 dark:border-gray-700'>
           <div className="flex items-center mb-3 gap-2 ">
             <p><FaClipboardList className="text-lg " /></p>
@@ -202,6 +198,8 @@ const Dashboard = () => {
                   <th className=" px-4 py-2">លេខរៀង</th>
                   <th className=" px-4 py-2">ឈ្មោះប្រភេទផលិតផល</th>
                   <th className=" px-4 py-2">ការណិពណ័នា</th>
+                  <th className=" px-4 py-2">បង្កើត</th>
+
                   <th className=" px-4 py-2">សកម្មភាព</th>
 
                 </tr>
@@ -215,10 +213,12 @@ const Dashboard = () => {
               ) : (
                 <tbody>
                   {category.map((customer, index) => (
-                    <tr key={customer.id} className="text-sm font-NotoSansKhmer">
+                    <tr key={customer.id} className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100">
                       <td className=" px-4 py-1">{index + 1}</td>
                       <td className="px-4 py-1">{customer.cat_names}</td>
                       <td className=" px-4 py-1">{customer.detail || 'N/A'}</td>
+                      <td className=" px-4 py-1">{customer.create_at}</td>
+
                       <td className="px-4  space-x-2 flex">
                         <button
                           onClick={() => openDeleteModal(customer)}
@@ -249,7 +249,6 @@ const Dashboard = () => {
           </div>
 
         </div>
-      </div>
 
       {/* Insert Modal */}
       {isInsertModalOpen && (
