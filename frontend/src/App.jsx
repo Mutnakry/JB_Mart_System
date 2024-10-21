@@ -12,6 +12,8 @@ import Category from './view/product/Category';
 import Brands from './view/product/Brands';
 import Unit from './view/product/Unit';
 import Acount from './view/account/Account';
+import Cost from './view/cost/Cost';
+import CostType from './view/cost/CostType';
 
 
 function App() {
@@ -36,6 +38,10 @@ function App() {
           <Route path='/brands'  element={isAuthenticated ? <Brands /> : <Navigate to="/" />} />
           <Route path='/udit'  element={isAuthenticated ? <Unit /> : <Navigate to="/" />} />
           <Route path='/account'  element={isAuthenticated ? <Acount /> : <Navigate to="/" />} />
+          <Route path='/cost'  element={isAuthenticated ? <Cost /> : <Navigate to="/" />} />
+          <Route path='/costtype'  element={isAuthenticated ? <CostType /> : <Navigate to="/" />} />
+
+
 
 
         </Routes>

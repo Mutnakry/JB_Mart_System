@@ -1,8 +1,8 @@
 const db = require("../utile/db");
 
-// show data unit
+// show data cost_type
 exports.GetAll = (req, res) => {
-    const sql = "SELECT * FROM unit";
+    const sql = "SELECT * FROM cost_type";
     db.query(sql, (err, results) => {
         if (err) {
             return res.status(500).send(err);
@@ -22,8 +22,8 @@ exports.GetAllData = (req, res) => {
     // Query to get the total number of items that match the search query
     const countQuery = `
         SELECT COUNT(*) AS total 
-        FROM unit 
-        WHERE names LIKE ?
+        FROM cost_type 
+        WHERE type_names LIKE ?
     `;
     db.query(countQuery, [`%${searchQuery}%`], (err, results) => {
         if (err) {
@@ -37,8 +37,8 @@ exports.GetAllData = (req, res) => {
         // Query to get the paginated and filtered data
         const selectQuery = `
             SELECT * 
-            FROM unit 
-            WHERE names LIKE ?
+            FROM cost_type 
+            WHERE type_names LIKE ?
             ORDER BY id DESC
             LIMIT ? OFFSET ?
         `;
@@ -48,7 +48,7 @@ exports.GetAllData = (req, res) => {
                 return res.status(500).json({ error: 'Database query error' });
             }
             res.json({
-                unit: results,
+                cost_type: results,
                 totalPages,
                 currentPage: page,
                 totalCategory,
@@ -58,11 +58,11 @@ exports.GetAllData = (req, res) => {
   };
   
 
-// Create data unit
+// Create data cost_type
 exports.Create = (req, res) => {
-    const {names,description}=req.body;
-    const sql = "INSERT INTO unit (names,description) VALUES (?,?)";
-    db.query(sql,[names,description], (err, results) => {
+    const {type_names}=req.body;
+    const sql = "INSERT INTO cost_type (type_names) VALUES (?)";
+    db.query(sql,[type_names], (err, results) => {
         if (err) {
             return res.status(500).send(err);
         }
@@ -71,12 +71,12 @@ exports.Create = (req, res) => {
 }
 
 
-// update data unit
+// update data cost_type
 exports.Update = (req, res) => {
     const {id} = req.params;
-    const {names,description}=req.body;
-    const sql = "UPDATE unit set names=?,description=? where id=?";
-    db.query(sql,[names,description,id], (err, results) => {
+    const {type_names}=req.body;
+    const sql = "UPDATE cost_type set type_names=? where id=?";
+    db.query(sql,[type_names,id], (err, results) => {
         if (err) {
             return res.status(500).send(err);
         }
@@ -84,10 +84,10 @@ exports.Update = (req, res) => {
     });
 }
 
-// GEt Data Single unit
+// GEt Data Single cost_type
 exports.GetSingle = (req, res) => {
     const {id} = req.params;
-    const sql = "SELECT * From unit  where id=?";
+    const sql = "SELECT * From cost_type  where id=?";
     db.query(sql,[id], (err, results) => {
         if (err) {
             return res.status(500).send(err);
@@ -96,10 +96,10 @@ exports.GetSingle = (req, res) => {
     });
 }
 
-// DElete unit
+// DElete cost_type
 exports.Delete = (req, res) => {
     const {id} = req.params;
-    const sql = "Delete from unit  where id=?";
+    const sql = "Delete from cost_type  where id=?";
     db.query(sql,[id], (err, results) => {
         if (err) {
             return res.status(500).send(err);

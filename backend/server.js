@@ -41,6 +41,13 @@ app.use('/api/bank', BankRoutes);
 const AccountRoutes = require('./src/route/account.router');
 app.use('/api/account', AccountRoutes); 
 
+// Import and use the BankAount routes
+const CostRoutes = require('./src/route/cost.router');
+app.use('/api/cost', CostRoutes); 
+// Import and use the BankAount routes
+const CostTypeRoutes = require('./src/route/costtype.router');
+app.use('/api/cost_type', CostTypeRoutes); 
+
 
 
 

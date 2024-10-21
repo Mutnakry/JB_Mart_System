@@ -5,6 +5,8 @@ import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
 import { RiContactsBook3Fill } from "react-icons/ri";
 import AccoutList from '../../component/acount/AccountList';
 import AccoutType from '../../component/acount/AcountType';
+import Transfer_Monry from '../../component/acount/Transfer_money';
+
 
 const Account = () => {
     const [activeTabIndex, setActiveTabIndex] = useState(0);
@@ -50,7 +52,7 @@ const Account = () => {
                                     <AccoutType />
                                 </TabPanel>
                                 <TabPanel className="p-4 border border-gray-300 rounded-md">
-                                    <AccoutType />
+                                    <Transfer_Monry />
                                 </TabPanel>
                             </TabPanels>
                         </TabGroup>

@@ -1,18 +1,17 @@
 import React from 'react'
 import Navbar from '../../component/Navbar'
-import CategoryConponent from '../../component/product/Category'
+import CostConponent from '../../component/const/Cost'
 
-function Category() {
+function Cost() {
     return (
         <div>
             <Navbar />
             <div className='py-16 px-2 md:ml-64 bg-white dark:bg-gray-950'>
-
-                <CategoryConponent />
+                <CostConponent />
             </div>
         </div>
     )
 }
 
-export default Category
+export default Cost
 
