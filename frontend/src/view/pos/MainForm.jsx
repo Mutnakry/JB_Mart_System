@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from 'react';
 import Navbar from '../../component/Navbar';
 import Main from '../../component/pos/Main';
@@ -12,7 +10,8 @@ import { GrSubtractCircle } from "react-icons/gr";
 function Header({ currentDateTime }) {
     return (
         <div className='bg-gray-500 flex justify-between md:px-20'>
-            <div className='text-white text-lg'>
+            <div className='text-white font-NotoSansKhmer p-1 text-lg flex gap-5'>
+                <h2 className='hidden md:block'>ចែប៊ីម៉ាត</h2>
                 {currentDateTime.toLocaleDateString()} {currentDateTime.toLocaleTimeString()}
             </div>
             <div className='flex text-lg p-1 gap-2'>
@@ -21,7 +20,7 @@ function Header({ currentDateTime }) {
                         <GrSubtractCircle className="mr-1" /> បន្ថែមការចំណាយ
                     </span>
                 </p>
-                <p className='p-1 bg-red-500 text-white' aria-label="Equals"><FaEquals /></p>
+                <p className='p-1 bg-red-500 text-white ' aria-label="Equals"><FaEquals /></p>
                 <p className='p-1 bg-blue-500 text-white' aria-label="Open Box"><FaBoxOpen /></p>
                 <p className='p-1 bg-yellow-500 text-white' aria-label="Product"><AiFillProduct /></p>
                 <a href="/" className='p-1 bg-green-500 text-white' aria-label="Go Back"><FaBackward /></a>

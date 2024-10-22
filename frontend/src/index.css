@@ -27,7 +27,7 @@
     @apply text-xl font-semibold text-gray-900 flex justify-between p-4 border-b  dark:text-white ;
   }
   .modal {
-    @apply fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50;
+    @apply fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-30;
   }
   .modal_center {
     @apply relative w-full bg-white shadow dark:bg-gray-700;

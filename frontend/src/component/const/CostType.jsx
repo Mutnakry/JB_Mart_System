@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import Pagination from '../pagination/Pagination';
 import { FaClipboardList, FaPencilAlt } from "react-icons/fa";
 import { MdDelete, MdClose } from "react-icons/md";
+import { motion, AnimatePresence } from "framer-motion";
 
 
 
@@ -142,6 +143,11 @@ const cost_type = () => {
             toast.error('សូមលោកព្យាយាមម្ដងទៀត !', { autoClose: 3000 });
         }
     };
+    const rowAnimation = {
+        hidden: { opacity: 0, y: -20 },
+        visible: { opacity: 1, y: 0 },
+        exit: { opacity: 0, y: 20 }
+    };
     return (
         <div>
             <div className='border-2 p-4 border-gray-200 dark:border-gray-700'>
@@ -172,7 +178,7 @@ const cost_type = () => {
                     </div>
                 </div>
                 <div class="relative overflow-x-auto h-screen scrollbar-hidden">
-
+                <AnimatePresence>
                     <table className="min-w-full table-auto">
                         <thead className="bg-blue-600/95 text-white">
                             <tr className="font-NotoSansKhmer font-bold">
@@ -192,7 +198,14 @@ const cost_type = () => {
                         ) : (
                             <tbody>
                                 {cost_type.map((customer, index) => (
-                                    <tr key={customer.id} className="text-sm font-NotoSansKhmer  hover:scale-y-110 duration-100">
+                                     <motion.tr 
+                                     key={customer.id}
+                                    initial="hidden"
+                                        animate="visible"
+                                        exit="exit"
+                                        variants={rowAnimation}
+                                        transition={{ duration: 0.3 }}
+                                     className="text-sm font-NotoSansKhmer  hover:scale-y-110 duration-100">
                                         <td className=" px-4 py-1">{index + 1}</td>
                                         <td className="px-4 py-1">{customer.type_names}</td>
                                         <td className=" px-4 py-1">{customer.create_at}</td>
@@ -210,11 +223,12 @@ const cost_type = () => {
                                                 <FaPencilAlt className='text-blue-500' />
                                             </button>
                                         </td>
-                                    </tr>
+                                        </motion.tr>
                                 ))}
                             </tbody>
                         )}
                     </table>
+                    </AnimatePresence>
                     <Pagination
                         currentPage={page}
                         totalPages={totalPages}
@@ -227,10 +241,15 @@ const cost_type = () => {
 
             </div>
             {/* Insert Modal */}
+            <AnimatePresence>
             {isInsertModalOpen && (
-                <div
-                    className="modal"
-                >
+                <motion.div
+                className="modal"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.2 }}
+            >
                     <div className="modal_center max-w-sm">
                         <div className="modal_title">
                             <h3 className="">បង្កើតឈ្មោះប្រភេទចំណាយ</h3>
@@ -265,13 +284,19 @@ const cost_type = () => {
                             </form>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             )}
+             </AnimatePresence>
             {/* Delete Modal */}
+            <AnimatePresence>
             {isDeleteModalOpen && (
-                <div
-                    className="modal"
-                >
+               <motion.div
+               className="modal"
+               initial={{ opacity: 0, scale: 0.8 }}
+               animate={{ opacity: 1, scale: 1 }}
+               exit={{ opacity: 0, scale: 0.8 }}
+               transition={{ duration: 0.2 }}
+           >
                     <div className="modal_center max-w-sm">
                         <div className="modal_title">
                             <h3 className="">លុបប្រម៉ាក់យីយោ</h3>
@@ -300,13 +325,19 @@ const cost_type = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             )}
+             </AnimatePresence>
             {/* Update Modal */}
+            <AnimatePresence>
             {isUpdateModalOpen && (
-                <div
-                    className="modal"
-                >
+               <motion.div
+               className="modal"
+               initial={{ opacity: 0, scale: 0.8 }}
+               animate={{ opacity: 1, scale: 1 }}
+               exit={{ opacity: 0, scale: 0.8 }}
+               transition={{ duration: 0.2 }}
+           >
                     <div className="modal_center max-w-sm">
                         <div className="modal_title">
                             <h3 className="">កែប្រែឈ្មោះប្រភេទចំណាយ</h3>
@@ -341,8 +372,9 @@ const cost_type = () => {
                             </form>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             )}
+             </AnimatePresence>
         </div>
     );
 };

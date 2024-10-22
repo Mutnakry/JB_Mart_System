@@ -7,7 +7,19 @@ const ProductGrid = () => {
     { name: "a - M", sku: "0325-2", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
     { name: "Blue De Chanel", sku: "0259", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
     { name: "Box1 - Big", sku: "0346-1", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
-    // Add more products as needed...
+  
+    { name: "3CE", sku: "0247", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
+    { name: "a - S", sku: "0325-1", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
+    { name: "a - M", sku: "0325-2", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
+    { name: "Blue De Chanel", sku: "0259", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
+    { name: "Box1 - Big", sku: "0346-1", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
+  
+    { name: "3CE", sku: "0247", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
+    { name: "a - S", sku: "0325-1", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
+    { name: "a - M", sku: "0325-2", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
+    { name: "Blue De Chanel", sku: "0259", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
+    { name: "Box1 - Big", sku: "0346-1", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
+  
   ];
 
   return (
@@ -25,7 +37,7 @@ const ProductGrid = () => {
       </div>
 
       {/* Product Grid */}
-      <div className="grid xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 grid-cols-3 gap-4">
+      <div className="grid xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 grid-cols-3 gap-4 overflow-x-auto h-[75vh] scrollbar-hidden">
         {products.map((product, index) => (
           <div key={index} className="bg-white p-4 shadow-md text-center">
             <img
@@ -37,11 +49,6 @@ const ProductGrid = () => {
             <p className="text-gray-500">({product.sku})</p>
           </div>
         ))}
-      </div>
-
-      {/* Additional Features (Pagination, Footer, etc.) */}
-      <div className="mt-8 p-4 bg-gray-200 text-center">
-        <button className="px-4 py-2 bg-blue-500 text-white rounded">Load More</button>
       </div>
     </div>
   );

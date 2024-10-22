@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import Pagination from '../pagination/Pagination';
 import { FaClipboardList, FaPencilAlt } from "react-icons/fa";
 import { MdDelete, MdClose } from "react-icons/md";
+import { motion, AnimatePresence } from "framer-motion";
 
 
 
@@ -149,6 +150,11 @@ const Brands = () => {
             toast.error('សូមលោកព្យាយាមម្ដងទៀត !', { autoClose: 3000 });
         }
     };
+    const rowAnimation = {
+        hidden: { opacity: 0, y: -20 },
+        visible: { opacity: 1, y: 0 },
+        exit: { opacity: 0, y: 20 }
+    };
     return (
         <div>
             <div className='border-2 p-4 border-gray-200 dark:border-gray-700'>
@@ -179,6 +185,7 @@ const Brands = () => {
                     </div>
                 </div>
                 <div class="relative overflow-x-auto h-screen scrollbar-hidden">
+                <AnimatePresence>
 
                     <table className="min-w-full table-auto">
                         <thead className="bg-blue-600/95 text-white">
@@ -199,31 +206,39 @@ const Brands = () => {
                             <p className="text-start py-4 px-10 text-red-500">រកមិនឃើញប្រភេទ ? {searchQuery}</p>
                         ) : (
                             <tbody>
-                                {brands.map((customer, index) => (
-                                    <tr key={customer.id} className="text-sm font-NotoSansKhmer  hover:scale-y-110 duration-100">
+                                {brands.map((brand, index) => (
+                                    <motion.tr key={brand.id} 
+                                    initial="hidden"
+                                    animate="visible"
+                                    exit="exit"
+                                    variants={rowAnimation}
+                                    transition={{ duration: 0.3 }}
+                                    className="text-sm font-NotoSansKhmer  hover:scale-y-110 duration-100">
                                         <td className=" px-4 py-1">{index + 1}</td>
-                                        <td className="px-4 py-1">{customer.brand_names}</td>
-                                        <td className=" px-4 py-1">{customer.description || 'N/A'}</td>
-                                        <td className=" px-4 py-1">{customer.create_at}</td>
+                                        <td className="px-4 py-1">{brand.brand_names}</td>
+                                        <td className=" px-4 py-1">{brand.description || 'N/A'}</td>
+                                        <td className=" px-4 py-1">{brand.create_at}</td>
 
                                         <td className="px-4  space-x-2 flex">
                                             <button
-                                                onClick={() => openDeleteModal(customer)}
+                                                onClick={() => openDeleteModal(brand)}
                                                 className='bg-red-50 rounded-full p-2 '
                                             >
                                                 <MdDelete className='text-red-500' />
                                             </button>
                                             <button
-                                                onClick={() => openUpdateModal(customer)}
+                                                onClick={() => openUpdateModal(brand)}
                                                 className='bg-blue-50 rounded-full p-2 '                        >
                                                 <FaPencilAlt className='text-blue-500' />
                                             </button>
                                         </td>
-                                    </tr>
+                                        </motion.tr>
                                 ))}
                             </tbody>
                         )}
                     </table>
+                    </AnimatePresence>
+
                     <Pagination
                         currentPage={page}
                         totalPages={totalPages}
@@ -236,19 +251,125 @@ const Brands = () => {
 
             </div>
             {/* Insert Modal */}
-            {isInsertModalOpen && (
-                <div
-                    className="modal"
-                >
-                    <div className="modal_center max-w-sm">
-                        <div className="modal_title">
-                            <h3 className="">ឈ្មោះម៉ាក់យីយោ</h3>
-                            <MdClose className='text-2xl cursor-pointer' onClick={() => setIsInsertModalOpen(false)} />
+            <AnimatePresence>
+                {isInsertModalOpen && (
+                    <motion.div
+                        className="modal"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        <div className="modal_center max-w-sm">
+                            <div className="modal_title">
+                                <h3 className="">ឈ្មោះម៉ាក់យីយោ</h3>
+                                <MdClose className='text-2xl cursor-pointer' onClick={() => setIsInsertModalOpen(false)} />
+                            </div>
+                            <div className="modal_form">
+                                <form class="" onSubmit={CreateBrands}>
+                                    <div className="">
+                                        <div class="grid gap-4 mb-4 grid-cols-2">
+                                            <div class="col-span-2">
+                                                <label className="font-NotoSansKhmer font-bold">ឈ្មោះ: *</label>
+                                                <input
+                                                    type="text"
+                                                    value={brand_names}
+                                                    onChange={e => setbrand_names(e.target.value)}
+                                                    id="price"
+                                                    class="input_text "
+                                                    placeholder="ឈ្មោះនៃប្រភេទទំនិញ" required
+                                                />
+                                            </div>
+                                            <div class="col-span-2">
+                                                <label className="font-NotoSansKhmer font-bold">ការណិពណ័នា</label>
+                                                <textarea id="description"
+                                                    rows="4"
+                                                    value={description}
+                                                    onChange={e => setdescription(e.target.value)}
+                                                    class="input_text"
+                                                    placeholder="ការណិពណ័នា">
+                                                </textarea>
+                                            </div>
+                                        </div>
+                                        <div className='flex justify-end'>
+                                            <button
+                                                type="submit"
+
+                                                className="button_only_submit "
+                                            >
+                                                រក្សាទុក្ខ
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <div className="modal_form">
-                            <form class="" onSubmit={CreateBrands}>
-                                <div className="">
-                                    <div class="grid gap-4 mb-4 grid-cols-2">
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Delete Modal */}
+            <AnimatePresence>
+                {isDeleteModalOpen && (
+                    <motion.div
+                        className="modal"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        <div className="modal_center max-w-sm">
+                            <div className="modal_title">
+                                <h3 className="">លុបប្រម៉ាក់យីយោ</h3>
+
+                                <MdClose className='text-2xl cursor-pointer' onClick={() => setIsDeleteModalOpen(false)} />
+                            </div>
+                            <div className="p-4 space-y-4">
+                                <p className="text-sm ">
+                                    Are you sure you want to delete this Brands? This action cannot be undone.
+                                </p>
+                                <div className="flex justify-end space-x-2">
+                                    <button
+                                        type="button"
+                                        className="button_only_close"
+                                        onClick={() => setIsDeleteModalOpen(false)}
+                                    >
+                                        មិនលុប
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="button_only_submit"
+                                        onClick={deleteBrands}
+                                    >
+                                        លុប
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Update Modal */}
+            <AnimatePresence>
+                {isUpdateModalOpen && (
+                    <motion.div
+                        className="modal"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        <div className="modal_center max-w-sm">
+                            <div className="modal_title">
+                                <h3 className="">កែប្រែម៉ាក់យីយោ</h3>
+                                <MdClose className='text-2xl cursor-pointer' onClick={() => setIsUpdateModalOpen(false)} />
+
+                            </div>
+                            <div className="modal_form">
+                                <form class="" onSubmit={UpdateTeacher}>
+
+                                    <div class="grid gap-4 mb-4 grid-cols-1">
                                         <div class="col-span-2">
                                             <label className="font-NotoSansKhmer font-bold">ឈ្មោះ: *</label>
                                             <input
@@ -271,107 +392,22 @@ const Brands = () => {
                                             </textarea>
                                         </div>
                                     </div>
-                                    <div className='flex justify-end'>
+                                    <div className='flex items-end justify-end'>
                                         <button
                                             type="submit"
-
-                                            className="button_only_submit "
+                                            className="button_only_submit"
                                         >
                                             រក្សាទុក្ខ
                                         </button>
                                     </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            )}
-            {/* Delete Modal */}
-            {isDeleteModalOpen && (
-                <div
-                    className="modal"
-                >
-                    <div className="modal_center max-w-sm">
-                        <div className="modal_title">
-                            <h3 className="">លុបប្រម៉ាក់យីយោ</h3>
 
-                            <MdClose className='text-2xl cursor-pointer' onClick={() => setIsDeleteModalOpen(false)} />
-                        </div>
-                        <div className="p-4 space-y-4">
-                            <p className="text-sm ">
-                                Are you sure you want to delete this Brands? This action cannot be undone.
-                            </p>
-                            <div className="flex justify-end space-x-2">
-                                <button
-                                    type="button"
-                                    className="button_only_close"
-                                    onClick={() => setIsDeleteModalOpen(false)}
-                                >
-                                    មិនលុប
-                                </button>
-                                <button
-                                    type="button"
-                                    className="button_only_submit"
-                                    onClick={deleteBrands}
-                                >
-                                    លុប
-                                </button>
+                                </form>
                             </div>
                         </div>
-                    </div>
-                </div>
-            )}
-            {/* Update Modal */}
-            {isUpdateModalOpen && (
-                <div
-                    className="modal"
-                >
-                    <div className="modal_center max-w-sm">
-                        <div className="modal_title">
-                            <h3 className="">កែប្រែម៉ាក់យីយោ</h3>
-                            <MdClose className='text-2xl cursor-pointer' onClick={() => setIsUpdateModalOpen(false)} />
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
-                        </div>
-                        <div className="modal_form">
-                            <form class="" onSubmit={UpdateTeacher}>
-
-                                <div class="grid gap-4 mb-4 grid-cols-1">
-                                    <div class="col-span-2">
-                                        <label className="font-NotoSansKhmer font-bold">ឈ្មោះ: *</label>
-                                        <input
-                                            type="text"
-                                            value={brand_names}
-                                            onChange={e => setbrand_names(e.target.value)}
-                                            id="price"
-                                            class="input_text "
-                                            placeholder="ឈ្មោះនៃប្រភេទទំនិញ" required
-                                        />
-                                    </div>
-                                    <div class="col-span-2">
-                                        <label className="font-NotoSansKhmer font-bold">ការណិពណ័នា</label>
-                                        <textarea id="description"
-                                            rows="4"
-                                            value={description}
-                                            onChange={e => setdescription(e.target.value)}
-                                            class="input_text"
-                                            placeholder="ការណិពណ័នា">
-                                        </textarea>
-                                    </div>
-                                </div>
-                                <div className='flex items-end justify-end'>
-                                    <button
-                                        type="submit"
-                                        className="button_only_submit"
-                                    >
-                                        រក្សាទុក្ខ
-                                    </button>
-                                </div>
-
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };

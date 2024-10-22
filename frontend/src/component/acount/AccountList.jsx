@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import Pagination from '../pagination/Pagination';
-import { FaCcApplePay, FaPencilAlt,FaMoneyBillAlt,FaBookOpen,FaPowerOff   } from "react-icons/fa";
-import { MdDelete, MdClose ,MdOutlineMoneyOff} from "react-icons/md";
-
+import { FaCcApplePay, FaPencilAlt, FaMoneyBillAlt, FaBookOpen, FaPowerOff } from "react-icons/fa";
+import { MdDelete, MdClose, MdOutlineMoneyOff } from "react-icons/md";
+import { motion, AnimatePresence } from "framer-motion";
 
 
 const account = () => {
@@ -183,6 +183,11 @@ const account = () => {
             toast.error('សូមលោកព្យាយាមម្ដងទៀត !', { autoClose: 3000 });
         }
     };
+    const rowAnimation = {
+        hidden: { opacity: 0, y: -20 },
+        visible: { opacity: 1, y: 0 },
+        exit: { opacity: 0, y: 20 }
+    };
     return (
         <div>
             <div className="flex items-center mb-3 gap-2 ">
@@ -212,71 +217,79 @@ const account = () => {
                 </div>
             </div>
             <div class="relative overflow-x-auto h-screen scrollbar-hidden">
+                <AnimatePresence>
+                    <table className="min-w-full table-auto">
+                        <thead className="bg-blue-600/95 text-white">
+                            <tr className="font-NotoSansKhmer font-bold">
+                                <th className=" px-4 py-2">លេខរៀង</th>
+                                <th className=" px-4 py-2">ឈ្មោះគណនី</th>
+                                <th className=" px-4 py-2">ប្រភេទគណនី</th>
+                                <th className=" px-4 py-2">លេខគណនី</th>
+                                <th className=" px-4 py-2">សមតុល្យសាច់ប្រាក់</th>
+                                <th className=" px-4 py-2">ព័ត៌មានលម្អិតគណនី</th>
+                                <th className=" px-4 py-2">បានបន្ថែមដោយ</th>
+                                <th className=" px-4 py-2 text-center">សកម្មភាព</th>
 
-                <table className="min-w-full table-auto">
-                    <thead className="bg-blue-600/95 text-white">
-                        <tr className="font-NotoSansKhmer font-bold">
-                            <th className=" px-4 py-2">លេខរៀង</th>
-                            <th className=" px-4 py-2">ឈ្មោះគណនី</th>
-                            <th className=" px-4 py-2">ប្រភេទគណនី</th>
-                            <th className=" px-4 py-2">លេខគណនី</th>
-                            <th className=" px-4 py-2">សមតុល្យសាច់ប្រាក់</th>
-                            <th className=" px-4 py-2">ព័ត៌មានលម្អិតគណនី</th>
-                            <th className=" px-4 py-2">បានបន្ថែមដោយ</th>
-                            <th className=" px-4 py-2 text-center">សកម្មភាព</th>
-
-                        </tr>
-                    </thead>
-                    {loading ? (
-                        <p>Loading...</p>
-                    ) : error ? (
-                        <p>{error}</p>
-                    ) : account.length === 0 ? (
-                        <p className="text-start py-4 px-10 text-red-500">រកមិនឃើញប្រភេទ ? {searchQuery}</p>
-                    ) : (
-                        <tbody>
-                            {account.map((customer, index) => (
-                                <tr key={customer.id} className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100">
-                                    <td className=" px-4 py-1">{index + 1}</td>
-                                    <td className="px-4 py-1">{customer.acc_names}</td>
-                                    <td className="px-4 py-1">{customer.bank_names}</td>
-                                    <td className="px-4 py-1">{customer.acc_num}</td>
-                                    <td className="px-4 py-1">{customer.balance}</td>
-                                    <td className=" px-4 py-1">{customer.description || 'N/A'}</td>
-                                    <td className="px-4 py-1">{customer.user_at}</td>
-                                    <td className="px-4  space-x-2 flex">
-                                        <button
-                                            onClick={() => openUpdateModal(customer)}
-                                            className='bg-blue-300 p-2 flex text-xs text-white'                        >
-                                            <FaPencilAlt className='text-blue-500 mr-2' /> កែសម្រួល
-                                        </button>
-                                        <button
-                                            onClick={() => openUpdateModal(customer)}
-                                            className='bg-green-500 p-2 flex text-xs text-white'                        >
-                                            <MdOutlineMoneyOff className='text-sm mr-2'/>ផ្ទេរប្រាក់
-                                        </button> 
-                                        <button
-                                            onClick={() => openUpdateModal(customer)}
-                                            className='p-2 bg-lime-300 flex text-xs text-white'                        >
-                                            <FaMoneyBillAlt className='text-sm mr-2'/>ដាក់ប្រាក់
-                                        </button>
-                                        <button
-                                            onClick={() => openUpdateModal(customer)}
-                                            className='bg-yellow-300 p-2 flex text-xs text-white'                        >
-                                            <FaBookOpen className='text-sm mr-2'/>សៀវភៅគណនី
-                                        </button>
-                                        <button
-                                            onClick={() => openDeleteModal(customer)}
-                                            className='bg-red-300 p-2  flex text-xs text-white'
-                                        >
-                                            <FaPowerOff className='text-red-500 mr-2' /> បិទ
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    )}
-                </table>
+                            </tr>
+                        </thead>
+                        {loading ? (
+                            <p>Loading...</p>
+                        ) : error ? (
+                            <p>{error}</p>
+                        ) : account.length === 0 ? (
+                            <p className="text-start py-4 px-10 text-red-500">រកមិនឃើញប្រភេទ ? {searchQuery}</p>
+                        ) : (
+                            <tbody>
+                                {account.map((customer, index) => (
+                                    <motion.tr
+                                        key={customer.id}
+                                        initial="hidden"
+                                        animate="visible"
+                                        exit="exit"
+                                        variants={rowAnimation}
+                                        transition={{ duration: 0.3 }}
+                                        className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100">
+                                        <td className=" px-4 py-1">{index + 1}</td>
+                                        <td className="px-4 py-1">{customer.acc_names}</td>
+                                        <td className="px-4 py-1">{customer.bank_names}</td>
+                                        <td className="px-4 py-1">{customer.acc_num}</td>
+                                        <td className="px-4 py-1">{customer.balance}</td>
+                                        <td className=" px-4 py-1">{customer.description || 'N/A'}</td>
+                                        <td className="px-4 py-1">{customer.user_at}</td>
+                                        <td className="px-4  space-x-2 flex">
+                                            <button
+                                                onClick={() => openUpdateModal(customer)}
+                                                className='bg-blue-300 p-2 flex text-xs text-white'                        >
+                                                <FaPencilAlt className='text-blue-500 mr-2' /> កែសម្រួល
+                                            </button>
+                                            <button
+                                                onClick={() => openUpdateModal(customer)}
+                                                className='bg-green-500 p-2 flex text-xs text-white'                        >
+                                                <MdOutlineMoneyOff className='text-sm mr-2' />ផ្ទេរប្រាក់
+                                            </button>
+                                            <button
+                                                onClick={() => openUpdateModal(customer)}
+                                                className='p-2 bg-lime-300 flex text-xs text-white'                        >
+                                                <FaMoneyBillAlt className='text-sm mr-2' />ដាក់ប្រាក់
+                                            </button>
+                                            <button
+                                                onClick={() => openUpdateModal(customer)}
+                                                className='bg-yellow-300 p-2 flex text-xs text-white'                        >
+                                                <FaBookOpen className='text-sm mr-2' />សៀវភៅគណនី
+                                            </button>
+                                            <button
+                                                onClick={() => openDeleteModal(customer)}
+                                                className='bg-red-300 p-2  flex text-xs text-white'
+                                            >
+                                                <FaPowerOff className='text-red-500 mr-2' /> បិទ
+                                            </button>
+                                        </td>
+                                    </motion.tr>
+                                ))}
+                            </tbody>
+                        )}
+                    </table>
+                </AnimatePresence>
                 <Pagination
                     currentPage={page}
                     totalPages={totalPages}
@@ -288,226 +301,246 @@ const account = () => {
             </div>
 
             {/* Insert Modal */}
-            {isInsertModalOpen && (
-                <div
-                    className="modal"
-                >
-                    <div className="modal_center max-w-xl">
-                        <div className="modal_title">
-                            <h3 className="">ឈ្មោះគណនី</h3>
-                            <MdClose className='text-2xl cursor-pointer' onClick={() => setIsInsertModalOpen(false)} />
-                        </div>
-                        <div className="modal_form">
-                            <form class="" onSubmit={Createaccount}>
-                                <div className="">
-                                    <div class="grid gap-4 mb-4 grid-cols-2">
-                                        <div class="col-span-1">
-                                            <label className="font-NotoSansKhmer font-bold">ឈ្មោះ: *</label>
-                                            <input
-                                                type="text"
-                                                value={acc_names}
-                                                onChange={e => setAcc_names(e.target.value)}
-                                                id="price"
-                                                className="input_text "
-                                                placeholder="ឈ្មោះ" required
-                                            />
+            <AnimatePresence>
+                {isInsertModalOpen && (
+                    <motion.div
+                        className="modal"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        <div className="modal_center max-w-xl">
+                            <div className="modal_title">
+                                <h3 className="">ឈ្មោះគណនី</h3>
+                                <MdClose className='text-2xl cursor-pointer' onClick={() => setIsInsertModalOpen(false)} />
+                            </div>
+                            <div className="modal_form">
+                                <form class="" onSubmit={Createaccount}>
+                                    <div className="">
+                                        <div class="grid gap-4 mb-4 grid-cols-2">
+                                            <div class="col-span-1">
+                                                <label className="font-NotoSansKhmer font-bold">ឈ្មោះ: *</label>
+                                                <input
+                                                    type="text"
+                                                    value={acc_names}
+                                                    onChange={e => setAcc_names(e.target.value)}
+                                                    id="price"
+                                                    className="input_text "
+                                                    placeholder="ឈ្មោះ" required
+                                                />
+                                            </div>
+                                            <div class="col-span-1">
+                                                <label className="font-NotoSansKhmer font-bold">ប្រភេទគណនី: *</label>
+                                                <select
+                                                    className='input_text'
+                                                    id="bank"
+                                                    value={bank_id}
+                                                    required
+                                                    onChange={e => setBank_id(e.target.value)}
+                                                >
+                                                    <option value="" className='text-white'>ជ្រើសរើសប្រភេទគណនី</option>
+                                                    {accountTypeBank?.map((accountBank) => (
+                                                        <option key={accountBank.id} value={accountBank.id}>
+                                                            {accountBank.bank_names}
+                                                        </option>
+                                                    ))}
+
+                                                </select>
+                                            </div>
+                                            <div class="col-span-1">
+                                                <label className="font-NotoSansKhmer font-bold">លេខគណនី:*</label>
+                                                <input
+                                                    type="number"
+                                                    value={acc_num}
+                                                    onChange={e => setAcc_num(e.target.value)}
+                                                    id="price"
+                                                    className="input_text "
+                                                    placeholder="លេខគណនី" required
+                                                />
+                                            </div>
+                                            <div class="col-span-1">
+                                                <label className="font-NotoSansKhmer font-bold">សមតុល្យបើក</label>
+                                                <input
+                                                    type="number"
+                                                    value={balance}
+                                                    min={0}
+                                                    onChange={e => setBalance(e.target.value)}
+                                                    id="acc_names"
+                                                    defaultValue={0}
+                                                    className="input_text "
+                                                />
+                                            </div>
+                                            <div class="col-span-2">
+                                                <label className="font-NotoSansKhmer font-bold">ចំណាំ</label>
+                                                <textarea id="description"
+                                                    rows="4"
+                                                    value={description}
+                                                    onChange={e => setdescription(e.target.value)}
+                                                    class="input_text"
+                                                    placeholder="ចំណាំ">
+                                                </textarea>
+                                            </div>
                                         </div>
-                                        <div class="col-span-1">
-                                            <label className="font-NotoSansKhmer font-bold">ប្រភេទគណនី: *</label>
-                                            <select
-                                                className='input_text'
-                                                id="bank"
-                                                value={bank_id}
-                                                required
-                                                onChange={e => setBank_id(e.target.value)}
+                                        <div className='flex justify-end'>
+                                            <button
+                                                type="submit"
+
+                                                className="button_only_submit "
                                             >
-                                                <option value="" className='text-white'>ជ្រើសរើសប្រភេទគណនី</option>
-                                                {accountTypeBank?.map((accountBank) => (
-                                                    <option key={accountBank.id} value={accountBank.id}>
-                                                        {accountBank.bank_names}
-                                                    </option>
-                                                ))}
-
-                                            </select>
-                                        </div>
-                                        <div class="col-span-1">
-                                            <label className="font-NotoSansKhmer font-bold">លេខគណនី:*</label>
-                                            <input
-                                                type="number"
-                                                value={acc_num}
-                                                onChange={e => setAcc_num(e.target.value)}
-                                                id="price"
-                                                className="input_text "
-                                                placeholder="លេខគណនី" required
-                                            />
-                                        </div>
-                                        <div class="col-span-1">
-                                            <label className="font-NotoSansKhmer font-bold">សមតុល្យបើក</label>
-                                            <input
-                                                type="number"
-                                                value={balance}
-                                                min={0}
-                                                onChange={e => setBalance(e.target.value)}
-                                                id="acc_names"
-                                                defaultValue={0}
-                                                className="input_text "
-                                            />
-                                        </div>
-                                        <div class="col-span-2">
-                                            <label className="font-NotoSansKhmer font-bold">ចំណាំ</label>
-                                            <textarea id="description"
-                                                rows="4"
-                                                value={description}
-                                                onChange={e => setdescription(e.target.value)}
-                                                class="input_text"
-                                                placeholder="ចំណាំ">
-                                            </textarea>
+                                                រក្សាទុក្ខ
+                                            </button>
                                         </div>
                                     </div>
-                                    <div className='flex justify-end'>
-                                        <button
-                                            type="submit"
-
-                                            className="button_only_submit "
-                                        >
-                                            រក្សាទុក្ខ
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            )}
-            {/* Delete Modal */}
-            {isDeleteModalOpen && (
-                <div
-                    className="modal"
-                >
-                    <div className="modal_center max-w-sm">
-                        <div className="modal_title">
-                            <h3 className="">លុបប្រគណនី</h3>
-
-                            <MdClose className='text-2xl cursor-pointer' onClick={() => setIsDeleteModalOpen(false)} />
-                        </div>
-                        <div className="p-4 space-y-4">
-                            <p className="text-sm ">
-                                Are you sure you want to delete this account? This action cannot be undone.
-                            </p>
-                            <div className="flex justify-end space-x-2">
-                                <button
-                                    type="button"
-                                    className="button_only_close"
-                                    onClick={() => setIsDeleteModalOpen(false)}
-                                >
-                                    មិនលុប
-                                </button>
-                                <button
-                                    type="button"
-                                    className="button_only_submit"
-                                    onClick={deleteaccount}
-                                >
-                                    លុប
-                                </button>
+                                </form>
                             </div>
                         </div>
-                    </div>
-                </div>
-            )}
-            {/* Update Modal */}
-            {isUpdateModalOpen && (
-                <div
-                    className="modal"
-                >
-                    <div className="modal_center max-w-xl">
-                        <div className="modal_title">
-                            <h3 className="">កែប្រែគណនី</h3>
-                            <MdClose className='text-2xl cursor-pointer' onClick={() => setIsUpdateModalOpen(false)} />
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
-                        </div>
-                        <div className="modal_form">
-                            <form class="" onSubmit={UpdateTeacher}>
-                                <div className="">
-                                    <div class="grid gap-4 mb-4 grid-cols-2">
-                                        <div class="col-span-1">
-                                            <label className="font-NotoSansKhmer font-bold">ឈ្មោះ: *</label>
-                                            <input
-                                                type="text"
-                                                value={acc_names}
-                                                onChange={e => setAcc_names(e.target.value)}
-                                                id="price"
-                                                className="input_text "
-                                                placeholder="ឈ្មោះ" required
-                                            />
-                                        </div>
-                                        <div class="col-span-1">
-                                            <label className="font-NotoSansKhmer font-bold">ប្រភេទគណនី: *</label>
-                                            <select
-                                                className='input_text'
-                                                id="bank"
-                                                value={bank_id}
-                                                required
-                                                onChange={e => setBank_id(e.target.value)}
-                                            >
-                                                <option value="" className='text-white'>ជ្រើសរើសប្រភេទគណនី</option>
-                                                {accountTypeBank?.map((accountBank) => (
-                                                    <option key={accountBank.id} value={accountBank.id}>
-                                                        {accountBank.bank_names}
-                                                    </option>
-                                                ))}
+            {/* Delete Modal */}
+            <AnimatePresence>
+                {isDeleteModalOpen && (
+                    <motion.div
+                        className="modal"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        <div className="modal_center max-w-sm">
+                            <div className="modal_title">
+                                <h3 className="">លុបប្រគណនី</h3>
 
-                                            </select>
-                                        </div>
-                                        <div class="col-span-1">
-                                            <label className="font-NotoSansKhmer font-bold">លេខគណនី:*</label>
-                                            <input
-                                                type="number"
-                                                value={acc_num}
-                                                onChange={e => setAcc_num(e.target.value)}
-                                                id="price"
-                                                className="input_text "
-                                                placeholder="លេខគណនី" required
-                                            />
-                                        </div>
-                                        <div class="col-span-1">
-                                            <label className="font-NotoSansKhmer font-bold">សមតុល្យបើក</label>
-                                            <input
-                                                type="number"
-                                                value={balance}
-                                                min={0}
-                                                onChange={e => setBalance(e.target.value)}
-                                                id="acc_names"
-                                                defaultValue={0}
-                                                className="input_text "
-                                            />
-                                        </div>
-                                        <div class="col-span-2">
-                                            <label className="font-NotoSansKhmer font-bold">ចំណាំ</label>
-                                            <textarea id="description"
-                                                rows="4"
-                                                value={description}
-                                                onChange={e => setdescription(e.target.value)}
-                                                class="input_text"
-                                                placeholder="ចំណាំ">
-                                            </textarea>
-                                        </div>
-                                    </div>
-                                    <div className='flex justify-end'>
-                                        <button
-                                            type="submit"
-
-                                            className="button_only_submit "
-                                        >
-                                            រក្សាទុក្ខ
-                                        </button>
-                                    </div>
+                                <MdClose className='text-2xl cursor-pointer' onClick={() => setIsDeleteModalOpen(false)} />
+                            </div>
+                            <div className="p-4 space-y-4">
+                                <p className="text-sm ">
+                                    Are you sure you want to delete this account? This action cannot be undone.
+                                </p>
+                                <div className="flex justify-end space-x-2">
+                                    <button
+                                        type="button"
+                                        className="button_only_close"
+                                        onClick={() => setIsDeleteModalOpen(false)}
+                                    >
+                                        មិនលុប
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="button_only_submit"
+                                        onClick={deleteaccount}
+                                    >
+                                        លុប
+                                    </button>
                                 </div>
-
-                            </form>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            )}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+            {/* Update Modal */}
+            <AnimatePresence>
+                {isUpdateModalOpen && (
+                    <motion.div
+                        className="modal"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        <div className="modal_center max-w-xl">
+                            <div className="modal_title">
+                                <h3 className="">កែប្រែគណនី</h3>
+                                <MdClose className='text-2xl cursor-pointer' onClick={() => setIsUpdateModalOpen(false)} />
+
+                            </div>
+                            <div className="modal_form">
+                                <form class="" onSubmit={UpdateTeacher}>
+                                    <div className="">
+                                        <div class="grid gap-4 mb-4 grid-cols-2">
+                                            <div class="col-span-1">
+                                                <label className="font-NotoSansKhmer font-bold">ឈ្មោះ: *</label>
+                                                <input
+                                                    type="text"
+                                                    value={acc_names}
+                                                    onChange={e => setAcc_names(e.target.value)}
+                                                    id="price"
+                                                    className="input_text "
+                                                    placeholder="ឈ្មោះ" required
+                                                />
+                                            </div>
+                                            <div class="col-span-1">
+                                                <label className="font-NotoSansKhmer font-bold">ប្រភេទគណនី: *</label>
+                                                <select
+                                                    className='input_text'
+                                                    id="bank"
+                                                    value={bank_id}
+                                                    required
+                                                    onChange={e => setBank_id(e.target.value)}
+                                                >
+                                                    <option value="" className='text-white'>ជ្រើសរើសប្រភេទគណនី</option>
+                                                    {accountTypeBank?.map((accountBank) => (
+                                                        <option key={accountBank.id} value={accountBank.id}>
+                                                            {accountBank.bank_names}
+                                                        </option>
+                                                    ))}
+
+                                                </select>
+                                            </div>
+                                            <div class="col-span-1">
+                                                <label className="font-NotoSansKhmer font-bold">លេខគណនី:*</label>
+                                                <input
+                                                    type="number"
+                                                    value={acc_num}
+                                                    onChange={e => setAcc_num(e.target.value)}
+                                                    id="price"
+                                                    className="input_text "
+                                                    placeholder="លេខគណនី" required
+                                                />
+                                            </div>
+                                            <div class="col-span-1">
+                                                <label className="font-NotoSansKhmer font-bold">សមតុល្យបើក</label>
+                                                <input
+                                                    type="number"
+                                                    value={balance}
+                                                    min={0}
+                                                    onChange={e => setBalance(e.target.value)}
+                                                    id="acc_names"
+                                                    defaultValue={0}
+                                                    className="input_text "
+                                                />
+                                            </div>
+                                            <div class="col-span-2">
+                                                <label className="font-NotoSansKhmer font-bold">ចំណាំ</label>
+                                                <textarea id="description"
+                                                    rows="4"
+                                                    value={description}
+                                                    onChange={e => setdescription(e.target.value)}
+                                                    class="input_text"
+                                                    placeholder="ចំណាំ">
+                                                </textarea>
+                                            </div>
+                                        </div>
+                                        <div className='flex justify-end'>
+                                            <button
+                                                type="submit"
+
+                                                className="button_only_submit "
+                                            >
+                                                រក្សាទុក្ខ
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 };

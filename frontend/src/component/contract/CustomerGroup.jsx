@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import Pagination from '../pagination/Pagination';
 import { FaLayerGroup, FaPencilAlt, FaMoneyBillAlt, FaBookOpen, FaPowerOff } from "react-icons/fa";
 import { MdDelete, MdClose, MdOutlineMoneyOff } from "react-icons/md";
+import { motion, AnimatePresence } from "framer-motion";
 
 
 
@@ -157,6 +158,12 @@ const group_customer = () => {
             toast.error('សូមលោកព្យាយាមម្ដងទៀត !', { autoClose: 3000 });
         }
     };
+
+    const rowAnimation = {
+        hidden: { opacity: 0, y: -20 },
+        visible: { opacity: 1, y: 0 },
+        exit: { opacity: 0, y: 20 }
+    };
     return (
         <div>
             <div className="flex items-center mb-3 gap-2 ">
@@ -186,52 +193,60 @@ const group_customer = () => {
                 </div>
             </div>
             <div class="relative overflow-x-auto h-screen scrollbar-hidden">
+                <AnimatePresence>
+                    <table className="min-w-full table-auto">
+                        <thead className="bg-blue-600/95 text-white">
+                            <tr className="font-NotoSansKhmer font-bold">
+                                <th className=" px-4 py-2">លេខរៀង</th>
+                                <th className=" px-4 py-2">ឈ្មោះក្រុម</th>
+                                <th className=" px-4 py-2">បញ្ចុំតម្លៃថេរ</th>
+                                <th className=" px-4 py-2">ព័ត៌មានលម្អិតក្រុម</th>
+                                <th className=" px-4 py-2">បានបន្ថែមដោយ</th>
+                                <th className=" px-4 py-2 text-center">សកម្មភាព</th>
 
-                <table className="min-w-full table-auto">
-                    <thead className="bg-blue-600/95 text-white">
-                        <tr className="font-NotoSansKhmer font-bold">
-                            <th className=" px-4 py-2">លេខរៀង</th>
-                            <th className=" px-4 py-2">ឈ្មោះក្រុម</th>
-                            <th className=" px-4 py-2">បញ្ចុំតម្លៃថេរ</th>
-                            <th className=" px-4 py-2">ព័ត៌មានលម្អិតក្រុម</th>
-                            <th className=" px-4 py-2">បានបន្ថែមដោយ</th>
-                            <th className=" px-4 py-2 text-center">សកម្មភាព</th>
-
-                        </tr>
-                    </thead>
-                    {loading ? (
-                        <p>Loading...</p>
-                    ) : error ? (
-                        <p>{error}</p>
-                    ) : group_customer.length === 0 ? (
-                        <p className="text-start py-4 px-10 text-red-500">រកមិនឃើញប្រភេទ ? {searchQuery}</p>
-                    ) : (
-                        <tbody>
-                            {group_customer.map((customer, index) => (
-                                <tr key={customer.id} className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100">
-                                    <td className=" px-4 py-1">{index + 1}</td>
-                                    <td className="px-4 py-1">{customer.group_names}</td>
-                                    <td className="px-4 py-1">{customer.discount.toFixed(2)} $</td>
-                                    <td className="px-4 py-1">{customer.detail || 'N/A'}</td>
-                                    <td className="px-4 py-1">{customer.user_at}</td>
-                                    <td className="px-4  space-x-2 flex">
-                                        <button
-                                            onClick={() => openUpdateModal(customer)}
-                                            className='bg-blue-300 p-2 flex text-xs text-white'                        >
-                                            <FaPencilAlt className='text-blue-500 mr-2' /> កែសម្រួល
-                                        </button>
-                                        <button
-                                            onClick={() => openDeleteModal(customer)}
-                                            className='bg-red-300 p-2  flex text-xs text-white'
-                                        >
-                                            <FaPowerOff className='text-red-500 mr-2' /> លុប
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    )}
-                </table>
+                            </tr>
+                        </thead>
+                        {loading ? (
+                            <p>Loading...</p>
+                        ) : error ? (
+                            <p>{error}</p>
+                        ) : group_customer.length === 0 ? (
+                            <p className="text-start py-4 px-10 text-red-500">រកមិនឃើញប្រភេទ ? {searchQuery}</p>
+                        ) : (
+                            <tbody>
+                                {group_customer.map((customer, index) => (
+                                    <motion.tr
+                                        key={customer.id}
+                                        initial="hidden"
+                                        animate="visible"
+                                        exit="exit"
+                                        variants={rowAnimation}
+                                        transition={{ duration: 0.3 }}
+                                        className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100">
+                                        <td className=" px-4 py-1">{index + 1}</td>
+                                        <td className="px-4 py-1">{customer.group_names}</td>
+                                        <td className="px-4 py-1">{customer.discount.toFixed(2)} $</td>
+                                        <td className="px-4 py-1">{customer.detail || 'N/A'}</td>
+                                        <td className="px-4 py-1">{customer.user_at}</td>
+                                        <td className="px-4  space-x-2 flex">
+                                            <button
+                                                onClick={() => openUpdateModal(customer)}
+                                                className='bg-blue-300 p-2 flex text-xs text-white'                        >
+                                                <FaPencilAlt className='text-blue-500 mr-2' /> កែសម្រួល
+                                            </button>
+                                            <button
+                                                onClick={() => openDeleteModal(customer)}
+                                                className='bg-red-300 p-2  flex text-xs text-white'
+                                            >
+                                                <FaPowerOff className='text-red-500 mr-2' /> លុប
+                                            </button>
+                                        </td>
+                                    </motion.tr>
+                                ))}
+                            </tbody>
+                        )}
+                    </table>
+                </AnimatePresence>
                 <Pagination
                     currentPage={page}
                     totalPages={totalPages}
@@ -243,170 +258,187 @@ const group_customer = () => {
             </div>
 
             {/* Insert Modal */}
-            {isInsertModalOpen && (
-                <div
-                    className="modal"
-                >
-                    <div className="modal_center max-w-2xl">
-                        <div className="modal_title">
-                            <h3 className="">អតិជន</h3>
-                            <MdClose className='text-2xl cursor-pointer' onClick={() => setIsInsertModalOpen(false)} />
-                        </div>
-                        <div className="modal_form">
-                            <form class="" onSubmit={Creategroup_customer}>
-                                <div className='grid grid-cols-2 gap-3'>
+            <AnimatePresence>
+                {isInsertModalOpen && (
+                    <motion.div
+                        className="modal"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        <div className="modal_center max-w-2xl">
+                            <div className="modal_title">
+                                <h3 className="">អតិជន</h3>
+                                <MdClose className='text-2xl cursor-pointer' onClick={() => setIsInsertModalOpen(false)} />
+                            </div>
+                            <div className="modal_form">
+                                <form class="" onSubmit={Creategroup_customer}>
+                                    <div className='grid grid-cols-2 gap-3'>
 
-                                    <div className="col-span-1 gap-2">
-                                        <label htmlFor="email" className="font-NotoSansKhmer font-bold">
-                                            ឈ្មោះក្រុម
+                                        <div className="col-span-1 gap-2">
+                                            <label htmlFor="email" className="font-NotoSansKhmer font-bold">
+                                                ឈ្មោះក្រុម
+                                            </label>
+                                            <input
+                                                type="text"
+
+                                                value={group_Names}
+                                                onChange={(e) => setGroup_Names(e.target.value)}
+                                                className="input_text"
+                                                required
+                                                placeholder="ឈ្មោះក្រុម"
+                                            />
+                                        </div>
+                                        <div className="col-span-1 gap-2">
+                                            <label htmlFor="email" className="font-NotoSansKhmer font-bold">
+                                                បញ្ចុំតម្លៃជាថេរ
+                                            </label>
+                                            <input
+                                                type="number"
+                                                id="email"
+                                                required
+                                                value={discount}
+                                                onChange={(e) => setDiscount(e.target.value)}
+                                                className="input_text"
+                                                placeholder="0.00$"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="col-span-2 gap-3 mt-3">
+                                        <label htmlFor="description" className="font-NotoSansKhmer font-bold">
+                                            ពិពណ៌នា
                                         </label>
-                                        <input
-                                            type="text"
-
-                                            value={group_Names}
-                                            onChange={(e) => setGroup_Names(e.target.value)}
-                                            className="input_text"
-                                            required
-                                            placeholder="ឈ្មោះក្រុម"
+                                        <textarea
+                                            id="description"
+                                            value={detail}
+                                            onChange={(e) => setDetail(e.target.value)}
+                                            className="input_text w-full py-5"
+                                            placeholder="ពិពណ៌នា"
                                         />
                                     </div>
-                                    <div className="col-span-1 gap-2">
-                                        <label htmlFor="email" className="font-NotoSansKhmer font-bold">
-                                            បញ្ចុំតម្លៃជាថេរ
-                                        </label>
-                                        <input
-                                            type="number"
-                                            id="email"
-                                            required
-                                            value={discount}
-                                            onChange={(e) => setDiscount(e.target.value)}
-                                            className="input_text"
-                                            placeholder="0.00$"
-                                        />
+                                    <div className="flex justify-end my-3">
+                                        <button type="submit" className="button_only_submit">រក្សាទុក</button>
                                     </div>
-                                </div>
-                                <div className="col-span-2 gap-3 mt-3">
-                                    <label htmlFor="description" className="font-NotoSansKhmer font-bold">
-                                        ពិពណ៌នា
-                                    </label>
-                                    <textarea
-                                        id="description"
-                                        value={detail}
-                                        onChange={(e) => setDetail(e.target.value)}
-                                        className="input_text w-full py-5"
-                                        placeholder="ពិពណ៌នា"
-                                    />
-                                </div>
-                                <div className="flex justify-end my-3">
-                                    <button type="submit" className="button_only_submit">រក្សាទុក</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {/* Delete Modal */}
-            {isDeleteModalOpen && (
-                <div
-                    className="modal"
-                >
-                    <div className="modal_center max-w-sm">
-                        <div className="modal_title">
-                            <h3 className="">លុបប្រក្រុម</h3>
-
-                            <MdClose className='text-2xl cursor-pointer' onClick={() => setIsDeleteModalOpen(false)} />
-                        </div>
-                        <div className="p-4 space-y-4">
-                            <p className="text-sm ">
-                                Are you sure you want to delete this group_customer? This action cannot be undone.
-                            </p>
-                            <div className="flex justify-end space-x-2">
-                                <button
-                                    type="button"
-                                    className="button_only_close"
-                                    onClick={() => setIsDeleteModalOpen(false)}
-                                >
-                                    មិនលុប
-                                </button>
-                                <button
-                                    type="button"
-                                    className="button_only_submit"
-                                    onClick={deletegroup_customer}
-                                >
-                                    លុប
-                                </button>
+                                </form>
                             </div>
                         </div>
-                    </div>
-                </div>
-            )}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+            {/* Delete Modal */}
+            <AnimatePresence>
+                {isDeleteModalOpen && (
+                    <motion.div
+                        className="modal"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        <div className="modal_center max-w-sm">
+                            <div className="modal_title">
+                                <h3 className="">លុបប្រក្រុម</h3>
+
+                                <MdClose className='text-2xl cursor-pointer' onClick={() => setIsDeleteModalOpen(false)} />
+                            </div>
+                            <div className="p-4 space-y-4">
+                                <p className="text-sm ">
+                                    Are you sure you want to delete this group_customer? This action cannot be undone.
+                                </p>
+                                <div className="flex justify-end space-x-2">
+                                    <button
+                                        type="button"
+                                        className="button_only_close"
+                                        onClick={() => setIsDeleteModalOpen(false)}
+                                    >
+                                        មិនលុប
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="button_only_submit"
+                                        onClick={deletegroup_customer}
+                                    >
+                                        លុប
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
             {/* Update Modal */}
-            {isUpdateModalOpen && (
-                <div
-                    className="modal"
-                >
-                    <div className="modal_center max-w-xl">
-                        <div className="modal_title">
-                            <h3 className="">កែប្រែក្រុម</h3>
-                            <MdClose className='text-2xl cursor-pointer' onClick={() => setIsUpdateModalOpen(false)} />
+            <AnimatePresence>
+                {isUpdateModalOpen && (
+                    <motion.div
+                        className="modal"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        <div className="modal_center max-w-xl">
+                            <div className="modal_title">
+                                <h3 className="">កែប្រែក្រុម</h3>
+                                <MdClose className='text-2xl cursor-pointer' onClick={() => setIsUpdateModalOpen(false)} />
 
-                        </div>
-                        <div className="modal_form">
-                            <form class="" onSubmit={UpdateGroup_Customer}>
+                            </div>
+                            <div className="modal_form">
+                                <form class="" onSubmit={UpdateGroup_Customer}>
 
-                                <div className='grid grid-cols-2 gap-3'>
+                                    <div className='grid grid-cols-2 gap-3'>
 
-                                    <div className="col-span-1 gap-2">
-                                        <label htmlFor="email" className="font-NotoSansKhmer font-bold">
-                                            ឈ្មោះក្រុម
+                                        <div className="col-span-1 gap-2">
+                                            <label htmlFor="email" className="font-NotoSansKhmer font-bold">
+                                                ឈ្មោះក្រុម
+                                            </label>
+                                            <input
+                                                type="text"
+
+                                                value={group_Names}
+                                                onChange={(e) => setGroup_Names(e.target.value)}
+                                                className="input_text"
+                                                required
+                                                placeholder="ឈ្មោះក្រុម"
+                                            />
+                                        </div>
+                                        <div className="col-span-1 gap-2">
+                                            <label htmlFor="email" className="font-NotoSansKhmer font-bold">
+                                                បញ្ចុំតម្លៃជាថេរ
+                                            </label>
+                                            <input
+                                                type="number"
+                                                id="email"
+                                                required
+                                                value={discount}
+                                                onChange={(e) => setDiscount(e.target.value)}
+                                                className="input_text"
+                                                placeholder="0.00$"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="col-span-2 gap-3 mt-3">
+                                        <label htmlFor="description" className="font-NotoSansKhmer font-bold">
+                                            ពិពណ៌នា
                                         </label>
-                                        <input
-                                            type="text"
-
-                                            value={group_Names}
-                                            onChange={(e) => setGroup_Names(e.target.value)}
-                                            className="input_text"
-                                            required
-                                            placeholder="ឈ្មោះក្រុម"
+                                        <textarea
+                                            id="description"
+                                            value={detail}
+                                            onChange={(e) => setDetail(e.target.value)}
+                                            className="input_text w-full py-5"
+                                            placeholder="ពិពណ៌នា"
                                         />
                                     </div>
-                                    <div className="col-span-1 gap-2">
-                                        <label htmlFor="email" className="font-NotoSansKhmer font-bold">
-                                            បញ្ចុំតម្លៃជាថេរ
-                                        </label>
-                                        <input
-                                            type="number"
-                                            id="email"
-                                            required
-                                            value={discount}
-                                            onChange={(e) => setDiscount(e.target.value)}
-                                            className="input_text"
-                                            placeholder="0.00$"
-                                        />
+                                    <div className="flex justify-end my-3">
+                                        <button type="submit" className="button_only_submit">រក្សាទុក</button>
                                     </div>
-                                </div>
-                                <div className="col-span-2 gap-3 mt-3">
-                                    <label htmlFor="description" className="font-NotoSansKhmer font-bold">
-                                        ពិពណ៌នា
-                                    </label>
-                                    <textarea
-                                        id="description"
-                                        value={detail}
-                                        onChange={(e) => setDetail(e.target.value)}
-                                        className="input_text w-full py-5"
-                                        placeholder="ពិពណ៌នា"
-                                    />
-                                </div>
-                                <div className="flex justify-end my-3">
-                                    <button type="submit" className="button_only_submit">រក្សាទុក</button>
-                                </div>
 
-                            </form>
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            )}
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 };

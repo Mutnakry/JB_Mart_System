@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import Pagination from '../pagination/Pagination';
 import { FaAlignLeft , FaPencilAlt } from "react-icons/fa";
 import { MdDelete, MdClose } from "react-icons/md";
+import { motion, AnimatePresence } from "framer-motion";
 
 
 
@@ -140,6 +141,12 @@ const bank = () => {
             toast.error('សូមលោកព្យាយាមម្ដងទៀត !', { autoClose: 3000 });
         }
     };
+
+    const rowAnimation = {
+        hidden: { opacity: 0, y: -20 },
+        visible: { opacity: 1, y: 0 },
+        exit: { opacity: 0, y: 20 }
+    };
     return (
         <div>
             <div className="flex items-center mb-3 gap-2 ">
@@ -169,7 +176,7 @@ const bank = () => {
                 </div>
             </div>
             <div class="relative overflow-x-auto h-screen scrollbar-hidden">
-
+            <AnimatePresence>
                 <table className="min-w-full table-auto">
                     <thead className="bg-blue-600/95 text-white">
                         <tr className="font-NotoSansKhmer font-bold">
@@ -188,7 +195,13 @@ const bank = () => {
                     ) : (
                         <tbody>
                             {bank.map((customer, index) => (
-                                <tr key={customer.id} className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100">
+                                <motion.tr key={customer.id}
+                                initial="hidden"
+                                animate="visible"
+                                exit="exit"
+                                variants={rowAnimation}
+                                transition={{ duration: 0.3 }}
+                                 className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100">
                                     <td className=" px-4 py-1">{index + 1}</td>
                                     <td className="px-4 py-1">{customer.bank_names}</td>
                                     <td className="px-4  space-x-2 flex">
@@ -204,11 +217,12 @@ const bank = () => {
                                             <FaPencilAlt className='text-blue-500' />
                                         </button>
                                     </td>
-                                </tr>
+                                </motion.tr>
                             ))}
                         </tbody>
                     )}
                 </table>
+                </AnimatePresence>
                 <Pagination
                     currentPage={page}
                     totalPages={totalPages}
@@ -220,10 +234,15 @@ const bank = () => {
             </div>
 
             {/* Insert Modal */}
+            <AnimatePresence>
             {isInsertModalOpen && (
-                <div
-                    className="modal"
-                >
+                 <motion.div
+                 className="modal"
+                 initial={{ opacity: 0, scale: 0.8 }}
+                 animate={{ opacity: 1, scale: 1 }}
+                 exit={{ opacity: 0, scale: 0.8 }}
+                 transition={{ duration: 0.2 }}
+             >
                     <div className="modal_center max-w-sm">
                         <div className="modal_title">
                             <h3 className="">ឈ្មោះប្រភេទគណនី</h3>
@@ -258,13 +277,19 @@ const bank = () => {
                             </form>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             )}
+            </AnimatePresence>
+            <AnimatePresence>
             {/* Delete Modal */}
             {isDeleteModalOpen && (
-                <div
-                    className="modal"
-                >
+                 <motion.div
+                 className="modal"
+                 initial={{ opacity: 0, scale: 0.8 }}
+                 animate={{ opacity: 1, scale: 1 }}
+                 exit={{ opacity: 0, scale: 0.8 }}
+                 transition={{ duration: 0.2 }}
+             >
                     <div className="modal_center max-w-sm">
                         <div className="modal_title">
                             <h3 className="">លុបប្រប្រភេទគណនី</h3>
@@ -293,13 +318,19 @@ const bank = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             )}
+            </AnimatePresence>
+            <AnimatePresence>
             {/* Update Modal */}
             {isUpdateModalOpen && (
-                <div
-                    className="modal"
-                >
+                <motion.div
+                className="modal"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.2 }}
+            >
                     <div className="modal_center max-w-sm">
                         <div className="modal_title">
                             <h3 className="">កែប្រែប្រភេទគណនី</h3>
@@ -334,8 +365,9 @@ const bank = () => {
                             </form>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             )}
+            </AnimatePresence>
         </div>
     );
 };

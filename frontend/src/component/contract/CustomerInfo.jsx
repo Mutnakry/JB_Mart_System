@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import Pagination from '../pagination/Pagination';
 import { FaClipboardList, FaRegEye, FaPrint, FaPowerOff } from "react-icons/fa";
 import { MdDelete, MdClose, MdOutlineMoneyOff } from "react-icons/md";
+import { motion, AnimatePresence } from "framer-motion";
 
 
 
@@ -156,7 +157,11 @@ const CustomerInfo = () => {
             toast.error('សូមលោកព្យាយាមម្ដងទៀត!', { autoClose: 3000 });
         }
     };
-
+    const rowAnimation = {
+        hidden: { opacity: 0, y: -20 },
+        visible: { opacity: 1, y: 0 },
+        exit: { opacity: 0, y: 20 }
+    };
 
     return (
         <div>
@@ -184,7 +189,7 @@ const CustomerInfo = () => {
                 </div>
             </div>
             <div class="relative overflow-x-auto h-screen scrollbar-hidden">
-
+            <AnimatePresence>
                 <table className="min-w-full table-auto">
                     <thead className="bg-blue-600/95 text-white">
                         <tr className="font-NotoSansKhmer font-bold">
@@ -212,7 +217,14 @@ const CustomerInfo = () => {
                     ) : (
                         <tbody>
                             {customers.map((customer, index) => (
-                                <tr key={customer.id} className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100">
+                                <motion.tr
+                                key={customer.id}
+                                initial="hidden"
+                                animate="visible"
+                                exit="exit"
+                                variants={rowAnimation}
+                                transition={{ duration: 0.3 }}
+                                 className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100">
                                     <td className="px-4 py-1">{index + 1}</td>
                                     <td className="px-4 py-1">{customer.business_names}</td>
                                     <td className="px-4 py-1">{customer.full_names}</td>
@@ -243,11 +255,12 @@ const CustomerInfo = () => {
                                             </>
                                         )}
                                     </td>
-                                </tr>
+                                    </motion.tr>
                             ))}
                         </tbody>
                     )}
                 </table>
+                </AnimatePresence>
                 <Pagination
                     currentPage={page}
                     totalPages={totalPages}
@@ -259,10 +272,15 @@ const CustomerInfo = () => {
             </div>
 
             {/* Update Modal */}
+            <AnimatePresence>
             {isUpdateModalOpen && (
-                <div
-                    className="modal"
-                >
+                 <motion.div
+                 className="modal"
+                 initial={{ opacity: 0, scale: 0.8 }}
+                 animate={{ opacity: 1, scale: 1 }}
+                 exit={{ opacity: 0, scale: 0.8 }}
+                 transition={{ duration: 0.2 }}
+             >
                     <div className="modal_center max-w-xl">
                         <div className="modal_title">
                             <h3 className="">កែប្រែអតិជន</h3>
@@ -420,8 +438,9 @@ const CustomerInfo = () => {
                             </form>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             )}
+            </AnimatePresence>
         </div>
     );
 };

@@ -75,7 +75,7 @@ const PointOfSale = () => {
         </div>
       </div>
       {/* Table Section */}
-      <div className="overflow-x-auto h-[60vh] bg-white p-1 shadow-md">
+      <div className="overflow-x-auto h-[60vh] bg-white p-1 shadow-md scrollbar-hidden">
         <table className="min-w-full text-center">
           <thead>
             <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
@@ -168,9 +168,9 @@ const PointOfSale = () => {
           </button>
         </div>
         <div>
-          <button className='bg-gray-500 text-lg p-2 text-white flex' aria-label="Add expense">
+          <button className='bg-gray-500 text-md p-2 text-white flex' aria-label="Add expense">
             <span className="flex items-center">
-              <FaRegMoneyBillAlt className="mr-1" /> សាច់ប្រាក់សរុបត្រូវបង់ $ {finalTotal}
+              <FaRegMoneyBillAlt className="mr-1" /> សាច់ប្រាក់សរុបត្រូវបង់  <span> $ {finalTotal}</span>
             </span>
           </button>
         </div>

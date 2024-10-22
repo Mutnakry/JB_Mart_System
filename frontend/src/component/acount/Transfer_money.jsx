@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import Pagination from '../pagination/Pagination';
-import { FaAlignLeft , FaPencilAlt } from "react-icons/fa";
+import { FaAlignLeft, FaPencilAlt } from "react-icons/fa";
 import { MdDelete, MdClose } from "react-icons/md";
+import { motion, AnimatePresence } from "framer-motion";
 
 
 
@@ -60,10 +61,15 @@ const bank = () => {
         }
 
     };
+    const rowAnimation = {
+        hidden: { opacity: 0, y: -20 },
+        visible: { opacity: 1, y: 0 },
+        exit: { opacity: 0, y: 20 }
+    };
     return (
         <div>
             <div className="flex items-center mb-3 gap-2 ">
-                <p><FaAlignLeft  className="text-lg " /></p>
+                <p><FaAlignLeft className="text-lg " /></p>
                 <p className="font-NotoSansKhmer font-bold ">តារាងបញ្ជីផ្ទេប្រាក់គណនី</p>
             </div>
             <div className="flex justify-between items-center my-3">
@@ -86,34 +92,43 @@ const bank = () => {
                 </div>
             </div>
             <div class="relative overflow-x-auto h-screen scrollbar-hidden">
+                <AnimatePresence>
+                    <table className="min-w-full table-auto">
+                        <thead className="bg-blue-600/95 text-white">
+                            <tr className="font-NotoSansKhmer font-bold">
+                                <th className=" px-4 w-36 py-2">លេខរៀង</th>
+                                <th className=" px-4 w-64 py-2">ឈ្មោះ</th>
+                                <th className=" px-4 py-2">សកម្មភាព</th>
 
-                <table className="min-w-full table-auto">
-                    <thead className="bg-blue-600/95 text-white">
-                        <tr className="font-NotoSansKhmer font-bold">
-                            <th className=" px-4 w-36 py-2">លេខរៀង</th>
-                            <th className=" px-4 w-64 py-2">ឈ្មោះ</th>
-                            <th className=" px-4 py-2">សកម្មភាព</th>
+                            </tr>
+                        </thead>
+                        {loading ? (
+                            <p>Loading...</p>
+                        ) : error ? (
+                            <p>{error}</p>
+                        ) : bank.length === 0 ? (
+                            <p className="text-start py-4 px-10 text-red-500">រកមិនឃើញប្រភេទ ? {searchQuery}</p>
+                        ) : (
+                            <tbody>
+                                {bank.map((customer, index) => (
+                                    
+                                    <motion.tr key={customer.id}
+                                        initial="hidden"
+                                        animate="visible"
+                                        exit="exit"
+                                        variants={rowAnimation}
+                                        transition={{ duration: 0.3 }}
+                                        className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100">
+                                        <td className=" px-4 py-1">{index + 1}</td>
+                                        <td className="px-4 py-1">{customer.bank_names}</td>
 
-                        </tr>
-                    </thead>
-                    {loading ? (
-                        <p>Loading...</p>
-                    ) : error ? (
-                        <p>{error}</p>
-                    ) : bank.length === 0 ? (
-                        <p className="text-start py-4 px-10 text-red-500">រកមិនឃើញប្រភេទ ? {searchQuery}</p>
-                    ) : (
-                        <tbody>
-                            {bank.map((customer, index) => (
-                                <tr key={customer.id} className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100">
-                                    <td className=" px-4 py-1">{index + 1}</td>
-                                    <td className="px-4 py-1">{customer.bank_names}</td>
-                                   
-                                </tr>
-                            ))}
-                        </tbody>
-                    )}
-                </table>
+                                    </motion.tr>
+                                    
+                                ))}
+                            </tbody>
+                        )}
+                    </table>
+                </AnimatePresence>
                 <Pagination
                     currentPage={page}
                     totalPages={totalPages}
