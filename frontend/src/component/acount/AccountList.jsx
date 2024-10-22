@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import Pagination from '../pagination/Pagination';
-import { FaClipboardList, FaPencilAlt,FaMoneyBillAlt,FaBookOpen,FaPowerOff   } from "react-icons/fa";
+import { FaCcApplePay, FaPencilAlt,FaMoneyBillAlt,FaBookOpen,FaPowerOff   } from "react-icons/fa";
 import { MdDelete, MdClose ,MdOutlineMoneyOff} from "react-icons/md";
 
 
@@ -186,7 +186,7 @@ const account = () => {
     return (
         <div>
             <div className="flex items-center mb-3 gap-2 ">
-                <p><FaClipboardList className="text-lg " /></p>
+                <p><FaCcApplePay className="text-lg " /></p>
                 <p className="font-NotoSansKhmer font-bold ">តារាងបញ្ជីគណនី</p>
             </div>
             <div className="flex justify-end">

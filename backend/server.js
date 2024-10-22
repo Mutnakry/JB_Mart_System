@@ -37,18 +37,29 @@ app.use('/api/unit', UnitRoutes);
 const BankRoutes = require('./src/route/bank.router');
 app.use('/api/bank', BankRoutes); 
 
-// Import and use the BankAount routes
+// Import and use the account routes
 const AccountRoutes = require('./src/route/account.router');
 app.use('/api/account', AccountRoutes); 
 
-// Import and use the BankAount routes
+// Import and use the cost routes
 const CostRoutes = require('./src/route/cost.router');
 app.use('/api/cost', CostRoutes); 
-// Import and use the BankAount routes
+// Import and use the costtype routes
 const CostTypeRoutes = require('./src/route/costtype.router');
 app.use('/api/cost_type', CostTypeRoutes); 
 
 
+// Import and use the group_customer routes
+const Group_Customer_Routes = require('./src/route/group_customer.router');
+app.use('/api/group_customer', Group_Customer_Routes); 
+
+// Import and use the customer routes
+const Customer_Routes = require('./src/route/customer.router');
+app.use('/api/customer', Customer_Routes); 
+
+// Import and use the BankAount routes
+const Supplier_Routes = require('./src/route/supplier.router');
+app.use('/api/supplier', Supplier_Routes); 
 
 
 // Start the server

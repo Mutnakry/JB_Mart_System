@@ -14,6 +14,11 @@ import Unit from './view/product/Unit';
 import Acount from './view/account/Account';
 import Cost from './view/cost/Cost';
 import CostType from './view/cost/CostType';
+import Customer from './view/contact/Customer';
+import Supplier from './view/contact/Supplier';
+import GroupCustomer from './view/contact/GroupCustomer';
+import MainForm from './view/pos/MainForm';
+
 
 
 function App() {
@@ -32,16 +37,16 @@ function App() {
           <Route path="/register" element={isAuthenticated ? <Register /> : <Navigate to="/login" />} />
           <Route path="/" element={<Index />} />
           <Route path="/Dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} />
-          {/* <Route path='/category' element={<Category isAuthenticated={isAuthenticated}/>} /> */}
-          {/* <Route path='/brands' element={<Brands isAuthenticated={isAuthenticated}/>} /> */}
           <Route path='/category'  element={isAuthenticated ? <Category /> : <Navigate to="/" />} />
           <Route path='/brands'  element={isAuthenticated ? <Brands /> : <Navigate to="/" />} />
           <Route path='/udit'  element={isAuthenticated ? <Unit /> : <Navigate to="/" />} />
           <Route path='/account'  element={isAuthenticated ? <Acount /> : <Navigate to="/" />} />
           <Route path='/cost'  element={isAuthenticated ? <Cost /> : <Navigate to="/" />} />
           <Route path='/costtype'  element={isAuthenticated ? <CostType /> : <Navigate to="/" />} />
-
-
+          <Route path='/customer'  element={isAuthenticated ? <Customer /> : <Navigate to="/" />} />
+          <Route path='/supplier'  element={isAuthenticated ? <Supplier /> : <Navigate to="/" />} />
+          <Route path='/groupcustomer'  element={isAuthenticated ? <GroupCustomer /> : <Navigate to="/" />} />
+          <Route path='/pos'  element={isAuthenticated ? <MainForm /> : <Navigate to="/" />} />
 
 
         </Routes>

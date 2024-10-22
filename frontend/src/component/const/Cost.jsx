@@ -122,6 +122,17 @@ const cost = () => {
         setTax(cat.tax);
         setIsUpdateModalOpen(true);
     };
+    const ClearData = ()=>{
+        setPrice('');
+        setdescription('');
+        setCustType('');
+        setPayment('');
+        setDOB('');
+        setInterval('');
+        setAccount('');
+        setTax('');
+        setInterval_Type('');
+    }
     // modal update 
     const UpdateTeacher = async e => {
         e.preventDefault();
@@ -144,29 +155,15 @@ const cost = () => {
         }
         try {
             await axios.put(`http://localhost:6700/api/cost/${selectedcostId}`, values);
-            toast.success('កែប្រែម៉ាក់យីយោបានដោយជោគជ័យ', { autoClose: 3000 });
+            toast.success('កែប្រែចំណាយបានដោយជោគជ័យ', { autoClose: 3000 });
             getAllStudent();
             setIsUpdateModalOpen(false);
             setSelectedcostId(null);
-            setPrice('');
-            setdescription('');
-            setCustType('');
-            setPayment('');
-            setDOB('');
-            setInterval('');
-            setAccount('');
-            setTax('');
-            setInterval_Type('');
+            ClearData();
+           
         } catch (err) {
             console.error(err);
-            setPrice('');
-            setdescription('');
-            setCustType('');
-            setPayment('');
-            setDOB('');
-            setInterval('');
-            setAccount('');
-            setTax('');
+            ClearData();
             setInterval_Type('');
             toast.error('សូមលោកព្យាយាមម្ដងទៀត!', { autoClose: 3000 });
         }
@@ -218,16 +215,8 @@ const cost = () => {
         try {
             const res = await axios.post('http://localhost:6700/api/cost', values);
             console.log(res.data);
-            toast.success('បង្កើតម៉ាក់យីយោបានដោយជោគជ័យ ', { autoClose: 3000 });
-            setPrice('');
-            setdescription('');
-            setCustType('');
-            setPayment('');
-            setDOB('');
-            setInterval('');
-            setAccount('');
-            setTax('');
-            setInterval_Type('');
+            toast.success('បង្កើតចំណាយបានដោយជោគជ័យ ', { autoClose: 3000 });
+            ClearData();
             setIsInsertModalOpen(false);
             getAllStudent();
         } catch (err) {
@@ -241,10 +230,10 @@ const cost = () => {
             <div className='border-2 p-4 border-gray-200 dark:border-gray-700'>
                 <div className="flex items-center mb-3 gap-2 ">
                     <p><FaClipboardList className="text-lg " /></p>
-                    <p className="font-NotoSansKhmer font-bold ">តារាងបញ្ជីម៉ាកយីហោ</p>
+                    <p className="font-NotoSansKhmer font-bold ">តារាងបញ្ជីចំណាយ</p>
                 </div>
                 <div className="flex justify-end">
-                    <button className="button_only_submit" onClick={openInsertModal}>+ បង្កើតម៉ាកយីហោថ្មី</button>
+                    <button className="button_only_submit" onClick={openInsertModal}>+ បង្កើតចំណាយថ្មី</button>
                 </div>
                 <div className="flex justify-between items-center my-3">
                     <div className="flex flex-col gap-2 font-bold font-NotoSansKhmer">
@@ -262,7 +251,7 @@ const cost = () => {
                         <input type="text"
                             value={searchQuery}
                             onChange={handleSearch}
-                            className="input_text w-[300px]" placeholder="ស្វែងរកម៉ាកយីហោ..." />
+                            className="input_text w-[300px]" placeholder="ស្វែងរកចំណាយ..." />
                     </div>
                 </div>
                 <div class="relative overflow-x-auto h-screen scrollbar-hidden">
