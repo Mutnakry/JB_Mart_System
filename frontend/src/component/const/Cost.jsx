@@ -21,6 +21,8 @@ const cost = () => {
     const [description, setdescription] = useState(null);
     const [error, setError] = useState('');
     const [userLoginNames, setUserLoginNames] = useState('');
+    const today = new Date().toISOString().split('T')[0];
+
 
 
     //// paginate and search data
@@ -456,6 +458,7 @@ const cost = () => {
                                                     type="date"
                                                     value={DOB}
                                                     onChange={e => setDOB(e.target.value)}
+                                                    min={today}
                                                     id="price"
                                                     class="input_text "
                                                     required
@@ -658,6 +661,7 @@ const cost = () => {
                                                     type="date"
                                                     value={DOB}
                                                     onChange={e => setDOB(e.target.value)}
+                                                    min={today}
                                                     id="price"
                                                     class="input_text "
                                                     required

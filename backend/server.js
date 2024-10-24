@@ -4,6 +4,7 @@ const mysql = require('mysql');
 const db = require('./src/utile/db'); // Your database utility file
 const app = express();
 const port = 6700;
+const path = require('path');
 
 app.use(express.json()); // Middleware to parse JSON bodies
 app.use(cors()); // Middleware to handle CORS
@@ -60,6 +61,13 @@ app.use('/api/customer', Customer_Routes);
 // Import and use the BankAount routes
 const Supplier_Routes = require('./src/route/supplier.router');
 app.use('/api/supplier', Supplier_Routes); 
+
+
+// Import and use the product routes
+const Product_Routes = require('./src/route/product.router');
+app.use('/api/product', Product_Routes); 
+// get image static files show in front end
+app.use('/image', express.static(path.join(__dirname, './src/public/image')));
 
 
 // Start the server

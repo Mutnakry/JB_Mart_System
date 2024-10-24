@@ -59,28 +59,52 @@ exports.GetAllData = (req, res) => {
 
 // Create data bank
 exports.Create = (req, res) => {
-    const {bank_names}=req.body;
-    const sql = "INSERT INTO bank (bank_names) VALUES (?)";
-    db.query(sql,[bank_names], (err, results) => {
+    const { bank_names } = req.body;
+    const checkSql = "SELECT * FROM bank WHERE bank_names = ?";
+    db.query(checkSql, [bank_names], (err, results) => {
         if (err) {
             return res.status(500).send(err);
         }
-        res.json(results);
+        if (results.length > 0) {
+            return res.status(400).json({ success: false, message: "Bank name already exists." });
+        }
+        const sql = "INSERT INTO bank (bank_names) VALUES (?)";
+        db.query(sql, [bank_names], (err, results) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            res.json({ success: true, message: "Bank created successfully.", data: results });
+        });
     });
-}
+};
+
+
 
 // update data bank
 exports.Update = (req, res) => {
-    const {id} = req.params;
-    const {bank_names}=req.body;
-    const sql = "UPDATE bank set bank_names=? where id=?";
-    db.query(sql,[bank_names,id], (err, results) => {
+    const { id } = req.params;
+    const { bank_names } = req.body;
+    const checkSql = "SELECT * FROM bank WHERE bank_names = ? AND id != ?";
+    db.query(checkSql, [bank_names, id], (err, results) => {
         if (err) {
             return res.status(500).send(err);
         }
-        res.json(results);
+        if (results.length > 0) {
+            return res.status(400).json({ message: " already " });
+        }
+        const sql = "UPDATE bank SET bank_names = ? WHERE id = ?";
+        db.query(sql, [bank_names, id], (err, results) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            if (results.affectedRows === 0) {
+                return res.status(404).json({ success: false, message: "Bank not found." });
+            }
+            res.json({ message: "successfully", data: results });
+        });
     });
-}
+};
+
 
 // GEt Data Single bank
 exports.GetSingle = (req, res) => {

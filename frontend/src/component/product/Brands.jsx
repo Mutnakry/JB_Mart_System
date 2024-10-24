@@ -100,9 +100,7 @@ const Brands = () => {
             setdescription('');
         } catch (err) {
             console.error(err);
-            setbrand_names('');
-            setdescription('');
-            toast.error('សូមលោកព្យាយាមម្ដងទៀត!', { autoClose: 3000 });
+            toast.error('សូមលោកព្យាយាមម្ដងទៀត ស្មោះមានរួចហើយ !', { autoClose: 3000 });
         }
     };
 
@@ -124,7 +122,7 @@ const Brands = () => {
                 setSelectedBrandsId(null);
             } catch (err) {
                 console.error(err);
-                toast.error('សូមលោកព្យាយាមម្ដងទៀត !', { autoClose: 3000 });
+                toast.error('សូមលោកព្យាយាមម្ដងទៀត ស្មោះមានរួចហើយ  !', { autoClose: 3000 });
             }
         }
     };
@@ -147,7 +145,7 @@ const Brands = () => {
             setIsInsertModalOpen(false);
         } catch (err) {
             console.error(err);
-            toast.error('សូមលោកព្យាយាមម្ដងទៀត !', { autoClose: 3000 });
+            toast.error('សូមលោកព្យាយាមម្ដងទៀត ស្មោះមានរួចហើយ  !', { autoClose: 3000 });
         }
     };
     const rowAnimation = {

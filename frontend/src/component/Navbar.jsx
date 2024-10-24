@@ -50,7 +50,7 @@ function Navbar() {
 
     // Routes
     const contactRoutes = ["/supplier", "/customer", "/groupcustomer"];
-    const productsRoutes = ["/category", "/brands", "/udit"];
+    const productsRoutes = ["/category", "/brands", "/udit","/product"];
     const purchaseRoutes = ["/purchase", "/purchase-list"];
     const topupRoutes = ['/topup', '/topupList']
     const exspenseRoutes = ['/cost', '/costtype']

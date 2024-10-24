@@ -57,30 +57,54 @@ exports.GetAllBrands = (req, res) => {
   };
   
 
-// Create data Category
-exports.Create = (req, res) => {
-    const {brand_names,description}=req.body;
-    const sql = "INSERT INTO brands (brand_names,description) VALUES (?,?)";
-    db.query(sql,[brand_names,description], (err, results) => {
-        if (err) {
-            return res.status(500).send(err);
-        }
-        res.json(results);
-    });
-}
-
-// update data brands
+// update data Category
 exports.Update = (req, res) => {
-    const {id} = req.params;
-    const {brand_names,description}=req.body;
-    const sql = "UPDATE brands set brand_names=?,description=? where id=?";
-    db.query(sql,[brand_names,description,id], (err, results) => {
+    const { id } = req.params;
+    const { brand_names, description } = req.body;
+    const checkSql = "SELECT * FROM brands WHERE brand_names = ? AND id != ?";
+    db.query(checkSql, [brand_names, id], (err, results) => {
         if (err) {
             return res.status(500).send(err);
         }
-        res.json(results);
+        if (results.length > 0) {
+            return res.status(400).json({ message: " already " });
+        }
+        const sql = "UPDATE brands SET brand_names = ?, description = ? WHERE id = ?";
+        db.query(sql, [brand_names, description, id], (err, results) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            if (results.affectedRows === 0) {
+                return res.status(404).json({ success: false, message: "Brand not found." });
+            }
+
+            res.json({ message: "successfully", data: results });
+        });
     });
-}
+};
+
+
+// create data brands
+exports.Create = (req, res) => {
+    const { brand_names, description } = req.body;
+    const checkSql = "SELECT * FROM brands WHERE brand_names = ?";
+    db.query(checkSql, [brand_names], (err, results) => {
+        if (err) {
+            return res.status(500).send(err);
+        }
+        if (results.length > 0) {
+            return res.status(400).json({ message: " already " });
+        }
+        const sql = "INSERT INTO brands (brand_names, description) VALUES (?, ?)";
+        db.query(sql, [brand_names, description], (err, results) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            res.json({ message: "successfully", data: results });
+        });
+    });
+};
+
 
 // GEt Data Single brands
 exports.GetSingle = (req, res) => {

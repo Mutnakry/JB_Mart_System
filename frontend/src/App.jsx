@@ -18,6 +18,7 @@ import Customer from './view/contact/Customer';
 import Supplier from './view/contact/Supplier';
 import GroupCustomer from './view/contact/GroupCustomer';
 import MainForm from './view/pos/MainForm';
+import Product from './view/product/Product';
 
 
 
@@ -47,6 +48,8 @@ function App() {
           <Route path='/supplier'  element={isAuthenticated ? <Supplier /> : <Navigate to="/" />} />
           <Route path='/groupcustomer'  element={isAuthenticated ? <GroupCustomer /> : <Navigate to="/" />} />
           <Route path='/pos'  element={isAuthenticated ? <MainForm /> : <Navigate to="/" />} />
+          <Route path='/product'  element={isAuthenticated ? <Product /> : <Navigate to="/" />} />
+
 
 
         </Routes>

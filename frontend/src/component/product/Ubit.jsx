@@ -98,9 +98,7 @@ const Unit = () => {
             setdescription('');
         } catch (err) {
             console.error(err);
-            setnames('');
-            setdescription('');
-            toast.error('សូមលោកព្យាយាមម្ដងទៀត!', { autoClose: 3000 });
+            toast.error('សូមលោកព្យាយាមម្ដងទៀត ស្មោះមានរួចហើយ !', { autoClose: 3000 });
         }
     };
 
@@ -122,6 +120,7 @@ const Unit = () => {
                 setSelectedUnitId(null);
             } catch (err) {
                 console.error(err);
+                
                 toast.error('សូមលោកព្យាយាមម្ដងទៀត !', { autoClose: 3000 });
             }
         }
@@ -145,7 +144,7 @@ const Unit = () => {
             setIsInsertModalOpen(false);
         } catch (err) {
             console.error(err);
-            toast.error('សូមលោកព្យាយាមម្ដងទៀត !', { autoClose: 3000 });
+            toast.error('សូមលោកព្យាយាមម្ដងទៀត ស្មោះមានរួចហើយ  !', { autoClose: 3000 });
         }
     };
     const rowAnimation = {

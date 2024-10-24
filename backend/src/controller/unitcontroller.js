@@ -18,7 +18,7 @@ exports.GetAllData = (req, res) => {
     const limit = parseInt(req.query.limit, 10) || 10;
     const searchQuery = req.query.search_query || "";
     const offset = (page - 1) * limit;
-  
+
     // Query to get the total number of items that match the search query
     const countQuery = `
         SELECT COUNT(*) AS total 
@@ -30,10 +30,10 @@ exports.GetAllData = (req, res) => {
             console.error('Error fetching count:', err);
             return res.status(500).json({ error: 'Database query error' });
         }
-  
+
         const totalCategory = results[0].total;
         const totalPages = Math.ceil(totalCategory / limit);
-  
+
         // Query to get the paginated and filtered data
         const selectQuery = `
             SELECT * 
@@ -55,40 +55,61 @@ exports.GetAllData = (req, res) => {
             });
         });
     });
-  };
-  
+};
+
 
 // Create data unit
 exports.Create = (req, res) => {
-    const {names,description}=req.body;
-    const sql = "INSERT INTO unit (names,description) VALUES (?,?)";
-    db.query(sql,[names,description], (err, results) => {
+    const { names, description } = req.body;
+    const checkSql = "SELECT * FROM unit WHERE names = ?";
+    db.query(checkSql, [names], (err, results) => {
         if (err) {
             return res.status(500).send(err);
         }
-        res.json(results);
+        if (results.length > 0) {
+            return res.status(400).json({ message: " already " });
+        }
+        const insertSql = "INSERT INTO unit (names, description) VALUES (?,?)";
+        db.query(insertSql, [names, description], (err, results) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            res.json(results);
+        });
     });
-}
+};
 
 
-// update data unit
+
+// Update unit
 exports.Update = (req, res) => {
-    const {id} = req.params;
-    const {names,description}=req.body;
-    const sql = "UPDATE unit set names=?,description=? where id=?";
-    db.query(sql,[names,description,id], (err, results) => {
+    const { id } = req.params;
+    const { names, description } = req.body;
+    const checkSql = "SELECT * FROM unit WHERE names = ? AND id != ?";
+    db.query(checkSql, [names, id], (err, results) => {
         if (err) {
             return res.status(500).send(err);
         }
-        res.json(results);
+        if (results.length > 0) {
+            return res.status(400).json({ message: " already " });
+        }
+        const updateSql = "UPDATE unit SET names = ?, description = ? WHERE id = ?";
+        db.query(updateSql, [names, description, id], (err, results) => {
+            if (err) {
+                console.error("Error updating unit:", err);
+                return res.status(500).json({ success: false, message: "Error updating unit." });
+            }
+            res.json({ success: true, message: "Unit updated successfully.", data: results });
+        });
     });
-}
+};
+
 
 // GEt Data Single unit
 exports.GetSingle = (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
     const sql = "SELECT * From unit  where id=?";
-    db.query(sql,[id], (err, results) => {
+    db.query(sql, [id], (err, results) => {
         if (err) {
             return res.status(500).send(err);
         }
@@ -98,9 +119,9 @@ exports.GetSingle = (req, res) => {
 
 // DElete unit
 exports.Delete = (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
     const sql = "Delete from unit  where id=?";
-    db.query(sql,[id], (err, results) => {
+    db.query(sql, [id], (err, results) => {
         if (err) {
             return res.status(500).send(err);
         }
