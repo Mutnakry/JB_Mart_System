@@ -51,7 +51,7 @@ exports.GetAllProduct = (req, res) => {
 
 // Create data products
 exports.Createproduct = (req, res) => {
-    const { pro_names, category_id, brand_id, unit_id, note_qty, cost_price, include_tax, exclude_tax, profit, expiry, type_of_tax,product_type, description, user_at } = req.body;
+    const { pro_names, category_id, brand_id, unit_id, note_qty, cost_price, include_tax, exclude_tax, profit, expiry, type_of_tax, product_type, description, user_at } = req.body;
     const image = req.file ? req.file.filename : null;
     const checkQuery = 'SELECT * FROM products WHERE pro_names = ?';
     db.query(checkQuery, [pro_names], (err, results) => {
@@ -63,7 +63,7 @@ exports.Createproduct = (req, res) => {
             return res.status(400).json({ message: 'Product with this name already exists.' });
         }
         const query = 'INSERT INTO products (pro_names, category_id, brand_id, unit_id, note_qty, cost_price, include_tax, exclude_tax, profit,expiry, type_of_tax,product_type, image, description, user_at) VALUES (?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-        db.query(query, [pro_names, category_id, brand_id, unit_id, note_qty, cost_price, include_tax, exclude_tax, profit, expiry, type_of_tax,product_type, image, description, user_at], (err, result) => {
+        db.query(query, [pro_names, category_id, brand_id, unit_id, note_qty, cost_price, include_tax, exclude_tax, profit, expiry, type_of_tax, product_type, image, description, user_at], (err, result) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Error creating product');
@@ -126,16 +126,73 @@ exports.Updateproduct = (req, res) => {
 };
 
 
+// exports.GetSingle = (req, res) => {
+//     const { id } = req.params;
+//     const sql = "SELECT * From products  where id=?";
+//     db.query(sql, [id], (err, results) => {
+//         if (err) {
+//             return res.status(500).send(err);
+//         }
+//         res.json(results);
+//     });
+// }
+
+
 exports.GetSingle = (req, res) => {
-    const { id } = req.params;
-    const sql = "SELECT * From products  where id=?";
-    db.query(sql, [id], (err, results) => {
+    const { id } = req.params; // Assume `id` is for category or unit ID
+    const sql = `SELECT pro.*, cat.cat_names, u.names as unit_names, b.brand_names
+                FROM products as pro
+                LEFT JOIN category as cat ON pro.category_id = cat.id
+                INNER JOIN unit as u ON pro.unit_id = u.id
+                LEFT JOIN brands as b ON pro.brand_id = b.id
+                WHERE cat.id = ? OR b.id = ?`;
+
+    db.query(sql, [id, id], (err, results) => { // Provide `id` for both parameters
         if (err) {
             return res.status(500).send(err);
         }
         res.json(results);
     });
-}
+};
+
+
+// exports.GetSingle = (req, res) => {
+//     const { cat_id, unit_id } = req.params;
+//     let sql = `SELECT pro.*, cat.cat_names, u.names as unit_names, b.brand_names
+//             FROM products as pro
+//             LEFT JOIN category as cat ON pro.category_id = cat.id
+//             INNER JOIN unit as u ON pro.unit_id = u.id
+//             LEFT JOIN brands as b ON pro.brand_id = b.id`;
+    
+//     const values = [];
+//     let conditions = [];
+
+//     // Add conditions based on provided parameters
+//     if (cat_id) {
+//         conditions.push("cat.id = ?");
+//         values.push(cat_id);
+//     }
+
+//     if (unit_id) {
+//         conditions.push("u.id = ?");
+//         values.push(unit_id);
+//     }
+
+//     // Only add WHERE if conditions exist
+//     if (conditions.length > 0) {
+//         sql += " WHERE " + conditions.join(" OR ");
+//     }
+
+//     db.query(sql, values, (err, results) => {
+//         if (err) {
+//             return res.status(500).send(err);
+//         }
+//         res.json(results);
+//     });
+// };
+
+
+
 
 exports.Deleteproduct = (req, res) => {
     const { id } = req.params;

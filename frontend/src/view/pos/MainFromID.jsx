@@ -48,7 +48,7 @@ function MainForm() {
                         <Cart />
                     </div>
                     <div>
-                        <ViewProduct />
+                        <ProductCategory />
                     </div>
                 </div>
             </div>

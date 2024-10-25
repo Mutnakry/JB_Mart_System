@@ -1,54 +1,49 @@
-import React from "react";
+
+import React, { useEffect, useState } from "react";
+import axios from 'axios';
+import { useCart } from './CartContext';
+import { toast } from 'react-toastify'; // Make sure toast is imported here
+import Search_Category_brand from "./Search_Category_brand";
 
 const ProductGrid = () => {
-  const products = [
-    { name: "3CE", sku: "0247", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
-    { name: "a - S", sku: "0325-1", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
-    { name: "a - M", sku: "0325-2", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
-    { name: "Blue De Chanel", sku: "0259", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
-    { name: "Box1 - Big", sku: "0346-1", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
-  
-    { name: "3CE", sku: "0247", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
-    { name: "a - S", sku: "0325-1", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
-    { name: "a - M", sku: "0325-2", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
-    { name: "Blue De Chanel", sku: "0259", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
-    { name: "Box1 - Big", sku: "0346-1", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
-  
-    { name: "3CE", sku: "0247", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
-    { name: "a - S", sku: "0325-1", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
-    { name: "a - M", sku: "0325-2", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
-    { name: "Blue De Chanel", sku: "0259", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
-    { name: "Box1 - Big", sku: "0346-1", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s" },
-  
-  ];
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState('');
+  const { addItem } = useCart();
+
+  useEffect(() => {
+    getALLProduct();
+  }, []);
+
+  const getALLProduct = async () => {
+    try {
+      const response = await axios.get('http://localhost:6700/api/product');
+      setProducts(response.data.product);
+    } catch (error) {
+      setError('Error fetching product data');
+    }
+  };
+
+  const handleAddToCart = (product) => {
+    addItem(product);
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 p-4">
-      {/* Dropdowns */}
-      <div className="flex space-x-4 mb-6">
-        <select className="w-full p-2 border border-gray-300 rounded-md">
-          <option>ប្រភេទទំនិញ</option>
-          {/* Add more categories */}
-        </select>
-        <select className="w-full p-2 border border-gray-300 rounded-md">
-          <option>អតិថិជន</option>
-          {/* Add more options */}
-        </select>
+     
+      <div className="flex space-x-4 mb-2 w-full">
+        <Search_Category_brand/>
       </div>
-
-      {/* Product Grid */}
-      <div className="grid xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 grid-cols-3 gap-4 overflow-x-auto h-[75vh] scrollbar-hidden">
-        {products.map((product, index) => (
-          <div key={index} className="bg-white p-4 shadow-md text-center">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-32 object-cover rounded mb-2"
-            />
-            <h2 className="text-lg font-semibold">{product.name}</h2>
-            <p className="text-gray-500">({product.sku})</p>
-          </div>
-        ))}
+      {error && <div className="text-red-500">{error}</div>}
+      <div className="overflow-x-auto scrollbar-hidden h-[75vh]">
+        <div className="grid xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 grid-cols-3 gap-4">
+          {products.map((product, index) => (
+            <div key={index} onClick={() => handleAddToCart(product)} className="bg-white p-2 cursor-pointer shadow-md text-center">
+              <img src={`http://localhost:6700/image/${product.image}`} alt={product.pro_names} className="w-full h-20 object-contain rounded mb-2" />
+              <h2 className="text-lg font-semibold">{product.pro_names}</h2>
+              <p className="text-gray-500">{product.cost_price} $</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

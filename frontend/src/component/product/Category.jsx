@@ -175,8 +175,6 @@ const Dashboard = () => {
     { value: 'VAT', label: 'រួមបញ្ចូលគ្នា' },
     { value: 'GST', label: 'ផ្ដាច់មុខ' },
     { value: 'VAT', label: 'រួមបញ្ចូលគ្នា' },
-
-    // Add more options if needed
   ];
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');

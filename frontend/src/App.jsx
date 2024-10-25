@@ -19,6 +19,9 @@ import Supplier from './view/contact/Supplier';
 import GroupCustomer from './view/contact/GroupCustomer';
 import MainForm from './view/pos/MainForm';
 import Product from './view/product/Product';
+import TestSelectSearch from './view/TestSelectSearch';
+import ProductCategory from './component/pos/ProductCategory'
+import MainFormID from './view/pos/MainFromID'
 
 
 
@@ -47,8 +50,15 @@ function App() {
           <Route path='/customer'  element={isAuthenticated ? <Customer /> : <Navigate to="/" />} />
           <Route path='/supplier'  element={isAuthenticated ? <Supplier /> : <Navigate to="/" />} />
           <Route path='/groupcustomer'  element={isAuthenticated ? <GroupCustomer /> : <Navigate to="/" />} />
-          <Route path='/pos'  element={isAuthenticated ? <MainForm /> : <Navigate to="/" />} />
+          {/* <Route path='/pos'  element={<MainForm />} /> */}
+          <Route path='/index/pos'  element={ <MainForm />} />
           <Route path='/product'  element={isAuthenticated ? <Product /> : <Navigate to="/" />} />
+
+          <Route path='/tests'  element={ <TestSelectSearch />} />
+          {/* <Route path='/productcategory'  element={ <MainFormID />} /> */}
+          <Route path='/index/pos/id/:id'  element={ <MainFormID />} />
+
+
 
 
 

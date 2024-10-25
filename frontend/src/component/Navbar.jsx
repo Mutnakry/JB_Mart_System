@@ -50,10 +50,10 @@ function Navbar() {
 
     // Routes
     const contactRoutes = ["/supplier", "/customer", "/groupcustomer"];
-    const productsRoutes = ["/category", "/brands", "/udit","/product"];
+    const productsRoutes = ["/category", "/brands", "/udit","/product","/tests"];
     const purchaseRoutes = ["/purchase", "/purchase-list"];
     const topupRoutes = ['/topup', '/topupList']
-    const exspenseRoutes = ['/cost', '/costtype']
+    const exspenseRoutes = ['/index/cost', '/costtype']
     const accountRoutes = ['/account', '/account_list']
     const paymentRoutes = ['/payment', '/payment_list']
     const usersRoutes = ['/payment', '/payment_list']
@@ -218,7 +218,7 @@ function Navbar() {
                         </div>
                         <div className="flex items-center">
                             <div className='flex space-x-4'>
-                                <NavLink to="/pos" >
+                                <NavLink to="/index/pos" >
                                     <p className='py-1 px-3 flex items-center space-x-2 hover:bg-green-500 transition duration-300 text-lg text-gray-700 font-medium bg-green-400'>
                                         <img width="24" height="24" src="https://img.icons8.com/ios-glyphs/30/menu--v1.png" alt="menu" />
                                         <span>pos</span>
@@ -361,7 +361,7 @@ function Navbar() {
                                     </svg>
                                     <p className="font-bold font-NotoSansKhmer">បញ្ជីផលិតផល</p>
                                 </NavLink>
-                                <NavLink to="/product-list" className={navLinkStyle}>
+                                <NavLink to="/tests" className={navLinkStyle}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 ml-3">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
                                     </svg>
@@ -425,7 +425,7 @@ function Navbar() {
                         </li>
                         {/* Purchase POS */}
                         <li>
-                            <NavLink to="/pos" className={navLinkStyle}>
+                            <NavLink to="/index/pos" className={navLinkStyle}>
                                 <svg
                                     className="flex-shrink-0 w-5 h-5 "
                                     aria-hidden="true"
