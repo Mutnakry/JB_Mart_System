@@ -6,6 +6,8 @@ import Pagination from '../pagination/Pagination';
 import { FaClipboardList, FaFileCsv, FaFileExcel, FaPencilAlt } from "react-icons/fa";
 import { MdDelete, MdClose } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
+import { formatDateToKhmer } from '../ForMartDateToKHmer';
+
 
 
 const Dashboard = () => {
@@ -187,7 +189,6 @@ const Dashboard = () => {
 
   return (
     <div>
-
       <div className="col-span-1 space-y-2 w-[300px]">
         <label className="font-NotoSansKhmer font-bold">ប្រភេទពន្ធលើតម្លៃលក់: *</label>
 
@@ -304,7 +305,7 @@ const Dashboard = () => {
                       <td className=" px-4 py-1">{index + 1}</td>
                       <td className="px-4 py-1">{categorys.cat_names}</td>
                       <td className=" px-4 py-1">{categorys.detail || 'N/A'}</td>
-                      <td className=" px-4 py-1">{categorys.create_at}</td>
+                      <td className=" px-4 py-1">{formatDateToKhmer(new Date(categorys.create_at))}</td>
 
                       <td className="px-4  space-x-2 flex">
                         <button

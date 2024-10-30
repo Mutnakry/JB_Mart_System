@@ -6,6 +6,8 @@ import Pagination from '../pagination/Pagination';
 import { FaClipboardList, FaPencilAlt } from "react-icons/fa";
 import { MdDelete, MdClose } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
+import { formatDateToKhmer } from '../ForMartDateToKHmer';
+
 
 const Unit = () => {
 
@@ -215,7 +217,7 @@ const Unit = () => {
                                             <td className=" px-4 py-1">{index + 1}</td>
                                             <td className="px-4 py-1">{units.names}</td>
                                             <td className=" px-4 py-1">{units.description || 'N/A'}</td>
-                                            <td className=" px-4 py-1">{units.create_at}</td>
+                                            <td className=" px-4 py-1">{formatDateToKhmer(new Date(units.create_at))}</td>
 
                                             <td className="px-4  space-x-2 flex">
                                                 <button

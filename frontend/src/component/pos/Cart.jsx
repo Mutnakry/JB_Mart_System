@@ -8,10 +8,11 @@ import { toast } from 'react-toastify';
 import SearchAddToCartProduct from './SearchAddToCartProduct'
 import axios from 'axios';
 import { motion, AnimatePresence } from "framer-motion";
+import AddCustomer from '../contract/modal/AddCustomer';
 
 const Cart = () => {
   const { cart, removeItem, clearCart, updateQuantity } = useCart();
-  const [isInsertModalOpen, setIsInsertModalOpen] = useState(false);
+
 
   useEffect(() => {
     getALLCustomer();
@@ -30,22 +31,31 @@ const Cart = () => {
     }
   };
 
-  const [selectedCustomerName, setSelectedCustomerName] = useState("");
-  const [getCustomerDiscount, setGetCustomerDiscount] = useState("");  
+  // const [selectedCustomerName, setSelectedCustomerName] = useState("");
+  const [getCustomerDiscount, setGetCustomerDiscount] = useState("");
 
   useEffect(() => {
     const selectedCustomer = customers.find((customer) => customer.id === parseInt(customer_ID));
     if (selectedCustomer) {
-      setSelectedCustomerName(`${selectedCustomer.full_names} ${selectedCustomer.business_names}`);
-      setGetCustomerDiscount(selectedCustomer.discount )
-      console.log(selectedCustomer.group_id); 
+      // setSelectedCustomerName(`${selectedCustomer.full_names} ${selectedCustomer.business_names}`);
+      setGetCustomerDiscount(selectedCustomer.discount)
+      console.log(selectedCustomer.group_id);
     }
-  }, [customer_ID, customers]); 
+  }, [customer_ID, customers]);
 
-
+  const [isInsertModalOpen, setIsInsertModalOpen] = useState(false);
   const openInsertModal = () => {
     setIsInsertModalOpen(true);
   };
+
+  const [isModalCustomer, setIsModalCustomer] = useState(false);
+
+  const openInsertCustomer = () => {
+    setIsModalCustomer(true);
+  };
+
+
+
   const [isPaymentType, setIsPaymentType] = useState("");
   const [payMoney, setPayMoney] = useState('');
   const [payment, setPayment] = useState(0);
@@ -56,7 +66,6 @@ const Cart = () => {
     setIsPaymentType(event.target.value);
   };
 
-  // Handle payment input change and calculate totals
   const handleChangeMoney = (e) => {
     // const newMoney = parseFloat(e.target.value) || 0; 
     const newMoney = parseFloat(e.target.value) || 0;
@@ -94,7 +103,7 @@ const Cart = () => {
     } else if (newQuantity > 0) {
       updateQuantity(item.id, newQuantity);
     } else {
-      removeItem(item.id); 
+      removeItem(item.id);
     }
   };
 
@@ -110,14 +119,17 @@ const Cart = () => {
     return acc + total;
   }, 0);
 
-  const finalTotal = totalAmount - discountTotal - getCustomerDiscount ;
+  const finalTotal = totalAmount - discountTotal - getCustomerDiscount;
+  // const totalAmount = cart.reduce((acc, item) => acc + (item.quantity * item.cost_price), 0);
+// const finalTotal = totalAmount - discountTotal - getCustomerDiscount;
+
 
   return (
     <div className="min-h-screen overflow-y-auto bg-gray-100 p-5 px-2 ">
       {/* Top Section */}
       <div className="flex justify-between mb-4">
         {/* Left Dropdown */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center">
           <div className="col-span-1 space-y-2">
             <select
               className='input_text w-[250px]'
@@ -133,7 +145,7 @@ const Cart = () => {
               ))}
             </select>
           </div>
-          <button className="bg-blue-500 text-white px-3 py-2 rounded-md">+</button>
+          <button onClick={openInsertCustomer} className="bg-blue-500 text-white border border-blue-500 px-4 py-2">+</button>
         </div>
 
         {/* Search Box */}
@@ -141,7 +153,7 @@ const Cart = () => {
           <SearchAddToCartProduct />
         </div>
       </div>
-      
+
 
       {/* Table Section */}
       <div className="overflow-x-auto h-[60vh] bg-white p-1 shadow-md scrollbar-hidden">
@@ -160,16 +172,14 @@ const Cart = () => {
             </tr>
           </thead>
 
-          <tbody className="text-gray-600 text-sm">
-            {cart.map((item, index) => {
-              const itemTotal = (item.quantity * item.cost_price) - (item.discount * item.quantity);
-              return (
+           <tbody className="text-gray-600 text-sm">
+           {cart.map((item, index) => (
                 <tr className="border-b border-gray-200" key={index}>
                   <td className="py-3 px-2">{index + 1}</td>
                   <td>
                     <img className='h-8' src={`http://localhost:6700/image/${item.image}`} alt={item.name} />
                   </td>
-                  <td className="py-3 line-clamp-1">{item.pro_names}</td>
+                  <td className="py-3 whitespace-nowrap">{item.pro_names}</td>
                   <td className="py-3 px-6">{item.qty}</td>
                   <td>
                     <div className="flex items-center border border-pink-500 justify-between">
@@ -197,16 +207,16 @@ const Cart = () => {
                     </div>
                     <input type="text" className='input_text text-center' value={item.unit_names} readOnly />
                   </td>
-                  <td className="py-3 px-6">$ {(item.cost_price).toFixed(2)} </td>
-                  <td className="py-3 px-6">$ {(item.discount).toFixed(2)}</td>
-                  <td className="py-3 px-6">$ {(itemTotal).toFixed(2)}</td> {/* Display item total */}
+                  <td className="py-3 px-6">$ {(item.cost_price)} </td>
+                  <td className="py-3 px-6">$ {(item.discount)}</td>
+                  <td className="py-3 px-6">$ {((item.quantity * item.cost_price) - (item.discount * item.quantity)).toFixed(2)}</td> 
                   <td className="py-3 px-6">
                     <MdDeleteForever onClick={() => handleRemoveItem(item.id)} className="cursor-pointer text-red-600 text-xl" />
                   </td>
                 </tr>
-              );
-            })}
-          </tbody>
+             
+            ))}
+          </tbody> 
         </table>
       </div>
 
@@ -252,14 +262,14 @@ const Cart = () => {
           </button>
         </div>
         <div>
-          <button className='bg-gray-500 text-md p-2 text-white flex' aria-label="Add expense">
+          <button className='bg-gray-500 text-md p-2 cursor-text text-white flex' aria-label="Add expense">
             <span className="flex items-center">
               <FaRegMoneyBillAlt className="mr-1" /> សាច់ប្រាក់សរុបត្រូវបង់ <span> $ {finalTotal.toFixed(2)}</span>
             </span>
           </button>
         </div>
       </div>
-      {/* Insert Modal */}
+      {/* Modal  payment */}
       <AnimatePresence>
         {isInsertModalOpen && (
           <motion.div
@@ -377,6 +387,12 @@ const Cart = () => {
               </div>
             </div>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isModalCustomer && (
+          <AddCustomer setIsModalCustomer={setIsModalCustomer} />
         )}
       </AnimatePresence>
     </div>

@@ -55,7 +55,7 @@ function Navbar() {
     const topupRoutes = ['/topup', '/topupList']
     const exspenseRoutes = ['/index/cost', '/costtype']
     const accountRoutes = ['/account', '/account_list']
-    const paymentRoutes = ['/payment', '/payment_list']
+    const paymentRoutes = ['/paymenttype', '/payment_list']
     const usersRoutes = ['/payment', '/payment_list']
     const reportsRoutes = ['/reports', '/report_list']
     const currentcyRoutes = ['/currency', '/currency_list']
@@ -485,7 +485,7 @@ function Navbar() {
                             </button>
 
                             <div className={`overflow-hidden transition-all duration-500 space-y-0 ${isCurrencyDropdown ? "max-h-40 opacity-100" : "max-h-0"}`}>
-                                <NavLink to="/purchase" className={navLinkStyle}>
+                                <NavLink to="/exchange" className={navLinkStyle}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 ml-3">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
                                     </svg>
@@ -582,7 +582,7 @@ function Navbar() {
                         </li>
 
                         {/*  Payment method dropdown */}
-                        <li className="space-y-0">
+                        <li className="space-y-2">
                             <button onClick={handlepaymentDropdown} className={`flex items-center p-3 w-full text-left justify-between ${isPaymentMethodDropdown ? "bg-blue-700 dark:bg-blue-500 text-white" : "text-gray-900 dark:text-white"}`}>
                                 <div className="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-hand-coins"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17" /><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" /><path d="m2 16 6 6" /><circle cx="16" cy="9" r="2.9" /><circle cx="6" cy="5" r="3" /></svg>                                    <span className="flex-1 ms-3 whitespace-nowrap font-NotoSansKhmer font-bold">
@@ -596,23 +596,23 @@ function Navbar() {
 
 
                             <div className={`overflow-hidden transition-all duration-500 space-y-0 ${isPaymentMethodDropdown ? "max-h-40 opacity-100" : "max-h-0"}`}>
-                                <NavLink to="/purchase" className={navLinkStyle}>
+                                <NavLink to="/paymenttype" className={navLinkStyle}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 ml-3">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
                                     </svg>
-                                    <p className="font-bold font-NotoSansKhmer">បង្កើតបញ្ជាទិញ</p>
+                                    <p className="font-bold font-NotoSansKhmer">បញ្ជីបង់ប្រាក់</p>
                                 </NavLink>
                                 <NavLink to="/purchase-list" className={navLinkStyle}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 ml-3">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
                                     </svg>
-                                    <p className="font-bold font-NotoSansKhmer">បញ្ជីបញ្ជាទិញ</p>
+                                    <p className="font-bold font-NotoSansKhmer">បញ្ជីបង់ប្រាក់</p>
                                 </NavLink>
                             </div>
                         </li>
 
                         {/*  User dropdown */}
-                        <li className="space-y-0">
+                        <li className="space-y-2">
                             <button onClick={handleUsersDropdown} className={`flex items-center p-3 w-full text-left justify-between ${isUsersDropdown ? "bg-blue-700 dark:bg-blue-500 text-white" : "text-gray-900 dark:text-white"}`}>
                                 <div className="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-users-round"><path d="M18 21a8 8 0 0 0-16 0" /><circle cx="10" cy="8" r="5" /><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" /></svg>                                    <span className="flex-1 ms-3 whitespace-nowrap font-NotoSansKhmer font-bold">
@@ -642,7 +642,7 @@ function Navbar() {
                         </li>
 
                         {/*  Report dropdown */}
-                        <li className="space-y-0">
+                        <li className="space-y-2">
                             <button onClick={handleReportDropdown} className={`flex items-center p-3 w-full text-left justify-between ${isReportsDropdown ? "bg-blue-700 dark:bg-blue-500 text-white" : "text-gray-900 dark:text-white"}`}>
                                 <div className="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">

@@ -2,7 +2,7 @@ const db = require("../utile/db");
 
 // show data customer
 exports.GetAll = (req, res) => {
-    const sql = "SELECT * FROM customer";
+    const sql = "SELECT c.*,g.discount FROM customer as c LEFT JOIN group_customer as g ON c.group_id = g.id";
     db.query(sql, (err, results) => {
         if (err) {
             return res.status(500).send(err);

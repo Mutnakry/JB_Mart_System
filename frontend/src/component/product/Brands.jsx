@@ -6,6 +6,7 @@ import Pagination from '../pagination/Pagination';
 import { FaClipboardList, FaPencilAlt } from "react-icons/fa";
 import { MdDelete, MdClose } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
+import { formatDateToKhmer } from '../ForMartDateToKHmer';
 
 
 
@@ -215,7 +216,8 @@ const Brands = () => {
                                         <td className=" px-4 py-1">{index + 1}</td>
                                         <td className="px-4 py-1">{brand.brand_names}</td>
                                         <td className=" px-4 py-1">{brand.description || 'N/A'}</td>
-                                        <td className=" px-4 py-1">{brand.create_at}</td>
+                                        {/* <td className=" px-4 py-1">{formatDateToKhmer(brand.create_at)}</td> */}
+                                        <td className="px-4 py-1">{formatDateToKhmer(new Date(brand.create_at))}</td>
 
                                         <td className="px-4  space-x-2 flex">
                                             <button

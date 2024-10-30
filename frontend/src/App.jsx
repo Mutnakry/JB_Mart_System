@@ -22,6 +22,9 @@ import Product from './view/product/Product';
 import TestSelectSearch from './view/TestSelectSearch';
 import ProductCategory from './component/pos/ProductCategory'
 import MainFormID from './view/pos/MainFromID'
+import Purchase from './view/purchase/Purchase';
+import PaymentType from './view/paymentType/PaymentType';
+import ExchangRate from './view/currency/ExchangRate';
 
 
 
@@ -58,8 +61,9 @@ function App() {
           {/* <Route path='/productcategory'  element={ <MainFormID />} /> */}
           <Route path='/index/pos/id/:id'  element={ <MainFormID />} />
 
-
-
+          <Route path='/purchase'  element={ <Purchase />} />
+          <Route path='/paymenttype'  element={ <PaymentType />} />
+          <Route path='/exchange'  element={ <ExchangRate />} />
 
 
         </Routes>

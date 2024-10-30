@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const mysql = require('mysql');
 const db = require('./src/utile/db'); // Your database utility file
 const app = express();
 const port = 6700;
@@ -10,13 +9,13 @@ app.use(express.json()); // Middleware to parse JSON bodies
 app.use(cors()); // Middleware to handle CORS
 
 // Connect to the database
-db.connect(err => {
-    if (err) {
-        console.error('Error connecting to the database:', err);
-        return;
-    }
-    console.log('Connected to the MySQL database.');
-});
+// db.connect(err => {
+//     if (err) {
+//         console.error('Error connecting to the database:', err);
+//         return;
+//     }
+//     console.log('Connected to the MySQL database.');
+// });
 // Import and use the authentication routes
 const authRoutes = require('./src/route/authRoute');
 app.use('/api/auth', authRoutes);
@@ -61,6 +60,15 @@ app.use('/api/customer', Customer_Routes);
 // Import and use the BankAount routes
 const Supplier_Routes = require('./src/route/supplier.router');
 app.use('/api/supplier', Supplier_Routes); 
+
+// Import and use the payment_type routes
+const Pamenttype_Routes = require('./src/route/payment_type.router');
+app.use('/api/payment_type', Pamenttype_Routes); 
+
+
+// Import and use the payment_type routes
+const Purchase_Routes = require('./src/route/purchase.router');
+app.use('/api/purchase', Purchase_Routes); 
 
 
 // Import and use the product routes

@@ -6,6 +6,7 @@ import Pagination from '../pagination/Pagination';
 import { FaClipboardList, FaFileCsv, FaFileExcel, FaPencilAlt } from "react-icons/fa";
 import { MdDelete, MdClose } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
+import { formatDateToKhmer } from '../ForMartDateToKHmer';
 
 
 const Dashboard = () => {
@@ -428,7 +429,7 @@ const Dashboard = () => {
                         )}
                       </td>
                       <td className=" px-4 py-1">{product.description || 'N/A'}</td>
-                      <td className=" px-4 py-1">{product.create_at}</td>
+                      <td className=" px-4 whitespace-nowrap py-1">{formatDateToKhmer(new Date(product.create_at))}</td>
                       <td className=" px-4 py-1">{product.user_at}</td>
                       <td className="px-4  space-x-2 flex">
                         <button

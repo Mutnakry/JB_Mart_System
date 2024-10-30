@@ -3,51 +3,92 @@ const fs = require('fs');
 const path = require('path');
 
 // get data to frontend ->  in backend
-exports.GetAllProduct = (req, res) => {
+// exports.GetAllProduct = (req, res) => {
+//     const page = parseInt(req.query.page, 10) || 1;
+//     const limit = parseInt(req.query.limit, 10) || 10;
+//     const searchQuery = req.query.search_query || "";
+//     const offset = (page - 1) * limit;
+
+//     // Query to get the total number of items that match the search query
+//     const countQuery = `
+//         SELECT COUNT(*) AS total 
+//         FROM products 
+//         WHERE pro_names LIKE ?
+//     `;
+//     db.query(countQuery, [`%${searchQuery}%`], (err, results) => {
+//         if (err) {
+//             console.error('Error fetching count:', err);
+//             return res.status(500).json({ error: 'Database query error' });
+//         }
+
+//         const totalCategory = results[0].total;
+//         const totalPages = Math.ceil(totalCategory / limit);
+
+//         // Query to get the paginated and filtered data
+//         const selectQuery = `
+//             SELECT pro.*,cat.cat_names,u.names as unit_names,b.brand_names FROM products as pro 
+//             LEFT JOIN  category as cat ON pro.category_id = cat.id
+//             INNER JOIN  unit as u ON pro.unit_id = u.id
+//             LEFT JOIN  brands as b  ON pro.brand_id = b.id
+//             WHERE pro.pro_names LIKE ?
+//             ORDER BY pro.id DESC
+//             LIMIT ? OFFSET ?
+//         `;
+//         db.query(selectQuery, [`%${searchQuery}%`, limit, offset], (err, results) => {
+//             if (err) {
+//                 console.error('Error fetching data:', err);
+//                 return res.status(500).json({ error: 'Database query error' });
+//             }
+//             res.json({
+//                 product: results,
+//                 totalPages,
+//                 currentPage: page,
+//                 totalCategory,
+//             });
+//         });
+//     });
+// };
+
+exports.GetAllProduct = async (req, res) => {
     const page = parseInt(req.query.page, 10) || 1;
     const limit = parseInt(req.query.limit, 10) || 10;
     const searchQuery = req.query.search_query || "";
     const offset = (page - 1) * limit;
 
-    // Query to get the total number of items that match the search query
-    const countQuery = `
-        SELECT COUNT(*) AS total 
-        FROM products 
-        WHERE pro_names LIKE ?
-    `;
-    db.query(countQuery, [`%${searchQuery}%`], (err, results) => {
-        if (err) {
-            console.error('Error fetching count:', err);
-            return res.status(500).json({ error: 'Database query error' });
-        }
-
-        const totalCategory = results[0].total;
+    try {
+        // Get total count
+        const [countResults] = await db.promise().query(`
+            SELECT COUNT(*) AS total 
+            FROM products 
+            WHERE pro_names LIKE ?
+        `, [`%${searchQuery}%`]);
+        const totalCategory = countResults[0].total;
         const totalPages = Math.ceil(totalCategory / limit);
 
-        // Query to get the paginated and filtered data
-        const selectQuery = `
-            SELECT pro.*,cat.cat_names,u.names as unit_names,b.brand_names FROM products as pro 
-            LEFT JOIN  category as cat ON pro.category_id = cat.id
-            INNER JOIN  unit as u ON pro.unit_id = u.id
-            LEFT JOIN  brands as b  ON pro.brand_id = b.id
+        // Get paginated data
+        const [results] = await db.promise().query(`
+            SELECT pro.*, cat.cat_names, u.names AS unit_names, b.brand_names 
+            FROM products AS pro 
+            LEFT JOIN category AS cat ON pro.category_id = cat.id
+            INNER JOIN unit AS u ON pro.unit_id = u.id
+            LEFT JOIN brands AS b ON pro.brand_id = b.id
             WHERE pro.pro_names LIKE ?
             ORDER BY pro.id DESC
             LIMIT ? OFFSET ?
-        `;
-        db.query(selectQuery, [`%${searchQuery}%`, limit, offset], (err, results) => {
-            if (err) {
-                console.error('Error fetching data:', err);
-                return res.status(500).json({ error: 'Database query error' });
-            }
-            res.json({
-                product: results,
-                totalPages,
-                currentPage: page,
-                totalCategory,
-            });
+        `, [`%${searchQuery}%`, limit, offset]);
+
+        res.json({
+            product: results,
+            totalPages,
+            currentPage: page,
+            totalCategory,
         });
-    });
+    } catch (err) {
+        console.error('Database query error:', err);
+        res.status(500).json({ error: 'Database query error' });
+    }
 };
+
 
 // Create data products
 exports.Createproduct = (req, res) => {

@@ -24,14 +24,18 @@ const ProductGrid = () => {
   };
 
   const handleAddToCart = (product) => {
-    addItem(product);
+    if (product.qty > 0) { 
+      addItem(product);
+    } else {
+      toast.warning('This product is out of stock'); 
+    }
   };
 
   return (
     <div className="min-h-screen bg-gray-100 p-4">
-     
+
       <div className="flex space-x-4 mb-2 w-full">
-        <Search_Category_brand/>
+        <Search_Category_brand />
       </div>
       {error && <div className="text-red-500">{error}</div>}
       <div className="overflow-x-auto scrollbar-hidden h-[75vh]">

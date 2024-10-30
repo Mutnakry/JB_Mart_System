@@ -108,3 +108,50 @@ export const CartProvider = ({ children }) => {
     </CartContext.Provider>
   );
 };
+
+
+// import React, { createContext, useContext, useReducer } from 'react';
+
+// // Create a Cart Context
+// const CartContext = createContext();
+
+// // Initial state of the cart
+// const initialState = {
+//   items: [],
+// };
+
+// // Reducer function to manage cart state
+// const cartReducer = (state, action) => {
+//   switch (action.type) {
+//     case 'ADD_ITEM':
+//       return { ...state, items: [...state.items, action.payload] };
+//     case 'REMOVE_ITEM':
+//       return { ...state, items: state.items.filter(item => item.id !== action.payload.id) };
+//     default:
+//       return state;
+//   }
+// };
+
+// // Cart Provider component
+// export const CartProvider = ({ children }) => {
+//   const [state, dispatch] = useReducer(cartReducer, initialState);
+
+//   const addItem = (product) => {
+//     dispatch({ type: 'ADD_ITEM', payload: product });
+//   };
+
+//   const removeItem = (product) => {
+//     dispatch({ type: 'REMOVE_ITEM', payload: product });
+//   };
+
+//   return (
+//     <CartContext.Provider value={{ cart: state.items, addItem, removeItem }}>
+//       {children}
+//     </CartContext.Provider>
+//   );
+// };
+
+// // Custom hook to use the Cart Context
+// export const useCart = () => {
+//   return useContext(CartContext);
+// };
