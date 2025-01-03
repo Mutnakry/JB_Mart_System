@@ -1,76 +1,32 @@
-// import React from 'react'
-// import { motion } from "framer-motion";
-// import { MdClose } from "react-icons/md";
-
-// function NodePayManey({ setIsModalCustomer }) {
-//     return (
-//         <div>
-//             <motion.div
-//                 className="fixed top-0 left-0 right-0 z-50 flex items-start justify-center w-full h-full bg-black bg-opacity-30"
-//                 initial={{ opacity: 0, scale: 0.8 }}
-//                 animate={{ opacity: 1, scale: 1 }}
-//                 exit={{ opacity: 0, scale: 0.8 }}
-//                 transition={{ duration: 0.2 }}
-//             >
-//                 <div className="relative w-full bg-white shadow mt-10 dark:bg-gray-700 max-w-xl">
-//                     <div className="modal_title">
-//                         <h3 className="">អតិជន</h3>
-//                         <MdClose className='text-2xl cursor-pointer' onClick={() => setIsModalCustomer(false)} />
-//                     </div>
-//                     <div className="modal_form">
-
-//                     </div>
-//                 </div>
-//             </motion.div>
-//         </div>
-//     )
-// }
-
-// export default NodePayManey
-
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MdClose } from 'react-icons/md';
 
-const Calculator = ({ setIsModalCustomer }) => {
+const Calculator = ({ setIsDropdownOpen }) => {
   // State to store the input and result
   const [input, setInput] = useState('');
   const [result, setResult] = useState('');
-
-  // Handle button click
   const handleClick = (value) => {
     setInput((prev) => prev + value);
   };
-
-  // Handle calculation of the result
   const handleCalculate = () => {
     try {
-      setResult(eval(input)); // Using eval to evaluate the expression (caution with eval in real apps)
+      setResult(eval(input)); 
       setInput('');
     } catch (error) {
       setResult('Error');
       setInput('');
     }
   };
-
-  // Handle clearing the input
   const handleClear = () => {
     setInput('');
     setResult('');
   };
 
-  // Handle backspace (remove last character)
   const handleBackspace = () => {
     setInput((prev) => prev.slice(0, -1));
   };
 
-
-  const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) {
-      setIsModalCustomer(false);
-    }
-  };
 
   return (
     <motion.div
@@ -79,16 +35,12 @@ const Calculator = ({ setIsModalCustomer }) => {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.8 }}
       transition={{ duration: 0.2 }}
-      onClick={handleOverlayClick} 
     >
-      <div className="relative w-full max-w-sm bg-white rounded-lg shadow-md mt-10 p-6 dark:bg-gray-700">
+      <div className="relative w-full max-w-sm bg-white rounded-lg shadow-md p-6 dark:bg-gray-700">
         {/* Modal Header */}
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold dark:text-white">ម៉ាស៊ីនគិតលេខ</h2>
-          <MdClose
-            className="text-2xl cursor-pointer text-gray-700 hover:text-red-500 dark:text-white"
-            onClick={() => setIsModalCustomer(false)}
-          />
+         
         </div>
 
         {/* Display */}
@@ -138,7 +90,7 @@ const Calculator = ({ setIsModalCustomer }) => {
           <button className="bg-blue-500 text-white p-4 rounded hover:bg-blue-600" onClick={() => handleClick('-')}>
             −
           </button>
-
+          
           {/* Row 4 */}
           <button className="bg-gray-200 p-4 rounded hover:bg-gray-300" onClick={() => handleClick('1')}>
             1

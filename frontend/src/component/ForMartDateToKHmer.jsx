@@ -86,7 +86,7 @@ export const formatDateToKhmer = (date) => {
     const month = khmerMonths[date.getMonth()];
     const year = convertToKhmerNumber(date.getFullYear());
 
-    return `${day}-${month}-${year}`;
+    return `${day} ${month} ${year}`;
 };
 
 // Function to format time in Khmer

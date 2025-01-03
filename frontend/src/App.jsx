@@ -25,6 +25,10 @@ import MainFormID from './view/pos/MainFromID'
 import Purchase from './view/purchase/Purchase';
 import PaymentType from './view/paymentType/PaymentType';
 import ExchangRate from './view/currency/ExchangRate';
+import CreatePurchase from './component/purchase/CreatePurchase';
+import UpdatePuchase from './component/purchase/UpdatePuchase';
+import CreateProduct from './component/product/product/CreateProduct';
+import Update from './component/purchase/Update';
 
 
 
@@ -62,8 +66,12 @@ function App() {
           <Route path='/index/pos/id/:id'  element={ <MainFormID />} />
 
           <Route path='/purchase'  element={ <Purchase />} />
+          <Route path='/update/:id'  element={ <Update />} />
           <Route path='/paymenttype'  element={ <PaymentType />} />
           <Route path='/exchange'  element={ <ExchangRate />} />
+          <Route path='/createpurchase'  element={ <CreatePurchase />} />
+          <Route path='/updatepuchase/:id/detailpuchase/:id'  element={ <UpdatePuchase />} />
+          <Route path='/createproduct'  element={ <CreateProduct />} />
 
 
         </Routes>

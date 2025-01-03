@@ -5,6 +5,8 @@ import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
 import { RiContactsBook3Fill } from "react-icons/ri";
 import PuchaseList from '../../component/purchase/PuchaseList';
 import ProductInfo from '../../component/product/ProductInfo';
+import PurchaseDetail from '../../component/purchase/PurchaseDetail';
+
 import Test from '../../component/purchase/Test';
 
 
@@ -25,8 +27,9 @@ const Purchase = () => {
     return (
         <div>
             <Navbar />
-            <div className='py-12 px-2 md:ml-64 bg-white dark:bg-gray-950'>
-                <div className="p-4 bg-white dark:border-gray-700 mt-5 ">
+            <div className='py-12 px-6 md:ml-64 bg-gray-100 dark:bg-gray-950'>
+                <div className="w-full p-4 mt-7 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
+
                     <div className='flex items-center gap-2 pb-5'>
                         <RiContactsBook3Fill className='text-lg' />
                         <p className='font-NotoSansKhmer font-bold text-lg'>អតិជន</p>
@@ -46,10 +49,10 @@ const Purchase = () => {
 
                             <TabPanels className="mt-3">
                                 <TabPanel className="p-4 border">
-                                    <Test />
+                                    <PuchaseList />
                                 </TabPanel>
                                 <TabPanel className="p-4 border">
-                                    <ProductInfo />
+                                    <PurchaseDetail />
                                 </TabPanel>
                                 <TabPanel className="p-4 border border-gray-300 rounded-md">
                                     <ProductInfo />

@@ -225,7 +225,7 @@ const group_customer = () => {
                                         className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100">
                                         <td className=" px-4 py-1">{index + 1}</td>
                                         <td className="px-4 py-1">{customer.group_names}</td>
-                                        <td className="px-4 py-1">{customer.discount.toFixed(2)} $</td>
+                                        <td className="px-4 py-1">{customer.discount} $</td>
                                         <td className="px-4 py-1">{customer.detail || 'N/A'}</td>
                                         <td className="px-4 py-1">{customer.user_at}</td>
                                         <td className="px-4  space-x-2 flex">

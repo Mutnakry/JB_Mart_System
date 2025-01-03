@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  font-family: "Noto Sans Khmer", sans-serif;
+  font-weight: 600;
+}
+* {
+  font-family: "Noto Sans Khmer", sans-serif;
+}
+
 
 @layer components {
   .input_text {
@@ -62,3 +70,7 @@ th {
 .scrollbar-hidden::-webkit-scrollbar {
   display: none;
 }
+
+
+
+

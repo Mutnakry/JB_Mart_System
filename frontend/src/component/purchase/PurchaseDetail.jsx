@@ -28,7 +28,7 @@ const Dashboard = () => {
     const getAllPuchase = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:6700/api/purchase', {
+            const response = await axios.get('http://localhost:6700/api/purchase/purchasedetail', {
                 params: {
                     page,
                     limit,
@@ -70,7 +70,7 @@ const Dashboard = () => {
     const [IsModalUpdateStatus, setIsModalUpdateStatus] = useState(false);
     const [selectedpurchasesId, setSelectedpurchasesId] = useState(null);
     const [status, setStatus] = useState('');
-  
+
     // modal update 
     const openUpdateModal = cat => {
         setSelectedpurchasesId(cat.id);
@@ -78,7 +78,7 @@ const Dashboard = () => {
         console.log(cat.status);
         setIsModalUpdateStatus(true);
     };
-      // modal update 
+    // modal update 
     const UpdatePurchase = async (e) => {
         e.preventDefault();
         setError('');
@@ -86,7 +86,9 @@ const Dashboard = () => {
             status: status,
         };
         try {
-            await axios.put(`http://localhost:6700/api/purchase/status/${selectedpurchasesId}`, values);
+            // await axios.put(`http://localhost:6700/api/purchase/status/${selectedpurchasesId}`, values);
+            await axios.put(`http://localhost:6700/api/purchase/status/96`, values);
+
             toast.success('កែប្រែស្ថានភាពទិញបានដោយជោគជ័យ', { autoClose: 3000 });
             console.log(status);
             getAllPuchase();
@@ -145,16 +147,11 @@ const Dashboard = () => {
                                 <tr className="font-NotoSansKhmer font-bold">
                                     <th className=" px-4 py-2">លេខរៀង</th>
                                     <th className=" px-4 py-2">កាលបរិច្ឆេទ</th>
-                                    <th className=" px-4 py-2">រូបភាព</th>
                                     <th className=" px-4 py-2">ផលិតផល</th>
                                     <th className=" px-4 py-2">ថ្លៃទិញឯកតា</th>
                                     <th className=" px-4 py-2">តម្លៃលក់</th>
                                     <th className=" px-4 py-2">ស្ថានភាពទិញ</th>
                                     <th className=" px-4 py-2">ចំនួនក្នុងស្តុក</th>
-                                    <th className=" px-4 py-2">បញ្ចុះតម្លៃ</th>
-                                    <th className=" px-4 py-2">ពន្ធ</th>
-                                    <th className=" px-4 py-2">សរុប</th>
-                                    <th className=" px-4 py-2">បន្ថែមដោយ</th>
                                     <th className=" px-4 py-2">សកម្មភាព</th>
 
                                 </tr>
@@ -176,49 +173,19 @@ const Dashboard = () => {
                                             transition={{ duration: 0.3 }}
                                             className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100">
                                             <td className="px-4 py-1">{index + 1}</td>
-                                            <td className="px-4 py-1">{formatDateToKhmer(new Date(purchase.date_by))}</td>
-                                            <td>
-                                                <img src={`http://localhost:6700/image/${purchase.image}`} alt="Character" class="w-12 h-12 rounded-lg object-contain" />
-                                            </td>
-                                            <td className="px-4 py-1">{purchase.pro_names}</td>
-                                            <td className="px-4 py-1">{purchase.cost_price} $</td>
-                                            <td className="px-4 py-1">{purchase.excluded_tax} $</td>
-                                            <td className="px-4 text-center whitespace-nowrap py-1">
-                                                <button onClick={() => openUpdateModal(purchase)}>
-                                                    {purchase.status === 'active' ? (
-                                                        <span className='bg-red-500 py-1 px-4 rounded-lg text-white'>
-                                                            កំពុងរងចាំ
-                                                        </span>
-                                                    ) : purchase.status === 'pending' ? (
-                                                        <span className='bg-yellow-500 py-1 px-4 rounded-lg text-white'>
-                                                            បានបញ្ជាទិញ
-                                                        </span>
-                                                    ) : purchase.status === 'completed' ? (
-                                                        <span className='bg-green-500 py-1 px-4 rounded-lg text-white'>
-                                                            បានទទួល
-                                                        </span>
-                                                    ) : (
-                                                        <span className='bg-gray-500 py-1 px-4 rounded-lg text-white'>
-                                                            មិនមានស្ថានភាព
-                                                        </span>
-                                                    )}
-                                                </button>
-                                            </td>
-                                            <td className="px-4 py-1 text-center">{purchase.qty}</td>
-                                            <td className="px-4 py-1 text-center">{purchase.discount} $</td>
-                                            <td className="px-4 py-1 text-center">{purchase.included_tax} $</td>
-                                            <td className="px-4 py-1 text-center">{purchase.total} $</td>
-                                            <td className="px-4 py-1 text-center">{purchase.user_at || 'Unknown'}</td>
+                                            <td className="px-4 py-1">{purchase.pay_date} $</td>
+                                            <td className="px-4 py-1">{purchase.account_id}</td>
+                                            <td className="px-4 py-1">{purchase.paymenttype_id} $</td>
+                                            <td className="px-4 py-1">{purchase.amount_total} $</td>
+                                            <td className="px-4 py-1">{purchase.amount_discount} $</td>
+                                            <td className="px-4 py-1">{purchase.amount_pay} $</td>
                                             <td className="px-4  space-x-2 flex">
                                                 <button
                                                     className='bg-red-50 rounded-full p-2 '
                                                 >
                                                     <MdDelete className='text-red-500' />
                                                 </button>
-                                                <Link className="bg-blue-50 rounded-full p-2" to={`/updatepuchase/${purchase.id}/detailpuchase/${purchase.purchasedetail_id}`}>
-                                                    <FaPencilAlt className='text-blue-500' />
-                                                </Link>
-                                                <Link className="bg-blue-50 rounded-full p-2" to={`/update/${purchase.purchasedetail_id}`}>
+                                                <Link className="bg-blue-50 rounded-full p-2" to={`/update/${purchase.id}`}>
                                                     <FaPencilAlt className='text-blue-500' />
                                                 </Link>
                                             </td>

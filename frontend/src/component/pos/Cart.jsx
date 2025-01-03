@@ -10,12 +10,17 @@ import axios from 'axios';
 import { motion, AnimatePresence } from "framer-motion";
 import AddCustomer from '../contract/modal/AddCustomer';
 
+
 const Cart = () => {
   const { cart, removeItem, clearCart, updateQuantity } = useCart();
 
+  const [ispaymentTypeCurrency, setPaymentTypeCurrency] = useState('usd');
+  const totalItemCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   useEffect(() => {
     getALLCustomer();
+    getCurrencyData();
+
 
   }, [])
   // add customer
@@ -28,6 +33,25 @@ const Cart = () => {
     } catch (error) {
       console.error('Error fetching customers data', error);
       toast.error('Error fetching customers data');
+    }
+  };
+
+  const [exchangeRateKHR, setExchangeRateKHR] = useState(4200);
+  const [thbToKhrRateTHB, setThbToKhrRateTHB] = useState(120);
+
+
+  const getCurrencyData = async () => {
+    try {
+      const response = await axios.get("http://localhost:6700/api/currency");
+      const fetchedData = response.data;
+      const khrRate = parseFloat(fetchedData.find(c => c.name === "KHR")?.rate) || 4200;
+      const thbRate = parseFloat(fetchedData.find(c => c.name === "THB")?.rate) || 120;
+      console.log(khrRate)
+      console.log(thbRate)
+      setExchangeRateKHR(khrRate);
+      setThbToKhrRateTHB(thbRate);
+    } catch (error) {
+      console.error("Error fetching exchange rates:", error);
     }
   };
 
@@ -67,22 +91,32 @@ const Cart = () => {
   };
 
   const handleChangeMoney = (e) => {
-    // const newMoney = parseFloat(e.target.value) || 0; 
     const newMoney = parseFloat(e.target.value) || 0;
     if (isNaN(newMoney) || newMoney < 0) return;
     setPayMoney(newMoney);
-
-    // const newPayment = newMoney >= finalTotal ? finalTotal : newMoney;
     const newPayment = newMoney;
     setPayment(newPayment);
 
-    const cashDeposit = newMoney > finalTotal ? newMoney - finalTotal : 0;
-    setDeposit(cashDeposit);
-
+    if (ispaymentTypeCurrency == "usd") {
+      const cashDeposit = newMoney > finalTotal ? newMoney - finalTotal : 0;
+      setDeposit(cashDeposit);
+    }
+    else if (ispaymentTypeCurrency == "khr") {
+      const cashDeposit = newMoney > (finalTotal * exchangeRateKHR) ? (newMoney - (finalTotal * exchangeRateKHR)) : 0;
+      setDeposit(cashDeposit);
+    } else if (ispaymentTypeCurrency == "thb") {
+      const cashDeposit = newMoney > (finalTotal * (exchangeRateKHR / thbToKhrRateTHB)) ? (newMoney - finalTotal * (exchangeRateKHR / thbToKhrRateTHB)) : 0;
+      setDeposit(cashDeposit);
+    }
     const cashBalance = finalTotal - newPayment;
     setCashBalance(cashBalance);
   };
 
+
+  const handleChangepaymentType = (e) => {
+    setPaymentTypeCurrency(e.target.value);
+    setDeposit(0);
+  };
 
 
   const handleRemoveItem = (id) => {
@@ -121,13 +155,13 @@ const Cart = () => {
 
   const finalTotal = totalAmount - discountTotal - getCustomerDiscount;
   // const totalAmount = cart.reduce((acc, item) => acc + (item.quantity * item.cost_price), 0);
-// const finalTotal = totalAmount - discountTotal - getCustomerDiscount;
+  // const finalTotal = totalAmount - discountTotal - getCustomerDiscount;
 
 
   return (
     <div className="min-h-screen overflow-y-auto bg-gray-100 p-5 px-2 ">
       {/* Top Section */}
-      <div className="flex justify-between mb-4">
+      <div className="flex justify-between ">
         {/* Left Dropdown */}
         <div className="flex items-center">
           <div className="col-span-1 space-y-2">
@@ -172,74 +206,95 @@ const Cart = () => {
             </tr>
           </thead>
 
-           <tbody className="text-gray-600 text-sm">
-           {cart.map((item, index) => (
-                <tr className="border-b border-gray-200" key={index}>
-                  <td className="py-3 px-2">{index + 1}</td>
-                  <td>
-                    <img className='h-8' src={`http://localhost:6700/image/${item.image}`} alt={item.name} />
-                  </td>
-                  <td className="py-3 whitespace-nowrap">{item.pro_names}</td>
-                  <td className="py-3 px-6">{item.qty}</td>
-                  <td>
-                    <div className="flex items-center border border-pink-500 justify-between">
-                      <button
-                        type="button"
-                        className={`text-gray-500 text-xl w-full hover:text-white  px-4 ${item.quantity <= 1 ? 'cursor-not-allowed bg-gray-200' : 'hover:bg-pink-400'}`}
-                        onClick={() => handleQuantityChange(item, -1)}
-                        disabled={item.quantity <= 1}
-                      >
-                        -
-                      </button>
-                      <input
-                        type="text"
-                        className="w-12 text-center border-l text-xl border-r border-pink-500"
-                        value={item.quantity}
-                        readOnly
-                      />
-                      <button
-                        type="button"
-                        className="text-gray-500 text-xl w-full hover:text-white hover:bg-pink-400 px-4"
-                        onClick={() => handleQuantityChange(item, 1)}
-                      >
-                        +
-                      </button>
-                    </div>
-                    <input type="text" className='input_text text-center' value={item.unit_names} readOnly />
-                  </td>
-                  <td className="py-3 px-6">$ {(item.cost_price)} </td>
-                  <td className="py-3 px-6">$ {(item.discount)}</td>
-                  <td className="py-3 px-6">$ {((item.quantity * item.cost_price) - (item.discount * item.quantity)).toFixed(2)}</td> 
-                  <td className="py-3 px-6">
-                    <MdDeleteForever onClick={() => handleRemoveItem(item.id)} className="cursor-pointer text-red-600 text-xl" />
-                  </td>
-                </tr>
-             
+          <tbody className="text-gray-600 text-sm">
+            {cart.map((item, index) => (
+              <tr className="border-b border-gray-200" key={index}>
+                <td className="py-3 px-2">{index + 1}</td>
+                <td>
+                  <img className='h-8' src={`http://localhost:6700/image/${item.image}`} alt={item.name} />
+                </td>
+                <td className="py-3 whitespace-nowrap">{item.pro_names}</td>
+                <td className="py-3 px-6">{item.qty}</td>
+                <td>
+                  <div className="flex items-center border border-pink-500 justify-between">
+                    <button
+                      type="button"
+                      className={`text-gray-500 text-xl w-full hover:text-white  px-4 ${item.quantity <= 1 ? 'cursor-not-allowed bg-gray-200' : 'hover:bg-pink-400'}`}
+                      onClick={() => handleQuantityChange(item, -1)}
+                      disabled={item.quantity <= 1}
+                    >
+                      -
+                    </button>
+                    <input
+                      type="text"
+                      className="w-12 text-center border-l text-xl border-r border-pink-500"
+                      value={item.quantity}
+                      readOnly
+                    />
+                    <button
+                      type="button"
+                      className="text-gray-500 text-xl w-full hover:text-white hover:bg-pink-400 px-4"
+                      onClick={() => handleQuantityChange(item, 1)}
+                    >
+                      +
+                    </button>
+                  </div>
+                  <input type="text" className='input_text text-center' value={item.unit_names} readOnly />
+                </td>
+                <td className="py-3 px-6">$ {(item.cost_price)} </td>
+                <td className="py-3 px-6">$ {(item.discount)}</td>
+                <td className="py-3 px-6">$ {((item.quantity * item.cost_price) - (item.discount * item.quantity)).toFixed(2)}</td>
+                <td className="py-3 px-6">
+                  <MdDeleteForever onClick={() => handleRemoveItem(item.id)} className="cursor-pointer text-red-600 text-xl" />
+                </td>
+              </tr>
+
             ))}
-          </tbody> 
+          </tbody>
         </table>
       </div>
 
       <div className="grid grid-cols-4 gap-4 text-sm bg-gray-200 px-6 py-4">
-        <div>
+        <div className='s space-y-1'>
           <p>សរុប:</p>
-          <p>${totalAmount.toFixed(2)}</p>
+          <p>$ {totalAmount.toFixed(2)}</p>
+          {totalAmount !== 0 && (
+            <>
+              <p>{(totalAmount * exchangeRateKHR).toFixed(2)} រៀល</p>
+              <p>{(totalAmount * (exchangeRateKHR / thbToKhrRateTHB)).toFixed(2)} បាត</p>
+            </>
+          )}
         </div>
-        <div>
+        <div className='s space-y-1'>
           <p>ការបញ្ចុះតំលៃ:</p>
           <p>${discountTotal.toFixed(2)}</p>
+          {discountTotal !== 0 && (
+            <>
+              <p>{(discountTotal * exchangeRateKHR).toFixed(2)} រៀល</p>
+              <p>{(discountTotal * (exchangeRateKHR / thbToKhrRateTHB)).toFixed(2)} បាត</p>
+            </>
+          )}
         </div>
-        <div>
-          <p>ចំណាយបន្ថែម:</p>
-          <p>$0.00</p>
+        <div className='s space-y-1'>
+          <p>បន្ថែម:</p>
+          <p>${getCustomerDiscount}</p>
         </div>
-        <div>
+        <div className='s space-y-1'>
           <p>សរុបចុងក្រោយ:</p>
           <p>${finalTotal.toFixed(2)}</p>
+          {finalTotal !== 0 && (
+            <>
+              <p>{(finalTotal * exchangeRateKHR).toFixed(2)} រៀល</p>
+              <p>{(finalTotal * (exchangeRateKHR / thbToKhrRateTHB)).toFixed(2)} បាត</p>
+            </>
+          )}
+
         </div>
       </div>
 
-      <div className="flex fixed text-sm space-x-3 px-12 my-4">
+
+
+      <footer class="fixed  bottom-0 left-0 z-20 w-full flex p-4 space-x-4 ">
         <div>
           <button onClick={openInsertModal} className='p-2 bg-green-600 text-md text-white flex' aria-label="Add expense">
             <span className="flex items-center">
@@ -268,7 +323,10 @@ const Cart = () => {
             </span>
           </button>
         </div>
-      </div>
+      </footer>
+
+
+
       {/* Modal  payment */}
       <AnimatePresence>
         {isInsertModalOpen && (
@@ -280,7 +338,7 @@ const Cart = () => {
             transition={{ duration: 0.2 }}
 
           >
-            <div className="modal_center max-w-4xl bg-white ">
+            <div className="modal_center max-w-[1024px] bg-white ">
               <div className="modal_title flex justify-between items-center">
                 <h3 className="">ការទូទាត់</h3>
                 <MdClose
@@ -299,13 +357,25 @@ const Cart = () => {
                         <input
                           type="number"
                           id="price"
-                          value={payMoney}
+                          value={payMoney || finalTotal}
                           min={0}
                           onChange={handleChangeMoney}
                           class="input_text bg-white font-NotoSansKhmer"
                           placeholder={finalTotal.toFixed(2)} required
                         />
                       </div>
+                      <div class="w-1/2 pr-2">
+                        <label for="bank" class="block text-sm font-medium text-gray-700">បង់ជាសាចប្រាក់:</label>
+                        <select id="paymenttype"
+                          value={ispaymentTypeCurrency}
+                          onChange={handleChangepaymentType}
+                          class="input_text bg-white  font-NotoSansKhmer">
+                          <option value="usd">ដុល្លារ</option>
+                          <option value="khr">រៀល</option>
+                          <option value="thb">បាត</option>
+                        </select>
+                      </div>
+
                       <div class="w-1/2 pr-2 ">
                         <label for="method" class="block text-sm font-medium text-gray-700">វិធី​សា​ស្រ្ត​ទូទាត់ប្រាក់: *</label>
                         <select
@@ -321,7 +391,6 @@ const Cart = () => {
                           <option value="ការផ្ទេរប្រាក់តាមធនាគារ" className="font-bold">ការផ្ទេរប្រាក់តាមធនាគារ</option>
                         </select>
                       </div>
-
                       <div class="w-1/2 pl-2">
                         <label for="bank" class="block text-sm font-medium text-gray-700">គណនីធនាគារ:</label>
                         <select id="bank" class="input_text bg-white  font-NotoSansKhmer">
@@ -352,29 +421,109 @@ const Cart = () => {
                   <div class="bg-orange-500 w-1/4 text-white text-center py-4 rounded-lg">
                     <div class="mb-4 border-b border-gray-400">
                       <span class="block font-semibold">អីវ៉ាន់សរុប:</span>
-                      <span class="block text-lg mb-2">1.00 $</span>
+                      <span class="block text-lg mb-2">{totalItemCount}</span>
                     </div>
                     <div class="mb-4 border-b border-gray-400">
                       <span class="block font-semibold">ប្រាក់សរុបត្រូវបង់:</span>
                       <span class="block text-lg mb-2">{finalTotal.toFixed(2)} $</span>
+                      {totalAmount !== 0 && (
+                        <>
+                          <p>{(totalAmount * exchangeRateKHR).toFixed(2)} រៀល</p>
+                          <p>{(totalAmount * (exchangeRateKHR / thbToKhrRateTHB)).toFixed(2)} បាត</p>
+                        </>
+                      )}
                     </div>
                     <div class="mb-4 border-b border-gray-400">
                       <span class="block font-semibold">ការបញ្ចុះតំលៃ:</span>
-                      <span class="block text-lg mb-2">{discountTotal.toFixed(2)} $</span>
-                    </div>
-                    <div class="mb-4 border-b border-gray-400">
-                      <span class="block font-semibold">ការទូទាត់សរុប:</span>
-                      {/* <span class="block text-lg mb-2">{payment.toFixed(2)} $</span> */}
-                      <span class="block text-lg mb-2">{payment > 0 ? payment.toFixed(2) : finalTotal.toFixed(2)} $</span>
+                      {ispaymentTypeCurrency === "usd" ? (
+                        <div>
+                          <span className="block text-lg mb-2">
+                            <span class="block text-lg mb-2">{discountTotal.toFixed(2)} $</span>
+                          </span>
+                        </div>
+                      ) : ispaymentTypeCurrency === "khr" ? (
+                        <div>
+                          <span className="block text-lg mb-2">
+                            <p>{(discountTotal * exchangeRateKHR).toFixed(2)} រៀល</p>
+                          </span>
+                        </div>
+                      ) : ispaymentTypeCurrency === "thb" ? (
+                        <div>
+                          <span className="block text-lg mb-2">
+                            <p>{(discountTotal * (exchangeRateKHR / thbToKhrRateTHB)).toFixed(2)} បាត</p>                          </span>
+                        </div>
+                      ) : null}
+
 
                     </div>
                     <div class="mb-4 border-b border-gray-400">
+                      <span class="block font-semibold">ការទូទាត់សរុប:</span>
+                      {ispaymentTypeCurrency === "usd" ? (
+                        <div>
+                          <span className="block text-lg mb-2">
+                            {payment > 0 ? payment.toFixed(2) : finalTotal.toFixed(2)} $
+                          </span>
+                        </div>
+                      ) : ispaymentTypeCurrency === "khr" ? (
+                        <div>
+                          <span className="block text-lg mb-2">
+                            {payment > 0 ? payment.toFixed(2) : (finalTotal * exchangeRateKHR).toFixed(2)} រៀល
+                          </span>
+                        </div>
+                      ) : ispaymentTypeCurrency === "thb" ? (
+                        <div>
+                          <span className="block text-lg mb-2">
+                            {payment > 0 ? payment.toFixed(2) : (finalTotal * (exchangeRateKHR / thbToKhrRateTHB)).toFixed(2)} បាត
+                          </span>
+                        </div>
+                      ) : null}
+                    </div>
+                    <div class="mb-4 border-b border-gray-400">
                       <span class="block font-semibold">សមតុល្យសាច់ប្រាក់:</span>
-                      <span class="block text-red-600  text-lg mb-2">{CashBalance < 0 ? '0.00 $' : CashBalance.toFixed(2) + ' $'}</span>
+                      {ispaymentTypeCurrency === "usd" ? (
+                        <div>
+                          <span className="block text-lg mb-2">
+                            <span class="block text-red-600  text-lg mb-2">{CashBalance < 0 ? '0.00 $' : CashBalance.toFixed(2) + ' $'}</span>
+
+                          </span>
+                        </div>
+                      ) : ispaymentTypeCurrency === "khr" ? (
+                        <div>
+                          <span className="block text-lg mb-2">
+                            <span class="block text-red-600  text-lg mb-2">{CashBalance < 0 ? '0.00 រៀល' : (CashBalance * exchangeRateKHR).toFixed(2) + ' រៀល'}</span>
+
+                          </span>
+                        </div>
+                      ) : ispaymentTypeCurrency === "thb" ? (
+                        <div>
+                          <span className="block text-lg mb-2">
+                            <span class="block text-red-600  text-lg mb-2">{CashBalance < 0 ? '0.00 បាត' : (CashBalance * (exchangeRateKHR / thbToKhrRateTHB)).toFixed(2) + ' បាត'}</span>
+
+                          </span>
+                        </div>
+                      ) : null}
                     </div>
                     <div class="mb-2">
                       <span class="block font-semibold">សរុបសំរាប់:</span>
-                      <span class="block text-lg mb-2">{Deposit.toFixed(2)} $</span>
+                      {ispaymentTypeCurrency === "usd" ? (
+                        <div>
+                          <span className="block text-lg mb-2">
+                            {Deposit.toFixed(2)} $
+                          </span>
+                        </div>
+                      ) : ispaymentTypeCurrency === "khr" ? (
+                        <div>
+                          <span className="block text-lg mb-2">
+                            {Deposit.toFixed(2)} រៀល
+                          </span>
+                        </div>
+                      ) : ispaymentTypeCurrency === "thb" ? (
+                        <div>
+                          <span className="block text-lg mb-2">
+                            {Deposit.toFixed(2)} បាត
+                          </span>
+                        </div>
+                      ) : null}
                     </div>
                   </div>
                 </div>

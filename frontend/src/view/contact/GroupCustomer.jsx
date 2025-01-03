@@ -6,8 +6,9 @@ function Cost() {
     return (
         <div className=''>
             <Navbar />
-            <div className='py-16 px-4 md:ml-64 bg-white dark:bg-gray-950'>
-                <div className='border-gray-300 border-2 p-4 dark:border-gray-700'>
+            <div className='py-12 px-6 md:ml-64 bg-gray-100 dark:bg-gray-950'>
+                <div className="w-full p-4 mt-7 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
+
                     <CustomerGroup />
                 </div>
             </div>

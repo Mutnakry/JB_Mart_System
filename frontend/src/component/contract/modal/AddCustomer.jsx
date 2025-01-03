@@ -89,11 +89,18 @@ function AddCustomer({ setIsModalCustomer }) {
             console.log(data);
             toast.success('បង្កើតអតិជនបានដោយជោគជ័យ ', { autoClose: 3000 });
             setIsModalCustomer(false);
+            window.location.href = "/index/pos";
             cleardata();
         } catch (err) {
             console.error(err);
             const errorMessage = err.response?.data?.message || 'សូមលោកព្យាយាមម្ដងទៀត !';
             toast.error(errorMessage, { autoClose: 3000 });
+        }
+    };
+
+    const handleOverlayClick = (e) => {
+        if (e.target === e.currentTarget) {
+            setIsModalCustomer(false);
         }
     };
     return (
@@ -104,6 +111,7 @@ function AddCustomer({ setIsModalCustomer }) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.2 }}
+                onClick={handleOverlayClick}
             >
                 <div className="relative w-full bg-white shadow mt-10 dark:bg-gray-700 max-w-4xl">
                     <div className="modal_title">

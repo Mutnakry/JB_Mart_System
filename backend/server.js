@@ -66,6 +66,11 @@ const Pamenttype_Routes = require('./src/route/payment_type.router');
 app.use('/api/payment_type', Pamenttype_Routes); 
 
 
+// Import and use the currency routes
+const Currency_Routes = require('./src/route/currency.route');
+app.use('/api/currency', Currency_Routes); 
+
+
 // Import and use the payment_type routes
 const Purchase_Routes = require('./src/route/purchase.router');
 app.use('/api/purchase', Purchase_Routes); 

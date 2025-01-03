@@ -24,7 +24,9 @@ const Customer = () => {
     return (
         <div>
             <Navbar />
-            <div className='py-16 px-2 md:ml-64 bg-white dark:bg-gray-950'>
+            <div className='py-12 px-6 md:ml-64 bg-gray-100 dark:bg-gray-950'>
+                <div className="w-full p-4 mt-7 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
+
                 <div className="p-4 bg-white dark:border-gray-700 mt-5 ">
                     <div className='flex items-center gap-2 pb-5'>
                         <RiContactsBook3Fill className='text-lg' />
@@ -56,6 +58,7 @@ const Customer = () => {
                             </TabPanels>
                         </TabGroup>
                     </div>
+                </div>
                 </div>
             </div>
         </div>

@@ -184,59 +184,58 @@ const Brands = () => {
                     </div>
                 </div>
                 <div class="relative overflow-x-auto h-screen scrollbar-hidden">
-                <AnimatePresence>
+                    <AnimatePresence>
+                        <table className="min-w-full table-auto">
+                            <thead className="bg-blue-600/95 text-white">
+                                <tr className="font-NotoSansKhmer font-bold">
+                                    <th className=" px-4 py-2">លេខរៀង</th>
+                                    <th className=" px-4 py-2">ឈ្មោះម៉ាកយីហោ</th>
+                                    <th className=" px-4 py-2">ការណិពណ័នា</th>
+                                    <th className=" px-4 py-2">បង្កើត</th>
+                                    <th className=" px-4 py-2">សកម្មភាព</th>
 
-                    <table className="min-w-full table-auto">
-                        <thead className="bg-blue-600/95 text-white">
-                            <tr className="font-NotoSansKhmer font-bold">
-                                <th className=" px-4 py-2">លេខរៀង</th>
-                                <th className=" px-4 py-2">ឈ្មោះម៉ាកយីហោ</th>
-                                <th className=" px-4 py-2">ការណិពណ័នា</th>
-                                <th className=" px-4 py-2">បង្កើត</th>
-                                <th className=" px-4 py-2">សកម្មភាព</th>
+                                </tr>
+                            </thead>
+                            {loading ? (
+                                <p>Loading...</p>
+                            ) : error ? (
+                                <p>{error}</p>
+                            ) : brands.length === 0 ? (
+                                <p className="text-start py-4 px-10 text-red-500">រកមិនឃើញប្រភេទ ? {searchQuery}</p>
+                            ) : (
+                                <tbody>
+                                    {brands.map((brand, index) => (
+                                        <motion.tr key={brand.id}
+                                            initial="hidden"
+                                            animate="visible"
+                                            exit="exit"
+                                            variants={rowAnimation}
+                                            transition={{ duration: 0.3 }}
+                                            className="text-sm font-NotoSansKhmer  hover:scale-y-110 duration-100">
+                                            <td className=" px-4 py-1">{index + 1}</td>
+                                            <td className="px-4 py-1">{brand.brand_names}</td>
+                                            <td className=" px-4 py-1">{brand.description || 'N/A'}</td>
+                                            {/* <td className=" px-4 py-1">{formatDateToKhmer(brand.create_at)}</td> */}
+                                            <td className="px-4 py-1">{formatDateToKhmer(new Date(brand.create_at))}</td>
 
-                            </tr>
-                        </thead>
-                        {loading ? (
-                            <p>Loading...</p>
-                        ) : error ? (
-                            <p>{error}</p>
-                        ) : brands.length === 0 ? (
-                            <p className="text-start py-4 px-10 text-red-500">រកមិនឃើញប្រភេទ ? {searchQuery}</p>
-                        ) : (
-                            <tbody>
-                                {brands.map((brand, index) => (
-                                    <motion.tr key={brand.id} 
-                                    initial="hidden"
-                                    animate="visible"
-                                    exit="exit"
-                                    variants={rowAnimation}
-                                    transition={{ duration: 0.3 }}
-                                    className="text-sm font-NotoSansKhmer  hover:scale-y-110 duration-100">
-                                        <td className=" px-4 py-1">{index + 1}</td>
-                                        <td className="px-4 py-1">{brand.brand_names}</td>
-                                        <td className=" px-4 py-1">{brand.description || 'N/A'}</td>
-                                        {/* <td className=" px-4 py-1">{formatDateToKhmer(brand.create_at)}</td> */}
-                                        <td className="px-4 py-1">{formatDateToKhmer(new Date(brand.create_at))}</td>
-
-                                        <td className="px-4  space-x-2 flex">
-                                            <button
-                                                onClick={() => openDeleteModal(brand)}
-                                                className='bg-red-50 rounded-full p-2 '
-                                            >
-                                                <MdDelete className='text-red-500' />
-                                            </button>
-                                            <button
-                                                onClick={() => openUpdateModal(brand)}
-                                                className='bg-blue-50 rounded-full p-2 '                        >
-                                                <FaPencilAlt className='text-blue-500' />
-                                            </button>
-                                        </td>
+                                            <td className="px-4  space-x-2 flex">
+                                                <button
+                                                    onClick={() => openDeleteModal(brand)}
+                                                    className='bg-red-50 rounded-full p-2 '
+                                                >
+                                                    <MdDelete className='text-red-500' />
+                                                </button>
+                                                <button
+                                                    onClick={() => openUpdateModal(brand)}
+                                                    className='bg-blue-50 rounded-full p-2 '                        >
+                                                    <FaPencilAlt className='text-blue-500' />
+                                                </button>
+                                            </td>
                                         </motion.tr>
-                                ))}
-                            </tbody>
-                        )}
-                    </table>
+                                    ))}
+                                </tbody>
+                            )}
+                        </table>
                     </AnimatePresence>
 
                     <Pagination
