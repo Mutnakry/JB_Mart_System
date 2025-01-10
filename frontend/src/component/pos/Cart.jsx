@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { FaMoneyBill, FaRegIdCard, FaRegMoneyBillAlt } from "react-icons/fa";
+import { FaMoneyBill, FaRegIdCard, FaRegMoneyBillAlt, FaHandHoldingMedical } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import { MdDeleteForever } from "react-icons/md";
 import { useCart } from './CartContext';
@@ -9,10 +9,13 @@ import SearchAddToCartProduct from './SearchAddToCartProduct'
 import axios from 'axios';
 import { motion, AnimatePresence } from "framer-motion";
 import AddCustomer from '../contract/modal/AddCustomer';
+import HoldOrder from './HoldOrder'
+
+
 
 
 const Cart = () => {
-  const { cart, removeItem, clearCart, updateQuantity } = useCart();
+  const { cart, removeItem, clearCart, updateQuantity, holdOrder } = useCart();
 
   const [ispaymentTypeCurrency, setPaymentTypeCurrency] = useState('usd');
   const totalItemCount = cart.reduce((total, item) => total + item.quantity, 0);
@@ -152,6 +155,13 @@ const Cart = () => {
     const total = (item.quantity * item.discount);
     return acc + total;
   }, 0);
+
+  const handleClearCart = () => {
+    const confirmed = window.confirm('Are you sure you want to clear the cart?');
+    if (confirmed) {
+      clearCart();
+    }
+  };
 
   const finalTotal = totalAmount - discountTotal - getCustomerDiscount;
   // const totalAmount = cart.reduce((acc, item) => acc + (item.quantity * item.cost_price), 0);
@@ -310,8 +320,15 @@ const Cart = () => {
           </button>
         </div>
         <div>
+          <button onClick={holdOrder} className='bg-pink-600 text-md p-2 text-white flex' aria-label="Add expense">
+            <span className="flex items-center">
+              <FaHandHoldingMedical className="mr-1" /> រក្សាទុក្ខ
+            </span>
+          </button>
+        </div>
+        <div>
           <button className='bg-red-600 text-md p-2 text-white flex' aria-label="Add expense">
-            <span className="flex items-center" onClick={clearCart}>
+            <span className="flex items-center" onClick={handleClearCart}>
               <MdDeleteForever className="mr-1" /> បោះបង់
             </span>
           </button>
@@ -325,6 +342,7 @@ const Cart = () => {
         </div>
       </footer>
 
+      {/* <HoldOrder /> */}
 
 
       {/* Modal  payment */}
@@ -549,4 +567,6 @@ const Cart = () => {
 };
 
 export default Cart;
+
+
 

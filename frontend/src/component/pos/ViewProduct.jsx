@@ -108,6 +108,7 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { useCart } from './CartContext';
 import { toast } from 'react-toastify';
+import NullImage from '../../assets/image.png'
 
 const ProductGrid = () => {
   const [products, setProducts] = useState([]);
@@ -214,7 +215,7 @@ const ProductGrid = () => {
                 className="p-2 hover:bg-gray-100 cursor-pointer"
                 onClick={() => handleCategoryChange({ id: 'all', cat_names: 'Select All' })}
               >
-                   ប្រភេទទាំងអស់
+                ប្រភេទទាំងអស់
               </div>
 
               {/* Category Options */}
@@ -258,7 +259,6 @@ const ProductGrid = () => {
             </div>
           )}
         </div>
-
       </div>
 
       {error && <div className="text-red-500">{error}</div>}
@@ -273,12 +273,33 @@ const ProductGrid = () => {
         <div className="overflow-x-auto scrollbar-hidden h-[75vh] border-t-2">
           <div className="grid xl:grid-cols-4 lg:grid-cols-4 pt-4 md:grid-cols-3 grid-cols-3 gap-4">
             {products.map((product, index) => (
-              <div key={index} onClick={() => handleAddToCart(product)} className="bg-white p-2 cursor-pointer shadow-md text-center">
-                <img src={`http://localhost:6700/image/${product.image}`} alt={product.pro_names} className="w-full h-20 object-contain rounded mb-2" />
+              <div
+                key={index}
+                onClick={() => handleAddToCart(product)}
+                className="bg-white p-2 cursor-pointer shadow-md text-center"
+              >
+                {product.image ? (
+                  <div className="flex items-center justify-center h-20">
+                    <img
+                      src={`http://localhost:6700/image/${product.image}`}
+                      alt={product.pro_names}
+                      className="object-contain h-full w-full rounded mb-2"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center h-20">
+                    <img
+                      src={NullImage}
+                      alt={product.pro_names}
+                      className="object-contain h-full w-full rounded mb-2"
+                    />
+                  </div>
+                )}
                 <h2 className="text-lg font-semibold">{product.pro_names}</h2>
                 <p className="text-gray-500">{product.cost_price} $</p>
               </div>
             ))}
+
           </div>
         </div>
       )}

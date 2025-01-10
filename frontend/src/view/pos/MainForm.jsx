@@ -8,7 +8,7 @@ function MainForm() {
         <div>
             <div className='bg-white'>
                 <Navbar />
-                <div className='grid md:grid-cols-2'>
+                <div className='grid md:grid-cols-2 mt-10'>
                     <div className='h-screen'>
                         <Cart />
                     </div>

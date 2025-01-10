@@ -347,8 +347,6 @@ exports.GetSingle = (req, res) => {
 };
 
 
-
-
 // exports.GetSingle = (req, res) => {
 //   const { id } = req.params; // Assume `id` is for `purchasedetail_id`
 
@@ -531,11 +529,6 @@ exports.UpdatePurchaseStatus = (req, res) => {
 
 
 
-
-
-
-
-
 exports.GetPurchaseUpdateByID = async (req, res) => {
   try {
     const { id } = req.params; // purchaseId from URL parameter
@@ -575,15 +568,6 @@ exports.GetPurchaseUpdateByID = async (req, res) => {
     res.status(500).json({ error: 'An error occurred while retrieving the purchase record' });
   }
 };
-
-
-
-
-
-
-
-
-
 
 
 
