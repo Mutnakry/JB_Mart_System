@@ -26,7 +26,7 @@ const Login = () => {
       });
       window.location.href = "/Dashboard";
     } catch (error) {
-      toast.error('Login failed. Please check your credentials.', {
+      toast.error('សូមពិនិត្យមើល អ៊ីម៉ែល និង លេខសម្ថាត់ ​របស់អ្នក។.', {
         position: "top-center",
         autoClose: 3000,
       });
@@ -61,7 +61,7 @@ const Login = () => {
                 <label htmlFor="password" className="font-NotoSansKhmer font-bold text-lg">ពាក្យសម្ងាត់:*</label>
 
                 <input
-                  type={showPassword ? 'text' : 'password'} 
+                  type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-md block w-full p-2.5"
@@ -69,8 +69,8 @@ const Login = () => {
                   placeholder="ពាក្យសម្ងាត់របស់អ្នក"
                 />
                 <div
-                  className="absolute top-2/3 right-2 transform -translate-y-1/2 cursor-pointer" 
-                  onClick={() => setShowPassword(!showPassword)}  
+                  className="absolute top-2/3 right-2 transform -translate-y-1/2 cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
@@ -84,11 +84,10 @@ const Login = () => {
                   )}
                 </div>
               </div>
-
               <div className="flex justify-center pb-8">
                 <button
                   type="submit"
-                  className="text-white bg-blue-700 hover:bg-blue-800 font-medium text-sm w-1/2  px-5 py-2.5"
+                  className="text-white font-NotoSansKhmer text-xl bg-blue-700 hover:bg-blue-800 font-medium w-1/2  px-5 py-2.5"
                 >
                   ចូលប្រើប្រាស់
                 </button>

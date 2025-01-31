@@ -69,7 +69,7 @@ exports.CreatePurchase = async (req, res) => {
       const { supplier_id, product_id, date_by, qty, discount, cost_price, included_tax, excluded_tax, total, status, user_at } = product;
 
       // Insert order details into the 'order' table
-      const sqlOrder = "INSERT INTO `purchase` (supplier_id,product_id,purchasedetail_id,date_by,qty,discount,cost_price,included_tax,excluded_tax,total,status,user_at) VALUES (?, ?, ?, ?,? ,?, ?, ?, ?, ?,?,?)";
+      const sqlOrder = "INSERT INTO `purchase` (supplier_id,product_id,purchasedetail_id,date_by,qty,discount,cost_price,include_tax,exclude_tax,total,status,user_at) VALUES (?, ?, ?, ?,? ,?, ?, ?, ?, ?,?,?)";
       const orderValues = [supplier_id, product_id, customerIdFromDB, date_by, qty, discount, cost_price, included_tax, excluded_tax, total, status, user_at];
       await db.promise().query(sqlOrder, orderValues);
     }
@@ -241,6 +241,21 @@ exports.UpdatePurchase = async (req, res) => {
 // };
 
 
+
+exports.GetSinglePuchase = (req, res) => {
+  const { id } = req.params; // Assume `id` is for category or unit ID
+  const sql = `SELECT p.*,d.*,pro.pro_names FROM purchase as p 
+INNER JOIN purchase_detail as d on p.purchasedetail_id = d.id 
+inner JOIN products pro ON pro.id = p.product_id
+WHERE p.purchasedetail_id = ?`;
+
+  db.query(sql, [id], (err, results) => { // Provide `id` for both parameters
+    if (err) {
+      return res.status(500).send(err);
+    }
+    res.json(results);
+  });
+};
 
 
 // Get a single purchase with its details

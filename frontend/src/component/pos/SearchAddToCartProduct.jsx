@@ -212,8 +212,8 @@ const SearchAddToCartProduct = () => {
     const fetchProducts = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:6700/api/product');
-            setProducts(response.data.product);
+            const response = await axios.get('http://localhost:6700/api/product/product');
+            setProducts(response.data);
             setError('');
         } catch (error) {
             setError('Error fetching products data');
@@ -225,17 +225,15 @@ const SearchAddToCartProduct = () => {
     const filteredProducts = products.filter(product =>
         product.pro_names.toLowerCase().includes(productSearchQuery.toLowerCase())
     );
-
-
+    
     const handleBarcodeChange = (e) => {
         setProductSearchQuery(e.target.value);
         setShowProductDropdown(e.target.value.length > 0);
         const input = e.target.value;
         setBarcodeInput(input);
         const product = products.find(p =>
-            p.barcode === input || p.id === input || p.pro_names.toLowerCase() === input.toLowerCase()
+            p.barcode === input || p.barcode === input || p.pro_names.toLowerCase() === input.toLowerCase()
         );
-
         if (product) {
             if (product.qty > 0) {
                 addItem(product);
@@ -266,7 +264,7 @@ const SearchAddToCartProduct = () => {
                     <input
                         type="text"
                         className=" input_text w-[350px]"
-                        placeholder="ស្វែងរកកាតទូរស័ព្ទ"
+                        placeholder="ស្វែងរកកាតផលិតផល"
                         value={barcodeInput}
                         onChange={handleBarcodeChange}
                     />

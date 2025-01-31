@@ -73,7 +73,12 @@ app.use('/api/currency', Currency_Routes);
 
 // Import and use the payment_type routes
 const Purchase_Routes = require('./src/route/purchase.router');
-app.use('/api/purchase', Purchase_Routes); 
+app.use('/api/purchase', Purchase_Routes);
+
+// Import and use the payment_type routes
+const Warranty_Routes = require('./src/route/warranty.router');
+app.use('/api/warranty', Warranty_Routes); 
+
 
 
 // Import and use the product routes

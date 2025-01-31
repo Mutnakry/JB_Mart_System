@@ -129,10 +129,12 @@ const Cart = () => {
       autoClose: 1000,
     });
   };
+  
+
   const handleQuantityChange = (item, delta) => {
     const newQuantity = item.quantity + delta;
 
-    if (newQuantity > item.qty) {
+    if (item.mg_stock === "enable" && newQuantity > item.qty) {
       toast.error(`មានតែទំនិញ ${item.qty} ប៉ុណ្ណោះក្នុងស្តុក។`, {
         position: "top-right",
         autoClose: 1000,
@@ -140,14 +142,14 @@ const Cart = () => {
     } else if (newQuantity > 0) {
       updateQuantity(item.id, newQuantity);
     } else {
-      removeItem(item.id);
+      removeItem(item.id); 
     }
   };
 
 
   // Calculate total amount and discounts
   const totalAmount = cart.reduce((acc, item) => {
-    const total = (item.quantity * item.cost_price);
+    const total = (item.quantity * item.exclude_tax);
     return acc + total;
   }, 0);
 
@@ -164,19 +166,19 @@ const Cart = () => {
   };
 
   const finalTotal = totalAmount - discountTotal - getCustomerDiscount;
-  // const totalAmount = cart.reduce((acc, item) => acc + (item.quantity * item.cost_price), 0);
+  // const totalAmount = cart.reduce((acc, item) => acc + (item.quantity * item.exclude_tax), 0);
   // const finalTotal = totalAmount - discountTotal - getCustomerDiscount;
 
 
   return (
     <div className="min-h-screen overflow-y-auto bg-gray-100 p-5 px-2 ">
       {/* Top Section */}
-      <div className="flex justify-between ">
-        {/* Left Dropdown */}
+      <div className="grid gap-2 xl:grid-cols-2 md:grid-cols-1 justify-between ">
+       
         <div className="flex items-center">
           <div className="col-span-1 space-y-2">
             <select
-              className='input_text w-[250px]'
+              className='input_text w-[250px] '
               id="unit_ID"
               value={customer_ID}
               required
@@ -192,7 +194,6 @@ const Cart = () => {
           <button onClick={openInsertCustomer} className="bg-blue-500 text-white border border-blue-500 px-4 py-2">+</button>
         </div>
 
-        {/* Search Box */}
         <div className="flex items-center space-x-2">
           <SearchAddToCartProduct />
         </div>
@@ -251,9 +252,9 @@ const Cart = () => {
                   </div>
                   <input type="text" className='input_text text-center' value={item.unit_names} readOnly />
                 </td>
-                <td className="py-3 px-6">$ {(item.cost_price)} </td>
+                <td className="py-3 px-6">$ {(item.exclude_tax)} </td>
                 <td className="py-3 px-6">$ {(item.discount)}</td>
-                <td className="py-3 px-6">$ {((item.quantity * item.cost_price) - (item.discount * item.quantity)).toFixed(2)}</td>
+                <td className="py-3 px-6">$ {((item.quantity * item.exclude_tax) - (item.discount * item.quantity)).toFixed(2)}</td>
                 <td className="py-3 px-6">
                   <MdDeleteForever onClick={() => handleRemoveItem(item.id)} className="cursor-pointer text-red-600 text-xl" />
                 </td>

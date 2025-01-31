@@ -157,81 +157,8 @@ const Dashboard = () => {
 
 
 
-  const handleOptionClick = (option) => {
-    setSelectedOption(option.label);
-    setIsDropdownOpen(false); // Close the dropdown after selecting
-  };
-
-  const options = [
-    { value: 'GST', label: 'ផ្ដាច់មុខ' },
-    { value: 'VAT', label: 'រួមបញ្ចូលគ្នា' },
-    { value: 'GST', label: 'ផ្ដាច់មុខ' },
-    { value: 'VAT', label: 'រួមបញ្ចូលគ្នា' },
-    { value: 'GST', label: 'ផ្ដាច់មុខ' },
-    { value: 'VAT', label: 'រួមបញ្ចូលគ្នា' },
-    { value: 'GST', label: 'ផ្ដាច់មុខ' },
-    { value: 'VAT', label: 'រួមបញ្ចូលគ្នា' },
-    { value: 'GST', label: 'ផ្ដាច់មុខ' },
-    { value: 'VAT', label: 'រួមបញ្ចូលគ្នា' },
-    { value: 'GST', label: 'ផ្ដាច់មុខ' },
-    { value: 'VAT', label: 'រួមបញ្ចូលគ្នា' },
-    { value: 'GST', label: 'ផ្ដាច់មុខ' },
-    { value: 'VAT', label: 'រួមបញ្ចូលគ្នា' },
-  ];
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('');
-
-  // Filter options based on the search query
-  const filteredOptions = options.filter(option =>
-    option.label.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-
   return (
     <div>
-      <div className="col-span-1 space-y-2 w-[300px]">
-        <label className="font-NotoSansKhmer font-bold">ប្រភេទពន្ធលើតម្លៃលក់: *</label>
-
-        {/* Custom dropdown */}
-        <div className="relative">
-          <div
-            className="input_text cursor-pointer"
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          >
-            {selectedOption || 'ជ្រើសរើស...'}
-          </div>
-
-          {isDropdownOpen && (
-            <div className="absolute z-10 bg-white border rounded-md mt-2 w-[300px]">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={handleSearch}
-                className="input_text w-full p-2"
-                placeholder="ស្វែងរកអ្នកផ្គត់ផ្គង់..."
-              />
-
-              {/* Dropdown options */}
-              <div className="h-[300px] overflow-y-auto scrollbar-hidden">
-                {filteredOptions.length > 0 ? (
-                  filteredOptions.map((option) => (
-                    <div
-                      key={option.value}
-                      className="p-2 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => handleOptionClick(option)}
-                    >
-                      {option.label}
-                    </div>
-                  ))
-                ) : (
-                  <div className="p-2 text-gray-500">No options found</div>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
       <div className='border p-4 border-gray-200 dark:border-gray-700'>
         <div className="flex items-center mb-3 gap-2 ">
           <p><FaClipboardList className="text-lg " /></p>
@@ -252,7 +179,7 @@ const Dashboard = () => {
               ))}
             </select>
           </div>
-          <div class="flex-col hidden md:block">
+          {/* <div class="flex-col hidden md:block">
             <div className='flex'>
               <button class="button_export">
                 <p><FaFileCsv /></p>
@@ -263,7 +190,7 @@ const Dashboard = () => {
                 Export to Excel
               </button>
             </div>
-          </div>
+          </div> */}
           <div>
             <input type="text"
               value={searchQuery}

@@ -1705,9 +1705,9 @@ const CreatePurchase = () => {
     };
 
     return (
-        <div>
+        <div >
             <Navbar />
-            <div className='py-12 px-6 md:ml-64 bg-gray-200 dark:bg-gray-950'>
+            <div className='py-12 px-6 ml-64 xl:w-auto md:w-[860px] w-[860px] bg-gray-200 dark:bg-gray-950'>
                 <div className="w-full p-4 mt-10 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
                     <div className='flex items-center gap-2 pb-5'>
                         <p className='font-NotoSansKhmer font-bold text-3xl'>បន្ថែមការទិញ </p>
@@ -1764,9 +1764,6 @@ const CreatePurchase = () => {
                                                 className="input_text font-NotoSansKhmer"
                                             >
                                                 <option value="" disabled>--ជ្រើសរើស--</option>
-                                                {/* <option value={1}>បានទទួល</option>
-                                                <option value={2}>រងចាំ</option>
-                                                <option value={3}>បានបញ្ជាទិញ</option> */}
                                                 <option value="completed">បានទទួល</option>
                                                 <option value="active">រងចាំ</option>
                                                 <option value="pending">បានបញ្ជាទិញ</option>
@@ -1790,7 +1787,9 @@ const CreatePurchase = () => {
                                                     </div>
                                                 </div>
                                                 <div className="absolute top-0 right-[-3%]">
-                                                    <button type='button' className="py-2.5 button_only_submit">
+                                                    <button type='button'
+                                                     onClick={() => setIsDropdownOpenProduct((prev) => !prev)} 
+                                                    className="py-2.5 button_only_submit">
                                                         + ជ្រើសរើសផលិតផល
                                                     </button>
                                                 </div>
@@ -1822,7 +1821,7 @@ const CreatePurchase = () => {
                                 </div>
 
                                 <div className='pb-12 pt-6 px-4 shadow-md mt-8  border-t-4 border-pink-600 rounded-md'>
-                                    {/* Table for Selected Products */}
+                                   
                                     <h3 className="text-lg font-semibold">កំណត់ការបញ្ជាទិញ</h3>
                                     <table className="mt-4 border-collapse w-full">
                                         <thead className="p-2 text-white bg-blue-600/90">
@@ -2049,7 +2048,7 @@ const CreatePurchase = () => {
                                 <div className="flex justify-end mt-5">
                                     <button
                                         type="submit"
-                                        className="px-4 py-2 font-semibold text-white bg-blue-500 hover:bg-blue-600"
+                                        className="px-4 py-2 font-NotoSansKhmer text-xl w-[10%] font-semibold text-white bg-blue-500 hover:bg-blue-600"
                                     >
                                         រក្សាទុក
                                     </button>

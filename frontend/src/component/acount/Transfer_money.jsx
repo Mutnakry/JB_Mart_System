@@ -1,145 +1,149 @@
 
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
-import Pagination from '../pagination/Pagination';
-import { FaAlignLeft, FaPencilAlt } from "react-icons/fa";
-import { MdDelete, MdClose } from "react-icons/md";
-import { motion, AnimatePresence } from "framer-motion";
+import { useParams, Link } from 'react-router-dom';
+import { IoPrint } from 'react-icons/io5';
 
+import Navbar from '../Navbar';
 
+const AccountDetailTransfer = () => {
+    const [paymentDetails, setPaymentDetails] = useState([]);
+    const [filteredDetails, setFilteredDetails] = useState([]);
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [loading, setLoading] = useState(false); // Add loading state
 
-const bank = () => {
-    const [error, setError] = useState('');
-
-    //// paginate and search data
-    const [bank, setStudent] = useState([]);
-    const [searchQuery, setSearchQuery] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [totalPages, setTotalPages] = useState(0);
-    const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(20);
 
     useEffect(() => {
-        getAllStudent();
-    }, [page, limit, searchQuery]);
+        fetchPaymentDetails();
+    }, []);
 
-    // get all bank add paginate and search
-    const getAllStudent = async () => {
-        setLoading(true);
+    const fetchPaymentDetails = async () => {
         try {
-            const response = await axios.get('http://localhost:6700/api/bank', {
-                params: {
-                    page,
-                    limit,
-                    search_query: searchQuery
-                }
-            });
-            setStudent(response.data.bank);
-            console.log(response.data)
-            setTotalPages(response.data.totalPages);
-            setError(null);
+            const response = await axios.get(`http://localhost:6700/api/account/paymentdetail`);
+            setPaymentDetails(response.data);
+            setFilteredDetails(response.data); // Initialize filteredDetails with all data
         } catch (error) {
-            setError('Error fetching categories data');
-        } finally {
-            setLoading(false);
+            console.error('Error fetching payment details:', error);
+            alert('Failed to fetch payment details. Please try again later.');
         }
     };
-    /// page total
-    const handlePageChange = (newPage) => {
-        if (newPage > 0 && newPage <= totalPages) {
-            setPage(newPage);
-        }
-    };
-    //// search data
-    const handleSearch = (event) => {
-        if (setPage(0)) {
-            alert('not found!')
-        } else {
-            setSearchQuery(event.target.value);
-            setPage(1);
+
+    const handleFilter = () => {
+        if (!startDate || !endDate) {
+            alert('Please select both start and end dates.');
+            return;
         }
 
+        setLoading(true); // Set loading to true
+
+        setTimeout(() => {
+            const filtered = paymentDetails.filter(detail => {
+                const detailDate = new Date(detail.created_at);
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+                return detailDate >= start && detailDate <= end;
+            });
+
+            setFilteredDetails(filtered);
+            setLoading(false); // Set loading back to false
+        }, 1000); // Simulate a delay for filtering
     };
-    const rowAnimation = {
-        hidden: { opacity: 0, y: -20 },
-        visible: { opacity: 1, y: 0 },
-        exit: { opacity: 0, y: 20 }
+
+    const handlePrint = () => {
+        window.print();
     };
+
     return (
         <div>
-            <div className="flex items-center mb-3 gap-2 ">
-                <p><FaAlignLeft className="text-lg " /></p>
-                <p className="font-NotoSansKhmer font-bold ">តារាងបញ្ជីផ្ទេប្រាក់គណនី</p>
-            </div>
-            <div className="flex justify-between items-center my-3">
-                <div className="flex flex-col gap-2 font-bold font-NotoSansKhmer">
-                    <label htmlFor="">ច្រោះតាមចំនួន</label>
-                    <select
-                        value={limit}
-                        onChange={(e) => setLimit(Number(e.target.value))}
-                        className="input_text w-[100px]">
-                        {[25, 50, 100, 500].map(value => (
-                            <option key={value} value={value}>{value}</option>
-                        ))}
-                    </select>
+            <div className=" bg-white print:bg-transparent dark:border-gray-700 print:bg-white print:p-0 print:shadow-none">
+                <div className="my-4 print:hidden flex justify-between">
+                   
+                    <div className="flex justify-center space-x-2">
+                        <div className="space-y-2">
+                            <label htmlFor="startDate">ថ្ងៃទីចាប់ផ្ដើម</label>
+                            <input
+                                type="date"
+                                id="startDate"
+                                className="input_text"
+                                value={startDate}
+                                onChange={(e) => setStartDate(e.target.value)}
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <label htmlFor="endDate">ថ្ងៃទីបញ្ខប់</label>
+                            <input
+                                type="date"
+                                id="endDate"
+                                className="input_text"
+                                value={endDate}
+                                onChange={(e) => setEndDate(e.target.value)}
+                            />
+                        </div>
+                        <div className="flex items-end">
+                            <button
+                                onClick={handleFilter}
+                                className={`px-8 py-2 text-white bg-blue-500 rounded hover:bg-blue-700 ${loading ? 'opacity-50 cursor-not-allowed' : ''
+                                    }`}
+                                disabled={loading}
+                            >
+                                {loading ? 'ទាញយក...' : 'ទាញយក'}
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <input type="text"
-                        value={searchQuery}
-                        onChange={handleSearch}
-                        className="input_text w-[300px]" placeholder="ស្វែងរកប្រភេទគណនី..." />
-                </div>
-            </div>
-            <div class="relative overflow-x-auto h-screen scrollbar-hidden">
-                <AnimatePresence>
-                    <table className="min-w-full table-auto">
-                        <thead className="bg-blue-600/95 text-white">
-                            <tr className="font-NotoSansKhmer font-bold">
-                                <th className=" px-4 w-36 py-2">លេខរៀង</th>
-                                <th className=" px-4 w-64 py-2">ឈ្មោះ</th>
-                                <th className=" px-4 py-2">សកម្មភាព</th>
-
+                <div className=" print:border-0 print:shadow-none">
+                    <table className="w-full border-collapse border border-gray-400">
+                        <thead>
+                            <tr className="dark:bg-gray-600 bg-blue-500">
+                                <th className="border border-gray-400 px-4 py-2">គណនីចូល</th>
+                                <th className="border border-gray-400 px-4 py-2">លេខគណនីចូល</th>
+                                <th className="border border-gray-400 px-4 py-2">គណនីចេញ</th>
+                                <th className="border border-gray-400 px-4 py-2">លេខគណនីចេញ</th>
+                                <th className="border border-gray-400 px-4 py-2">ចំនួន</th>
+                                <th className="border border-gray-400 px-4 py-2">ថ្ងៃទី</th>
+                                <th className="border border-gray-400 px-4 py-2">ការណិពណ័នា</th>
                             </tr>
                         </thead>
-                        {loading ? (
-                            <p>Loading...</p>
-                        ) : error ? (
-                            <p>{error}</p>
-                        ) : bank.length === 0 ? (
-                            <p className="text-start py-4 px-10 text-red-500">រកមិនឃើញប្រភេទ ? {searchQuery}</p>
-                        ) : (
-                            <tbody>
-                                {bank.map((customer, index) => (
-                                    
-                                    <motion.tr key={customer.id}
-                                        initial="hidden"
-                                        animate="visible"
-                                        exit="exit"
-                                        variants={rowAnimation}
-                                        transition={{ duration: 0.3 }}
-                                        className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100">
-                                        <td className=" px-4 py-1">{index + 1}</td>
-                                        <td className="px-4 py-1">{customer.bank_names}</td>
-
-                                    </motion.tr>
-                                    
-                                ))}
-                            </tbody>
-                        )}
+                        <tbody>
+                            {filteredDetails.length > 0 ? (
+                                filteredDetails.map((detail, index) => (
+                                    <tr key={index} className="odd:bg-white even:bg-gray-100 dark:odd:bg-gray-800 dark:even:bg-gray-700">
+                                        <td className="border border-gray-400 px-4 py-2">{detail.acc_nameIn || 'NA'}</td>
+                                        <td className="border border-gray-400 px-4 py-2">{detail.acc_numIn || 'NA'}</td>
+                                        <td className="border border-gray-400 px-4 py-2">{detail.acc_nameOut || 'NA'}</td>
+                                        <td className="border border-gray-400 px-4 py-2">{detail.acc_numOut || 'NA'}</td>
+                                        <td className="border border-gray-400 px-4 py-2">{detail.detail_balance } $</td>
+                                       
+                                        <td className="border border-gray-400 px-4 py-2">
+                                            {detail.created_at ? new Date(detail.created_at).toLocaleDateString() : 'NA'}
+                                        </td>
+                                        <td className="border border-gray-400 px-4 py-2">{detail.description }</td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="4" className="text-center py-4">
+                                        No payment details available.
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
                     </table>
-                </AnimatePresence>
-                <Pagination
-                    currentPage={page}
-                    totalPages={totalPages}
-                    onPageChange={handlePageChange}
-                    limit={limit}
-                    setLimit={setLimit}
-                />
-
+                    <div className="flex justify-end my-2 print:hidden">
+                        <button
+                            className="flex items-center gap-1 px-4 py-2 font-bold text-white bg-blue-500 hover:bg-blue-700"
+                            onClick={handlePrint}
+                        >
+                            <IoPrint /> <span>បោះពុម្ភ</span>
+                        </button>
+                    </div>
+                </div>
             </div>
+
         </div>
     );
 };
 
-export default bank;
+export default AccountDetailTransfer;

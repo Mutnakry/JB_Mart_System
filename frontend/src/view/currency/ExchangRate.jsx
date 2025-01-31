@@ -152,7 +152,7 @@ const ExchangRate = () => {
     return (
         <div>
             <Navbar />
-            <div className='py-12 px-6 md:ml-64 bg-gray-100 dark:bg-gray-950'>
+            <div className='py-12 px-6 ml-64 xl:w-auto md:w-[860px] w-[860px] bg-gray-100 dark:bg-gray-950'>
                 <div className="w-full p-4 mt-7 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
                     <div className="">
                         <div className="flex items-center gap-2 py-5">
@@ -248,7 +248,7 @@ const ExchangRate = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="flex border-t-4 justify-between mt-10 shadow-lg p-2 pr-8 border-blue-700 rounded-lg">
+                        <div className="grid xl:grid-cols-2 gap-10 md:grid-cols-1 border-t-4 justify-between mt-10 shadow-lg p-2 pr-8 border-blue-700 rounded-lg">
                             <div>
                                 <TableCurrency/>
                             </div>

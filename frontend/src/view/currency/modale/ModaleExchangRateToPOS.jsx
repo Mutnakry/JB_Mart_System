@@ -157,7 +157,7 @@ const ModaleExchangRateToPOS = ({ setIsModalExchangRate }) => {
 
     return (
         <motion.div
-            className="fixed top-0 left-0 right-0 z-50 flex items-start justify-center w-full h-full bg-black bg-opacity-30"
+            className="fixed top-0 left-0 right-0 z-50 p-4 flex items-start justify-center w-full h-full bg-black bg-opacity-30"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
@@ -185,7 +185,7 @@ const ModaleExchangRateToPOS = ({ setIsModalExchangRate }) => {
                                 id="fromCurrencySelect"
                                 value={fromCurrency}
                                 onChange={(e) => setFromCurrency(e.target.value)}
-                                className="input_text font-NotoSansKhmer font-bold w-[350px] block"
+                                className="input_text font-NotoSansKhmer font-bold xl:w-[350px] w-[280px] block"
                             >
                                 <option value="រៀល">Khmer Riel (រៀល)</option>
                                 <option value="ដុល្លារ">US Dollar (ដុល្លារ)</option>
@@ -199,7 +199,7 @@ const ModaleExchangRateToPOS = ({ setIsModalExchangRate }) => {
                                 id="toCurrencySelect"
                                 value={toCurrency}
                                 onChange={(e) => setToCurrency(e.target.value)}
-                                className="input_text font-NotoSansKhmer font-bold w-[350px] block"
+                                className="input_text font-NotoSansKhmer font-bold xl:w-[350px] w-[280px]  block"
                             >
                                 {getToCurrencyOptions().map(option => (
                                     <option key={option.value} value={option.value}>
@@ -265,8 +265,8 @@ const ModaleExchangRateToPOS = ({ setIsModalExchangRate }) => {
                             </div>
                         </div>
                     </div>
-                    <div className="flex border-t-4 justify-between mt-10 shadow-lg p-2 pr-8 border-blue-700 rounded-lg">
-                        <div>
+                    <div className="grid xl:grid-cols-2 gap-10 md:grid-cols-1 border-t-4 justify-between mt-10 shadow-lg p-2 pr-8 border-blue-700 rounded-lg">
+                    <div>
                             <TableCurrency />
                         </div>
                         <div className=" bg-blue-950 rounded-lg">

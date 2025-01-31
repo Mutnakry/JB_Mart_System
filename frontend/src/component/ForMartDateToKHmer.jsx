@@ -49,7 +49,7 @@
 export const formatDateToKhmer = (date) => {
     const khmerMonths = [
       "មករា",
-      "កម្ភៃ",
+      "កុម្ភៈ",
       "មីនា",
       "មេសា",
       "ឧសភា",

@@ -90,7 +90,11 @@ exports.Update = (req, res) => {
 // GEt Data Single cost
 exports.GetSingle = (req, res) => {
     const { id } = req.params;
-    const sql = "SELECT * From cost  where id=?";
+    const sql = ` SELECT cost.*, ty.type_names, acc.acc_names 
+            FROM cost
+            INNER JOIN cost_type as ty ON cost.cost_type_id = ty.id
+            LEFT JOIN acount as acc ON cost.account_id = acc.id
+            WHERE cost.id=?`;
     db.query(sql, [id], (err, results) => {
         if (err) {
             return res.status(500).send(err);

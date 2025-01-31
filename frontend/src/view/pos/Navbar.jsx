@@ -191,13 +191,41 @@ function Navbar() {
     const [isHoveringExpence, setIsHoveringExpence] = useState(false);
     const [isHoveringSale, setIsHoveringSale] = useState(false);
 
+    const [theme, setTheme] = useState(() => {
+        return localStorage.getItem("theme") || "light";
+    });
+
+    const handleThemeSwitch = () => {
+        setTheme(theme === "dark" ? "light" : "dark");
+    };
+
+     useEffect(() => {
+            if (theme === "dark") {
+                document.documentElement.classList.add("dark");
+            } else {
+                document.documentElement.classList.remove("dark");
+            }
+            // Save the theme to localStorage
+            localStorage.setItem("theme", theme);
+        }, [theme]);
+
     return (
-        <div className="bg-gray-500 flex fixed top-0 left-0 right-0 justify-between md:px-20 p-1 text-center z-50">
+        <div className="bg-blue-600 dark:bg-slate-600 flex fixed top-0 left-0 right-0 justify-between md:px-20 p-1 text-center z-50">
             <div className='flex justify-between w-full'>
                 <div className="text-white font-bold font-NotoSansKhmer flex gap-5 text-center items-center">
-                    <h2 className="hidden md:block">ចែប៊ីម៉ាត</h2>
-                    <span className="text-blue-700">{khmerToday}</span> {khmerTime}
+                    <h2 className="hidden font-KhmerMoul md:block">ចែប៊ីម៉ាត</h2>
+                    <span className="text-white">{khmerToday}</span> <span>ម៉ោង : {khmerTime}</span>
                 </div>
+                <button
+                    className="bg-slate-200 rounded-3xl p-1"
+                    onClick={handleThemeSwitch}
+                >
+                    {theme === "dark" ? (
+                        <img width="24" height="24" src="https://img.icons8.com/ios-filled/50/ffffff/sun--v1.png" alt="light mode icon" />
+                    ) : (
+                        <img width="24" height="24" src="https://img.icons8.com/ios-filled/50/000000/moon-symbol.png" alt="dark mode icon" />
+                    )}
+                </button>
 
                 <div className="flex text-lg p-1 gap-2">
                     <div
@@ -221,7 +249,7 @@ function Navbar() {
                         onMouseEnter={() => setIsHoveringHoldOrder(true)}
                         onMouseLeave={() => setIsHoveringHoldOrder(false)}
                     >
-                        <button onClick={openHoldOrder} className='p-1 px-2 space-x-2 items-center bg-pink-700 text-sm text-white flex' aria-label="Add expense">
+                        <button onClick={openHoldOrder} className='p-1 px-2 space-x-2 items-center bg-pink-600 text-sm text-white flex' aria-label="Add expense">
                             <span className="">
                                 <FaHandHoldingMedical />
                             </span>
@@ -254,7 +282,7 @@ function Navbar() {
                         onMouseEnter={() => setIsHoveringExpence(true)}
                         onMouseLeave={() => setIsHoveringExpence(false)}
                     >
-                        <button onClick={openInsertExchangRate} className='p-1 bg-blue-500 text-white' aria-label="Open Box">
+                        <button onClick={openInsertExchangRate} className='p-1 px-2 bg-pink-500 text-white' aria-label="Open Box">
                             <FaMoneyBillAlt />
                         </button>
                         {isHoveringExpence && (

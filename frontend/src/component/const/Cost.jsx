@@ -773,7 +773,8 @@ import Pagination from '../pagination/Pagination';
 import { FaClipboardList, FaPencilAlt } from "react-icons/fa";
 import { MdDelete, MdClose } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
-
+import { IoPrint } from 'react-icons/io5';
+import { Link } from 'react-router-dom';
 
 
 const cost = () => {
@@ -893,6 +894,22 @@ const cost = () => {
         setTax(cat.tax);
         setIsUpdateModalOpen(true);
     };
+
+    //// modale print page
+    const [isModalOpenPrintPage, setIsModalOpenPrintPage] = useState(false);
+    const openModalPrintPage = cat => {
+        setSelectedcostId(cat.id);
+        setdescription(cat.description);
+        setPrice(cat.price);
+        setCustType(cat.cost_type_id);
+        setPayment(cat.payment);
+        setDOB(cat.dob);
+        setInterval(cat.interval);
+        setAccount(cat.account_id);
+        setInterval_Type(cat.interval_type);
+        setTax(cat.tax);
+        setIsModalOpenPrintPage(true);
+    };
     const ClearData = () => {
         setPrice('');
         setdescription('');
@@ -995,15 +1012,20 @@ const cost = () => {
             toast.error('សូមលោកព្យាយាមម្ដងទៀត !', { autoClose: 3000 });
         }
     };
- 
+
     const rowAnimation = {
         hidden: { opacity: 0, y: -20 },
         visible: { opacity: 1, y: 0 },
         exit: { opacity: 0, y: 20 }
     };
+
+    const handlePrint = () => {
+        window.print();
+    };
+
     return (
-        <div>
-            <div className='border-2 p-4 border-gray-200 dark:border-gray-700'>
+        <div >
+            <div className='border-2 p-4 border-gray-200 dark:border-gray-700 print:hidden'>
                 <div className="flex items-center mb-3 gap-2 ">
                     <p><FaClipboardList className="text-lg " /></p>
                     <p className="font-NotoSansKhmer font-bold ">តារាងបញ្ជីចំណាយ</p>
@@ -1074,6 +1096,7 @@ const cost = () => {
                                             <td className="px-4 py-1">{customer.type_names}</td>
                                             <td className="px-4 py-1">{customer.acc_names || 'N/A'}</td>
                                             <td className="px-4 py-1">ចន្លោះពេលកើតឡើងវិញ​ : {customer.interval} {customer.interval_type || 'N/A'}</td>
+
                                             <td className="px-4 py-1">
                                                 {customer.payment >= customer.price ? (
                                                     <span className="text-green-400">បង់</span> // Fully Paid
@@ -1083,9 +1106,34 @@ const cost = () => {
                                                     <span className="text-red-400">ជុំពាក់</span> // Owing
                                                 ) : null}
                                             </td>
-                                            <td className="px-4 py-1">{customer.tax.toFixed(2)} $</td>
+                                            <td className="px-4 py-1">
+                                                {customer.tax.toLocaleString('en-US', {
+                                                    style: 'decimal',
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2,
+                                                })}{' '}
+                                                $
+                                            </td>
+
+                                            <td className="px-4 py-1">
+                                                {customer.price.toLocaleString('en-US', {
+                                                    style: 'decimal',
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2,
+                                                })}{' '}
+                                                $
+                                            </td>
+                                            <td className="px-4 py-1">
+                                                {customer.payment.toLocaleString('en-US', {
+                                                    style: 'decimal',
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2,
+                                                })}{' '}
+                                                $
+                                            </td>
+                                            {/* <td className="px-4 py-1">{customer.tax.toFixed(2)} $</td>
                                             <td className="px-4 py-1">{customer.price.toFixed(2)} $</td>
-                                            <td className="px-4 py-1">{customer.payment.toFixed(2)} $</td>
+                                            <td className="px-4 py-1">{customer.payment.toFixed(2)} $</td> */}
                                             <td className=" px-4 py-1">{customer.description || 'N/A'}</td>
                                             <td className="px-4 py-1">{customer.user_at || 'N/A'}</td>
 
@@ -1093,21 +1141,35 @@ const cost = () => {
                                             <td className="px-4  space-x-2 flex">
                                                 <button
                                                     onClick={() => openDeleteModal(customer)}
-                                                    className='bg-red-50 rounded-full p-2 '
+                                                    className='bg-red-50 p-2 hover:bg-red-400'
                                                 >
                                                     <MdDelete className='text-red-500' />
                                                 </button>
                                                 <button
                                                     onClick={() => openUpdateModal(customer)}
-                                                    className='bg-blue-50 rounded-full p-2 '                        >
+                                                    className='bg-blue-200  p-2  hover:bg-blue-400'                        >
                                                     <FaPencilAlt className='text-blue-500' />
                                                 </button>
+                                                <button
+                                                    className="flex items-center gap-1 p-2 font-bold text-white bg-green-300 hover:bg-green-400"
+                                                    onClick={() => openModalPrintPage(customer)}
+                                                >
+                                                    <IoPrint />
+                                                </button>
+                                                <Link
+                                                    to={`/cost/${customer.id}`}
+                                                    className="flex items-center gap-1 p-2 font-bold text-white bg-green-300 hover:bg-green-400"
+                                                    onClick={() => openModalPrintPage(customer)}
+                                                >
+                                                    <IoPrint />
+                                                </Link>
                                             </td>
                                         </motion.tr>
                                     ))}
 
                                 </tbody>
                             )}
+
                             {/* Sum */}
                             <motion.tr
                                 initial="hidden"
@@ -1136,15 +1198,41 @@ const cost = () => {
                                         </span>
                                     )}
                                 </td>
-                                <td className="font-bold px-4 py-1">
+                                {/* <td className="font-bold px-4 py-1">
                                     {(cost.reduce((total, customer) => total + customer.tax, 0)).toFixed(2)} $
+                                </td> */}
+                                <td className="font-bold px-4 py-1">
+                                    {cost
+                                        .reduce((total, customer) => total + customer.tax, 0)
+                                        .toLocaleString('en-US', {
+                                            style: 'decimal',
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                        })}{' '}
+                                    $
                                 </td>
-                                <td>
-                                    {(cost.reduce((total, customer) => total + customer.price, 0)).toFixed(2)} $
+                                <td className="font-bold px-4 py-1">
+                                    {cost
+                                        .reduce((total, customer) => total + customer.price, 0)
+                                        .toLocaleString('en-US', {
+                                            style: 'decimal',
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                        })}{' '}
+                                    $
                                 </td>
-                                <td>
-                                    {(cost.reduce((total, customer) => total + customer.payment, 0)).toFixed(2)} $
+                                <td className="font-bold px-4 py-1">
+                                    {cost
+                                        .reduce((total, customer) => total + customer.payment, 0)
+                                        .toLocaleString('en-US', {
+                                            style: 'decimal',
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                        })}{' '}
+                                    $
                                 </td>
+
+
                                 <td colSpan="3"></td>
                             </motion.tr>
                         </table>
@@ -1429,10 +1517,10 @@ const cost = () => {
                                                     type="date"
                                                     value={DOB}
                                                     onChange={e => setDOB(e.target.value)}
-                                                    min={today}
+
                                                     id="price"
                                                     class="input_text "
-                                                    required
+
                                                 />
                                             </div>
                                             <div className='grid grid-cols-12'>
@@ -1520,6 +1608,185 @@ const cost = () => {
 
                                 </form>
                             </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            <AnimatePresence>
+                {isModalOpenPrintPage && (
+                    <motion.div
+                        className="modal no-print print:bg-white print:shadow-none"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        <div className="modal_center max-w-4xl print:max-w-full print:shadow-none">
+                            <div className="modal_title print:hidden">
+                                <h3>Print</h3>
+                                <MdClose className="text-2xl cursor-pointer" onClick={() => setIsModalOpenPrintPage(false)} />
+                            </div>
+                            <div className="p-6 border print:border-0 print:shadow-none">
+                                <div className="flex justify-between text-xs">
+                                    <div>
+                                        <h2 className="text-xl font-bold">ចែប៊ីម៉ាត់ប៉ោយប៉ែត</h2>
+                                        <p>1331 Hart Ridge Road{costType}1</p>
+                                        <p>48436 Gaines, MI</p>
+                                        <p>VAT no.: 987654321</p>
+                                        <p>your.mail@gmail.com</p>
+                                        <p>m +380 989 271 3115</p>
+                                    </div>
+                                    <div>
+                                        <h2 className="text-xl font-bold">អ្នកផ្គត់ផ្គង់</h2>
+                                        <p>name fule</p>
+                                        <p>4304 Liberty Avenue</p>
+                                        <p>92680 Tustin, CA</p>
+                                        <p>VAT no.: 12345678</p>
+                                        <p>company.mail@gmail.com</p>
+                                        <p>m +386 714 505 8385</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="modal_form">
+
+                                <form class="">
+                                    <div className="">
+                                        <div className="">
+                                            <div class="grid gap-4 mb-4 grid-cols-2">
+                                                <div class="col-span-1">
+                                                    <label className="font-NotoSansKhmer font-bold">ប្រភេទនៃការចំណាយ: *</label>
+                                                    <select
+                                                        className='input_text'
+                                                        id="bank"
+                                                        value={costType}
+                                                        required
+                                                        onChange={e => setCustType(e.target.value)}
+                                                    >
+                                                        <option value="" >សូមជ្រើសរើស</option>
+                                                        {CostTypeName?.map((items) => (
+                                                            <option key={items.id} value={items.id}>
+                                                                {items.type_names}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                </div>
+                                                <div class="col-span-1">
+                                                    <label className="font-NotoSansKhmer font-bold">ពន្ធ</label>
+                                                    <input
+                                                        type="number"
+                                                        value={tax}
+                                                        defaultValue={0}
+                                                        onChange={e => setTax(e.target.value)}
+                                                        id="price"
+                                                        class="input_text "
+                                                    />
+                                                </div>
+                                                <div class="col-span-1">
+                                                    <label className="font-NotoSansKhmer font-bold">ចំនួនសរុប: *</label>
+                                                    <input
+                                                        type="number"
+                                                        value={price}
+                                                        onChange={e => setPrice(e.target.value)}
+                                                        id="price"
+                                                        class="input_text "
+                                                        placeholder="ចំនួនសរុប"
+                                                        required
+                                                    />
+                                                </div>
+                                                <div class="col-span-1">
+                                                    <label className="font-NotoSansKhmer font-bold">កាលបរិច្ខេទ: *</label>
+                                                    <input
+                                                        type="date"
+                                                        value={DOB}
+                                                        onChange={e => setDOB(e.target.value)}
+
+                                                        id="price"
+                                                        class="input_text "
+
+                                                    />
+                                                </div>
+                                                <div className='grid grid-cols-12'>
+                                                    <div className="col-span-8">
+                                                        <label className="font-NotoSansKhmer font-bold">ចន្លោះពេលកើតឡើងវិញ: *</label>
+                                                        <input
+                                                            type="number"
+                                                            value={interval}
+                                                            onChange={e => setInterval(e.target.value)}
+                                                            id="price"
+                                                            className="input_text w-full"
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className="col-span-4">
+                                                        <label className="font-NotoSansKhmer font-bold"><br /></label>
+                                                        <select
+                                                            className='input_text'
+                                                            id="bank"
+                                                            value={interval_type}
+                                                            onChange={e => setInterval_Type(e.target.value)}
+                                                        >
+                                                            <option value='ថ្ងៃ'>ថ្ងៃ</option>
+                                                            <option value='ខែ'>ខែ</option>
+                                                            <option value='ឆ្នាំ'>ឆ្នាំ</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="grid gap-4 mb-4 grid-cols-2">
+                                                <div class="col-span-1">
+                                                    <label className="font-NotoSansKhmer font-bold">ចំនួនសរុបរួមបញ្ចូលពន្ធ</label>
+                                                    <input
+                                                        type="number"
+                                                        value={payment}
+                                                        onChange={e => setPayment(e.target.value)}
+                                                        id="price"
+                                                        class="input_text "
+                                                        placeholder="0.00 $"
+                                                    />
+                                                </div>
+                                                <div class="col-span-2 ">
+                                                    <label className="font-NotoSansKhmer font-bold">គណនីទូទាត់</label>
+                                                    <select
+                                                        className='input_text'
+                                                        id="bank"
+                                                        value={account}
+                                                        onChange={e => setAccount(e.target.value)}
+                                                    >
+                                                        <option>មិនមាន</option>
+                                                        {AccountNames?.map((items) => (
+                                                            <option key={items.id} value={items.id}>
+                                                                {items.acc_names}
+                                                            </option>
+                                                        ))}
+
+                                                    </select>
+                                                </div>
+                                                <div class="col-span-2">
+                                                    <label className="font-NotoSansKhmer font-bold">ការណិពណ័នា</label>
+                                                    <textarea id="description"
+                                                        rows="2"
+                                                        value={description}
+                                                        onChange={e => setdescription(e.target.value)}
+                                                        class="input_text"
+                                                        placeholder="ការណិពណ័នា">
+                                                    </textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="flex justify-end my-2 print:hidden">
+                                            <button
+                                                className="flex items-center gap-1 px-4 py-2 font-bold text-white bg-blue-500 hover:bg-blue-700"
+                                                onClick={handlePrint}
+                                            >
+                                                <IoPrint /> <span>បោះពុម្ភ</span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+
                         </div>
                     </motion.div>
                 )}
