@@ -4,9 +4,8 @@ import Navbar from '../../component/Navbar';
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
 import { RiContactsBook3Fill } from "react-icons/ri";
 import PuchaseList from '../../component/purchase/PuchaseList';
-import ProductInfo from '../../component/product/ProductInfo';
 import PurchaseDetail from '../../component/purchase/PurchaseDetail';
-
+import PurchaseInfo from '../../component/purchase/PurchaseInfo'
 
 const Purchase = () => {
     const [activeTabIndex, setActiveTabIndex] = useState(0);
@@ -48,12 +47,15 @@ const Purchase = () => {
                             <TabPanels className="mt-3">
                                 <TabPanel className="p-4 border">
                                     <PuchaseList />
+                                    {/* <PurchaseDetail /> */}
+                                    {/* <PrintPurchaseDetail/> */}
                                 </TabPanel>
                                 <TabPanel className="p-4 border">
+                                    {/* <PuchaseList /> */}
                                     <PurchaseDetail />
                                 </TabPanel>
                                 <TabPanel className="p-4 border border-gray-300 rounded-md">
-                                    <ProductInfo />
+                                    <PurchaseInfo />
                                 </TabPanel>
                             </TabPanels>
                         </TabGroup>

@@ -6,6 +6,8 @@ import { Link, useParams } from 'react-router-dom';
 import { IoPrint } from 'react-icons/io5';
 import Navbar from '../Navbar';
 import { formatDateToKhmer } from '../ForMartDateToKHmer';
+import NullImage from '../../assets/image.png';
+
 
 
 function PrintProduct() {
@@ -92,8 +94,23 @@ function PrintProduct() {
                         </div>
                     </div>
                     <div className='py-4'>
-                        {Products[0] && <img src={`http://localhost:6700/image/${Products[0].image}`} alt="Character" class="md:h-64 h-36 object-contain p-4 border border-gray-200" />}
-
+                        {Products[0]?.image ? (
+                            <div className="">
+                                <img
+                                    src={`http://localhost:6700/image/${Products[0].image}`}
+                                    alt={Products[0].pro_names || "Character"}
+                                    class="md:h-64 h-36 object-contain p-4 border border-gray-200"
+                                />
+                            </div>
+                        ) : (
+                            <div className="">
+                                <img
+                                    src={NullImage}
+                                    alt="Placeholder"
+                                    class="md:h-64 h-36 object-contain p-4 border border-gray-200"
+                                />
+                            </div>
+                        )}
                     </div>
                     <table className="min-w-full table-auto">
                         <thead className="bg-blue-600/95 text-white">

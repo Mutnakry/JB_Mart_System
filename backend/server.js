@@ -80,6 +80,10 @@ const Warranty_Routes = require('./src/route/warranty.router');
 app.use('/api/warranty', Warranty_Routes); 
 
 
+// Import and use  dasboard_chart
+const Dasboard_chart_Routes = require('./src/route/dasboard_chart.router');
+app.use('/api/dashbord', Dasboard_chart_Routes); 
+
 
 // Import and use the product routes
 const Product_Routes = require('./src/route/product.router');

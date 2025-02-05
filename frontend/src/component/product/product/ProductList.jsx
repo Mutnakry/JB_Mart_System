@@ -16,6 +16,7 @@ import NullImage from '../../../assets/image.png';
 const Dashboard = () => {
     const [error, setError] = useState('');
     const [userLoginNames, setUserLoginNames] = useState('');
+    const [userRol, setUserRol] = useState('');
 
     //// paginate and search data
     const [product, setProducts] = useState([]);
@@ -28,6 +29,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         setUserLoginNames(localStorage.getItem('user_names') || '');
+        setUserRol(localStorage.getItem('user_rol') || '');
         getAllProduct();
     }, [page, limit, searchQuery]);
 
@@ -96,7 +98,6 @@ const Dashboard = () => {
         }
     };
 
-
     /// show modal insert
     const [IsModalUpdateStatus, setIsModalUpdateStatus] = useState(false);
     const [status, setStatus] = useState('');
@@ -129,7 +130,6 @@ const Dashboard = () => {
         }
     };
 
-
     const rowAnimation = {
         hidden: { opacity: 0, y: -20 },
         visible: { opacity: 1, y: 0 },
@@ -145,8 +145,15 @@ const Dashboard = () => {
                     <p className="font-NotoSansKhmer font-bold ">តារាងបញ្ជីប្រភេទទំនិញ</p>
                 </div>
                 <div className="flex justify-end">
-                    <Link to={'/createproduct'} className="button_only_submit">+ បង្កើតប្រភេទថ្មី</Link>
+                    {(userRol === 'superadmin' || userRol === 'admin') ? (
+                        <Link to={'/createproduct'} className="button_only_submit">+ បង្កើតប្រភេទថ្មី</Link>
+
+                    ) : (
+                        <button to={'/createproduct'} className="button_only_submit opacity-50 cursor-not-allowed">+ បង្កើតប្រភេទថ្មី</button>
+
+                    )}
                 </div>
+
                 <div className="md:flex justify-between items-center my-3 overflow-hidden space-y-2">
                     <div className="flex flex-col gap-2 font-bold font-NotoSansKhmer">
                         <label htmlFor="">ច្រោះតាមចំនួន</label>
@@ -240,23 +247,64 @@ const Dashboard = () => {
                                                     </div>
                                                 )}
                                             </td>
-                                            <td className="px-4 py-1">{product.pro_names}</td>
-                                            <td className=" px-4 py-1">{product.cost_price}</td>
-                                            <td className=" px-4 py-1">{product.exclude_tax}</td>
-                                            <td className=" px-4 py-1">{product.include_tax || 'N/A'} </td>
-                                            <td className=" px-4 py-1">{product.profit}</td>
+
+                                            <td className='whitespace-nowrap'>
+                                                {(() => {
+                                                    if (!product.expiry) {
+                                                        return <span className="">{product.pro_names}</span>;
+                                                    }
+
+                                                    const expiryDate = new Date(product.expiry);
+                                                    if (isNaN(expiryDate.getTime())) {
+                                                        return <span className="">{product.pro_names}</span>;
+                                                    }
+
+                                                    const today = new Date();
+                                                    const next7Days = new Date(today);
+                                                    const next15Days = new Date(today);
+
+                                                    next7Days.setDate(today.getDate() + 7);
+                                                    next15Days.setDate(today.getDate() + 15);
+
+                                                    if (expiryDate < today) {
+                                                        return <span className="text-red-500">{product.pro_names}</span>;
+                                                    } else if (expiryDate <= next7Days) {
+                                                        return <span className="text-blue-500">{product.pro_names}</span>;
+                                                    } else if (expiryDate <= next15Days) {
+                                                        return <span className="text-green-500">{product.pro_names}</span>;
+                                                    } else {
+                                                        return <span>{product.pro_names}</span>;
+                                                    }
+                                                })()}
+
+                                            </td>
+                                            {/* <td className="px-4 py-1">{product.pro_names}</td> */}
+                                            <td className=" px-4 py-1 whitespace-nowrap">{product.cost_price} $</td>
+                                            <td className=" px-4 py-1 whitespace-nowrap">{product.exclude_tax} $</td>
+                                            <td className=" px-4 py-1 whitespace-nowrap">{product.include_tax} $</td>
+                                            <td className=" px-4 py-1 whitespace-nowrap">{product.profit} $</td>
                                             <td className="px-4 py-1">{product.qty} {product.unit_names}</td>
                                             <td className=" px-4 py-1">{product.product_type || 'N/A'}</td>
                                             <td className=" px-4 py-1">{product.cat_names || 'N/A'}</td>
                                             <td className="px-4 py-1">{product.brand_names || 'N/A'}</td>
                                             <td className=" px-4 py-1 whitespace-nowrap">
-                                                <button onClick={() => openUpdateModal(product)}>
-                                                    {product.status === 'active' ? (
-                                                        <span className='bg-green-500 py-1 px-4 rounded hover:bg-green-300 dark:bg-green-300 text-white'>កំពុងលក់</span>
-                                                    ) : (
-                                                        <span className='bg-red-500 py-1 px-4 rounded hover:bg-red-300 text-white dark:bg-red-300'>បិទការលក់</span>
-                                                    )}
-                                                </button>
+                                                {(userRol === 'superadmin' || userRol === 'admin') ? (
+                                                    <button onClick={() => openUpdateModal(product)}>
+                                                        {product.status === 'active' ? (
+                                                            <span className='bg-green-500 py-1 px-4 rounded hover:bg-green-300 dark:bg-green-300 text-white'>កំពុងលក់</span>
+                                                        ) : (
+                                                            <span className='bg-red-500 py-1 px-4 rounded hover:bg-red-300 text-white dark:bg-red-300'>បិទការលក់</span>
+                                                        )}
+                                                    </button>
+                                                ) : (
+                                                    <button className='opacity-50 cursor-not-allowed'>
+                                                        {product.status === 'active' ? (
+                                                            <span className='bg-green-500 py-1 px-4 rounded hover:bg-green-300 dark:bg-green-300 text-white'>កំពុងលក់</span>
+                                                        ) : (
+                                                            <span className='bg-red-500 py-1 px-4 rounded hover:bg-red-300 text-white dark:bg-red-300'>បិទការលក់</span>
+                                                        )}
+                                                    </button>
+                                                )}
                                             </td>
                                             <td className='whitespace-nowrap'>
                                                 {(() => {
@@ -288,31 +336,53 @@ const Dashboard = () => {
                                                 })()}
 
                                             </td>
-                                            <td className=" px-4 py-1">{product.description || 'N/A'}</td>
+                                            <td className=" px-4 py-1 line-clamp-2">{product.description || 'N/A'}</td>
                                             <td className=" px-4 whitespace-nowrap py-1">{formatDateToKhmer(new Date(product.create_at))}</td>
                                             <td className=" px-4 py-1">{product.user_at}</td>
-                                            <td className="px-4  space-x-2 flex">
-                                                <button
-                                                    onClick={() => openDeleteModal(product)}
-                                                    className='bg-red-200  p-2 '
-                                                >
-                                                    <MdDelete className='text-red-500' />
-                                                </button>
-                                                <Link
-                                                    to={`/updateproduct/${product.id}`}
-                                                    className="flex items-center gap-1 p-2 font-bold text-white bg-green-300 hover:bg-green-400"
+                                            {(userRol === 'superadmin' || userRol === 'admin') ? (
+                                                <td className="px-4  space-x-2 flex">
+                                                    <button
+                                                        onClick={() => openDeleteModal(product)}
+                                                        className='bg-red-200  p-2 '
+                                                    >
+                                                        <MdDelete className='text-red-500' />
+                                                    </button>
+                                                    <Link
+                                                        to={`/updateproduct/${product.id}`}
+                                                        className="flex items-center gap-1 p-2 font-bold text-white bg-blue-300 hover:bg-blue-400"
 
-                                                >
-                                                    <FaPencilAlt className='text-blue-500' />
-                                                </Link>
-                                                <Link
-                                                    to={`/product/${product.id}`}
-                                                    className="flex items-center gap-1 p-2 font-bold text-white bg-green-300 hover:bg-green-400"
+                                                    >
+                                                        <FaPencilAlt className='text-blue-500' />
+                                                    </Link>
+                                                    <Link
+                                                        to={`/product/${product.id}`}
+                                                        className="flex items-center gap-1 p-2 font-bold text-white bg-green-300 hover:bg-green-400"
 
-                                                >
-                                                    <IoPrint />
-                                                </Link>
-                                            </td>
+                                                    >
+                                                        <IoPrint />
+                                                    </Link>
+                                                </td>
+                                            ) : (
+                                                <td className="px-4  space-x-2 flex">
+                                                    <button
+                                                        className='bg-red-200  p-2 cursor-not-allowed opacity-50'
+                                                    >
+                                                        <MdDelete className='text-red-500' />
+                                                    </button>
+                                                    <span
+                                                        className="flex items-center gap-1 cursor-not-allowed opacity-50 p-2 font-bold text-white bg-blue-300 hover:bg-blue-400"
+                                                    >
+                                                        <FaPencilAlt className='text-blue-500' />
+                                                    </span>
+                                                    <Link
+                                                        to={`/product/${product.id}`}
+                                                        className="flex items-center gap-1 p-2 font-bold text-white bg-green-300 hover:bg-green-400"
+
+                                                    >
+                                                        <IoPrint />
+                                                    </Link>
+                                                </td>
+                                            )}
                                         </motion.tr>
                                     ))}
                                 </tbody>
@@ -418,12 +488,11 @@ const Dashboard = () => {
                 )}
             </AnimatePresence>
             <div className='flex space-x-8 py-2'>
-                <p className='text-red-500'>ថ្ងៃទីពណ័ « ក្រហម » ថ្ងៃផុតកំណត់</p>
-                <p className='text-blue-500'>ថ្ងៃទីពណ័ « ខៀវ » នៅសល់៧ថ្ងៃផុតកំណត់</p>
-                <p className='text-green-500'>ថ្ងៃទីពណ័ « បៃតង » នៅសល់15ថ្ងៃផុតកំណត់</p>
+                <p className='text-red-500'>ឈ្មោះផលិតផល « ក្រហម » ថ្ងៃផុតកំណត់</p>
+                <p className='text-blue-500'>ឈ្មោះផលិតផល « ខៀវ » នៅសល់៧ថ្ងៃផុតកំណត់</p>
+                <p className='text-green-500'>ឈ្មោះផលិតផល « បៃតង » នៅសល់15ថ្ងៃផុតកំណត់</p>
             </div>
         </div>
     );
 };
-
 export default Dashboard;

@@ -14,8 +14,8 @@ exports.GetAll = (req, res) => {
 
 // get data to frontend ->  in backend
 exports.GetAllData = (req, res) => {
-    const page = parseInt(req.query.page, 10) || 1;
-    const limit = parseInt(req.query.limit, 10) || 10;
+    const page = parseInt(req.query.page, 25) || 1;
+    const limit = parseInt(req.query.limit, 25) || 25;
     const searchQuery = req.query.search_query || "";
     const offset = (page - 1) * limit;
 

@@ -19,7 +19,6 @@ const SupplierList = () => {
     const [supplierId, setSupplierId] = useState(null);
     const [email, setEmail] = useState(null);
     const [description, setDescription] = useState(null);
-    const [userLoginNames, setUserLoginNames] = useState('');
     const [error, setError] = useState('');
     //// paginate and search data
     const [suppliers, setsupplier] = useState([]);
@@ -28,8 +27,11 @@ const SupplierList = () => {
     const [totalPages, setTotalPages] = useState(0);
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(20);
+    const [userLoginNames, setUserLoginNames] = useState('');
+    const [userRol, setUserRol] = useState('');
 
     useEffect(() => {
+        setUserRol(localStorage.getItem('user_rol') || '');
         setUserLoginNames(localStorage.getItem('user_names') || '');
         GetAllsupplier();
 
@@ -121,6 +123,7 @@ const SupplierList = () => {
     const Updatesupplier = async e => {
         e.preventDefault();
         setError('');
+        setError('');
         const values = {
             contect_type: isTypwsupplier,
             contect_phone: businessPhone,
@@ -140,8 +143,11 @@ const SupplierList = () => {
             setSelectedsupplierId(null);
             cleardata();
         } catch (err) {
+            // console.error(err);
+            // toast.error('សូមលោកព្យាយាមម្ដងទៀត!', { autoClose: 3000 });
             console.error(err);
-            toast.error('សូមលោកព្យាយាមម្ដងទៀត!', { autoClose: 3000 });
+            const errorMessage = err.response?.data?.message || 'សូមលោកព្យាយាមម្ដងទៀត !';
+            toast.error(errorMessage, { autoClose: 3000 });
         }
     };
 
@@ -165,6 +171,9 @@ const SupplierList = () => {
             } catch (err) {
                 console.error(err);
                 toast.error('សូមលោកព្យាយាមម្ដងទៀត !', { autoClose: 3000 });
+                // console.error(err);
+                // const errorMessage = err.response?.data?.message || 'សូមលោកព្យាយាមម្ដងទៀត !';
+                // toast.error(errorMessage, { autoClose: 3000 });
             }
         }
     };
@@ -218,7 +227,11 @@ const SupplierList = () => {
                 <p className="font-NotoSansKhmer font-bold ">តារាងបញ្ជីអតិជន</p>
             </div>
             <div className="flex justify-end">
-                <button className="button_only_submit" onClick={openInsertModal}>+ បង្កើតអតិជនថ្មី</button>
+                {(userRol === 'superadmin' || userRol === 'admin') ? (
+                    <button className="button_only_submit" onClick={openInsertModal}>+ បង្កើតអតិជនថ្មី</button>
+                ) : (
+                    <button className="button_only_submit cursor-not-allowed opacity-60">+ បង្កើតអតិជនថ្មី</button>
+                )}
             </div>
             <div className="flex justify-between items-center my-3">
                 <div className="flex flex-col gap-2 font-bold font-NotoSansKhmer">
@@ -283,9 +296,8 @@ const SupplierList = () => {
                                         <td className="px-4 py-1">{supplier.contect_phone || 'N/A'}</td>
                                         <td className="px-4 py-1">{supplier.description || 'N/A'}</td>
                                         <td className="px-4 py-1">{supplier.user_at || 'Unknown'}</td>
-                                        <td className="px-4 space-x-2 flex">
-                                            {/* Conditional rendering for buttons */}
-                                            {supplier.full_names !== 'Walk-In supplier' && (
+                                        {(userRol === 'superadmin' || userRol === 'admin') ? (
+                                            <td className="px-4 space-x-2 flex">
                                                 <>
                                                     <button
                                                         onClick={() => openUpdateModal(supplier)}
@@ -297,11 +309,26 @@ const SupplierList = () => {
                                                         onClick={() => openDeleteModal(supplier)}
                                                         className="bg-red-300 p-2 flex text-xs text-white"
                                                     >
-                                                        <FaPowerOff className="text-red-500 mr-2" /> លុប
+                                                        <MdDelete className="text-red-500 mr-2" /> លុប
                                                     </button>
                                                 </>
-                                            )}
-                                        </td>
+                                            </td>
+                                        ) : (
+                                            <td className="px-4 space-x-2 flex">
+                                                <>
+                                                    <button
+                                                        className="bg-blue-300 p-2 flex text-xs text-white cursor-not-allowed opacity-60"
+                                                    >
+                                                        <FaPencilAlt className="text-blue-500 mr-2" /> កែសម្រួល
+                                                    </button>
+                                                    <button
+                                                        className="bg-red-300 p-2 flex text-xs text-white cursor-not-allowed opacity-60"
+                                                    >
+                                                        <MdDelete className="text-red-500 mr-2" /> លុប
+                                                    </button>
+                                                </>
+                                            </td>
+                                        )}
                                     </motion.tr>
                                 ))}
                             </tbody>
@@ -487,7 +514,7 @@ const SupplierList = () => {
                             </div>
                             <div className="p-4 space-y-4">
                                 <p className="text-sm ">
-                                    Are you sure you want to delete this supplier? This action cannot be undone.
+                                តើអ្នកប្រាកដថាចង់លុបអ្នកផ្គត់ផ្គង់នេះទេ? សកម្មភាពនេះមិនអាចត្រឡប់វិញបានទេ។
                                 </p>
                                 <div className="flex justify-end space-x-2">
                                     <button

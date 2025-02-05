@@ -14,9 +14,6 @@ const Account = () => {
             name: ' ផលិតផលទាំងអស់',
         },
         {
-            name: 'បញ្ចូលផលិតផល',
-        },
-        {
             name: 'ព័ត៍មានរបាយការណ៍ស្តុក',
         },
         {
@@ -51,9 +48,6 @@ const Account = () => {
                                 <TabPanels className="mt-3">
                                     <TabPanel className="p-4 border">
                                         <ProductList />
-                                    </TabPanel>
-                                    <TabPanel className="p-4 border">
-                                        <ProductInfo />
                                     </TabPanel>
                                     <TabPanel className="p-4 border border-gray-300 rounded-md">
                                         <ProductInfo />

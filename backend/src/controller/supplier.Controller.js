@@ -13,8 +13,8 @@ exports.GetAll = (req, res) => {
 
 // get data to frontend ->  in backend
 exports.GetAllsupplier = (req, res) => {
-    const page = parseInt(req.query.page, 10) || 1;
-    const limit = parseInt(req.query.limit, 10) || 10;
+    const page = parseInt(req.query.page, 25) || 1;
+    const limit = parseInt(req.query.limit, 25) || 25;
     const searchQuery = req.query.search_query || "";
     const offset = (page - 1) * limit;
   
@@ -56,29 +56,83 @@ exports.GetAllsupplier = (req, res) => {
 };
 
 // Create data Category
+// exports.Create = (req, res) => {
+//     const {contect_type,contect_phone,mobile_phone,business_names,full_names,half_names,description,email,user_at}=req.body;
+//     const sql = "INSERT INTO supplier (contect_type,contect_phone,mobile_phone,business_names,full_names,half_names,description,email,user_at) VALUES (?,?,?,?,?,?,?,?,?)";
+//     db.query(sql,[contect_type,contect_phone,mobile_phone,business_names,full_names,half_names,description,email,user_at], (err, results) => {
+//         if (err) {
+//             return res.status(500).send(err);
+//         }
+//         res.json(results);
+//     });
+// }
+
 exports.Create = (req, res) => {
-    const {contect_type,contect_phone,mobile_phone,business_names,full_names,half_names,description,email,user_at}=req.body;
-    const sql = "INSERT INTO supplier (contect_type,contect_phone,mobile_phone,business_names,full_names,half_names,description,email,user_at) VALUES (?,?,?,?,?,?,?,?,?)";
-    db.query(sql,[contect_type,contect_phone,mobile_phone,business_names,full_names,half_names,description,email,user_at], (err, results) => {
+    const { contect_type, contect_phone, mobile_phone, business_names, full_names, half_names, description, email, user_at } = req.body;
+
+    // Check if email, contect_phone, or mobile_phone already exist
+    const checkSql = "SELECT * FROM supplier WHERE email = ? OR contect_phone = ? OR mobile_phone = ?";
+    db.query(checkSql, [email, contect_phone, mobile_phone], (err, results) => {
         if (err) {
-            return res.status(500).send(err);
+            return res.status(500).json({ error: "Database error", details: err });
         }
-        res.json(results);
+
+        if (results.length > 0) {
+            return res.status(400).json({ message: "អ៊ីមែល ឬលេខទូរស័ព្ទបានប្រើរួចហើយសម្រាប់អ្នកផ្គត់ផ្គង់ផ្សេងទៀត​។" });
+        }
+
+        // Insert new record if email and phone numbers are not found
+        const insertSql = "INSERT INTO supplier (contect_type, contect_phone, mobile_phone, business_names, full_names, half_names, description, email, user_at) VALUES (?,?,?,?,?,?,?,?,?)";
+        db.query(insertSql, [contect_type, contect_phone, mobile_phone, business_names, full_names, half_names, description, email, user_at], (err, results) => {
+            if (err) {
+                return res.status(500).json({ error: "Database error", details: err });
+            }
+            res.status(201).json({ message: "Supplier created successfully", data: results });
+        });
     });
-}
+};
+
 
 // update data supplier
+// exports.Update = (req, res) => {
+//     const {id} = req.params;
+//     const {contect_type,contect_phone,mobile_phone,business_names,full_names,half_names,description,email,user_at}=req.body;
+//     const sql = "UPDATE supplier set contect_type=?,contect_phone=?,mobile_phone=?,business_names=?,full_names=?,half_names=?,description=?,email=?,user_update=? where id=?";
+//     db.query(sql,[contect_type,contect_phone,mobile_phone,business_names,full_names,half_names,description,email,user_at,id], (err, results) => {
+//         if (err) {
+//             return res.status(500).send(err);
+//         }
+//         res.json(results);
+//     });
+// }
+
+// Update supplier data
 exports.Update = (req, res) => {
-    const {id} = req.params;
-    const {contect_type,contect_phone,mobile_phone,business_names,full_names,half_names,description,email,user_at}=req.body;
-    const sql = "UPDATE supplier set contect_type=?,contect_phone=?,mobile_phone=?,business_names=?,full_names=?,half_names=?,description=?,email=?,user_update=? where id=?";
-    db.query(sql,[contect_type,contect_phone,mobile_phone,business_names,full_names,half_names,description,email,user_at,id], (err, results) => {
+    const { id } = req.params;
+    const { contect_type, contect_phone, mobile_phone, business_names, full_names, half_names, description, email, user_at } = req.body;
+
+    // Check if email, contect_phone, or mobile_phone already exist for another supplier
+    const checkSql = "SELECT * FROM supplier WHERE (email = ? OR contect_phone = ? OR mobile_phone = ?) AND id != ?";
+    db.query(checkSql, [email, contect_phone, mobile_phone, id], (err, results) => {
         if (err) {
-            return res.status(500).send(err);
+            return res.status(500).json({ error: "Database error", details: err });
         }
-        res.json(results);
+
+        if (results.length > 0) {
+            return res.status(400).json({ message: "អ៊ីមែល ឬលេខទូរស័ព្ទបានប្រើរួចហើយសម្រាប់អ្នកផ្គត់ផ្គង់ផ្សេងទៀត។" });
+        }
+
+        // If no duplicate found, update the supplier
+        const updateSql = "UPDATE supplier SET contect_type=?, contect_phone=?, mobile_phone=?, business_names=?, full_names=?, half_names=?, description=?, email=?, user_update=? WHERE id=?";
+        db.query(updateSql, [contect_type, contect_phone, mobile_phone, business_names, full_names, half_names, description, email, user_at, id], (err, results) => {
+            if (err) {
+                return res.status(500).json({ error: "Database error", details: err });
+            }
+            res.status(200).json({ message: "Supplier updated successfully", data: results });
+        });
     });
-}
+};
+
 
 // GEt Data Single supplier
 exports.GetSingle = (req, res) => {

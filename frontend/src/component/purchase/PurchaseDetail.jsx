@@ -100,9 +100,6 @@ const Dashboard = () => {
         }
     };
 
-
-
-
     const rowAnimation = {
         hidden: { opacity: 0, y: -20 },
         visible: { opacity: 1, y: 0 },
@@ -185,7 +182,7 @@ const Dashboard = () => {
                                                 >
                                                     <MdDelete className='text-red-500' />
                                                 </button>
-                                                <Link className="bg-blue-50 rounded-full p-2" to={`/update/${purchase.id}`}>
+                                                <Link className="bg-blue-50 rounded-full p-2" to={`/purchase/${purchase.id}`}>
                                                     <FaPencilAlt className='text-blue-500' />
                                                 </Link>
                                             </td>

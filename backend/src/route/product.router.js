@@ -3,7 +3,7 @@ const multer = require('multer');
 const path = require('path');
 
 const router = express.Router();
-const { Createproduct, Updateproduct, GetSingle, Deleteproduct, GetAllProduct,CreateproductBa,GetAllProductAll,GetProductID,UpdateproductBa ,UpdateproductStatus} = require('../controller/product.controller');
+const {GetAll, Createproduct, Updateproduct, GetSingle, Deleteproduct, GetAllProduct,CreateproductBa,GetAllProductAll,GetProductID,UpdateproductBa ,UpdateproductStatus} = require('../controller/product.controller');
 
 // Set up storage engine for multer
 const storage = multer.diskStorage({
@@ -37,6 +37,7 @@ const upload = multer({
   }
 });
 
+router.get('/all', GetAll);   //// use ing in page warrenty 
 router.get('/', GetAllProduct);  //// use ing in page table 
 router.get('/product', GetAllProductAll); //// use ing in page viewproduct POS
 router.post('/', upload.single('file'), Createproduct);
@@ -46,7 +47,7 @@ router.put('/updateproduct_status/:id', UpdateproductStatus); //// use ing in pa
 
 router.put('/:id', upload.single('file'), Updateproduct);
 router.get('/:id', GetSingle);
-router.get('/product/:id', GetProductID);
+router.get('/product/:id', GetProductID); //// using update purchase 
 router.delete('/:id', Deleteproduct);
 
 module.exports = router;

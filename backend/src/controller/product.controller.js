@@ -3,7 +3,21 @@ const fs = require('fs');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 
-
+//// use ing in page warrenty 
+exports.GetAll = (req, res) => {
+    const sql1 = `SELECT * from products`;
+    const sql = ` SELECT pro.*, cat.cat_names, u.names AS unit_names, b.brand_names 
+            FROM products AS pro
+            LEFT JOIN category AS cat ON pro.category_id = cat.id
+            LEFT JOIN unit AS u ON pro.unit_id = u.id
+            LEFT JOIN brands AS b ON pro.brand_id = b.id`;
+    db.query(sql, (err, results) => {
+        if (err) {
+            return res.status(500).send(err);
+        }
+        res.json(results);
+    });
+}
 
 // exports.GetAllProduct = async (req, res) => {
 //     const page = parseInt(req.query.page, 10) || 1;
@@ -46,10 +60,9 @@ const { v4: uuidv4 } = require('uuid');
 // };
 
 
-
 exports.GetAllProduct = async (req, res) => {
-    const page = parseInt(req.query.page, 10) || 1;  // Default to page 1 if not specified
-    const limit = parseInt(req.query.limit, 10) || 10;  // Default to 10 results per page
+    const page = parseInt(req.query.page, 25) || 1;  // Default to page 1 if not specified
+    const limit = parseInt(req.query.limit, 25) || 25;  // Default to 10 results per page
     const searchQuery = req.query.search_query || '';  // Default to empty search query
     const categoryId = req.query.category_id || '';  // Optional filter for category
     const brandId = req.query.brand_id || '';  // Optional filter for brand
@@ -428,7 +441,7 @@ exports.Updateproduct = (req, res) => {
 
 
 
- //// update product status use ing in page product lsit
+//// update product status use ing in page product lsit
 exports.UpdateproductStatus = (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
@@ -453,9 +466,9 @@ exports.UpdateproductStatus = (req, res) => {
 //     const { id } = req.params;
 //     const { pro_names, category_id, brand_id, unit_id, note_qty, mg_stock, cost_price, include_tax, exclude_tax, profit, expiry, type_of_tax, product_type, description, user_at, barcode_type } = req.body;
 //     const image = req.file ? req.file.filename : null;
-   
+
 //     const sql = "UPDATE products SET pro_names=?, category_id=?, brand_id=?, unit_id=?, note_qty=?,mg_stock=?, cost_price=?, include_tax=?, exclude_tax=?, profit=?,expiry=?, type_of_tax=?,product_type=?, image=?, description=?, user_update=?,barcode_type=? WHERE id = ?";
-    
+
 //     db.query(sql, [pro_names, category_id, brand_id, unit_id, note_qty,mg_stock, cost_price, include_tax, exclude_tax, profit,expiry, type_of_tax,product_type, image, description, user_at,barcode_type, id], (err, results) => {
 //         if (err) {
 //             return res.status(500).json({ error: "Database error", details: err });
@@ -501,7 +514,7 @@ exports.UpdateproductBa1 = (req, res) => {
 
 exports.UpdateproductBa = (req, res) => {
     const { id } = req.params;
-    const {  pro_names, category_id, brand_id, unit_id, note_qty, mg_stock, cost_price, include_tax, exclude_tax, profit, expiry, type_of_tax, product_type, description, user_at, barcode_type } = req.body;
+    const { pro_names, category_id, brand_id, unit_id, note_qty, mg_stock, cost_price, include_tax, exclude_tax, profit, expiry, type_of_tax, product_type, description, user_at, barcode_type } = req.body;
     let newImage = req.file ? req.file.filename : null;
 
     // Check if another product with the same pro_names exists, excluding the current product
@@ -538,7 +551,7 @@ exports.UpdateproductBa = (req, res) => {
             db.query(
                 `UPDATE products 
                  SET pro_names=?, category_id=?, brand_id=?, unit_id=?, note_qty=?, mg_stock=?, cost_price=?, include_tax=?, exclude_tax=?, profit=?, expiry=?, type_of_tax=?, product_type=?, image=?, description=?, user_update=?, barcode_type=? WHERE id=?`,
-                [ pro_names, category_id, brand_id, unit_id, note_qty, mg_stock, cost_price, include_tax, exclude_tax, profit, expiry, type_of_tax, product_type,newImage, description, user_at, barcode_type, id],
+                [pro_names, category_id, brand_id, unit_id, note_qty, mg_stock, cost_price, include_tax, exclude_tax, profit, expiry, type_of_tax, product_type, newImage, description, user_at, barcode_type, id],
                 (err, result) => {
                     if (err) {
                         console.error(err);
@@ -583,7 +596,7 @@ exports.GetProductID = (req, res) => {
                 LEFT JOIN brands as b ON pro.brand_id = b.id
                 WHERE pro.id  = ?`;
 
-    db.query(sql, [id, id], (err, results) => { 
+    db.query(sql, [id, id], (err, results) => {
         if (err) {
             return res.status(500).send(err);
         }

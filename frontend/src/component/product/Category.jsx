@@ -75,6 +75,8 @@ const Dashboard = () => {
   // modal insert
   const openInsertModal = () => {
     setIsInsertModalOpen(true);
+    setNames('');
+    setDetail('');
   };
   // modal update 
   const openUpdateModal = cat => {
@@ -93,7 +95,7 @@ const Dashboard = () => {
     }
     try {
       await axios.put(`http://localhost:6700/categories/${selectedCategoryId}`, values);
-      toast.success('កែប្រែបានដោយជោគជ័យ!', { autoClose: 3000 });
+      toast.success(`កែប្រែបានដោយជោគជ័យ ​« ${names} »`, { autoClose: 3000 });
       getAllStudent();
       setIsUpdateModalOpen(false);
       setSelectedCategoryId(null);
@@ -101,7 +103,7 @@ const Dashboard = () => {
       setDetail('');
     } catch (err) {
       console.error(err);
-      toast.error('សូមលោកព្យាយាមម្ដងទៀត ស្មោះមានរួចហើយ !', { autoClose: 3000 });
+      toast.error(`សូមលោកព្យាយាមម្ដងទៀត ​« ${names} » ស្មោះមានរួចហើយ !`, { autoClose: 3000 });
     }
   };
 
@@ -110,6 +112,7 @@ const Dashboard = () => {
   const openDeleteModal = cat => {
     setSelectedCategoryId(cat.id);
     setIsDeleteModalOpen(true);
+    setNames(cat.cat_names);
   };
 
   // modale delete
@@ -117,13 +120,15 @@ const Dashboard = () => {
     if (selectedCategoryId) {
       try {
         await axios.delete(`http://localhost:6700/categories/${selectedCategoryId}`);
-        toast.success('លុបបានដោយជោគជ័យ!', { autoClose: 3000 });
+        toast.success(`លុបបានដោយជោគជ័យ  ​« ${names} » `, { autoClose: 3000 });
         getAllStudent();
         setIsDeleteModalOpen(false);
         setSelectedCategoryId(null);
       } catch (err) {
         console.error(err);
-        toast.error('សូមលោកព្យាយាមម្ដងទៀត ស្មោះមានរួចហើយ !', { autoClose: 3000 });
+        // toast.error('សូមលោកព្យាយាមម្ដងទៀត ស្មោះមានរួចហើយ !', { autoClose: 3000 });
+
+        toast.error(`សូមលោកព្យាយាមម្ដងទៀត ស្មោះ ​« ${names} »មានរួចហើយ !`, { autoClose: 3000 });
       }
     }
   };
@@ -139,14 +144,14 @@ const Dashboard = () => {
     try {
       const res = await axios.post('http://localhost:6700/categories', values);
       console.log(res.data);
-      toast.success('បង្កើតបានដោយជោគជ័យ!', { autoClose: 3000 });
+      toast.success(`បង្កើតបានដោយជោគជ័យ  ​« ${names} »`, { autoClose: 3000 });
       setNames('');
       setDetail('');
       getAllStudent();
       setIsInsertModalOpen(false);
     } catch (err) {
       console.error(err);
-      toast.error('សូមលោកព្យាយាមម្ដងទៀត ស្មោះមានរួចហើយ !', { autoClose: 3000 });
+      toast.error(`សូមលោកព្យាយាមម្ដងទៀត ស្មោះ ​« ${names} » មានរួចហើយ !`, { autoClose: 3000 });
     }
   };
   const rowAnimation = {
@@ -179,18 +184,7 @@ const Dashboard = () => {
               ))}
             </select>
           </div>
-          {/* <div class="flex-col hidden md:block">
-            <div className='flex'>
-              <button class="button_export">
-                <p><FaFileCsv /></p>
-                Export to CSV
-              </button>
-              <button class="button_export">
-                <p><FaFileExcel /></p>
-                Export to Excel
-              </button>
-            </div>
-          </div> */}
+         
           <div>
             <input type="text"
               value={searchQuery}
@@ -342,7 +336,7 @@ const Dashboard = () => {
               </div>
               <div className="p-4 space-y-4">
                 <p className="text-sm ">
-                  Are you sure you want to delete this category? This action cannot be undone.
+                តើអ្នកប្រាកដថាចង់លុបប្រភេទ ​« {names} ​»​ នេះទេ?  សកម្មភាពនេះមិនអាចត្រឡប់វិញបានទេ។
                 </p>
                 <div className="flex justify-end space-x-2">
                   <button

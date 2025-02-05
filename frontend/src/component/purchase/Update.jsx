@@ -1,1726 +1,92 @@
-// // import Navbar from '../Navbar';
-// // import React, { useEffect, useState } from 'react';
-// // import axios from 'axios';
-// // import { toast } from 'react-toastify';
-// // import Pagination from '../pagination/Pagination';
-// // import { FaClipboardList, FaFileCsv, FaFileExcel, FaPencilAlt, FaSearch } from "react-icons/fa";
-// // import { MdDelete, MdClose } from "react-icons/md";
-// // import { motion, AnimatePresence } from "framer-motion";
-// // import { IoMdClose } from "react-icons/io";
-// // import BackgroundArrow from '../background/BackgroundArrow'
-// // import { useNavigate } from 'react-router-dom';
-// // import { useParams } from 'react-router-dom';
 
 
-
-// // const UpdatePurchase = () => {
-// //   const navigate = useNavigate();
-// //   const [isDropdownOpenProduct, setIsDropdownOpenProduct] = useState(false);
-// //   const [quantities, setQuantities] = useState({});
-// //   const [discounts, setDiscounts] = useState({});
-// //   const [salePrices, setSalePrices] = useState({});
-// //   const [originalPrice, setOriginalPrice] = useState({});
-// //   const [taxes, setTaxes] = useState({});
-// //   const [product_ID, setProduct_ID] = useState('');
-// //   const [amountTotal, setAmountTotal] = useState(0);
-// //   const [amountDiscount, setAmounDiscount] = useState(0);
-// //   const [amountPay, setAmounPay] = useState(null);
-// //   const today = new Date().toISOString().split('T')[0];
-// //   const [payDob, setPayDob] = useState('');
-// //   const [createDob, setCreateDob] = useState(today);
-// //   const [supplier_id, setSupplier_ID] = useState('');
-// //   const [statuss, setStatus] = useState('');
-// //   const [account_ID, setAccount_ID] = useState('');
-// //   const [paymentType_ID, setPaymentType_ID] = useState('');
-// //   const [userLoginNames, setUserLoginNames] = useState('');
-
-// //   const [supplier, setsupplier] = useState([]);
-// //   const [products, setProducts] = useState([]);
-// //   const [selectedProducts, setSelectedProducts] = useState([]);
-// //   const [error, setError] = useState('');
-// //   const [loading, setLoading] = useState(false);
-// //   const [isSubmitting, setIsSubmitting] = useState(false);
-
-
-// //   const [purchaseData, setPurchaseData] = useState(null);
-
-
-// //   const { id } = useParams();
-
-// // const fetchData = async () => {
-// //   try {
-// //     const response = await axios.get(`http://localhost:6700/api/purchase/${id}`);
-// //     const data = response.data;
-
-// //     // Set the purchase-related fields
-// //     setAmountTotal(data.amount_total);
-// //     setAmounDiscount(data.amount_discount);
-// //     setAmounPay(data.amount_pay || 0);
-// //     setPayDob(data.pay_date || '');
-// //     setPaymentType_ID(data.paymenttype_id || '');
-// //     setAccount_ID(data.account_id || '');
-
-// //     // Handle products inside the purchase
-// //     if (data.products && data.products.length > 0) {
-// //       setSelectedProducts(data.products);
-// //     }
-
-// //     setPayDob(data.date_by);
-// //     setSupplier_ID(data.supplier_id);
-
-// //     console.log('Fetched data:', data);
-// //   } catch (error) {
-// //     console.error('Error fetching purchase data:', error);
-// //   }
-// // };
-
-// // useEffect(() => {
-// //   fetchData();
-// // }, [id]);
-
-
-// //   useEffect(() => {
-// //     setUserLoginNames(localStorage.getItem('user_names') || '');
-// //     fetchsupplier();
-// //     fetchProducts();
-// //     getAccountBank();
-// //     getPaymentType();
-// //   }, []);
-
-// //   useEffect(() => {
-// //     const total = selectedProducts.reduce((acc, product) => {
-// //       const qty = quantities[product.id] || 1; // Default to 1
-// //       const discount = discounts[product.id] || 0;
-// //       const saleprice = salePrices[product.id] || product.exclude_tax;
-// //       const tax = taxes[product.id] || 0;
-// //       const totalPrice = qty * saleprice;
-// //       const grandTotal = totalPrice - discount + tax;
-// //       return acc + grandTotal;
-// //     }, 0);
-// //     setAmountTotal(total);
-// //   }, [selectedProducts, quantities, discounts, taxes, salePrices]);
-
-// //   const handleSubmit = async (e) => {
-// //     e.preventDefault();
-
-// //     // Validation
-// //     if (selectedProducts.length === 0) {
-// //       alert("Please add a product to cart");
-// //       return;
-// //     }
-
-// //     let totalAmount = 0;
-// //     let totalDiscount = 0;
-
-// //     const productsData = selectedProducts.map(product => {
-// //       const qty = quantities[product.id] || 1;
-// //       const discount = discounts[product.id] || 0;
-// //       const tax = taxes[product.id] || 0;
-// //       const saleprice = salePrices[product.id] || product.exclude_tax;
-// //       const Originale_price = originalPrice[product.id] || product.cost_price;
-// //       const totalPrice = qty * saleprice;
-// //       const grandTotal = totalPrice - discount + tax;
-
-// //       // Accumulate totals
-// //       totalAmount += grandTotal;
-// //       totalDiscount += discount;
-// //       return {
-// //         supplier_id: supplier_id,
-// //         product_id: product.id,
-// //         date_by: createDob,
-// //         qty: qty,
-// //         discount: discount,
-// //         cost_price: Originale_price,
-// //         included_tax: tax,
-// //         excluded_tax: saleprice,
-// //         total: grandTotal,
-// //         status: statuss,
-// //         user_at: userLoginNames,
-// //       };
-// //     });
-
-// //     if ((totalAmount - amountDiscount) < amountPay) {
-// //       alert("ការទូទាត់សាច់ប្រាក់លើសការកំណត់!");
-// //       return;
-// //     }
-
-// //     const orderData = {
-// //       paymenttype_id: paymentType_ID,
-// //       account_id: account_ID,
-// //       amount_total: totalAmount,
-// //       amount_discount: amountDiscount,
-// //       amount_pay: amountPay,
-// //       pay_date: payDob,
-// //       products: productsData,
-// //     };
-// //     setIsSubmitting(true); // Set submitting state
-
-// //     try {
-// //       // Send data to backend
-// //       const response = await fetch('http://localhost:6700/api/purchase', {
-// //         method: 'POST',
-// //         headers: { 'Content-Type': 'application/json' },
-// //         body: JSON.stringify(orderData),
-// //       });
-
-// //       const result = await response.json();
-
-// //       if (response.ok) {
-// //         toast.success(`Order created successfully!`, {
-// //           position: "top-right",
-// //           autoClose: 3000,
-// //         });
-// //         navigate('/purchase')
-// //         clearCart();
-// //       } else {
-// //         // toast.error(result.message || 'Failed to place the order!');
-// //       }
-// //     } catch (error) {
-// //       toast.error('Failed to place the order!', {
-// //         position: "top-right",
-// //         autoClose: 1000,
-// //       });
-// //     } finally {
-// //       setIsSubmitting(false);
-// //     }
-// //   };
-
-// //   const clearCart = () => {
-// //     setSelectedProducts([]);
-// //     setPaymentType_ID('');
-// //     setAccount_ID('');
-// //     setAmounDiscount('');
-// //     setCreateDob('');
-// //     setSupplier_ID('');
-// //     setStatus('');
-// //     setAmountTotal('');
-// //     setAmounPay('');
-// //     setPayDob(today);
-// //   };
-
-// //   const fetchsupplier = async () => {
-// //     setLoading(true);
-// //     try {
-// //       const response = await axios.get('http://localhost:6700/api/supplier');
-// //       setsupplier(response.data.supplier);
-// //       setError('');
-// //     } catch (error) {
-// //       setError('Error fetching supplier data');
-// //     } finally {
-// //       setLoading(false);
-// //     }
-// //   };
-
-// //   const fetchProducts = async () => {
-// //     setLoading(true);
-// //     try {
-// //       const response = await axios.get('http://localhost:6700/api/product');
-// //       setProducts(response.data.product);
-// //       setError('');
-// //     } catch (error) {
-// //       setError('Error fetching products data');
-// //     } finally {
-// //       setLoading(false);
-// //     }
-// //   };
-
-// //   const handleAmountPayChange = (value) => {
-// //     const numericValue = parseFloat(value);
-// //     if (!isNaN(numericValue) && numericValue >= 0) {
-// //       setAmounPay(numericValue);
-// //     }
-// //   };
-
-// //   const handleAmountDiscountChange = (value) => {
-// //     const numericValue = parseFloat(value);
-// //     if (!isNaN(numericValue) && numericValue >= 0) {
-// //       setAmounDiscount(numericValue);
-// //     }
-// //   };
-
-
-
-// //   const handleQtyChange = (productId, value) => {
-// //     setQuantities((prevQuantities) => ({
-// //       ...prevQuantities,
-// //       [productId]: value >= 1 ? Number(value) : 1, // Ensure quantity is at least 1
-// //     }));
-// //   };
-
-// //   const handleOriginalPriceceChange = (productId, value) => {
-// //     setOriginalPrice((prevOrinalPrice) => ({
-// //       ...prevOrinalPrice,
-// //       [productId]: value >= 0 ? Number(value) : 0,
-// //     }));
-// //   };
-
-// //   const handleSalePriceChange = (productId, value) => {
-// //     setSalePrices((prevSalePrice) => ({
-// //       ...prevSalePrice,
-// //       [productId]: value >= 0 ? Number(value) : 0,
-// //     }));
-// //   };
-// //   const handleDiscountChange = (productId, value) => {
-// //     setDiscounts((prevDiscounts) => ({
-// //       ...prevDiscounts,
-// //       [productId]: value >= 0 ? Number(value) : 0,
-// //     }));
-// //   };
-// //   const handleTaxChange = (productId, value) => {
-// //     setTaxes((prevTaxes) => ({
-// //       ...prevTaxes,
-// //       [productId]: value >= 0 ? Number(value) : 0,
-// //     }));
-// //   };
-
-
-// //   const handleRemoveProduct = (productId) => {
-// //     setSelectedProducts(
-// //       selectedProducts.filter((product) => product.id !== productId)
-// //     );
-// //   };
-// //   const handleAddProduct = (product) => {
-// //     if (selectedProducts.find((p) => p.id === product.id)) {
-// //       toast.error(`ផលិតផល ${product.pro_names} មានរូចហើយ!`, {
-// //         position: "top-center",
-// //         autoClose: 1000,
-// //       });
-
-// //     } else {
-// //       setSelectedProducts([...selectedProducts, product]);
-// //     }
-// //     setProduct_ID("");
-// //     setIsDropdownOpenProduct(false);
-// //   };
-
-// //   const handleProductSearchChange = (e) => {
-// //     setProduct_ID(e.target.value);
-// //     setIsDropdownOpenProduct(e.target.value.length > 0); // Corrected here
-// //   };
-
-// //   const filteredOptionsProduct = products.filter(option =>
-// //     option.pro_names.toLowerCase().includes(product_ID.toLowerCase())
-// //   );
-
-
-// //   ///// get account 
-// //   const [accountBank, setAccountBank] = useState([]);
-// //   const getAccountBank = async () => {
-// //     try {
-// //       const response = await axios.get('http://localhost:6700/api/account');
-// //       setAccountBank(response.data.account);
-// //       // console.log(response.data)
-// //     } catch (error) {
-// //       setError('Error fetching categories data');
-// //     }
-// //   };
-
-// //   ///// get payment Type 
-// //   const [paymentType, setPaymentType] = useState([]);
-// //   const getPaymentType = async () => {
-// //     try {
-// //       const response = await axios.get('http://localhost:6700/api/payment_type');
-// //       setPaymentType(response.data.payment_type);
-// //       // console.log(response.data)
-// //     } catch (error) {
-// //       setError('Error fetching categories data');
-// //     }
-// //   };
-
-// //   return (
-// //     <div>
-// //       <Navbar />
-// //       <div className='py-12 px-6 md:ml-64 bg-gray-200 dark:bg-gray-950'>
-// //         <div className="w-full p-4 mt-10 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
-// //           <div className='flex items-center gap-2 pb-5'>
-// //             <p className='font-NotoSansKhmer font-bold text-3xl'>បន្ថែមការទិញ </p>
-// //           </div>
-// //           <div className="w-full">
-// //             <div className="modal_form">
-// //               <form onSubmit={handleSubmit}>
-// //                 <div className='py-8 px-4 shadow-md  border-t-4 border-blue-600 rounded-md'>
-// //                   <div className='grid grid-cols-3 gap-4'>
-// //                     <div className="space-y-2">
-// //                       <label htmlFor="groupCustomer" className="font-NotoSansKhmer">អ្នកផ្គត់ផ្គង់ : *</label>
-// //                       <select
-// //                         className='input_text'
-// //                         id="bank"
-// //                         value={supplier_id}
-// //                         required
-// //                         onChange={e => setSupplier_ID(e.target.value)}
-// //                       >
-// //                         <option value="" >សូមជ្រើសរើស</option>
-// //                         {supplier?.map((items) => (
-// //                           <option key={items.id} value={items.id}>
-// //                             {items.full_names} {items.business_names}
-
-// //                           </option>
-// //                         ))}
-
-// //                       </select>
-// //                     </div>
-
-// //                     {/* Date Input */}
-// //                     <div className="col-span-1 space-y-2">
-// //                       <label className="font-NotoSansKhmer font-bold">កាលបរិច្ឆេទទិញ: *</label>
-// //                       <input
-// //                         type="date"
-// //                         id="price"
-// //                         min={today}
-// //                         value={createDob}
-// //                         onChange={(e) => setCreateDob(e.target.value)}
-// //                         className="input_text"
-// //                         required
-// //                       />
-// //                     </div>
-// //                     <div className="col-span-1 space-y-2">
-// //                       <label htmlFor="" className="font-bold font-NotoSansKhmer">ស្ថានភាព: *</label>
-// //                       <select
-// //                         required
-// //                         value={statuss}
-// //                         onChange={(e) => {
-// //                           const selectedStatus = e.target.value;
-// //                           setStatus(selectedStatus);
-// //                           console.log(selectedStatus);
-// //                         }}
-// //                         className="input_text font-NotoSansKhmer"
-// //                       >
-// //                         <option value="" disabled>--ជ្រើសរើស--</option>
-// //                         <option value="completed">បានទទួល</option>
-// //                         <option value="active">រងចាំ</option>
-// //                         <option value="pending">បានបញ្ជាទិញ</option>
-// //                       </select>
-// //                     </div>
-// //                   </div>
-
-
-// //                   <div className='md:w-[70%] w-[100%] mx-auto mt-12'>
-// //                     <div className="relative items-center gap-3 mx-auto my-2">
-// //                       <div className="relative">
-// //                         <div className="flex justify-center">
-// //                           <input
-// //                             type="text"
-// //                             className="w-full input_text"
-// //                             placeholder="ស្វែងរកផលិតផល"
-// //                             value={product_ID}
-// //                             onChange={handleProductSearchChange}
-// //                           />
-// //                           <div className="absolute right-[15%] top-3.5">
-// //                             <FaSearch className="text-gray-400" />
-// //                           </div>
-// //                         </div>
-// //                         <div className="absolute top-0 right-[-3%]">
-// //                           <button type='button' className="py-2.5 button_only_submit">
-// //                             + ជ្រើសរើសផលិតផល
-// //                           </button>
-// //                         </div>
-// //                       </div>
-// //                       {isDropdownOpenProduct && (
-// //                         <div className="flex justify-center">
-// //                           <ul className="absolute z-[2] w-full mt-1 overflow-y-auto bg-white border border-gray-300 shadow-md max-h-48">
-// //                             {filteredOptionsProduct.length > 0 ? (
-// //                               filteredOptionsProduct.map((product) => (
-// //                                 <li
-// //                                   key={product.id}
-// //                                   className="p-2 text-gray-700 cursor-pointer hover:bg-gray-200 hover:text-black"
-// //                                   onClick={() => handleAddProduct(product)}
-// //                                 >
-// //                                   {product.pro_names}
-// //                                 </li>
-// //                               ))
-// //                             ) : (
-// //                               <li className="p-2 text-gray-500 font-NotoSansKhmer">
-// //                                 មិនមានកាត ឈ្មោះនេះ​ <span className="font-bold">{product_ID}</span> ទេ!
-// //                               </li>
-// //                             )}
-// //                           </ul>
-// //                         </div>
-// //                       )}
-// //                     </div>
-// //                   </div>
-
-// //                 </div>
-
-// //                 <div className='pb-12 pt-6 px-4 shadow-md mt-8  border-t-4 border-pink-600 rounded-md'>
-// //                   {/* Table for Selected Products */}
-// //                   <h3 className="text-lg font-semibold">កំណត់ការបញ្ជាទិញ</h3>
-// //                   <table className="mt-4 border-collapse w-full">
-// //                     <thead className="p-2 text-white bg-blue-600/90">
-// //                       <tr>
-// //                         <th className="p-2 border w-[7%]">លេខរៀង</th>
-// //                         <th className="p-2 border w-[20%]">ឈ្មោះផលិតផល</th>
-// //                         <th className="p-2 border w-[10%]">តម្លៃដើម(ឯកតា)</th>
-// //                         <th className="p-2 border w-[10%]">បរិមាណទិញចូល</th>
-// //                         <th className="p-2 border w-[10%]">តម្លៃដើមលក់ចេញ(ឯកតា)</th>
-// //                         <th className="p-2 border w-[10%]">បញ្ចុះតម្លៃ</th>
-// //                         <th className="p-2 border w-[10%]">ពន្ធសរុប</th>
-// //                         <th className="p-2 border w-[15%]">សរុប</th>
-// //                         <th className="p-2 border w-[5%}">
-// //                           <p className="text-center">ស្ថានភាព</p>
-// //                         </th>
-// //                       </tr>
-// //                     </thead>
-// //                     <tbody>
-// //                       {selectedProducts.length > 0 ? (
-// //                         selectedProducts.map((product, index) => {
-// //                           const qty = quantities[product.id] || 1;
-// //                           const discount = discounts[product.id] || 0;
-// //                           const saleprice = salePrices[product.id] || product.exclude_tax;
-// //                           const Originale_price = originalPrice[product.id] || product.cost_price;
-// //                           const tax = taxes[product.id] || 0;
-// //                           const totalPrice = qty * saleprice;
-// //                           const grandTotal = totalPrice - discount + tax;
-// //                           return (
-// //                             <tr key={product.id}>
-// //                               <td className="p-2 w-[7%]">{index + 1}</td>
-// //                               <td className="p-2">
-// //                                 {product.pro_names}
-// //                                 <p className="text-xs text-gray-500">
-// //                                   មានស្តុកនៅសល់ {product.qty} {product.unit_names}
-
-// //                                 </p>
-// //                               </td>
-// //                               <td className="w-[10%]">
-// //                                 <input
-// //                                   min={0}
-// //                                   type="number"
-// //                                   step={0.01}
-// //                                   placeholder="0.00"
-// //                                   value={Originale_price}
-// //                                   onChange={(e) => handleOriginalPriceceChange(product.id, e.target.value)}
-// //                                   className="bg-gray-100 input_text"
-// //                                 />
-// //                               </td>
-// //                               <td className="w-[10%] text-center">
-// //                                 <input
-// //                                   min={1}
-// //                                   type="number"
-// //                                   step={1}
-// //                                   value={qty}
-// //                                   onChange={(e) => handleQtyChange(product.id, e.target.value)}
-// //                                   placeholder="0.0"
-// //                                   className="input_text"
-// //                                 />
-// //                                 <span className='text-xs'> {product.unit_names}</span>
-// //                               </td>
-
-// //                               <td className="w-[10%]">
-// //                                 <input
-// //                                   min={0}
-// //                                   type="number"
-// //                                   placeholder="0.00"
-// //                                   step={0.01}
-// //                                   value={saleprice}
-// //                                   onChange={(e) => handleSalePriceChange(product.id, e.target.value)}
-// //                                   className="bg-gray-100 input_text"
-// //                                 />
-// //                               </td>
-// //                               <td className="w-[10%]">
-// //                                 <input
-// //                                   type="number"
-// //                                   value={discount}
-// //                                   onChange={(e) => handleDiscountChange(product.id, e.target.value)}
-// //                                   placeholder="0"
-// //                                   className="input_text"
-// //                                 />
-// //                               </td>
-// //                               <td className="w-[10%]">
-// //                                 <input
-// //                                   min={0}
-// //                                   type="number"
-// //                                   value={tax}
-// //                                   onChange={(e) => handleTaxChange(product.id, e.target.value)} // Use the new handler
-// //                                   placeholder="0"
-// //                                   className="input_text"
-// //                                 />
-// //                               </td>
-// //                               <td className="w-[15%]">
-// //                                 <input
-// //                                   min={0}
-// //                                   type="number"
-// //                                   value={grandTotal.toFixed(2)} // Assuming you want to keep this tax calculation
-// //                                   placeholder="0.0"
-// //                                   readOnly
-// //                                   className="bg-gray-100 input_text"
-// //                                 />
-// //                               </td>
-// //                               <td className="p-2 w-[5%]">
-// //                                 <div className="flex justify-center">
-// //                                   <button
-// //                                     className="p-2 text-white bg-red-500 hover:text-white hover:bg-red-400"
-// //                                     onClick={() => handleRemoveProduct(product.id)}
-// //                                   >
-// //                                     <IoMdClose />
-// //                                   </button>
-// //                                 </div>
-// //                               </td>
-// //                             </tr>
-// //                           );
-// //                         })
-// //                       ) : (
-// //                         <tr>
-// //                           <td colSpan={10} className="p-2 text-center text-gray-500">
-// //                             សូមជ្រើសរើសផលិតផល
-// //                           </td>
-// //                         </tr>
-// //                       )}
-// //                     </tbody>
-// //                   </table>
-// //                 </div>
-
-// //                 <div className="pb-12 pt-6 px-4 shadow-md mt-8  border-t-4 border-green-600 rounded-md">
-// //                   <h3 className="text-lg font-semibold">បន្ថែមការទូទាត់</h3>
-// //                   <hr className="my-2" />
-// //                   <div className="grid grid-cols-3 gap-3">
-// //                     <div className="space-y-2">
-// //                       <label htmlFor="">ចំនួនការទូទាត់សរុប($)</label>
-// //                       <input
-// //                         type="number"
-// //                         placeholder="0.0"
-// //                         value={amountTotal}
-// //                         readOnly
-// //                         className="bg-gray-100 input_text"
-// //                       />
-// //                     </div>
-// //                     <div className="space-y-2">
-// //                       <label htmlFor="">ចំនួនទឹកប្រាក់បញ្ចុះតម្លៃ</label>
-// //                       <input
-// //                         type="number"
-// //                         value={amountDiscount}
-// //                         step={0.01}
-// //                         onChange={(e) => handleAmountDiscountChange(e.target.value)}
-// //                         placeholder="0.0"
-// //                         className="input_text"
-// //                       />
-// //                     </div>
-// //                     <div className="space-y-2">
-// //                       <label htmlFor="">ទូទាត់សាច់ប្រាក់($): * </label>
-// //                       <input
-// //                         type="number"
-// //                         value={amountPay}
-// //                         required
-// //                         step={0.01}
-
-// //                         onChange={(e) => handleAmountPayChange(e.target.value)}
-// //                         placeholder="0.00"
-// //                         className="input_text"
-// //                       />
-// //                     </div>
-// //                     <div className="space-y-2">
-// //                       <label htmlFor="">កាលបរិច្ឆេតបង់ប្រាក់ : *</label>
-// //                       <input type="date"
-// //                         required
-// //                         placeholder="0.0"
-// //                         value={payDob}
-// //                         onChange={(e) => setPayDob(e.target.value)}
-// //                         min={today}
-// //                         className="input_text"
-// //                       />
-// //                     </div>
-// //                     <div className="space-y-2">
-// //                       <label htmlFor="">វិធីសាទូទាត់</label>
-// //                       <select
-// //                         className='input_text'
-// //                         id="bank"
-// //                         value={paymentType_ID}
-// //                         onChange={e => setPaymentType_ID(e.target.value)}
-// //                       >
-// //                         <option value="" >សូមជ្រើសរើស</option>
-// //                         {paymentType?.map((items) => (
-// //                           <option key={items.id} value={items.id}>
-// //                             {items.pay_manes}
-// //                           </option>
-// //                         ))}
-
-// //                       </select>
-// //                     </div>
-// //                     <div className="space-y-2">
-// //                       <label htmlFor="groupCustomer" className="font-NotoSansKhmer">វិធីសាស្សបង់ប្រាក់:</label>
-// //                       <select
-// //                         className='input_text'
-// //                         id="bank"
-// //                         value={account_ID}
-// //                         onChange={e => setAccount_ID(e.target.value)}
-// //                       >
-// //                         <option value="" >សូមជ្រើសរើស</option>
-// //                         {accountBank?.map((items) => (
-// //                           <option key={items.id} value={items.id}>
-// //                             {items.acc_names}
-// //                           </option>
-// //                         ))}
-
-// //                       </select>
-// //                     </div>
-// //                     <div className="space-y-2">
-// //                       <label htmlFor="">ចំនួននៅសល់($)</label>
-// //                       <input
-// //                         type="number"
-// //                         placeholder="0.0"
-// //                         value={(amountTotal - amountDiscount - amountPay) < 0 ? 0.00 : (amountTotal - amountDiscount - amountPay).toFixed(2)}
-// //                         readOnly
-// //                         className="bg-gray-100 input_text"
-// //                       />
-// //                       {/* You may want to display the dollar sign outside the input if needed */}
-// //                       {/* <span>$</span> */}
-// //                     </div>
-
-// //                   </div>
-// //                 </div>
-// //                 <div className="flex justify-end mt-5">
-// //                   <button
-// //                     type="submit"
-// //                     className="px-4 py-2 font-semibold text-white bg-blue-500 hover:bg-blue-600"
-// //                   >
-// //                     រក្សាទុក
-// //                   </button>
-// //                 </div>
-
-// //               </form>
-// //             </div>
-// //           </div>
-
-// //         </div>
-// //         <div>
-// //           <BackgroundArrow />
-// //         </div>
-
-// //       </div>
-// //     </div>
-// //   );
-// // };
-// // export default UpdatePurchase
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import Navbar from '../Navbar';
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
-// import { toast } from 'react-toastify';
-// import Pagination from '../pagination/Pagination';
-// import { FaClipboardList, FaFileCsv, FaFileExcel, FaPencilAlt, FaSearch } from "react-icons/fa";
-// import { MdDelete, MdClose } from "react-icons/md";
-// import { motion, AnimatePresence } from "framer-motion";
-// import { IoMdClose } from "react-icons/io";
-// import BackgroundArrow from '../background/BackgroundArrow'
-// import { useNavigate } from 'react-router-dom';
-// import { useParams } from 'react-router-dom';
-
-
-
-// const UpdatePurchase = () => {
-//   const navigate = useNavigate();
-//   const [isDropdownOpenProduct, setIsDropdownOpenProduct] = useState(false);
-//   const [quantities, setQuantities] = useState({});
-//   const [discounts, setDiscounts] = useState({});
-//   const [salePrices, setSalePrices] = useState({});
-//   const [originalPrice, setOriginalPrice] = useState({});
-//   const [taxes, setTaxes] = useState({});
-//   const [product_ID, setProduct_ID] = useState('');
-//   const [amountTotal, setAmountTotal] = useState(0);
-//   const [amountDiscount, setAmounDiscount] = useState(0);
-//   const [amountPay, setAmounPay] = useState(null);
-//   const today = new Date().toISOString().split('T')[0];
-//   const [payDob, setPayDob] = useState('');
-//   const [createDob, setCreateDob] = useState(today);
-//   const [supplier_id, setSupplier_ID] = useState('');
-//   const [statuss, setStatus] = useState('');
-//   const [account_ID, setAccount_ID] = useState('');
-//   const [paymentType_ID, setPaymentType_ID] = useState('');
-//   const [userLoginNames, setUserLoginNames] = useState('');
-
-//   const [supplier, setsupplier] = useState([]);
-//   const [products, setProducts] = useState([]);
-//   const [selectedProducts, setSelectedProducts] = useState([]);
-//   const [error, setError] = useState('');
-//   const [loading, setLoading] = useState(false);
-//   const [isSubmitting, setIsSubmitting] = useState(false);
-//   const [totalProduct, setTotal] = useState(0);
-
-
-//   const [purchaseData, setPurchaseData] = useState(null);
-
-
-//   const { id } = useParams();
-
-//   // const fetchData = async () => {
-//   //   try {
-//   //     const response = await axios.get(`http://localhost:6700/api/purchase/${id}`);
-//   //     const data = response.data;
-
-//   //     // Set the purchase-related fields
-//   //     setAmountTotal(data.amount_total);
-//   //     setAmounDiscount(data.amount_discount);
-//   //     setAmounPay(data.amount_pay || 0);
-//   //     setPayDob(data.pay_date || '');
-//   //     setPaymentType_ID(data.paymenttype_id || '');
-//   //     setAccount_ID(data.account_id || '');
-
-//   //     // Handle products inside the purchase
-//   //     if (data.products && data.products.length > 0) {
-//   //       setSelectedProducts(data.products);
-//   //     }
-
-//   //     setPayDob(data.date_by);
-//   //     setSupplier_ID(data.supplier_id);
-
-//   //     console.log('Fetched data:', data);
-//   //   } catch (error) {
-//   //     console.error('Error fetching purchase data:', error);
-//   //   }
-//   // };
-
-//   // useEffect(() => {
-//   //   fetchData();
-//   // }, [id]);
-
-//   const [productDetails, setProductDetails] = useState({});
-//   const [isLoading, setIsLoading] = useState(true);
-
-//   const fetchData = async () => {
-//     try {
-//       setIsLoading(true);
-//       const response = await axios.get(`http://localhost:6700/api/purchase/${id}`);
-//       const data = response.data;
-//       setTotal(data.amount_total)
-//       console.log("data.amount_total=", data.amount_total)
-//       setSelectedProducts(data.products || []);
-//       console.log('fetching purchase', data.products)
-//       // console.log(selectedProducts.products.qty)
-//       data.products.forEach((product, index) => {
-//         console.log(`Product ${index + 1} qty:`, product.qty, product.discount);
-//       });
-//       console.log('Product Details:', productDetails);
-
-//       setIsLoading(false);
-//     } catch (error) {
-//       console.error('Error fetching purchase data:', error);
-//       setIsLoading(false);
-//     }
-//   };
-
-
-//   useEffect(() => {
-//     fetchData();
-//   }, [id]);
-
-//   useEffect(() => {
-//     setUserLoginNames(localStorage.getItem('user_names') || '');
-//     fetchsupplier();
-//     fetchProducts();
-//     getAccountBank();
-//     getPaymentType();
-//   }, []);
-
-//   // useEffect(() => {
-//   //   const total = selectedProducts.reduce((acc, product) => {
-//   //     const qty = quantities[product.id] || 1; // Default to 1
-//   //     const discount = discounts[product.id] || 0;
-//   //     const saleprice = salePrices[product.id] || product.total;
-//   //     console.log(saleprice)
-//   //     const saleprice_pro = salePrices[product.id] || product.exclude_tax  || product.total;
-//   //     console.log('saleprice_pro=',saleprice_pro)
-//   //     const tax = taxes[product.id] || 0;
-//   //     const totalPrice = qty * (saleprice || saleprice_pro);
-//   //     const grandTotal = totalPrice - discount + tax;
-//   //     return acc + grandTotal;
-
-//   //   }, 0);
-//   //   setAmountTotal(total);
-//   //   console.log('Total Product2:', total)
-//   // }, [selectedProducts, quantities, discounts, taxes, salePrices]);
-
-//   useEffect(() => {
-//     const total = selectedProducts.reduce((acc, product) => {
-//       const qty = quantities[product.id] || 1;
-//       const discount = discounts[product.id] || 0;
-//       const saleprice = salePrices[product.id] || product.exclude_tax || product.total;
-//       const tax = taxes[product.id] || 0;
-//       const totalPrice = qty * (saleprice);
-//       const grandTotal = totalPrice - discount + tax;
-
-//       return acc + grandTotal;
-//     }, 0);
-
-//     setAmountTotal(total);
-//   }, [selectedProducts, quantities, discounts, taxes, salePrices]);
-
-
-
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     // Validation
-//     if (selectedProducts.length === 0) {
-//       alert("Please add a product to cart");
-//       return;
-//     }
-
-//     let totalAmount = 0;
-//     let totalDiscount = 0;
-
-//     const productsData = selectedProducts.map(product => {
-//       const qty = quantities[product.id] || 1;
-//       const discount = discounts[product.id] || 0;
-//       const tax = taxes[product.id] || 0;
-//       const saleprice = salePrices[product.id] || product.exclude_tax;
-//       const Originale_price = originalPrice[product.id] || product.cost_price;
-//       const totalPrice = qty * saleprice;
-//       const grandTotal = totalPrice - discount + tax;
-
-//       // Accumulate totals
-//       totalAmount += grandTotal;
-//       totalDiscount += discount;
-//       return {
-//         supplier_id: supplier_id,
-//         product_id: product.id,
-//         date_by: createDob,
-//         qty: qty,
-//         discount: discount,
-//         cost_price: Originale_price,
-//         included_tax: tax,
-//         excluded_tax: saleprice,
-//         total: grandTotal,
-//         status: statuss,
-//         user_at: userLoginNames,
-//       };
-//     });
-
-//     if ((totalAmount - amountDiscount) < amountPay) {
-//       alert("ការទូទាត់សាច់ប្រាក់លើសការកំណត់!");
-//       return;
-//     }
-
-//     const orderData = {
-//       paymenttype_id: paymentType_ID,
-//       account_id: account_ID,
-//       amount_total: totalAmount,
-//       amount_discount: amountDiscount,
-//       amount_pay: amountPay,
-//       pay_date: payDob,
-//       products: productsData,
-//     };
-//     setIsSubmitting(true); // Set submitting state
-
-//     try {
-//       // Send data to backend
-//       const response = await fetch('http://localhost:6700/api/purchase', {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify(orderData),
-//       });
-
-//       const result = await response.json();
-
-//       if (response.ok) {
-//         toast.success(`Order created successfully!`, {
-//           position: "top-right",
-//           autoClose: 3000,
-//         });
-//         navigate('/purchase')
-//         clearCart();
-//       } else {
-//         // toast.error(result.message || 'Failed to place the order!');
-//       }
-//     } catch (error) {
-//       toast.error('Failed to place the order!', {
-//         position: "top-right",
-//         autoClose: 1000,
-//       });
-//     } finally {
-//       setIsSubmitting(false);
-//     }
-//   };
-
-//   const clearCart = () => {
-//     setSelectedProducts([]);
-//     setPaymentType_ID('');
-//     setAccount_ID('');
-//     setAmounDiscount('');
-//     setCreateDob('');
-//     setSupplier_ID('');
-//     setStatus('');
-//     setAmountTotal('');
-//     setAmounPay('');
-//     setPayDob(today);
-//   };
-
-//   const fetchsupplier = async () => {
-//     setLoading(true);
-//     try {
-//       const response = await axios.get('http://localhost:6700/api/supplier');
-//       setsupplier(response.data.supplier);
-//       setError('');
-//     } catch (error) {
-//       setError('Error fetching supplier data');
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   const fetchProducts = async () => {
-//     setLoading(true);
-//     try {
-//       const response = await axios.get('http://localhost:6700/api/product');
-//       setProducts(response.data.product);
-//       setError('');
-//     } catch (error) {
-//       setError('Error fetching products data');
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   const handleAmountPayChange = (value) => {
-//     const numericValue = parseFloat(value);
-//     if (!isNaN(numericValue) && numericValue >= 0) {
-//       setAmounPay(numericValue);
-//     }
-//   };
-
-//   const handleAmountDiscountChange = (value) => {
-//     const numericValue = parseFloat(value);
-//     if (!isNaN(numericValue) && numericValue >= 0) {
-//       setAmounDiscount(numericValue);
-//     }
-//   };
-
-
-
-//   const handleQtyChange = (productId, value) => {
-//     setQuantities((prevQuantities) => ({
-//       ...prevQuantities,
-//       [productId]: value >= 1 ? Number(value) : 1, // Ensure quantity is at least 1
-//     }));
-//   };
-
-//   const handleOriginalPriceceChange = (productId, value) => {
-//     setOriginalPrice((prevOrinalPrice) => ({
-//       ...prevOrinalPrice,
-//       [productId]: value >= 0 ? Number(value) : 0,
-//     }));
-//   };
-
-//   const handleSalePriceChange = (productId, value) => {
-//     setSalePrices((prevSalePrice) => ({
-//       ...prevSalePrice,
-//       [productId]: value >= 0 ? Number(value) : 0,
-//     }));
-//   };
-//   const handleDiscountChange = (productId, value) => {
-//     setDiscounts((prevDiscounts) => ({
-//       ...prevDiscounts,
-//       [productId]: value >= 0 ? Number(value) : 0,
-//     }));
-//   };
-//   const handleTaxChange = (productId, value) => {
-//     setTaxes((prevTaxes) => ({
-//       ...prevTaxes,
-//       [productId]: value >= 0 ? Number(value) : 0,
-//     }));
-//   };
-
-//   const handleOriginalPriceChange = (productId, value) => {
-//     // Update the original price for the given product ID
-//     setOriginalPrice(prevState => ({
-//       ...prevState,
-//       [productId]: parseFloat(value) || 0, // Parse value as float, default to 0 if invalid
-//     }));
-//   };
-
-
-//   const handleRemoveProduct = (productId) => {
-//     setSelectedProducts(
-//       selectedProducts.filter((product) => product.id !== productId)
-//     );
-//   };
-//   const handleAddProduct = (product) => {
-//     if (selectedProducts.find((p) => p.id === product.id)) {
-//       toast.error(`ផលិតផល ${product.pro_names} មានរូចហើយ!`, {
-//         position: "top-center",
-//         autoClose: 1000,
-//       });
-
-//     } else {
-//       setSelectedProducts([...selectedProducts, product]);
-//     }
-//     setProduct_ID("");
-//     setIsDropdownOpenProduct(false);
-//   };
-
-//   const handleProductSearchChange = (e) => {
-//     setProduct_ID(e.target.value);
-//     setIsDropdownOpenProduct(e.target.value.length > 0); // Corrected here
-//   };
-
-//   const filteredOptionsProduct = products.filter(option =>
-//     option.pro_names.toLowerCase().includes(product_ID.toLowerCase())
-//   );
-
-
-//   ///// get account 
-//   const [accountBank, setAccountBank] = useState([]);
-//   const getAccountBank = async () => {
-//     try {
-//       const response = await axios.get('http://localhost:6700/api/account');
-//       setAccountBank(response.data.account);
-//       // console.log(response.data)
-//     } catch (error) {
-//       setError('Error fetching categories data');
-//     }
-//   };
-
-//   ///// get payment Type 
-//   const [paymentType, setPaymentType] = useState([]);
-//   const getPaymentType = async () => {
-//     try {
-//       const response = await axios.get('http://localhost:6700/api/payment_type');
-//       setPaymentType(response.data.payment_type);
-//       // console.log(response.data)
-//     } catch (error) {
-//       setError('Error fetching categories data');
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <Navbar />
-//       <div className='py-12 px-6 md:ml-64 bg-gray-200 dark:bg-gray-950'>
-//         <div className="w-full p-4 mt-10 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
-//           <div className='flex items-center gap-2 pb-5'>
-//             <p className='font-NotoSansKhmer font-bold text-3xl'>បន្ថែមការទិញ </p>
-//           </div>
-//           <div className="w-full">
-//             <div className="modal_form">
-//               <form onSubmit={handleSubmit}>
-//                 <div className='py-8 px-4 shadow-md  border-t-4 border-blue-600 rounded-md'>
-//                   <div className='grid grid-cols-3 gap-4'>
-//                     <div className="space-y-2">
-//                       <label htmlFor="groupCustomer" className="font-NotoSansKhmer">អ្នកផ្គត់ផ្គង់ : *</label>
-//                       <select
-//                         className='input_text'
-//                         id="bank"
-//                         value={supplier_id}
-//                         required
-//                         onChange={e => setSupplier_ID(e.target.value)}
-//                       >
-//                         <option value="" >សូមជ្រើសរើស</option>
-//                         {supplier?.map((items) => (
-//                           <option key={items.id} value={items.id}>
-//                             {items.full_names} {items.business_names}
-
-//                           </option>
-//                         ))}
-//                       </select>
-//                     </div>
-
-//                     {/* Date Input */}
-//                     <div className="col-span-1 space-y-2">
-//                       <label className="font-NotoSansKhmer font-bold">កាលបរិច្ឆេទទិញ: *</label>
-//                       <input
-//                         type="date"
-//                         id="price"
-//                         min={today}
-//                         value={createDob}
-//                         onChange={(e) => setCreateDob(e.target.value)}
-//                         className="input_text"
-//                         required
-//                       />
-//                     </div>
-//                     <div className="col-span-1 space-y-2">
-//                       <label htmlFor="" className="font-bold font-NotoSansKhmer">ស្ថានភាព: *</label>
-//                       <select
-//                         required
-//                         value={statuss}
-//                         onChange={(e) => {
-//                           const selectedStatus = e.target.value;
-//                           setStatus(selectedStatus);
-//                           console.log(selectedStatus);
-//                         }}
-//                         className="input_text font-NotoSansKhmer"
-//                       >
-//                         <option value="" disabled>--ជ្រើសរើស--</option>
-//                         <option value="completed">បានទទួល</option>
-//                         <option value="active">រងចាំ</option>
-//                         <option value="pending">បានបញ្ជាទិញ</option>
-//                       </select>
-//                     </div>
-//                   </div>
-
-
-//                   <div className='md:w-[70%] w-[100%] mx-auto mt-12'>
-//                     <div className="relative items-center gap-3 mx-auto my-2">
-//                       <div className="relative">
-//                         <div className="flex justify-center">
-//                           <input
-//                             type="text"
-//                             className="w-full input_text"
-//                             placeholder="ស្វែងរកផលិតផល"
-//                             value={product_ID}
-//                             onChange={handleProductSearchChange}
-//                           />
-//                           <div className="absolute right-[15%] top-3.5">
-//                             <FaSearch className="text-gray-400" />
-//                           </div>
-//                         </div>
-//                         <div className="absolute top-0 right-[-3%]">
-//                           <button type='button' className="py-2.5 button_only_submit">
-//                             + ជ្រើសរើសផលិតផល
-//                           </button>
-//                         </div>
-//                       </div>
-//                       {isDropdownOpenProduct && (
-//                         <div className="flex justify-center">
-//                           <ul className="absolute z-[2] w-full mt-1 overflow-y-auto bg-white border border-gray-300 shadow-md max-h-48">
-//                             {filteredOptionsProduct.length > 0 ? (
-//                               filteredOptionsProduct.map((product) => (
-//                                 <li
-//                                   key={product.id}
-//                                   className="p-2 text-gray-700 cursor-pointer hover:bg-gray-200 hover:text-black"
-//                                   onClick={() => handleAddProduct(product)}
-//                                 >
-//                                   {product.pro_names}
-//                                 </li>
-//                               ))
-//                             ) : (
-//                               <li className="p-2 text-gray-500 font-NotoSansKhmer">
-//                                 មិនមានកាត ឈ្មោះនេះ​ <span className="font-bold">{product_ID}</span> ទេ!
-//                               </li>
-//                             )}
-//                           </ul>
-//                         </div>
-//                       )}
-//                     </div>
-//                   </div>
-
-//                 </div>
-
-//                 <div className="pb-12 pt-6 px-4 shadow-md mt-8 border-t-4 border-pink-600 rounded-md">
-//                   {/* Table for Selected Products */}
-//                   <h3 className="text-lg font-semibold">កំណត់ការបញ្ជាទិញ</h3>
-//                   <table className="mt-4 border-collapse w-full">
-//                     <thead className="p-2 text-white bg-blue-600/90">
-//                       <tr>
-//                         <th className="p-2 border w-[7%]">លេខរៀង</th>
-//                         <th className="p-2 border w-[20%]">ឈ្មោះផលិតផល</th>
-//                         <th className="p-2 border w-[10%]">តម្លៃដើម(ឯកតា)</th>
-//                         <th className="p-2 border w-[10%]">បរិមាណទិញចូល</th>
-//                         <th className="p-2 border w-[10%]">តម្លៃដើមលក់ចេញ(ឯកតា)</th>
-//                         <th className="p-2 border w-[10%]">បញ្ចុះតម្លៃ</th>
-//                         <th className="p-2 border w-[10%]">ពន្ធសរុប</th>
-//                         <th className="p-2 border w-[15%]">សរុប</th>
-//                         <th className="p-2 border w-[5%]">
-//                           <p className="text-center">ស្ថានភាព</p>
-//                         </th>
-//                       </tr>
-//                     </thead>
-//                     <tbody>
-//                       {selectedProducts.length > 0 ? (
-//                         selectedProducts.map((product, index) => {
-//                           const qty = quantities[product.id] || product.qty || 1;
-//                           const discount = discounts[product.id] || parseFloat(product.discount) || 0;
-//                           const saleprice = salePrices[product.id] || product.excluded_tax;
-//                           const costPrice = originalPrice[product.id] || product.cost_price;
-//                           const includedTax = taxes[product.id] || 0;
-//                           const saleprice_pro = salePrices[product.id] || product.exclude_tax;
-//                           const totalPrice = qty * (saleprice_pro || saleprice);
-//                           const grandTotal = totalPrice - discount + includedTax;
-
-//                           return (
-//                             <tr key={product.id}>
-//                               <td className="p-2 w-[7%]">{index + 1}</td>
-//                               <td className="p-2">
-//                                 {product.pro_names || product.product_name}
-//                                 <p className="text-xs text-gray-500">
-//                                   មានស្តុកនៅសល់ {product.qty || 0} {product.unit_names}
-//                                 </p>
-//                               </td>
-//                               <td className="w-[10%]">
-//                                 <input
-//                                   min={0}
-//                                   type="number"
-//                                   step={0.01}
-//                                   placeholder="0.00"
-//                                   value={costPrice}
-//                                   onChange={(e) => handleOriginalPriceChange(product.id, e.target.value)}
-//                                   className="bg-gray-100 input_text"
-//                                 />
-//                               </td>
-//                               <td className="w-[10%] text-center">
-//                                 <input
-//                                   min={1}
-//                                   type="number"
-//                                   step={1}
-//                                   value={qty}
-//                                   onChange={(e) => handleQtyChange(product.id, e.target.value)}
-//                                   placeholder="0.0"
-//                                   className="input_text"
-//                                 />
-//                               </td>
-//                               <td className="w-[10%]">
-//                                 <input
-//                                   min={0}
-//                                   type="number"
-//                                   placeholder="0.00"
-//                                   step={0.01}
-//                                   value={saleprice || saleprice_pro}
-//                                   onChange={(e) => handleSalePriceChange(product.id, e.target.value)}
-//                                   className="bg-gray-100 input_text"
-//                                 />
-//                               </td>
-//                               <td className="w-[10%]">
-//                                 <input
-//                                   type="number"
-//                                   value={discount}
-//                                   onChange={(e) => handleDiscountChange(product.id, e.target.value)}
-//                                   placeholder="0"
-//                                   className="input_text"
-//                                 />
-//                               </td>
-//                               <td className="w-[10%]">
-//                                 <input
-//                                   min={0}
-//                                   type="number"
-//                                   value={includedTax}
-//                                   onChange={(e) => handleTaxChange(product.id, e.target.value)}
-//                                   placeholder="0"
-//                                   className="input_text"
-//                                 />
-//                               </td>
-//                               <td className="w-[15%]">
-//                                 <input
-//                                   min={0}
-//                                   type="number"
-//                                   value={grandTotal.toFixed(2)}
-//                                   placeholder="0.0"
-//                                   readOnly
-//                                   className="bg-gray-100 input_text"
-//                                 />
-//                               </td>
-//                               <td className="p-2 w-[5%]">
-//                                 <div className="flex justify-center">
-//                                   <button
-//                                     className="p-2 text-white bg-red-500 hover:text-white hover:bg-red-400"
-//                                     onClick={() => handleRemoveProduct(product.id)}
-//                                   >
-//                                     <IoMdClose />
-//                                   </button>
-//                                 </div>
-//                               </td>
-//                             </tr>
-//                           );
-//                         })
-//                       ) : (
-//                         <tr>
-//                           <td colSpan={10} className="p-2 text-center text-gray-500">
-//                             សូមជ្រើសរើសផលិតផល
-//                           </td>
-//                         </tr>
-//                       )}
-//                     </tbody>
-//                   </table>
-//                 </div>
-
-
-
-//                 <div className="pb-12 pt-6 px-4 shadow-md mt-8  border-t-4 border-green-600 rounded-md">
-//                   <h3 className="text-lg font-semibold">បន្ថែមការទូទាត់</h3>
-//                   <hr className="my-2" />
-//                   <div className="grid grid-cols-3 gap-3">
-//                     <div className="space-y-2">
-//                       <label htmlFor="">ចំនួនការទូទាត់សរុប($)</label>
-//                       <input
-//                         type="number"
-//                         placeholder="0.0"
-//                         value={amountTotal}
-//                         readOnly
-//                         className="bg-gray-100 input_text"
-//                       />
-//                     </div>
-//                     <div className="space-y-2">
-//                       <label htmlFor="">ចំនួនទឹកប្រាក់បញ្ចុះតម្លៃ</label>
-//                       <input
-//                         type="number"
-//                         value={amountDiscount}
-//                         step={0.01}
-//                         onChange={(e) => handleAmountDiscountChange(e.target.value)}
-//                         placeholder="0.0"
-//                         className="input_text"
-//                       />
-//                     </div>
-//                     <div className="space-y-2">
-//                       <label htmlFor="">ទូទាត់សាច់ប្រាក់($): * </label>
-//                       <input
-//                         type="number"
-//                         value={amountPay}
-//                         required
-//                         step={0.01}
-
-//                         onChange={(e) => handleAmountPayChange(e.target.value)}
-//                         placeholder="0.00"
-//                         className="input_text"
-//                       />
-//                     </div>
-//                     <div className="space-y-2">
-//                       <label htmlFor="">កាលបរិច្ឆេតបង់ប្រាក់ : *</label>
-//                       <input type="date"
-//                         required
-//                         placeholder="0.0"
-//                         value={payDob}
-//                         onChange={(e) => setPayDob(e.target.value)}
-//                         min={today}
-//                         className="input_text"
-//                       />
-//                     </div>
-//                     <div className="space-y-2">
-//                       <label htmlFor="">វិធីសាទូទាត់</label>
-//                       <select
-//                         className='input_text'
-//                         id="bank"
-//                         value={paymentType_ID}
-//                         onChange={e => setPaymentType_ID(e.target.value)}
-//                       >
-//                         <option value="" >សូមជ្រើសរើស</option>
-//                         {paymentType?.map((items) => (
-//                           <option key={items.id} value={items.id}>
-//                             {items.pay_manes}
-//                           </option>
-//                         ))}
-
-//                       </select>
-//                     </div>
-//                     <div className="space-y-2">
-//                       <label htmlFor="groupCustomer" className="font-NotoSansKhmer">វិធីសាស្សបង់ប្រាក់:</label>
-//                       <select
-//                         className='input_text'
-//                         id="bank"
-//                         value={account_ID}
-//                         onChange={e => setAccount_ID(e.target.value)}
-//                       >
-//                         <option value="" >សូមជ្រើសរើស</option>
-//                         {accountBank?.map((items) => (
-//                           <option key={items.id} value={items.id}>
-//                             {items.acc_names}
-//                           </option>
-//                         ))}
-
-//                       </select>
-//                     </div>
-//                     <div className="space-y-2">
-//                       <label htmlFor="">ចំនួននៅសល់($)</label>
-//                       <input
-//                         type="number"
-//                         placeholder="0.0"
-//                         value={(amountTotal - amountDiscount - amountPay) < 0 ? 0.00 : (amountTotal - amountDiscount - amountPay).toFixed(2)}
-//                         readOnly
-//                         className="bg-gray-100 input_text"
-//                       />
-//                       {/* You may want to display the dollar sign outside the input if needed */}
-//                       {/* <span>$</span> */}
-//                     </div>
-
-//                   </div>
-//                 </div>
-//                 <div className="flex justify-end mt-5">
-//                   <button
-//                     type="submit"
-//                     className="px-4 py-2 font-semibold text-white bg-blue-500 hover:bg-blue-600"
-//                   >
-//                     រក្សាទុក
-//                   </button>
-//                 </div>
-//               </form>
-//             </div>
-//           </div>
-//         </div>
-//         <div>
-//           <BackgroundArrow />
-//         </div>
-
-//       </div>
-//     </div>
-//   );
-// };
-// export default UpdatePurchase
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import Navbar from '../Navbar';
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import Pagination from '../pagination/Pagination';
-import { FaClipboardList, FaFileCsv, FaFileExcel, FaPencilAlt, FaSearch } from "react-icons/fa";
-import { MdDelete, MdClose } from "react-icons/md";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Navbar from "../Navbar";
 import { IoMdClose } from "react-icons/io";
-import BackgroundArrow from '../background/BackgroundArrow'
-import { useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { FaBackward } from "react-icons/fa6";
 
 
-
-const UpdatePurchase = () => {
-  const navigate = useNavigate();
+const PurchaseDetails = () => {
+  const [purchaseData, setPurchaseData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [isDropdownOpenProduct, setIsDropdownOpenProduct] = useState(false);
-  const [quantities, setQuantities] = useState({});
-  const [discounts, setDiscounts] = useState({});
-  const [salePrices, setSalePrices] = useState({});
-  const [originalPrice, setOriginalPrice] = useState({});
-  const [taxes, setTaxes] = useState({});
-  const [product_ID, setProduct_ID] = useState('');
-  const [amountTotal, setAmountTotal] = useState(0);
-  const [amountDiscount, setAmounDiscount] = useState(0);
-  const [amountPay, setAmounPay] = useState(null);
-  const today = new Date().toISOString().split('T')[0];
-  const [payDob, setPayDob] = useState('');
-  const [createDob, setCreateDob] = useState(today);
-  const [supplier_id, setSupplier_ID] = useState('');
-  const [statuss, setStatus] = useState('');
-  const [account_ID, setAccount_ID] = useState('');
-  const [paymentType_ID, setPaymentType_ID] = useState('');
-  const [userLoginNames, setUserLoginNames] = useState('');
-
-  const [supplier, setsupplier] = useState([]);
-  const [products, setProducts] = useState([]);
+  const [product_ID, setProduct_ID] = useState("");
   const [selectedProducts, setSelectedProducts] = useState([]);
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [totalProduct, setTotal] = useState(0);
-
-
-  const [purchaseData, setPurchaseData] = useState(null);
-
-
+  const [products, setProducts] = useState([]);
   const { id } = useParams();
-
-  // const fetchData = async () => {
-  //   try {
-  //     const response = await axios.get(`http://localhost:6700/api/purchase/${id}`);
-  //     const data = response.data;
-
-  //     // Set the purchase-related fields
-  //     setAmountTotal(data.amount_total);
-  //     setAmounDiscount(data.amount_discount);
-  //     setAmounPay(data.amount_pay || 0);
-  //     setPayDob(data.pay_date || '');
-  //     setPaymentType_ID(data.paymenttype_id || '');
-  //     setAccount_ID(data.account_id || '');
-
-  //     // Handle products inside the purchase
-  //     if (data.products && data.products.length > 0) {
-  //       setSelectedProducts(data.products);
-  //     }
-
-  //     setPayDob(data.date_by);
-  //     setSupplier_ID(data.supplier_id);
-
-  //     console.log('Fetched data:', data);
-  //   } catch (error) {
-  //     console.error('Error fetching purchase data:', error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, [id]);
-
-  const [productDetails, setProductDetails] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-
-  const fetchData = async () => {
-    try {
-      setIsLoading(true);
-      const response = await axios.get(`http://localhost:6700/api/purchase/${id}`);
-      const data = response.data;
-      setTotal(data.amount_total)
-      console.log("data.amount_total=", data.amount_total)
-      setSelectedProducts(data.products || []);
-      console.log('fetching purchase', data.products)
-      // console.log(selectedProducts.products.qty)
-      data.products.forEach((product, index) => {
-        console.log(`Product ${index + 1} qty:`, product.qty, product.discount);
-      });
-      console.log('Product Details:', productDetails);
-
-      setIsLoading(false);
-    } catch (error) {
-      console.error('Error fetching purchase data:', error);
-      setIsLoading(false);
-    }
-  };
+  const today = new Date().toISOString().split('T')[0];
 
 
-  useEffect(() => {
-    fetchData();
-  }, [id]);
+  const [amountDiscount, setAmountDiscount] = useState(0);
+  const [amountTotal, setAmountTotal] = useState(0);
+  const [amountTotalPay, setAmountTotalPay] = useState(0);
+  const [amounPayDate, setAmountPayDate] = useState(0);
+  const [createDob, setCreateDob] = useState(today);
+  const [status, setStatus] = useState('completed');
+  const [supplier_id, setSupplier_ID] = useState('');
+  const [paymentType_ID, setPaymentType_ID] = useState(null);
+  const [account_ID, setAccount_ID] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [userLoginNames, setUserLoginNames] = useState('');
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     setUserLoginNames(localStorage.getItem('user_names') || '');
-    fetchsupplier();
-    fetchProducts();
-    getAccountBank();
-    getPaymentType();
+
   }, []);
+
   useEffect(() => {
-    const total = selectedProducts.reduce((acc, product) => {
-      const qty = quantities[product.id] || 1;
-      const discount = discounts[product.id] || 0;
-      const saleprice = salePrices[product.id] || product.exclude_tax || product.total;
-      const tax = taxes[product.id] || 0;
-      const totalPrice = qty * (saleprice);
-      const grandTotal = totalPrice - discount + tax;
-
-      return acc + grandTotal;
-    }, 0);
-
-    setAmountTotal(total);
-  }, [selectedProducts, quantities, discounts, taxes, salePrices]);
-
-
-
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Validation
-    if (selectedProducts.length === 0) {
-      alert("Please add a product to cart");
-      return;
-    }
-
-    let totalAmount = 0;
-    let totalDiscount = 0;
-
-    const productsData = selectedProducts.map(product => {
-      const qty = quantities[product.id] || 1;
-      const discount = discounts[product.id] || 0;
-      const tax = taxes[product.id] || 0;
-      const saleprice = salePrices[product.id] || product.exclude_tax;
-      const Originale_price = originalPrice[product.id] || product.cost_price;
-      const totalPrice = qty * saleprice;
-      const grandTotal = totalPrice - discount + tax;
-
-      // Accumulate totals
-      totalAmount += grandTotal;
-      totalDiscount += discount;
-      return {
-        supplier_id: supplier_id,
-        product_id: product.id,
-        date_by: createDob,
-        qty: qty,
-        discount: discount,
-        cost_price: Originale_price,
-        included_tax: tax,
-        excluded_tax: saleprice,
-        total: grandTotal,
-        status: statuss,
-        user_at: userLoginNames,
-      };
-    });
-
-    if ((totalAmount - amountDiscount) < amountPay) {
-      alert("ការទូទាត់សាច់ប្រាក់លើសការកំណត់!");
-      return;
-    }
-
-    const orderData = {
-      paymenttype_id: paymentType_ID,
-      account_id: account_ID,
-      amount_total: totalAmount,
-      amount_discount: amountDiscount,
-      amount_pay: amountPay,
-      pay_date: payDob,
-      products: productsData,
-    };
-    setIsSubmitting(true); // Set submitting state
-
-    try {
-      // Send data to backend
-      const response = await fetch('http://localhost:6700/api/purchase', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(orderData),
+    axios
+      .get(`http://localhost:6700/api/purchase/puchase/${id}`)
+      .then((response) => {
+        setPurchaseData(response.data);
+        console.log("Purchase Data:", response.data);
+        setEditableData(response.data);
+        setAmountDiscount(response.data[0]?.amount_discount || 0);
+        setAmountTotal(response.data[0]?.amount_pay || 0);
+        setAmountPayDate(response.data[0]?.pay_date || 0);
+        setCreateDob(response.data[0]?.date_by || today);
+        setStatus(response.data[0]?.status);
+        setSupplier_ID(response.data[0]?.supplier_id);
+        setPaymentType_ID(response.data[0]?.paymenttype_id);
+        setAccount_ID(response.data[0]?.account_id);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching data:", err);
+        setError(err.message);
+        setLoading(false);
       });
+  }, [id]);
 
-      const result = await response.json();
 
-      if (response.ok) {
-        toast.success(`Order created successfully!`, {
-          position: "top-right",
-          autoClose: 3000,
-        });
-        navigate('/purchase')
-        clearCart();
-      } else {
-        // toast.error(result.message || 'Failed to place the order!');
-      }
-    } catch (error) {
-      toast.error('Failed to place the order!', {
-        position: "top-right",
-        autoClose: 1000,
+  ///// product
+  const [editableData, setEditableData] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:6700/api/product/all")
+      .then((response) => {
+        setProducts(response.data);
+      })
+      .catch((err) => {
+        console.error("Error fetching products:", err);
       });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  }, []);
 
-  const clearCart = () => {
-    setSelectedProducts([]);
-    setPaymentType_ID('');
-    setAccount_ID('');
-    setAmounDiscount('');
-    setCreateDob('');
-    setSupplier_ID('');
-    setStatus('');
-    setAmountTotal('');
-    setAmounPay('');
-    setPayDob(today);
-  };
+  useEffect(() => {
+    fetchsupplier();
+    getPaymentType();
+    getAccountBank();
+  }, [])
 
+  ///// supplier
+  const [supplier, setsupplier] = useState([]);
   const fetchsupplier = async () => {
     setLoading(true);
     try {
@@ -1734,369 +100,609 @@ const UpdatePurchase = () => {
     }
   };
 
-  const fetchProducts = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get('http://localhost:6700/api/product');
-      setProducts(response.data.product);
-      setError('');
-    } catch (error) {
-      setError('Error fetching products data');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleAmountPayChange = (value) => {
-    const numericValue = parseFloat(value);
-    if (!isNaN(numericValue) && numericValue >= 0) {
-      setAmounPay(numericValue);
-    }
-  };
-
-  const handleAmountDiscountChange = (value) => {
-    const numericValue = parseFloat(value);
-    if (!isNaN(numericValue) && numericValue >= 0) {
-      setAmounDiscount(numericValue);
-    }
-  };
-
-
-
-  const handleQtyChange = (productId, value) => {
-    setQuantities((prevQuantities) => ({
-      ...prevQuantities,
-      [productId]: value >= 1 ? Number(value) : 1, // Ensure quantity is at least 1
-    }));
-  };
-
-  const handleOriginalPriceceChange = (productId, value) => {
-    setOriginalPrice((prevOrinalPrice) => ({
-      ...prevOrinalPrice,
-      [productId]: value >= 0 ? Number(value) : 0,
-    }));
-  };
-
-  const handleSalePriceChange = (productId, value) => {
-    setSalePrices((prevSalePrice) => ({
-      ...prevSalePrice,
-      [productId]: value >= 0 ? Number(value) : 0,
-    }));
-  };
-  const handleDiscountChange = (productId, value) => {
-    setDiscounts((prevDiscounts) => ({
-      ...prevDiscounts,
-      [productId]: value >= 0 ? Number(value) : 0,
-    }));
-  };
-  const handleTaxChange = (productId, value) => {
-    setTaxes((prevTaxes) => ({
-      ...prevTaxes,
-      [productId]: value >= 0 ? Number(value) : 0,
-    }));
-  };
-
-  const handleOriginalPriceChange = (productId, value) => {
-    // Update the original price for the given product ID
-    setOriginalPrice(prevState => ({
-      ...prevState,
-      [productId]: parseFloat(value) || 0, // Parse value as float, default to 0 if invalid
-    }));
-  };
-
-
-  const handleRemoveProduct = (productId) => {
-    setSelectedProducts(
-      selectedProducts.filter((product) => product.id !== productId)
-    );
-  };
-  const handleAddProduct = (product) => {
-    if (selectedProducts.find((p) => p.id === product.id)) {
-      toast.error(`ផលិតផល ${product.pro_names} មានរូចហើយ!`, {
-        position: "top-center",
-        autoClose: 1000,
-      });
-
-    } else {
-      setSelectedProducts([...selectedProducts, product]);
-    }
-    setProduct_ID("");
-    setIsDropdownOpenProduct(false);
-  };
-
-  const handleProductSearchChange = (e) => {
-    setProduct_ID(e.target.value);
-    setIsDropdownOpenProduct(e.target.value.length > 0); // Corrected here
-  };
-
-  const filteredOptionsProduct = products.filter(option =>
-    option.pro_names.toLowerCase().includes(product_ID.toLowerCase())
-  );
-
-
-  ///// get account 
-  const [accountBank, setAccountBank] = useState([]);
-  const getAccountBank = async () => {
-    try {
-      const response = await axios.get('http://localhost:6700/api/account');
-      setAccountBank(response.data.account);
-      // console.log(response.data)
-    } catch (error) {
-      setError('Error fetching categories data');
-    }
-  };
-
-  ///// get payment Type 
+  ///// get payment Type
   const [paymentType, setPaymentType] = useState([]);
   const getPaymentType = async () => {
     try {
       const response = await axios.get('http://localhost:6700/api/payment_type');
       setPaymentType(response.data.payment_type);
-      // console.log(response.data)
+      console.log(response.data)
     } catch (error) {
       setError('Error fetching categories data');
     }
   };
 
+  ///// get account
+  const [accountBank, setAccountBank] = useState([]);
+  const getAccountBank = async () => {
+    try {
+      const response = await axios.get('http://localhost:6700/api/account');
+      setAccountBank(response.data.account);
+      console.log(response.data)
+    } catch (error) {
+      setError('Error fetching categories data');
+    }
+  };
+
+
+  const filteredOptionsProduct = products.filter((product) =>
+    product.pro_names.toLowerCase().includes(product_ID.toLowerCase())
+  );
+
+
+
+  const handleInputChange = (index, field, value) => {
+    // Ensure the value is not less than 0
+    const validatedValue = value >= 1 ? Number(value) : 1;
+    const updatedData = [...editableData];
+    updatedData[index][field] = validatedValue;
+    setEditableData(updatedData);
+  };
+
+
+
+
+
+  const amount_payTotal = Number(amountTotal) + Number(amountTotalPay);
+  const handleSubmit1 = async (e) => {
+    e.preventDefault();
+
+    if (editableData.length === 0) {
+      toast.error("សូមបន្ថែមផលិតផលយ៉ាងហោចណាស់មួយ.", {
+        position: "top-right",
+        autoClose: 1000,
+      });
+      return;
+    }
+
+    // Prepare products data
+    const productsData = editableData.map((item) => ({
+      supplier_id: supplier_id,
+      product_id: item.product_id || item.id,
+      date_by: createDob,
+      qty: item.qty,
+      discount: item.discount,
+      cost_price: item.cost_price,
+      included_tax: item.include_tax,
+      excluded_tax: item.exclude_tax,
+      total: Number(item.qty) * Number(item.cost_price) - Number(item.discount) + Number(item.include_tax),
+      status: status,
+      user_at: userLoginNames,
+    }));
+
+    // Prepare order data
+    const orderData = {
+      customerId: id,
+      paymenttype_id: paymentType_ID,
+      account_id: account_ID,
+      amount_total: editableData.reduce((sum, item) => {
+        const qty = Number(item.qty) || 0;
+        const excludeTax = Number(item.cost_price) || 0;
+        const discount = Number(item.discount) || 0;
+        const includeTax = Number(item.include_tax) || 0;
+        return sum + (qty * excludeTax - (discount - includeTax));
+      }, 0),
+      amount_discount: Number(amountDiscount),
+      amount_pay: Number(amount_payTotal),
+      pay_date: amounPayDate,
+      products: productsData,
+      deletedProducts: deletedProducts, // Add the deleted products array
+    };
+
+    setIsSubmitting(true);
+
+    try {
+      let response;
+      if (id) {
+        // Update purchase
+        response = await fetch(`http://localhost:6700/api/purchase/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(orderData),
+        });
+      } else {
+        // Insert new purchase
+        response = await fetch("http://localhost:6700/api/purchase1", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(orderData),
+        });
+      }
+
+      const result = await response.json();
+
+      if (response.ok) {
+        toast.success(id ? "កែប្រែទំនិញដោយជោគជ័យ!" : "ការទិញថ្មីបានបញ្ចូលជោគជ័យ!", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+        navigate("/purchase");
+      } else {
+        toast.error(result.message || "Failed to save purchase.", {
+          position: "top-right",
+          autoClose: 1000,
+        });
+      }
+    } catch (error) {
+      console.error("Error saving purchase:", error);
+      toast.error("Failed to save purchase. Please check the console for details.", {
+        position: "top-right",
+        autoClose: 1000,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (editableData.length === 0) {
+      toast.error("សូមបន្ថែមផលិតផលយ៉ាងហោចណាស់មួយ.", {
+        position: "top-right",
+        autoClose: 1000,
+      });
+      return;
+    }
+
+    // Prepare products data
+    const productsData = editableData.map((item) => ({
+      supplier_id: supplier_id,
+      product_id: item.product_id || item.id,
+      date_by: createDob,
+      qty: item.qty,
+      discount: item.discount,
+      cost_price: item.cost_price,
+      included_tax: item.include_tax,
+      excluded_tax: item.exclude_tax,
+      total: Number(item.qty) * Number(item.cost_price) - Number(item.discount) + Number(item.include_tax),
+      status: status,
+      user_at: userLoginNames,
+    }));
+
+    // Prepare order data
+    const orderData = {
+      customerId: id,
+      paymenttype_id: paymentType_ID,
+      account_id: account_ID,
+      amount_total: editableData.reduce((sum, item) => {
+        const qty = Number(item.qty) || 0;
+        const excludeTax = Number(item.cost_price) || 0;
+        const discount = Number(item.discount) || 0;
+        const includeTax = Number(item.include_tax) || 0;
+        return sum + (qty * excludeTax - (discount - includeTax));
+      }, 0),
+      amount_discount: Number(amountDiscount),
+      amount_pay: Number(amount_payTotal),
+      pay_date: amounPayDate,
+      products: productsData,
+      deletedProducts: deletedProducts, // Add the deleted products array
+    };
+
+    setIsSubmitting(true);
+
+    try {
+      let response;
+      if (id) {
+        // Update purchase
+        response = await fetch(`http://localhost:6700/api/purchase/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(orderData),
+        });
+      } else {
+        // Insert new purchase
+        response = await fetch("http://localhost:6700/api/purchase1", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(orderData),
+        });
+      }
+
+      const result = await response.json();
+
+      if (response.ok) {
+        toast.success(id ? "កែប្រែទំនិញដោយជោគជ័យ!" : "ការទិញថ្មីបានបញ្ចូលជោគជ័យ!", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+        navigate("/purchase");
+      } else {
+        toast.error(result.message || "Failed to save purchase.", {
+          position: "top-right",
+          autoClose: 1000,
+        });
+      }
+    } catch (error) {
+      console.error("Error saving purchase:", error);
+      toast.error("Failed to save purchase. Please check the console for details.", {
+        position: "top-right",
+        autoClose: 1000,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const [deletedProducts, setDeletedProducts] = useState([]);
+
+  const handleRemoveProduct = (productId) => {
+    // Mark the product for deletion (you can also remove it directly from the array)
+    const updatedData = editableData.filter(item => item.product_id !== productId);
+    setEditableData(updatedData);
+
+    // Mark it as deleted (optional)
+    const updatedDeletedData = [...deletedProducts, productId];
+    setDeletedProducts(updatedDeletedData);
+  };
+
+  const handleRemoveProductNew = (productId) => {
+    const updatedSelectedProducts = selectedProducts.filter(
+      (product) => product.id !== productId
+    );
+    setSelectedProducts(updatedSelectedProducts);
+    const updatedEditableData = editableData.filter(
+      (item) => item.id !== productId
+    );
+    setEditableData(updatedEditableData);
+  };
+
+
+
+  const handleAddProduct = (product) => {
+
+    const isProductInPurchaseData = purchaseData.some(
+      (item) => item.product_id === product.id
+    );
+    if (isProductInPurchaseData) {
+      toast.error(`ផលិតផល ${product.pro_names} មិនអាចបន្ថែមបានទេ ព្រោះវាត្រូវនឹងការទិញដើម!`, {
+        position: "top-center",
+        autoClose: 2000,
+      });
+    } else if (selectedProducts.find((p) => p.id === product.id)) {
+      toast.error(`ផលិតផល ${product.pro_names} មានរូចហើយ!`, {
+        position: "top-center",
+        autoClose: 1000,
+      });
+    } else {
+      // Add the product to selectedProducts
+      setSelectedProducts([...selectedProducts, product]);
+
+      const newProductData = {
+        ...product,
+        qty: 1,
+        discount: 0,
+        cost_price: product.cost_price || 0,
+        include_tax: product.include_tax || 0,
+        exclude_tax: product.exclude_tax || 0,
+        total: 0,
+      };
+
+
+      console.log("purchaseData.id:", purchaseData[0]?.product_id);
+      console.log("selectedProducts:", selectedProducts);
+      console.log("product.id:", product.id);
+      setEditableData([...editableData, newProductData]);
+    }
+
+    // Clear the search input and close the dropdown
+    setProduct_ID("");
+    setIsDropdownOpenProduct(false);
+  };
+
+
+  const handleProductSearchChange = (e) => {
+    setProduct_ID(e.target.value);
+    setIsDropdownOpenProduct(e.target.value.length > 0);
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+
+
+  const handleAmountDiscountChange = (e) => {
+    const value = parseFloat(e.target.value);
+    if (value < 0) {
+      setAmountDiscount(0);
+    } else {
+      setAmountDiscount(value);
+    }
+  };
+
+
+
+  const handleAmountTotalChange = (e) => {
+    const value = parseFloat(e.target.value);
+    if (value < 0) {
+      setAmountTotal(0);
+      setAmountTotalPay(0);
+    } else {
+      setAmountTotal(value);
+      setAmountTotalPay(value);
+    }
+  };
+
+  const handleAmountTotalPayChange = (e) => {
+    const value = parseFloat(e.target.value);
+    if (value < 0) {
+      setAmountTotalPay(0);
+    } else {
+      setAmountTotalPay(value);
+    }
+  };
+
+  const handleAmountPayDatelChange = (e) => {
+    setAmountPayDate(e.target.value);
+  };
+
+
+  const totalAmount = editableData.reduce((sum, item) => {
+    const qty = Number(item.qty) || 0;
+    const excludeTax = Number(item.cost_price) || 0;
+    const discount = Number(item.discount) || 0;
+    const includeTax = Number(item.include_tax) || 0;
+    const totalPrice = qty * excludeTax - (discount - includeTax);
+    return sum + totalPrice;
+  }, 0);
+
+  const finalAmount = Number(totalAmount) - Number(amountDiscount) - (Number(amountTotalPay) + Number(amountTotal));
+
+
   return (
     <div>
       <Navbar />
-      <div className='py-12 px-6 md:ml-64 bg-gray-200 dark:bg-gray-950'>
+      <div className='py-12 px-6 ml-64 md:w-auto w-[860px] bg-gray-200 dark:bg-gray-950'>
         <div className="w-full p-4 mt-10 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
-          <div className='flex items-center gap-2 pb-5'>
-            <p className='font-NotoSansKhmer font-bold text-3xl'>បន្ថែមការទិញ </p>
+          <div className="my-4 ">
+            <Link
+              type="button"
+              to={'/purchase'}
+              className="px-4 w-36 items-center space-x-1 flex py-2 font-semibold text-white font-NotoSansKhmer bg-blue-500 hover:bg-blue-600"
+            >
+
+              <FaBackward /> <span>ត្រឡប់ក្រោយ</span>
+            </Link>
           </div>
-          <div className="w-full">
-            <div className="modal_form">
-              <form onSubmit={handleSubmit}>
-                <div className='py-8 px-4 shadow-md  border-t-4 border-blue-600 rounded-md'>
-                  <div className='grid grid-cols-3 gap-4'>
-                    <div className="space-y-2">
-                      <label htmlFor="groupCustomer" className="font-NotoSansKhmer">អ្នកផ្គត់ផ្គង់ : *</label>
-                      <select
-                        className='input_text'
-                        id="bank"
-                        value={supplier_id}
-                        required
-                        onChange={e => setSupplier_ID(e.target.value)}
-                      >
-                        <option value="" >សូមជ្រើសរើស</option>
-                        {supplier?.map((items) => (
-                          <option key={items.id} value={items.id}>
-                            {items.full_names} {items.business_names}
+          {purchaseData.length > 0 ? (
+            <form onSubmit={handleSubmit}>
+              <div className='py-8 px-4 shadow-md  border-t-4 border-blue-600 rounded-md'>
+                <div className='grid grid-cols-3 gap-4'>
+                  <div className="space-y-2">
+                    <label htmlFor="groupCustomer" className="font-NotoSansKhmer">វិធីសាស្សបង់ប្រាក់:</label>
+                    <select
+                      className='input_text'
+                      id="bank"
+                      value={supplier_id}
+                      required
+                      onChange={e => setSupplier_ID(e.target.value)}
+                    >
+                      <option value="" >សូមជ្រើសរើស</option>
+                      {supplier?.map((items) => (
+                        <option key={items.id} value={items.id}>
+                          {items.full_names} {items.business_names}
 
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                        </option>
+                      ))}
 
-                    {/* Date Input */}
-                    <div className="col-span-1 space-y-2">
-                      <label className="font-NotoSansKhmer font-bold">កាលបរិច្ឆេទទិញ: *</label>
-                      <input
-                        type="date"
-                        id="price"
-                        min={today}
-                        value={createDob}
-                        onChange={(e) => setCreateDob(e.target.value)}
-                        className="input_text"
-                        required
-                      />
-                    </div>
-                    <div className="col-span-1 space-y-2">
-                      <label htmlFor="" className="font-bold font-NotoSansKhmer">ស្ថានភាព: *</label>
-                      <select
-                        required
-                        value={statuss}
-                        onChange={(e) => {
-                          const selectedStatus = e.target.value;
-                          setStatus(selectedStatus);
-                          console.log(selectedStatus);
-                        }}
-                        className="input_text font-NotoSansKhmer"
-                      >
-                        <option value="" disabled>--ជ្រើសរើស--</option>
-                        <option value="completed">បានទទួល</option>
-                        <option value="active">រងចាំ</option>
-                        <option value="pending">បានបញ្ជាទិញ</option>
-                      </select>
-                    </div>
+                    </select>
                   </div>
 
+                  {/* Date Input */}
+                  <div className="col-span-1 space-y-2">
+                    <label className="font-NotoSansKhmer font-bold">កាលបរិច្ឆេទទិញ: *</label>
+                    <input
+                      type="date"
+                      id="price"
+                      // min={today}
+                      value={createDob}
+                      onChange={(e) => setCreateDob(e.target.value)}
+                      className="input_text"
+                    />
+                  </div>
+                  <div className="col-span-1 space-y-2">
+                    <label htmlFor="" className="font-bold font-NotoSansKhmer">ស្ថានភាព: *</label>
+                    <select
+                      required
+                      value={status}
+                      onChange={(e) => {
+                        const selectedStatus = e.target.value;
+                        setStatus(selectedStatus);
+                        console.log(selectedStatus);
+                      }}
+                      className="input_text font-NotoSansKhmer"
+                    >
+                      <option value="" disabled>--ជ្រើសរើស--</option>
+                      <option value="completed">បានទទួល</option>
+                      <option value="active">រងចាំ</option>
+                      <option value="pending">បានបញ្ជាទិញ</option>
+                    </select>
+                  </div>
+                </div>
 
-                  <div className='md:w-[70%] w-[100%] mx-auto mt-12'>
-                    <div className="relative items-center gap-3 mx-auto my-2">
-                      <div className="relative">
-                        <div className="flex justify-center">
-                          <input
-                            type="text"
-                            className="w-full input_text"
-                            placeholder="ស្វែងរកផលិតផល"
-                            value={product_ID}
-                            onChange={handleProductSearchChange}
-                          />
-                          <div className="absolute right-[15%] top-3.5">
-                            <FaSearch className="text-gray-400" />
-                          </div>
-                        </div>
-                        <div className="absolute top-0 right-[-3%]">
-                          <button type='button' className="py-2.5 button_only_submit">
-                            + ជ្រើសរើសផលិតផល
-                          </button>
+                <div className="md:w-[70%] w-[100%] mx-auto mt-12">
+                  <div className="relative items-center gap-3 mx-auto my-2">
+                    <div className="relative">
+                      <div className="flex justify-center">
+                        <input
+                          type="text"
+                          className="w-full input_text"
+                          placeholder="ស្វែងរកផលិតផល"
+                          value={product_ID}
+                          onChange={handleProductSearchChange}
+                        />
+                        <div className="absolute right-[15%] top-3.5">
+                          {/* Search icon */}
                         </div>
                       </div>
-                      {isDropdownOpenProduct && (
-                        <div className="flex justify-center">
-                          <ul className="absolute z-[2] w-full mt-1 overflow-y-auto bg-white border border-gray-300 shadow-md max-h-48">
-                            {filteredOptionsProduct.length > 0 ? (
-                              filteredOptionsProduct.map((product) => (
-                                <li
-                                  key={product.id}
-                                  className="p-2 text-gray-700 cursor-pointer hover:bg-gray-200 hover:text-black"
-                                  onClick={() => handleAddProduct(product)}
-                                >
-                                  {product.pro_names}
-                                </li>
-                              ))
-                            ) : (
-                              <li className="p-2 text-gray-500 font-NotoSansKhmer">
-                                មិនមានកាត ឈ្មោះនេះ​ <span className="font-bold">{product_ID}</span> ទេ!
-                              </li>
-                            )}
-                          </ul>
-                        </div>
-                      )}
+                      <div className="absolute top-0 right-[-3%]">
+                        <button
+                          type="button"
+                          className="py-2.5 button_only_submit"
+                          onClick={() => setIsDropdownOpenProduct((prev) => !prev)}
+                        >
+                          + ជ្រើសរើសផលិតផល
+                        </button>
+                      </div>
                     </div>
+                    {isDropdownOpenProduct && (
+                      <div className="flex justify-center">
+                        <ul className="absolute z-[2] w-full mt-1 overflow-y-auto bg-white border border-gray-300 shadow-md max-h-48">
+                          {filteredOptionsProduct.length > 0 ? (
+                            filteredOptionsProduct.map((product) => (
+                              <li
+                                key={product.id}
+                                className="p-2 text-gray-700 cursor-pointer hover:bg-gray-200 hover:text-black"
+                                onClick={() => handleAddProduct(product)}
+                              >
+                                {product.pro_names} {product.id}
+                              </li>
+                            ))
+                          ) : (
+                            <li className="p-2 text-gray-500 font-NotoSansKhmer">
+                              មិនមានកាត ឈ្មោះនេះ​{" "}
+                              <span className="font-bold">{product_ID}</span> ទេ!
+                            </li>
+                          )}
+                        </ul>
+                      </div>
+                    )}
                   </div>
-
                 </div>
 
-                <div className="pb-12 pt-6 px-4 shadow-md mt-8 border-t-4 border-pink-600 rounded-md">
-                  {/* Table for Selected Products */}
+              </div>
+
+              <table>
+                <div className='pb-12 pt-6 px-4 shadow-md mt-8  border-t-4 border-pink-600 rounded-md'>
                   <h3 className="text-lg font-semibold">កំណត់ការបញ្ជាទិញ</h3>
-                  <table className="mt-4 border-collapse w-full">
-                    <thead className="p-2 text-white bg-blue-600/90">
-                      <tr>
-                        <th className="p-2 border w-[7%]">លេខរៀង</th>
-                        <th className="p-2 border w-[20%]">ឈ្មោះផលិតផល</th>
-                        <th className="p-2 border w-[10%]">តម្លៃដើម(ឯកតា)</th>
-                        <th className="p-2 border w-[10%]">បរិមាណទិញចូល</th>
-                        <th className="p-2 border w-[10%]">តម្លៃដើមលក់ចេញ(ឯកតា)</th>
-                        <th className="p-2 border w-[10%]">បញ្ចុះតម្លៃ</th>
-                        <th className="p-2 border w-[10%]">ពន្ធសរុប</th>
-                        <th className="p-2 border w-[15%]">សរុប</th>
-                        <th className="p-2 border w-[5%]">
-                          <p className="text-center">ស្ថានភាព</p>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {selectedProducts.length > 0 ? (
-                        selectedProducts.map((product, index) => {
-                          const qty = quantities[product.id] || product.qty || 1;
-                          const discount = discounts[product.id] || parseFloat(product.discount) || 0;
-                          const saleprice = salePrices[product.id] || product.excluded_tax;
-                          const costPrice = originalPrice[product.id] || product.cost_price;
-                          const includedTax = taxes[product.id] || 0;
-                          const saleprice_pro = salePrices[product.id] || product.exclude_tax;
-                          const totalPrice = qty * (saleprice_pro || saleprice);
-                          const grandTotal = totalPrice - discount + includedTax;
-
-                          return (
-                            <tr key={product.id}>
-                              <td className="p-2 w-[7%]">{index + 1}</td>
-                              <td className="p-2">
-                                {product.pro_names || product.product_name}
-                                <p className="text-xs text-gray-500">
-                                  មានស្តុកនៅសល់ {product.qty || 0} {product.unit_names}
-                                </p>
-                              </td>
-                              <td className="w-[10%]">
-                                <input
-                                  min={0}
-                                  type="number"
-                                  step={0.01}
-                                  placeholder="0.00"
-                                  value={costPrice}
-                                  onChange={(e) => handleOriginalPriceChange(product.id, e.target.value)}
-                                  className="bg-gray-100 input_text"
-                                />
-                              </td>
-                              <td className="w-[10%] text-center">
-                                <input
-                                  min={1}
-                                  type="number"
-                                  step={1}
-                                  value={qty}
-                                  onChange={(e) => handleQtyChange(product.id, e.target.value)}
-                                  placeholder="0.0"
-                                  className="input_text"
-                                />
-                              </td>
-                              <td className="w-[10%]">
-                                <input
-                                  min={0}
-                                  type="number"
-                                  placeholder="0.00"
-                                  step={0.01}
-                                  value={saleprice || saleprice_pro}
-                                  onChange={(e) => handleSalePriceChange(product.id, e.target.value)}
-                                  className="bg-gray-100 input_text"
-                                />
-                              </td>
-                              <td className="w-[10%]">
-                                <input
-                                  type="number"
-                                  value={discount}
-                                  onChange={(e) => handleDiscountChange(product.id, e.target.value)}
-                                  placeholder="0"
-                                  className="input_text"
-                                />
-                              </td>
-                              <td className="w-[10%]">
-                                <input
-                                  min={0}
-                                  type="number"
-                                  value={includedTax}
-                                  onChange={(e) => handleTaxChange(product.id, e.target.value)}
-                                  placeholder="0"
-                                  className="input_text"
-                                />
-                              </td>
-                              <td className="w-[15%]">
-                                <input
-                                  min={0}
-                                  type="number"
-                                  value={grandTotal.toFixed(2)}
-                                  placeholder="0.0"
-                                  readOnly
-                                  className="bg-gray-100 input_text"
-                                />
-                              </td>
-                              <td className="p-2 w-[5%]">
-                                <div className="flex justify-center">
-                                  <button
-                                    className="p-2 text-white bg-red-500 hover:text-white hover:bg-red-400"
-                                    onClick={() => handleRemoveProduct(product.id)}
-                                  >
-                                    <IoMdClose />
-                                  </button>
-                                </div>
-                              </td>
-                            </tr>
-                          );
-                        })
-                      ) : (
-                        <tr>
-                          <td colSpan={10} className="p-2 text-center text-gray-500">
-                            សូមជ្រើសរើសផលិតផល
+                  <thead className="p-2 text-white bg-blue-600/90">
+                    <tr>
+                      <th className="p-2 border w-[7%]">លេខរៀង</th>
+                      <th className="p-2 border w-[20%]">ឈ្មោះផលិតផល</th>
+                      <th className="p-2 border w-[10%]">តម្លៃដើម(ឯកតា $)</th>
+                      <th className="p-2 border w-[10%]">បរិមាណទិញចូល</th>
+                      <th className="p-2 border w-[10%]">តម្លៃលក់ចេញ(ឯកតា $)</th>
+                      <th className="p-2 border w-[10%]">បញ្ចុះតម្លៃ $</th>
+                      <th className="p-2 border w-[10%]">ពន្ធសរុប</th>
+                      <th className="p-2 border w-[15%]">សរុប</th>
+                      <th className="p-2 border w-[5%}">
+                        <p className="text-center">ស្ថានភាព</p>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {editableData.map((item, index) => {
+                      const qty = Number(item.qty) || 0;
+                      const excludeTax = Number(item.cost_price) || 0;
+                      const discount = Number(item.discount) || 0;
+                      const includeTax = Number(item.include_tax) || 0;
+                      const totalPrice = (qty * excludeTax) - (discount - includeTax);
+                      return (
+                        <tr key={`${item.id}-${index}`}>
+                          <td className="p-2 w-[7%]">{index + 1}</td>
+                          <td className="p-2">
+                            {item.pro_names}
+                            <p className="text-xs text-gray-500">
+                              មានស្តុកនៅសល់ {item.stock_qty} {item.unit_names}
+                            </p>
                           </td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                          <td>
+                            <input
+                              type="number"
+                              value={item.cost_price}
+                              step={0.01}
+                              className="bg-gray-100 input_text"
+                              onChange={(e) => handleInputChange(index, "cost_price", e.target.value)}
+                            />
+                          </td>
+                          <td className="text-center">
+                            <input
+                              type="number"
+                              value={item.qty}
+                              min={1}
+                              className="bg-gray-100 input_text"
+                              onChange={(e) => handleInputChange(index, "qty", e.target.value)}
+                            />
+                            <span className='text-xs'> {item.unit_names}</span>
+                          </td>
+                          <td>
+                            <input
+                              type="number"
+                              value={item.exclude_tax}
+                              step={0.01}
+                              className="bg-gray-100 input_text"
+                              onChange={(e) => handleInputChange(index, "exclude_tax", e.target.value)}
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="number"
+                              value={item.discount}
+                              step={0.01}
+                              className="bg-gray-100 input_text"
+                              onChange={(e) => handleInputChange(index, "discount", e.target.value)}
+                            />
+                          </td>
 
+                          <td>
+                            <input
+                              type="number"
+                              value={item.include_tax}
+                              step={0.01}
+                              className="bg-gray-100 input_text"
+                              onChange={(e) => handleInputChange(index, "include_tax", e.target.value)}
+                            />
+                          </td>
+
+                          <td>
+                            <input
+                              type="number"
+                              readOnly
+                              value={totalPrice.toFixed(2)}
+                              step={0.01}
+                              className="bg-gray-100 input_text"
+                            />
+                          </td>
+                          {/* <td>
+                            <button
+                              type="button"
+                              className="p-2 text-white bg-red-500 hover:text-white hover:bg-red-400"
+                              onClick={() => handleRemoveProduct(item.product_id || item.id)}
+                            >
+                              <IoMdClose />
+                            </button>
+                          </td> */}
+                          <td className="text-center">
+                            {item.id === item.product_id ? (
+                              <button
+                                type="button"
+                                className="p-2 text-white bg-red-500 hover:text-white hover:bg-red-400"
+                                onClick={() => handleRemoveProduct(item.product_id || item.id)}
+                              >
+                                <IoMdClose />
+                              </button>
+                            ) : (
+                              <button
+                                type="button"
+                                className="p-2 text-white bg-red-500 hover:text-white hover:bg-red-400"
+                                onClick={() => handleRemoveProductNew(item.product_id || item.id)}
+                              >
+                                <IoMdClose />
+                              </button>
+                            )}
+                          </td>
+
+                        </tr>
+
+                      );
+                    })}
+                  </tbody>
+                </div>
 
 
                 <div className="pb-12 pt-6 px-4 shadow-md mt-8  border-t-4 border-green-600 rounded-md">
@@ -2107,10 +713,16 @@ const UpdatePurchase = () => {
                       <label htmlFor="">ចំនួនការទូទាត់សរុប($)</label>
                       <input
                         type="number"
-                        placeholder="0.0"
-                        value={amountTotal}
                         readOnly
-                        className="bg-gray-100 input_text"
+                        value={editableData.reduce((sum, item) => {
+                          const qty = Number(item.qty) || 0;
+                          const excludeTax = Number(item.cost_price) || 0;
+                          const discount = Number(item.discount) || 0;
+                          const includeTax = Number(item.include_tax) || 0;
+                          const totalPrice = (qty * excludeTax) - (discount - includeTax);
+                          return sum + totalPrice;
+                        }, 0)}
+                        className="bg-gray-100 input_text font-bold"
                       />
                     </div>
                     <div className="space-y-2">
@@ -2118,21 +730,34 @@ const UpdatePurchase = () => {
                       <input
                         type="number"
                         value={amountDiscount}
+                        onChange={handleAmountDiscountChange} // Add the onChange handler
+                        required
                         step={0.01}
-                        onChange={(e) => handleAmountDiscountChange(e.target.value)}
-                        placeholder="0.0"
+                        min={0}
+                        placeholder="0.00"
                         className="input_text"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label htmlFor="">ទូទាត់សាច់ប្រាក់($): * </label>
+                      <label htmlFor="">បន្ថែមសាច់ប្រាក់ <span className="text-red-400">ទឹកប្រាក់បង់មុន = </span><span className="text-red-400">{amountTotal}$</span>  </label>
                       <input
                         type="number"
-                        value={amountPay}
+                        value={amountTotal}
+                        onChange={handleAmountTotalChange}
+                        required
+                        readOnly
+                        step={0.01}
+                        min={0}
+                        placeholder="0.00"
+                        className="input_text hidden"
+                      />
+                      <input
+                        type="number"
+                        value={amountTotalPay}
+                        onChange={handleAmountTotalPayChange}
                         required
                         step={0.01}
-
-                        onChange={(e) => handleAmountPayChange(e.target.value)}
+                        min={0}
                         placeholder="0.00"
                         className="input_text"
                       />
@@ -2140,11 +765,11 @@ const UpdatePurchase = () => {
                     <div className="space-y-2">
                       <label htmlFor="">កាលបរិច្ឆេតបង់ប្រាក់ : *</label>
                       <input type="date"
-                        required
+
                         placeholder="0.0"
-                        value={payDob}
-                        onChange={(e) => setPayDob(e.target.value)}
-                        min={today}
+                        value={amounPayDate}
+                        onChange={handleAmountPayDatelChange}
+                        // min={today}
                         className="input_text"
                       />
                     </div>
@@ -2164,9 +789,10 @@ const UpdatePurchase = () => {
                         ))}
 
                       </select>
+
                     </div>
                     <div className="space-y-2">
-                      <label htmlFor="groupCustomer" className="font-NotoSansKhmer">វិធីសាស្សបង់ប្រាក់:</label>
+                      <label htmlFor="groupCustomer" className="font-NotoSansKhmer">វិធីសាស្ត្របង់ប្រាក់:</label>
                       <select
                         className='input_text'
                         id="bank"
@@ -2183,39 +809,38 @@ const UpdatePurchase = () => {
                       </select>
                     </div>
                     <div className="space-y-2">
-                      <label htmlFor="">ចំនួននៅសល់($)</label>
+                      <label htmlFor="">ចំនួនទឹកប្រាក់នៅសល់($)</label>
                       <input
                         type="number"
-                        placeholder="0.0"
-                        value={(amountTotal - amountDiscount - amountPay) < 0 ? 0.00 : (amountTotal - amountDiscount - amountPay).toFixed(2)}
+                        value={finalAmount.toFixed(2)}
                         readOnly
-                        className="bg-gray-100 input_text"
+                        className="bg-gray-100 text-red-500 input_text"
                       />
-                      {/* You may want to display the dollar sign outside the input if needed */}
-                      {/* <span>$</span> */}
                     </div>
-
                   </div>
                 </div>
                 <div className="flex justify-end mt-5">
                   <button
                     type="submit"
-                    className="px-4 py-2 font-semibold text-white bg-blue-500 hover:bg-blue-600"
+                    disabled={isSubmitting}
+                    className="px-4 py-2 font-semibold text-white font-NotoSansKhmer bg-blue-500 hover:bg-blue-600"
                   >
-                    រក្សាទុក
+
+                    {isSubmitting ? 'រក្សាទុក...' : 'រក្សាទុក'}
                   </button>
                 </div>
-              </form>
-            </div>
-          </div>
-        </div>
-        <div>
-          <BackgroundArrow />
-        </div>
+              </table>
 
+            </form>
+          ) : (
+            <div>No purchase data found.</div>
+          )}
+        </div>
       </div>
     </div>
+
   );
 };
-export default UpdatePurchase
+
+export default PurchaseDetails;
 

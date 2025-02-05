@@ -75,6 +75,8 @@ const Brands = () => {
     // modal insert
     const openInsertModal = () => {
         setIsInsertModalOpen(true);
+        setbrand_names('');
+        setdescription('');
     };
     // modal update 
     const openUpdateModal = cat => {
@@ -93,7 +95,7 @@ const Brands = () => {
         }
         try {
             await axios.put(`http://localhost:6700/api/brands/${selectedBrandsId}`, values);
-            toast.success('កែប្រែម៉ាក់យីយោបានដោយជោគជ័យ', { autoClose: 3000 });
+            toast.success(`កែប្រែម៉ាក់យីយោបានដោយជោគជ័យ ​« ${brand_names} ​»`, { autoClose: 3000 });
             getAllStudent();
             setIsUpdateModalOpen(false);
             setSelectedBrandsId(null);
@@ -101,7 +103,7 @@ const Brands = () => {
             setdescription('');
         } catch (err) {
             console.error(err);
-            toast.error('សូមលោកព្យាយាមម្ដងទៀត ស្មោះមានរួចហើយ !', { autoClose: 3000 });
+            toast.error(`សូមលោកព្យាយាមម្ដងទៀត ​« ${brand_names} ​» ស្មោះមានរួចហើយ !`, { autoClose: 3000 });
         }
     };
 
@@ -110,6 +112,7 @@ const Brands = () => {
     const openDeleteModal = cat => {
         setSelectedBrandsId(cat.id);
         setIsDeleteModalOpen(true);
+        setbrand_names(cat.brand_names);
     };
 
     // modale delete
@@ -123,7 +126,8 @@ const Brands = () => {
                 setSelectedBrandsId(null);
             } catch (err) {
                 console.error(err);
-                toast.error('សូមលោកព្យាយាមម្ដងទៀត ស្មោះមានរួចហើយ  !', { autoClose: 3000 });
+                setbrand_names('');
+                toast.error(`សូមលោកព្យាយាមម្ដងទៀត ម៉ាក់យីហោ ​« ${brand_names} ​»នេះមិនអាចលុបបានទេ  !`, { autoClose: 3000 });
             }
         }
     };
@@ -146,7 +150,7 @@ const Brands = () => {
             setIsInsertModalOpen(false);
         } catch (err) {
             console.error(err);
-            toast.error('សូមលោកព្យាយាមម្ដងទៀត ស្មោះមានរួចហើយ  !', { autoClose: 3000 });
+            toast.error(`សូមលោកព្យាយាមម្ដងទៀត ​« ${brand_names} ​» ស្មោះមានរួចហើយ !`, { autoClose: 3000 });
         }
     };
     const rowAnimation = {
@@ -325,7 +329,7 @@ const Brands = () => {
                             </div>
                             <div className="p-4 space-y-4">
                                 <p className="text-sm ">
-                                    Are you sure you want to delete this Brands? This action cannot be undone.
+                                តើអ្នកប្រាកដថាចង់លុបម៉ាកនេះទេ? សកម្មភាពនេះមិនអាចត្រឡប់វិញបានទេ។
                                 </p>
                                 <div className="flex justify-end space-x-2">
                                     <button

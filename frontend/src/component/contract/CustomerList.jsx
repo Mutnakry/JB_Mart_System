@@ -21,6 +21,8 @@ const Supplier = () => {
     const [email, setEmail] = useState(null);
     const [description, setDescription] = useState(null);
     const [userLoginNames, setUserLoginNames] = useState('');
+    const [userRol, setUserRol] = useState('');
+
     const [error, setError] = useState('');
 
     //// paginate and search data
@@ -34,6 +36,8 @@ const Supplier = () => {
 
     useEffect(() => {
         setUserLoginNames(localStorage.getItem('user_names') || '');
+        setUserRol(localStorage.getItem('user_rol') || '');
+
         GetAllCustomer();
         getGroup_Customer();
 
@@ -106,6 +110,7 @@ const Supplier = () => {
     // modal insert
     const openInsertModal = () => {
         setIsInsertModalOpen(true);
+        cleardata();
     };
     // Clear Data 
     const cleardata = async () => {
@@ -158,8 +163,11 @@ const Supplier = () => {
             setSelectedcustomerId(null);
             cleardata();
         } catch (err) {
+            // console.error(err);
+            // toast.error('សូមលោកព្យាយាមម្ដងទៀត!', { autoClose: 3000 });
             console.error(err);
-            toast.error('សូមលោកព្យាយាមម្ដងទៀត!', { autoClose: 3000 });
+            const errorMessage = err.response?.data?.message || 'សូមលោកព្យាយាមម្ដងទៀត !';
+            toast.error(errorMessage, { autoClose: 3000 });
         }
     };
 
@@ -314,14 +322,22 @@ const Supplier = () => {
                                                         onClick={() => openUpdateModal(customer)}
                                                         className="bg-blue-300 p-2 flex text-xs text-white"
                                                     >
-                                                        <FaPencilAlt className="text-blue-500 mr-2" /> កែសម្រួល
+                                                        <FaPencilAlt className="text-blue-600 mr-2" /> កែសម្រួល
                                                     </button>
-                                                    <button
-                                                        onClick={() => openDeleteModal(customer)}
-                                                        className="bg-red-300 p-2 flex text-xs text-white"
-                                                    >
-                                                        <FaPowerOff className="text-red-500 mr-2" /> លុប
-                                                    </button>
+                                                    {(userRol === 'superadmin' || userRol === 'admin') ? (
+                                                        <button
+                                                            onClick={() => openDeleteModal(customer)}
+                                                            className="bg-red-300 p-2 flex text-xs text-white"
+                                                        >
+                                                            <FaPowerOff className="text-red-500 mr-2" /> លុប
+                                                        </button>
+                                                    ) : (
+                                                        <button
+                                                            className="bg-red-300 p-2 flex text-xs text-white opacity-50 cursor-not-allowed"
+                                                        >
+                                                            <FaPowerOff className="text-red-500 mr-2" /> លុប
+                                                        </button>
+                                                    )}
                                                 </>
                                             )}
                                         </td>
@@ -528,7 +544,7 @@ const Supplier = () => {
                             </div>
                             <div className="p-4 space-y-4">
                                 <p className="text-sm ">
-                                    Are you sure you want to delete this customer? This action cannot be undone.
+                                តើអ្នកប្រាកដថាចង់លុបអតិថិជននេះទេ? សកម្មភាពនេះមិនអាចត្រឡប់វិញបានទេ។
                                 </p>
                                 <div className="flex justify-end space-x-2">
                                     <button

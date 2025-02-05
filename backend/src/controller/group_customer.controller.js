@@ -14,8 +14,8 @@ exports.GetAll = (req, res) => {
 
 // get data to frontend ->  in backend
 exports.GetAllData = (req, res) => {
-    const page = parseInt(req.query.page, 10) || 1;
-    const limit = parseInt(req.query.limit, 10) || 10;
+    const page = parseInt(req.query.page, 25) || 1;
+    const limit = parseInt(req.query.limit, 25) || 25;
     const searchQuery = req.query.search_query || "";
     const offset = (page - 1) * limit;
 
@@ -61,14 +61,25 @@ exports.GetAllData = (req, res) => {
 // Create data group_customer
 exports.Create = (req, res) => {
     const { group_names, discount, detail, user_at } = req.body;
-    const sql = "INSERT INTO group_customer (group_names, discount, detail, user_at) VALUES (?,?,?,?)";
-    db.query(sql, [group_names, discount, detail, user_at], (err, results) => {
+    const checkSql = "SELECT * FROM group_customer WHERE group_names = ?";
+    db.query(checkSql, [group_names], (err, results) => {
         if (err) {
             return res.status(500).send(err);
         }
-        res.json(results);
+
+        if (results.length > 0) {
+            return res.status(400).json({ message: "ឈ្មោះក្រុមមានរួចហើយ" });
+        }
+        const sql = "INSERT INTO group_customer (group_names, discount, detail, user_at) VALUES (?,?,?,?)";
+        db.query(sql, [group_names, discount, detail, user_at], (err, results) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            res.json(results);
+        });
     });
 };
+
 
 
 
@@ -76,14 +87,26 @@ exports.Create = (req, res) => {
 exports.Update = (req, res) => {
     const { id } = req.params;
     const { group_names, discount, detail, user_at } = req.body;
-    const sql = "UPDATE group_customer set group_names=?, discount=?, detail=?,user_update=? where id=?";
-    db.query(sql, [group_names, discount, detail, user_at, id], (err, results) => {
+    const checkSql = "SELECT * FROM group_customer WHERE group_names = ? AND id != ?";
+    db.query(checkSql, [group_names, id], (err, results) => {
         if (err) {
             return res.status(500).send(err);
         }
-        res.json(results);
+
+        if (results.length > 0) {
+            return res.status(400).json({ message: "ឈ្មោះក្រុមមានរួចហើយ" });
+        }
+
+        const sql = "UPDATE group_customer set group_names=?, discount=?, detail=?, user_update=? where id=?";
+        db.query(sql, [group_names, discount, detail, user_at, id], (err, results) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            res.json(results);
+        });
     });
-}
+};
+
 
 // GEt Data Single group_customer
 exports.GetSingle = (req, res) => {

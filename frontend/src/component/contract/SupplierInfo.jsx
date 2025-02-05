@@ -158,7 +158,7 @@ const SupplierInfo = () => {
                         value={limit}
                         onChange={(e) => setLimit(Number(e.target.value))}
                         className="input_text w-[100px]">
-                        {[25, 50, 100, 500].map(value => (
+                        {[25,1,2, 50, 100, 500].map(value => (
                             <option key={value} value={value}>{value}</option>
                         ))}
                     </select>
