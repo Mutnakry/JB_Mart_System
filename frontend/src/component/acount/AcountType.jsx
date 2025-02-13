@@ -6,7 +6,7 @@ import Pagination from '../pagination/Pagination';
 import { FaAlignLeft , FaPencilAlt } from "react-icons/fa";
 import { MdDelete, MdClose } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
-
+import {API_URL} from '../../service/api'
 
 
 const bank = () => {
@@ -30,7 +30,7 @@ const bank = () => {
     const getAllStudent = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:6700/api/bank', {
+            const response = await axios.get(`${API_URL}/api/bank`, {
                 params: {
                     page,
                     limit,
@@ -87,7 +87,7 @@ const bank = () => {
             bank_names: bank_names,
         }
         try {
-            await axios.put(`http://localhost:6700/api/bank/${selectedbankId}`, values);
+            await axios.put(`${API_URL}/api/bank/${selectedbankId}`, values);
             toast.success('កែប្រែប្រភេទគណនីបានដោយជោគជ័យ', { autoClose: 3000 });
             getAllStudent();
             setIsUpdateModalOpen(false);
@@ -110,7 +110,7 @@ const bank = () => {
     const deletebank = async () => {
         if (selectedbankId) {
             try {
-                await axios.delete(`http://localhost:6700/api/bank/${selectedbankId}`);
+                await axios.delete(`${API_URL}/api/bank/${selectedbankId}`);
                 toast.success('លុបប្រភេទគណនីបានដោយជោគជ័យ', { autoClose: 3000 });
                 getAllStudent();
                 setIsDeleteModalOpen(false);
@@ -130,7 +130,7 @@ const bank = () => {
             bank_names: bank_names,
         }
         try {
-            const res = await axios.post('http://localhost:6700/api/bank', values);
+            const res = await axios.post(`${API_URL}/api/bank`, values);
             console.log(res.data);
             toast.success('បង្កើតប្រភេទគណនីបានដោយជោគជ័យ ', { autoClose: 3000 });
             setBank_names('');

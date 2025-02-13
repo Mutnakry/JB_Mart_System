@@ -7,6 +7,7 @@ import { FaCcApplePay, FaPencilAlt, FaMoneyBillAlt, FaBookOpen, FaPowerOff } fro
 import { MdDelete, MdClose, MdOutlineMoneyOff  } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from 'react-router-dom';
+import {API_URL} from '../../service/api'
 
 const account = () => {
     const [acc_names, setAcc_names] = useState('');
@@ -40,7 +41,7 @@ const account = () => {
     //// get all bank type
     const GetBacktype = async () => {
         try {
-            const response = await axios.get('http://localhost:6700/api/bank');
+            const response = await axios.get(`${API_URL}/api/bank`);
             setAccountTypeBank(response.data.bank);
             console.log(response.data)
         } catch (error) {
@@ -52,7 +53,7 @@ const account = () => {
     const getAllStudent = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:6700/api/account', {
+            const response = await axios.get(`${API_URL}/api/account`, {
                 params: {
                     page,
                     limit,
@@ -155,7 +156,7 @@ const account = () => {
             user_at: userLoginNames
         }
         try {
-            await axios.put(`http://localhost:6700/api/account/${selectedaccountId}`, values);
+            await axios.put(`${API_URL}/api/account/${selectedaccountId}`, values);
             toast.success('កែប្រែគណនីបានដោយជោគជ័យ', { autoClose: 3000 });
             getAllStudent();
             setIsUpdateModalOpen(false);
@@ -183,7 +184,7 @@ const account = () => {
             user_at: userLoginNames
         }
         try {
-            await axios.put(`http://localhost:6700/api/account/update_status/${selectedaccountId}`, values);
+            await axios.put(`${API_URL}/api/account/update_status/${selectedaccountId}`, values);
             toast.success('កែប្រែគណនីបានដោយជោគជ័យ', { autoClose: 3000 });
             getAllStudent();
             setIsMoneyUpdateStatus(false);
@@ -206,7 +207,7 @@ const account = () => {
     const deleteaccount = async () => {
         if (selectedaccountId) {
             try {
-                await axios.delete(`http://localhost:6700/api/account/${selectedaccountId}`);
+                await axios.delete(`${API_URL}/api/account/${selectedaccountId}`);
                 toast.success('លុបគណនីបានដោយជោគជ័យ', { autoClose: 3000 });
                 getAllStudent();
                 setIsDeleteModalOpen(false);
@@ -231,7 +232,7 @@ const account = () => {
             user_at: userLoginNames
         }
         try {
-            const res = await axios.post('http://localhost:6700/api/account', values);
+            const res = await axios.post(`${API_URL}/api/account`, values);
             console.log(res.data);
             toast.success('បង្កើតគណនីបានដោយជោគជ័យ ', { autoClose: 3000 });
             setAcc_names('');
@@ -274,7 +275,7 @@ const account = () => {
         };
 
         try {
-            const response = await axios.post(`http://localhost:6700/api/account/paymentdetail`, values);
+            const response = await axios.post(`${API_URL}/api/account/paymentdetail`, values);
             if (response.status === 201) {
                 toast.success('ផ្ទេរប្រាក់បានដោយជោគជ័យ', { autoClose: 3000 });
                 setIsMoneyTransfer(false);
@@ -309,7 +310,7 @@ const account = () => {
         console.log(values)
 
         try {
-            const response = await axios.post(`http://localhost:6700/api/account/inputmoney`, values);
+            const response = await axios.post(`${API_URL}/api/account/inputmoney`, values);
             if (response.status === 201) {
                 toast.success('ផ្ទេរប្រាក់បានដោយជោគជ័យ', { autoClose: 3000 });
                 setIsInputMoneyTransfer(false);

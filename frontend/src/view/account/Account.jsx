@@ -27,8 +27,8 @@ const Account = () => {
             <div className='print:hidden'>
                 <Navbar />
             </div>
-            <div className='py-12 px-6 md:ml-64 bg-gray-100 dark:bg-gray-950 print:py-0 print:px-0'>
-                <div className="w-full p-4 mt-7 print:mt-0 print:p-0 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
+            <div className='Nav_bar  md:ml-64 bg-gray-100 dark:bg-gray-950 print:py-0 print:px-0'>
+                <div className=" Div_bar w-full  print:mt-0 print:p-0 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
 
                     <div className="p-4 bg-white dark:border-gray-700 mt-5  print:border-0 print:shadow-none">
                         <div className='flex items-center gap-2 pb-5  print:hidden'>

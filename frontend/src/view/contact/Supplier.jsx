@@ -20,9 +20,8 @@ const Customer = () => {
     return (
         <div>
             <Navbar />
-            <div className='py-12 px-6 md:ml-64 bg-gray-100 dark:bg-gray-950'>
-                <div className="w-full p-4 mt-7 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
-
+            <div className='Nav_bar'>
+            <div className=' Div_bar'>
                     <div className='flex items-center gap-2 pb-5'>
                         <RiContactsBook3Fill className='text-lg' />
                         <p className='font-NotoSansKhmer font-bold text-lg'>អ្នកផ្គត់ភ្កង់</p>

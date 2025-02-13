@@ -5,6 +5,7 @@ import { useCart } from './CartContext';
 import { toast } from 'react-toastify';
 import Search_Category_brand from "./Search_Category_brand";
 import { useParams } from 'react-router-dom';
+import {API_URL} from '../../service/api'
 
 const ProductGrid = () => {
     const { id } = useParams();
@@ -20,7 +21,7 @@ const ProductGrid = () => {
     const getALLProduct = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:6700/api/product/${id}`);
+            const response = await axios.get(`${API_URL}/api/product/${id}`);
             setTimeout(() => {
                 setProducts(response.data);
                 setLoading(false);
@@ -70,7 +71,7 @@ const ProductGrid = () => {
                                 className="bg-white p-2 cursor-pointer shadow-md text-center"
                             >
                                 <img
-                                    src={`http://localhost:6700/image/${product.image}`}
+                                    src={`${API_URL}/image/${product.image}`}
                                     alt={product.pro_names}
                                     className="w-full h-20 object-contain rounded mb-2"
                                 />

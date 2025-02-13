@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { FaSearch } from "react-icons/fa";
 import Barcode from 'react-barcode';
 import { IoPrint } from 'react-icons/io5';
-
+import {API_URL} from '../../service/api'
 
 function AddBarcode() {
     const [products, setProducts] = useState([]);
@@ -17,7 +17,7 @@ function AddBarcode() {
     }, []);
     const getAllProduct = async () => {
         try {
-            const response = await axios.get('http://localhost:6700/api/product');
+            const response = await axios.get(`${API_URL}/api/product`);
             setProducts(response.data.product);
         } catch (error) {
             console.error('Error fetching products:', error);
@@ -71,7 +71,6 @@ function AddBarcode() {
     return (
         <div>
             <div className=' mb-4 rounded-lg '>
-
                 <div className="md:w-[70%] w-[100%] mx-auto mt-12">
                     <div className="relative items-center gap-3 mx-auto my-2">
                         <div className="relative">

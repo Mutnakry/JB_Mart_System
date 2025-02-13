@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { formatDateToKhmer } from '../ForMartDateToKHmer';
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify';
+import {API_URL} from '../../service/api'
 
 
 
@@ -28,7 +29,7 @@ const Dashboard = () => {
     const getAllPuchase = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:6700/api/purchase/purchasedetail', {
+            const response = await axios.get(`${API_URL}/api/purchase/purchasedetail`, {
                 params: {
                     page,
                     limit,
@@ -87,7 +88,7 @@ const Dashboard = () => {
         };
         try {
             // await axios.put(`http://localhost:6700/api/purchase/status/${selectedpurchasesId}`, values);
-            await axios.put(`http://localhost:6700/api/purchase/status/96`, values);
+            await axios.put(`${API_URL}/api/purchase/status/96`, values);
 
             toast.success('កែប្រែស្ថានភាពទិញបានដោយជោគជ័យ', { autoClose: 3000 });
             console.log(status);

@@ -6,6 +6,7 @@ import axios from "axios";
 import TableCurrency from "../TableCurrency";
 import { motion } from 'framer-motion';
 import { MdClose } from 'react-icons/md';
+import {API_URL} from '../../../service/api'
 
 
 const ModaleExchangRateToPOS = ({ setIsModalExchangRate }) => {
@@ -25,7 +26,7 @@ const ModaleExchangRateToPOS = ({ setIsModalExchangRate }) => {
     const getCurrencyData = async () => {
         try {
             setLoading(true);
-            const response = await axios.get("http://localhost:6700/api/currency");
+            const response = await axios.get(`${API_URL}/api/currency`);
             const fetchedData = response.data;
             setCurrency(fetchedData);
             console.log(fetchedData)

@@ -6,6 +6,7 @@ import { TbSwitch3 } from "react-icons/tb";
 import Navbar from '../../component/Navbar'
 import axios from "axios";
 import TableCurrency from "./TableCurrency";
+import {API_URL} from '../../service/api'
 
 
 const ExchangRate = () => {
@@ -25,7 +26,7 @@ const ExchangRate = () => {
     const getCurrencyData = async () => {
         try {
             setLoading(true);
-            const response = await axios.get("http://localhost:6700/api/currency");
+            const response = await axios.get(`${API_URL}/api/currency`);
             const fetchedData = response.data;
             setCurrency(fetchedData);
             console.log(fetchedData)
@@ -148,13 +149,13 @@ const ExchangRate = () => {
 
     const exchangeRateStatements = getExchangeRateStatements();
 
-
+    
     return (
         <div>
             <Navbar />
-            <div className='py-12 px-6 ml-64 xl:w-auto md:w-[860px] w-[860px] bg-gray-100 dark:bg-gray-950'>
-                <div className="w-full p-4 mt-7 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
-                    <div className="">
+            <div className='Nav_bar'>
+                <div className=' Div_bar'>
+                     <div className="">
                         <div className="flex items-center gap-2 py-5">
                             <RiContactsBook3Fill className="text-lg" />
                             <p className="text-lg font-bold font-NotoSansKhmer">អត្រាប្តូប្រាក់</p>

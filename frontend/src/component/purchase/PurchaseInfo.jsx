@@ -448,6 +448,8 @@ import { formatDateToKhmer } from '../ForMartDateToKHmer';
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import { IoPrint } from 'react-icons/io5';
+import {API_URL} from '../../service/api'
+
 
 const Dashboard = () => {
     const [error, setError] = useState('');
@@ -467,7 +469,7 @@ const Dashboard = () => {
     const getAllPuchase = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:6700/api/purchase/puchase', {
+            const response = await axios.get(`${API_URL}/api/purchase/puchase`, {
                 params: {
                     page,
                     limit,
@@ -554,7 +556,7 @@ const Dashboard = () => {
             } else {
                 try {
                     // Proceed with deleting the purchase if it's more than 30 days
-                    await axios.delete(`http://localhost:6700/api/purchase/${selectedpurchasesId}`);
+                    await axios.delete(`${API_URL}/api/purchase/${selectedpurchasesId}`);
                     toast.success('Successfully deleted!', { autoClose: 3000 });
                     setIsModalDelete(false); // Close the modal
                 } catch (err) {
@@ -575,7 +577,7 @@ const Dashboard = () => {
             status: status,
         };
         try {
-            await axios.put(`http://localhost:6700/api/purchase/status/${selectedpurchasesId}`, values);
+            await axios.put(`${API_URL}/api/purchase/status/${selectedpurchasesId}`, values);
             toast.success('កែប្រែស្ថានភាពទិញបានដោយជោគជ័យ', { autoClose: 3000 });
             console.log(status);
             getAllPuchase();

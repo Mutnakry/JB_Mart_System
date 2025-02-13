@@ -566,6 +566,7 @@ exports.UpdateproductBa = (req, res) => {
 };
 
 
+
 exports.GetSingle = (req, res) => {
     const { id } = req.params; // Assume `id` is for category or unit ID
     const sql = `SELECT pro.*, cat.cat_names, u.names as unit_names, b.brand_names

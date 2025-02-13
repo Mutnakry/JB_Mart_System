@@ -193,7 +193,7 @@ import axios from 'axios';
 import { FaSearch } from "react-icons/fa";
 import { useCart } from './CartContext';
 import { toast } from 'react-toastify';
-
+import {API_URL} from '../../service/api'
 
 const SearchAddToCartProduct = () => {
     const { addItem } = useCart();
@@ -204,6 +204,7 @@ const SearchAddToCartProduct = () => {
     const [productSearchQuery, setProductSearchQuery] = useState("");
     const [showProductDropdown, setShowProductDropdown] = useState(false);
 
+    
     useEffect(() => {
         fetchProducts();
     }, []);
@@ -212,7 +213,7 @@ const SearchAddToCartProduct = () => {
     const fetchProducts = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:6700/api/product/product');
+            const response = await axios.get(`${API_URL}/api/product/product`);
             setProducts(response.data);
             setError('');
         } catch (error) {

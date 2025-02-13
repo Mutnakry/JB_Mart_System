@@ -4,6 +4,8 @@ import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from '../../component/Navbar';
 import banner from '../../image/image.jpg';
+import {API_URL} from '../../service/api'
+
 
 const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -27,7 +29,7 @@ const Register = () => {
     // Fetch user details by ID
     const getUserByID = async () => {
         try {
-            const response = await axios.get(`http://localhost:6700/api/auth/${id}`);
+            const response = await axios.get(`${API_URL}/api/auth/${id}`);
             const user = response.data;
             setEmail(user.user_email);
             setNames(user.user_names);
@@ -71,11 +73,11 @@ const Register = () => {
     return (
         <div>
             <Navbar />
-            <div className='py px-6 ml-64 md:w-auto bg-gray-200 dark:bg-gray-950'>
-                <div className="w-full grid grid-cols-2 mt-10 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out">
-
-                    {/* Registration Form */}
-                    <div className="h-screen bg-cover bg-opacity-40 bg-center bg-gray-800">
+            <div className='px-6 dm:ml-64  bg-gray-200 dark:bg-gray-950'>
+                <div className="w-full grid md:grid-cols-2 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
+                    <div
+                        className="h-screen bg-cover bg-opacity-40 bg-center bg-gray-800"
+                    >
                         <div className="h-screen max-w-sm mx-auto grid items-center">
                             <div className="p-6 bg-slate-100 bg-opacity-40">
                                 <div className="flex justify-center py-6">
@@ -103,7 +105,7 @@ const Register = () => {
                                         <label className="font-NotoSansKhmer font-bold text-lg">ពាក្យសម្ងាត់:</label>
                                         <input type={showPassword ? 'text' : 'password'} value={pass} onChange={(e) => setPass(e.target.value)}
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-md block w-full p-2.5"
-                                            placeholder="ពាក្យសម្ងាត់ថ្មី (អាចបោះចោលបាន)" />
+                                            placeholder="ពាក្យសម្ងាត់ថ្មី (អាចន្លោះចោលបាន)" />
                                         <div className="absolute text-2xl top-2/3 right-2 transform -translate-y-1/2 cursor-pointer"
                                             onClick={() => setShowPassword(!showPassword)}>
                                             {showPassword ? "🐵" : "🙈"}
@@ -148,7 +150,7 @@ const Register = () => {
                     </div>
 
                     {/* Background Image */}
-                    <div className="h-screen bg-cover bg-gray-950 bg-center" style={{ backgroundImage: `url(${banner})` }}></div>
+                    <div className="h-screen bg-cover bg-gray-950 bg-center hidden md:block" style={{ backgroundImage: `url(${banner})` }}></div>
                 </div>
             </div>
         </div>

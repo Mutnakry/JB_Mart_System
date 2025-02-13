@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import {API_URL} from '../../service/api'
 
 const Search_Category_brand = () => {
   const [isDropdownOpenCategory, setIsDropdownOpenCategory] = useState(false);
@@ -25,7 +26,7 @@ const Search_Category_brand = () => {
   const fetchCategories = async () => {
     setLoading(true);  // Start loading
     try {
-      const response = await axios.get('http://localhost:6700/categories');
+      const response = await axios.get(`${API_URL}/categories`);
       setCategories(response.data.categories);
       setError('');
     } catch (error) {
@@ -38,7 +39,7 @@ const Search_Category_brand = () => {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:6700/api/brands');
+      const response = await axios.get(`${API_URL}/api/brands`);
       setProducts(response.data.brands);
       setError('');
     } catch (error) {

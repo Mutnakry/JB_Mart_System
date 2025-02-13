@@ -2,13 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { FaClipboardList, FaPencilAlt, FaMoneyBillAlt, FaBookOpen, FaPowerOff } from "react-icons/fa";
-import { MdDelete, MdClose, MdOutlineMoneyOff } from "react-icons/md";
+import { FaClipboardList, FaPencilAlt, FaPowerOff } from "react-icons/fa";
+import { MdDelete, MdClose } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from '../../component/Navbar';
 import { Link } from 'react-router-dom';
-
-
+import {API_URL} from '../../service/api'
 
 const UserList = () => {
     const [userLoginNames, setUserLoginNames] = useState('');
@@ -30,7 +29,7 @@ const UserList = () => {
     //// get all bank type
     const getUser = async () => {
         try {
-            const response = await axios.get('http://localhost:6700/api/auth');
+            const response = await axios.get(`${API_URL}/api/auth`);
             setUsers(response.data);
             console.log(response.data)
         } catch (error) {
@@ -54,7 +53,7 @@ const UserList = () => {
     const deletecustomer = async () => {
         if (selectedcustomerId) {
             try {
-                await axios.delete(`http://localhost:6700/api/customer/${selectedcustomerId}`);
+                await axios.delete(`${API_URL}/api/customer/${selectedcustomerId}`);
                 toast.success('លុបអតិជនបានដោយជោគជ័យ', { autoClose: 3000 });
                 GetAllCustomer();
                 setIsDeleteModalOpen(false);
@@ -75,9 +74,8 @@ const UserList = () => {
     return (
         <div>
             <Navbar />
-            <div className='py-12 px-6 ml-64 md:w-auto w-[860px] bg-gray-200 dark:bg-gray-950'>
-                <div className="w-full p-4 mt-10 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
-
+            <div className='Nav_bar'>
+                <div className=' Div_bar'>
                     <div className="flex items-center mb-3 gap-2 ">
                         <p><FaClipboardList className="text-lg " /></p>
                         <p className="font-NotoSansKhmer font-bold ">តារាងបញ្ជីអតិជន</p>
@@ -145,7 +143,7 @@ const UserList = () => {
                                                                     onClick={() => openDeleteModal(customer)}
                                                                     className="bg-red-300 p-2 flex text-xs text-white"
                                                                 >
-                                                                    <FaPowerOff className="text-red-500 mr-2" /> លុប
+                                                                    <MdDelete className="text-red-500 mr-2" /> លុប
                                                                 </button>
                                                             </>
                                                         )}
@@ -180,7 +178,7 @@ const UserList = () => {
                                     </div>
                                     <div className="p-4 space-y-4">
                                         <p className="text-sm ">
-                                            Are you sure you want to delete this customer? This action cannot be undone.
+                                        តើអ្នកប្រាកដថាចង់លុបអ្នកប្រើប្រាស់នេះទេ?
                                         </p>
                                         <div className="flex justify-end space-x-2">
                                             <button

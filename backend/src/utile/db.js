@@ -16,7 +16,6 @@
 
 
 
-
 // Ensure mysql2 is imported only once
 const mysql = require('mysql2');
 

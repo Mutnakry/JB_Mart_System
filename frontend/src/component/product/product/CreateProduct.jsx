@@ -2,11 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { FaClipboardList, FaFileCsv, FaFileExcel, FaPencilAlt, FaSearch } from "react-icons/fa";
-import { MdDelete, MdClose } from "react-icons/md";
-import { motion, AnimatePresence } from "framer-motion";
 import Navbar from '../../Navbar'
 import { useNavigate } from 'react-router-dom';
+import {API_URL} from '../../../service/api'
 
 function CreateProduct() {
 
@@ -45,7 +43,7 @@ function CreateProduct() {
   //// get all category
   const getALLCategorys = async () => {
     try {
-      const response = await axios.get('http://localhost:6700/categories');
+      const response = await axios.get(`${API_URL}/categories`);
       setCategorys(response.data.categories);
       console.log(response.data)
     } catch (error) {
@@ -55,7 +53,7 @@ function CreateProduct() {
   //// get all brands
   const getALLBrands = async () => {
     try {
-      const response = await axios.get('http://localhost:6700/api/brands');
+      const response = await axios.get(`${API_URL}/api/brands`);
       setBrands(response.data.brands);
       console.log(response.data)
     } catch (error) {
@@ -65,9 +63,9 @@ function CreateProduct() {
   //// get all unit
   const getALLUnits = async () => {
     try {
-      const response = await axios.get('http://localhost:6700/api/unit');
+      const response = await axios.get(`${API_URL}/api/unit`);
       setUnits(response.data.unit);
-      console.log(response.data)
+      console.log('/api/unit',response.data.unit)
     } catch (error) {
       setError('Error fetching categories data');
     }
@@ -138,55 +136,6 @@ function CreateProduct() {
     setError('');
   };
 
-  // greate product
-  // const Createproduct = async (e) => {
-  //   e.preventDefault();
-  //   setError('');
-  //   const fileTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
-  //   if (file && !fileTypes.includes(file.type)) {
-  //     setError('Error: Images Only (jpeg, jpg, png, gif)');
-  //     return;
-  //   }
-  //   // Optionally, check file size
-  //   const maxSize = 5 * 1024 * 1024; // 5MB
-  //   if (file && file.size > maxSize) {
-  //     setError('Error: File size exceeds 5MB');
-  //     return;
-  //   }
-  //   const values = {
-  //     pro_names: ProNames,
-  //     category_id: category_ID ? category_ID : null,
-  //     brand_id: brand_ID ? brand_ID : null,
-  //     unit_id: unit_ID ? unit_ID : null,
-  //     note_qty: note_QTY ? note_QTY : 0,
-  //     mg_stock: enabled,
-  //     cost_price: cost_Price,
-  //     include_tax: include_Tax,
-  //     exclude_tax: exclude_Tax,
-  //     profit: profit,
-  //     expiry: expiry,
-  //     type_of_tax: type_Tax,
-  //     product_type: product_type,
-  //     file: file,
-  //     description: description,
-  //     user_at: userLoginNames,
-  //     barcode_type: barcode_type,
-  //   }
-  //   console.log(values)
-  //   try {
-  //     await axios.post(`http://localhost:6700/api/product/create`, values, {
-  //       headers: {
-  //         'Content-Type': 'multipart/form-data'
-  //       }
-  //     });
-  //     toast.success('បន្ថែមបានដោយជោគជ័យ!', { autoClose: 3000 });
-  //     ClearData();
-  //   } catch (err) {
-  //     console.error(err);
-  //     toast.error('សូមលោកព្យាយាមម្ដងទៀត ស្មោះមានរួចហើយ !', { autoClose: 3000 });
-  //   }
-  // };
-
   const Createproduct = async (e) => {
     e.preventDefault();
     setError('');
@@ -222,7 +171,7 @@ function CreateProduct() {
     }
     console.log(values)
     try {
-      await axios.post(`http://localhost:6700/api/product/create`, values, {
+      await axios.post(`${API_URL}/api/product/create`, values, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -239,7 +188,7 @@ function CreateProduct() {
   return (
     <div>
       <Navbar />
-      <div className='py-12 px-6 ml-64 md:w-auto w-[860px] bg-gray-200 dark:bg-gray-950'>
+      <div className='py-12 px-6 sm:ml-64 md:w-auto w-[860px] bg-gray-200 dark:bg-gray-950'>
         <div className="w-full p-4 mt-10 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
           <div className='flex items-center gap-2 pb-5'>
             <p className='font-NotoSansKhmer font-bold text-3xl'>បន្ថែមការទិញ </p>

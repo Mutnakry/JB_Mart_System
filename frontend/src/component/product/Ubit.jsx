@@ -7,6 +7,7 @@ import { FaClipboardList, FaPencilAlt } from "react-icons/fa";
 import { MdDelete, MdClose } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
 import { formatDateToKhmer } from '../ForMartDateToKHmer';
+import {API_URL} from '../../service/api'
 
 
 const Unit = () => {
@@ -31,7 +32,7 @@ const Unit = () => {
     const getAllStudent = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:6700/api/unit', {
+            const response = await axios.get(`${API_URL}/api/unit`, {
                 params: {
                     page,
                     limit,
@@ -91,7 +92,7 @@ const Unit = () => {
             description: description,
         }
         try {
-            await axios.put(`http://localhost:6700/api/unit/${selectedUnitId}`, values);
+            await axios.put(`${API_URL}/api/unit/${selectedUnitId}`, values);
             toast.success('កែប្រែឯកតាបានដោយជោគជ័យ', { autoClose: 3000 });
             getAllStudent();
             setIsUpdateModalOpen(false);
@@ -115,7 +116,7 @@ const Unit = () => {
     const deleteUnit = async () => {
         if (selectedUnitId) {
             try {
-                await axios.delete(`http://localhost:6700/api/unit/${selectedUnitId}`);
+                await axios.delete(`${API_URL}/api/unit/${selectedUnitId}`);
                 toast.success('លុបឯកតាបានដោយជោគជ័យ', { autoClose: 3000 });
                 getAllStudent();
                 setIsDeleteModalOpen(false);
@@ -137,7 +138,7 @@ const Unit = () => {
             description: description,
         }
         try {
-            const res = await axios.post('http://localhost:6700/api/unit', values);
+            const res = await axios.post(`${API_URL}/api/unit`, values);
             console.log(res.data);
             toast.success('បង្កើតឯកតាបានដោយជោគជ័យ ', { autoClose: 3000 });
             setnames('');

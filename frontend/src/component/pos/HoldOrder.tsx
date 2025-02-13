@@ -45,7 +45,7 @@ const Cart = ({ setIsModalHoldeOrder }) => {
             transition={{ duration: 0.2 }}
             onClick={handleOverlayClick}
         >
-            <div className="relative w-full max-w-3xl bg-white rounded shadow-md mt-10 p-2 py-4 dark:bg-gray-700">
+            <div className="relative w-full max-w-3xl m-4 bg-white rounded shadow-md mt-10 p-2 py-4 dark:bg-gray-700">
                 <div className="mb-4">
                     <h2 className="text-xl font-bold py-4">រក្សាទុក្ខកែប្រែ</h2>
                     {heldOrders.length > 0 ? (

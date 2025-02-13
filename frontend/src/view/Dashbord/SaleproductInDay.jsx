@@ -24,7 +24,7 @@ const MonthlySalesChart = () => {
                 response.data.forEach(({ day, total_amount }) => {
                     dailyData[day - 1] = total_amount; 
                 });
-                const categories = Array.from({ length: 31 }, (_, i) => `ថ្ងៃទី ${i + 1}`);
+                const categories = Array.from({ length: 31 }, (_, i) => `ទី ${i + 1}`);
                 setChartData({
                     series: [{ name: "ថ្ងៃនេះលក់បានសរុប​  $", data: dailyData }],
                     options: { ...chartData.options, xaxis: { categories } },
@@ -34,11 +34,11 @@ const MonthlySalesChart = () => {
             }
         };
         fetchMonthlyData();
-    }, []); // Only run once when the component mounts
+    }, []); 
 
     return (
         <div className="max-w-screen-2xl w-full mx-auto">
-            <h2 className="text-2xl text-gray-600 font-NotoSansKhmer font-bold mb-4">សរុបការលក់ប្រចាំថ្ងៃ</h2>
+            <h2 className="text-2xl text-gray-600 font-NotoSansKhmer font-bold mb-4">សរុបការលក់ប្រចាំថ្ងៃក្នុងខែនេះ USD1</h2>
             <ReactApexChart
                 options={chartData.options}
                 series={chartData.series}

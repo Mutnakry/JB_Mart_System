@@ -80,9 +80,26 @@ const Warranty_Routes = require('./src/route/warranty.router');
 app.use('/api/warranty', Warranty_Routes); 
 
 
+// Import and use  order cart product
+const Order_Routes = require('./src/route/order.router');
+app.use('/api/order', Order_Routes); 
+
+// Import and use customer_payment
+const customer_payment = require('./src/route/customer_payment.router');
+app.use('/api/cus_payment', customer_payment); 
+
+// Import and use customer_payment
+const Product_Discount = require('./src/route/product_discount.router');
+app.use('/api/product_discount', Product_Discount); 
+
 // Import and use  dasboard_chart
 const Dasboard_chart_Routes = require('./src/route/dasboard_chart.router');
 app.use('/api/dashbord', Dasboard_chart_Routes); 
+
+// Import and use  Payment_repay_Routes
+const Payment_repay_Routes = require('./src/route/order_repay.router');
+app.use('/api/repay', Payment_repay_Routes); 
+
 
 
 // Import and use the product routes

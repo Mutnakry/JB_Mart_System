@@ -6,8 +6,10 @@ function PaymentType() {
     return (
         <div>
             <Navbar />
-            <div className='py-16 px-2 ml-64 md:w-auto w-[860px] bg-white dark:bg-gray-950'>
+            <div className='Nav_bar'>
+                <div className=' Div_bar'>
                 <PamentList />
+            </div>
             </div>
         </div>
     )

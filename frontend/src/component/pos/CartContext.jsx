@@ -1,4 +1,5 @@
 
+
 // import React, { createContext, useContext, useState, useEffect } from 'react';
 // import { toast } from 'react-toastify';
 
@@ -32,73 +33,96 @@
 //     localStorage.setItem('heldOrders', JSON.stringify(heldOrders));
 //   }, [heldOrders]);
 
+
 //   const addItem = (item) => {
 //     setCart((prevCart) => {
 //       const existingItem = prevCart.find((cartItem) => cartItem.id === item.id);
-
-//       if (existingItem) {
-//         const newQuantity = existingItem.quantity + 1;
-
-//         // Check for stock availability
-//         if (newQuantity > item.qty) {
+  
+//       // If stock management is enabled, check the stock quantity
+//       if (item.mg_stock === "enable") {
+//         if (item.qty <= 0) {
 //           toast.error('ចំនួនក្នុងស្តុកបានអស់ហើយ​​​ !', {
 //             position: "top-right",
 //             autoClose: 1000,
 //           });
-//           return prevCart; // Return current cart if out of stock
+//           return prevCart;
 //         }
-
-//         toast.success(`${item.pro_names} បានបញ្ចូលទៅក្នុងកន្រ្តក!`, {
-//           position: "top-right",
-//           autoClose: 1000,
-//         });
-//         return prevCart.map((cartItem) =>
-//           cartItem.id === item.id ? { ...cartItem, quantity: newQuantity } : cartItem
-//         );
-//       } else {
-//         if (item.quantity > item.qty) {
-//           toast.error('ចំនួនក្នុងស្តុកបានអស់ហើយ​​​ !', {
+  
+//         if (existingItem) {
+//           const newQuantity = existingItem.quantity + 1;
+//           if (newQuantity > item.qty) {
+//             toast.error(`Sorry, only ${item.qty} items are available in stock.`, {
+//               position: "top-center",
+//               timeout: 2000,
+//             });
+//             return prevCart;
+//           }
+  
+//           toast.success(`${item.pro_names} added more to the cart!`, {
 //             position: "top-right",
-//             autoClose: 1000,
+//             timeout: 2000,
 //           });
-//           return prevCart; // Return current cart if out of stock
+//           return prevCart.map((cartItem) =>
+//             cartItem.id === item.id ? { ...cartItem, quantity: newQuantity } : cartItem
+//           );
+//         } else {
+//           toast.success(`${item.pro_names} added to the cart!`, {
+//             position: "top-right",
+//             timeout: 2000,
+//           });
+//           return [...prevCart, { ...item, quantity: 1 }];
 //         }
-
-//         toast.success(`${item.pro_names} បានបញ្ចូលទៅក្នុងកន្រ្តក!`, {
-//           position: "top-right",
-//           autoClose: 1000,
-//         });
-//         return [...prevCart, { ...item, quantity: 1 }];
+//       } else if (item.mg_stock === "disable") {
+//         if (existingItem) {
+//           const newQuantity = existingItem.quantity + 1;
+//           toast.success(`${item.pro_names} added more to the cart!`, {
+//             position: "top-right",
+//             timeout: 2000,
+//           });
+//           return prevCart.map((cartItem) =>
+//             cartItem.id === item.id ? { ...cartItem, quantity: newQuantity } : cartItem
+//           );
+//         } else {
+//           toast.success(`${item.pro_names} added to the cart!`, {
+//             position: "top-right",
+//             timeout: 2000,
+//           });
+//           return [...prevCart, { ...item, quantity: 1 }];
+//         }
 //       }
 //     });
 //   };
-
+  
 //   const updateQuantity = (id, quantity) => {
 //     setCart((prevCart) => {
 //       const item = prevCart.find((item) => item.id === id);
 //       if (item) {
-//         if (quantity > item.qty) {
-//           toast.error('ចំនួនក្នុងស្តុកបានអស់ហើយ​​​ !', {
-//             position: "top-right",
-//             autoClose: 1000,
-//             hideProgressBar: false,
-//             closeOnClick: true,
-//             pauseOnHover: true,
-//             draggable: true,
-//             progress: undefined,
-//           });
-//           return prevCart;
-//         } else if (quantity <= 0) {
+//         if (item.mg_stock === "enable") {
+//           if (quantity > item.qty) {
+//             toast.error('ចំនួនក្នុងស្តុកបានអស់ហើយ​​​ !', {
+//               position: "top-right",
+//               autoClose: 1000,
+//             });
+//             return prevCart; 
+//           }
+//         }
+  
+//         // If quantity is less than or equal to 0, remove the item from the cart
+//         if (quantity <= 0) {
 //           return prevCart.filter((item) => item.id !== id);
 //         } else {
-//           return prevCart.map((item) =>
-//             item.id === id ? { ...item, quantity } : item
+//           // If stock management is disabled, update quantity automatically
+//           return prevCart.map((cartItem) =>
+//             cartItem.id === id ? { ...cartItem, quantity } : cartItem
 //           );
 //         }
 //       }
-//       return prevCart;
+      
+//       return prevCart; // Return unchanged cart if no item is found
 //     });
 //   };
+  
+
 
 //   const removeItem = (id) => {
 //     setCart((prevCart) => prevCart.filter((item) => item.id !== id));
@@ -177,12 +201,6 @@
 
 
 
-
-
-
-
-
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
@@ -234,41 +252,42 @@ export const CartProvider = ({ children }) => {
         if (existingItem) {
           const newQuantity = existingItem.quantity + 1;
           if (newQuantity > item.qty) {
-            toast.error(`Sorry, only ${item.qty} items are available in stock.`, {
-              position: "top-center",
-              timeout: 2000,
+            toast.error(`សូមអភ័យទោស មានតែទំនិញ ${item.qty} ប៉ុណ្ណោះដែលមាននៅក្នុងស្តុក`, {
+              position: "top-right",
+              autoClose: 600,
             });
             return prevCart;
           }
   
-          toast.success(`${item.pro_names} added more to the cart!`, {
-            position: "top-right",
-            timeout: 2000,
-          });
+          // toast.success(`${item.pro_names} added more to the cart 555!`, {
+          //   position: "top-right",
+          //   timeout: 2000,
+          // });
+
           return prevCart.map((cartItem) =>
             cartItem.id === item.id ? { ...cartItem, quantity: newQuantity } : cartItem
           );
         } else {
-          toast.success(`${item.pro_names} added to the cart!`, {
+          toast.success(`${item.pro_names} បានបន្ថែម!`, {
             position: "top-right",
-            timeout: 2000,
+            autoClose: 800,
           });
           return [...prevCart, { ...item, quantity: 1 }];
         }
       } else if (item.mg_stock === "disable") {
         if (existingItem) {
           const newQuantity = existingItem.quantity + 1;
-          toast.success(`${item.pro_names} added more to the cart!`, {
-            position: "top-right",
-            timeout: 2000,
-          });
+          // toast.success(`${item.pro_names} added more to the cart!11`, {
+          //   position: "top-right",
+          //   timeout: 2000,
+          // });
           return prevCart.map((cartItem) =>
             cartItem.id === item.id ? { ...cartItem, quantity: newQuantity } : cartItem
           );
         } else {
-          toast.success(`${item.pro_names} added to the cart!`, {
+          toast.success(`${item.pro_names} បានបន្ថែម!`, {
             position: "top-right",
-            timeout: 2000,
+            autoClose: 800,
           });
           return [...prevCart, { ...item, quantity: 1 }];
         }
@@ -276,6 +295,7 @@ export const CartProvider = ({ children }) => {
     });
   };
   
+
   const updateQuantity = (id, quantity) => {
     setCart((prevCart) => {
       const item = prevCart.find((item) => item.id === id);
@@ -290,11 +310,9 @@ export const CartProvider = ({ children }) => {
           }
         }
   
-        // If quantity is less than or equal to 0, remove the item from the cart
         if (quantity <= 0) {
           return prevCart.filter((item) => item.id !== id);
         } else {
-          // If stock management is disabled, update quantity automatically
           return prevCart.map((cartItem) =>
             cartItem.id === id ? { ...cartItem, quantity } : cartItem
           );
@@ -328,7 +346,7 @@ export const CartProvider = ({ children }) => {
   // CartContext.js
   const holdOrder = () => {
     if (cart.length === 0) {
-      toast.error('No items in cart to hold!', {
+      toast.error('គ្មានរបស់របរក្នុងរនេះសម្រាប់ដាក់!', {
         position: "top-center",
         autoClose: 500,
       });
@@ -345,7 +363,7 @@ export const CartProvider = ({ children }) => {
     clearCart();
     toast.success('ការរក្សាទុក្ខដោយជោគជ័យ!', {
       position: "top-center",
-      autoClose: 1000,
+      autoClose: 600,
     });
   };
 

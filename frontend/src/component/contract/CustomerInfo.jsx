@@ -6,7 +6,7 @@ import Pagination from '../pagination/Pagination';
 import { FaClipboardList, FaRegEye, FaPrint, FaPowerOff } from "react-icons/fa";
 import { MdDelete, MdClose, MdOutlineMoneyOff } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
-
+import {API_URL} from '../../service/api'
 
 
 const CustomerInfo = () => {
@@ -43,7 +43,7 @@ const CustomerInfo = () => {
     //// get all bank type
     const getGroup_Customer = async () => {
         try {
-            const response = await axios.get('http://localhost:6700/api/group_customer');
+            const response = await axios.get(`${API_URL}/api/group_customer`);
             setGroup_Customer(response.data.group_customer);
             console.log(response.data)
         } catch (error) {
@@ -55,7 +55,7 @@ const CustomerInfo = () => {
     const GetAllCustomer = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:6700/api/customer', {
+            const response = await axios.get(`${API_URL}/api/customer`, {
                 params: {
                     page,
                     limit,
@@ -146,7 +146,7 @@ const CustomerInfo = () => {
             user_at: userLoginNames
         };
         try {
-            await axios.put(`http://localhost:6700/api/customer11/${selectedcustomerId}`, values);
+            await axios.put(`${API_URL}/api/customer11/${selectedcustomerId}`, values);
             toast.success('កែប្រែអតិជនបានដោយជោគជ័យ', { autoClose: 3000 });
             GetAllCustomer();
             setIsUpdateModalOpen(false);

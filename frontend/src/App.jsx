@@ -4,6 +4,10 @@ import 'flowbite';
 import React, { useState, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 
+
+// import page PageNotFound
+import PageNotFound from './view/PageNotFound';
+
 // import from view Dashboard
 import Dashboard from './view/Dashboard';
 
@@ -29,12 +33,15 @@ import GroupCustomer from './view/contact/GroupCustomer';
 
 
 
-import TestSelectSearch from './view/TestSelectSearch';
-import ProductCategory from './component/pos/ProductCategory'
+// import TestSelectSearch from './view/TestSelectSearch';
+// import ProductCategory from './component/pos/ProductCategory'
 
 // pos
 import MainForm from './view/pos/MainForm';
 import MainFormID from './view/pos/MainFromID'
+/// pos invoie
+import InvoiceCart from './component/pos/InvoiceCart';
+
 
 // const  Type
 import CostType from './view/cost/CostType';
@@ -54,6 +61,8 @@ import UpdatePuchase from './component/purchase/UpdatePuchase';
 import UpdatePuchase1 from './component/purchase/Update';
 import PrintPurchaseDetail from './component/purchase/PrintPurchaseDetail'
 
+
+
 /// accout
 import AccountDetailTransfer from './component/acount/AccountDetailTransfer';
 import Acount from './view/account/Account';
@@ -66,6 +75,16 @@ import UpdateProduct from './component/product/product/Updateproduct';
 import CreateProduct from './component/product/product/CreateProduct';
 import ProductWarranties from './component/product/product/ProductWarranties';
 
+// import page Product Discount
+import CreateDiscountProduct from './component/discountproduct/CreateDiscountProduct';
+import DiscountProductList from './component/discountproduct/DiscountProductList';
+import UpdateDiscountProduct from './component/discountproduct/UpdateDiscountProduct';
+// import UpdateDiscountProduct from './component/discountproduct/Update';
+
+
+import Order_List from './component/order/Order_List';
+import Order_Repay from './component/order/Order_Repay'
+import FinhOrder from './component/order/FinhOrder'
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -79,15 +98,19 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
+
+          <Route path="*" element={<PageNotFound />} />
+
+
           <Route path="/login" element={isAuthenticated ? <Navigate to="/Dashboard" /> : <Login />} />
           <Route path="/register" element={isAuthenticated ? <Register /> : <Navigate to="/login" />} />
           <Route path="/user" element={<UserList />} />
           <Route path="/createuser" element={<CreateUser />} />
           <Route path="/user/:id" element={<UpdateUser />} />
 
-          
+
           <Route path="/" element={<Index />} />
-          <Route path="/Dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} />
+          <Route path="/Dashboard" element={<Dashboard />} />
 
           {/* category​  and brands */}
           <Route path='/category' element={isAuthenticated ? <Category /> : <Navigate to="/" />} />
@@ -114,7 +137,8 @@ function App() {
 
           {/* form pos */}
           <Route path='/index/pos' element={<MainForm />} />
-          <Route path='/tests' element={<TestSelectSearch />} />
+          <Route path='/index/invoce' element={<InvoiceCart />} />
+          {/* <Route path='/tests' element={<TestSelectSearch />} /> */}
           <Route path='/index/pos/id/:id' element={<MainFormID />} />
 
           {/* product */}
@@ -126,21 +150,31 @@ function App() {
 
           {/* purchase */}
           <Route path='/purchase' element={<Purchase />} />
-          <Route path='/purchase/:id' element={<UpdatePuchase1 />} />
+          <Route path='/purchase/:id' element={<UpdatePuchase />} />
           <Route path='/createpurchase/:id' element={<PrintPurchaseDetail />} />
           <Route path='/createpurchase' element={<CreatePurchase />} />
 
-          {/* <Route path='/updatepuchase/:id/detailpuchase/:id' element={<UpdatePuchase />} /> */}
-
-
           <Route path='/paymenttype' element={<PaymentType />} />
           <Route path='/exchange' element={<ExchangRate />} />
+         
 
 
           {/* acount and detail */}
           <Route path='/account' element={<Acount />} />
           <Route path='/accountdetail/:id' element={<AccountDetailTransfer />} />
 
+
+          {/* Product Discount */}
+          <Route path='/create_discount_product' element={<CreateDiscountProduct />} />
+          <Route path='/discount_product' element={<DiscountProductList />} />
+          <Route path='/create_discount_product/:id' element={<UpdateDiscountProduct />} />
+
+          
+          {/* Product Discount */}
+          <Route path='/order_List' element={<Order_List />} />
+          <Route path='/order-Repay' element={<FinhOrder />} />
+          <Route path='/order-Repay/:id' element={<Order_Repay />} />
+          
         </Routes>
         <ToastContainer />
       </BrowserRouter>

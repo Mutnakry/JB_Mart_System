@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../component/Navbar';
 import banner from '../../image/image.jpg'
-
+import { API_URL } from '../../service/api'
 
 
 const Register = () => {
@@ -33,7 +33,7 @@ const Register = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:6700/api/auth/register', { names, email, pass, rol });
+            const response = await axios.post(`${API_URL}/api/auth/register`, { names, email, pass, rol });
             console.log('Registration successful:', response.data);
             toast.success('Register successful!', {
                 position: "top-center",
@@ -42,18 +42,20 @@ const Register = () => {
             navigate('/user');
         } catch (error) {
             console.error('Registration error:', error.response?.data || error.message);
-            
+
             setErrorEmail(" អ៊ីមែលត្រូវបានប្រើប្រាស់រួចហើយ!");
 
         }
     };
 
+    // <div className='Nav_bar'>
+    //             <div className=' Div_bar'>
+
     return (
         <div>
             <Navbar />
-            <div className='py px-6 ml-64 md:w-auto bg-gray-200 dark:bg-gray-950'>
-                <div className="w-full grid grid-cols-2 mt-10 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
-
+            <div className='px-6 sm:ml-64  bg-gray-200 dark:bg-gray-950'>
+                <div className="w-full grid md:grid-cols-2 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
                     <div
                         className="h-screen bg-cover bg-opacity-40 bg-center bg-gray-800"
                     >
@@ -84,7 +86,7 @@ const Register = () => {
                                             required
                                             placeholder="អុីម៉ែល"
                                         />
-                                         {errorEgmail && <p className="text-red-500 text-sm">{email}{errorEgmail}</p>} {/* Show error message */}
+                                        {errorEgmail && <p className="text-red-500 text-sm">{email}{errorEgmail}</p>} {/* Show error message */}
 
                                     </div>
                                     <div className="mb-5 space-y-2 relative">
@@ -158,7 +160,7 @@ const Register = () => {
                     </div>
                     <div>
                         <div
-                            className="h-screen bg-cover bg-gray-950 bg-center"
+                            className="h-screen bg-cover bg-gray-950 bg-center hidden md:block"
                             style={{ backgroundImage: `url(${banner})` }}
                         >
                             <div className="h-screen mx-auto grid items-center ">

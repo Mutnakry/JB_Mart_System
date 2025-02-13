@@ -6,6 +6,7 @@ import Pagination from '../pagination/Pagination';
 import { FaClipboardList, FaPencilAlt } from "react-icons/fa";
 import { MdDelete, MdClose } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
+import {API_URL} from '../../service/api'
 
 
 
@@ -30,7 +31,7 @@ const cost_type = () => {
     const getAllStudent = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:6700/api/cost_type', {
+            const response = await axios.get(`${API_URL}/api/cost_type`, {
                 params: {
                     page,
                     limit,
@@ -88,7 +89,7 @@ const cost_type = () => {
             type_names: type_names,
         }
         try {
-            await axios.put(`http://localhost:6700/api/cost_type/${selectedcost_typeId}`, values);
+            await axios.put(`${API_URL}/api/cost_type/${selectedcost_typeId}`, values);
             toast.success('កែប្រែឈ្មោះប្រភេទចំណាយបានដោយជោគជ័យ', { autoClose: 3000 });
             getAllStudent();
             setIsUpdateModalOpen(false);
@@ -112,7 +113,7 @@ const cost_type = () => {
     const deletecost_type = async () => {
         if (selectedcost_typeId) {
             try {
-                await axios.delete(`http://localhost:6700/api/cost_type/${selectedcost_typeId}`);
+                await axios.delete(`${API_URL}/api/cost_type/${selectedcost_typeId}`);
                 toast.success('លុបឈ្មោះប្រភេទចំណាយបានដោយជោគជ័យ', { autoClose: 3000 });
                 getAllStudent();
                 setIsDeleteModalOpen(false);
@@ -132,7 +133,7 @@ const cost_type = () => {
             type_names: type_names,
         }
         try {
-            const res = await axios.post('http://localhost:6700/api/cost_type', values);
+            const res = await axios.post(`${API_URL}/api/cost_type`, values);
             console.log(res.data);
             toast.success('បង្កើតឈ្មោះប្រភេទចំណាយបានដោយជោគជ័យ ', { autoClose: 3000 });
             setType_names('');

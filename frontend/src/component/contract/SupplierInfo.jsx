@@ -6,7 +6,7 @@ import Pagination from '../pagination/Pagination';
 import { FaRegThumbsUp, FaRegEye, FaPrint } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
-
+import {API_URL} from '../../service/api'
 
 
 const SupplierInfo = () => {
@@ -21,7 +21,6 @@ const SupplierInfo = () => {
     const [description, setDescription] = useState(null);
     const [userLoginNames, setUserLoginNames] = useState('');
     const [error, setError] = useState('');
-    //// paginate and search data
     const [suppliers, setsupplier] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [loading, setLoading] = useState(false);
@@ -40,7 +39,7 @@ const SupplierInfo = () => {
     const GetAllsupplier = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:6700/api/supplier', {
+            const response = await axios.get(`${API_URL}/api/supplier`, {
                 params: {
                     page,
                     limit,
@@ -128,7 +127,7 @@ const SupplierInfo = () => {
             user_at: userLoginNames
         };
         try {
-            await axios.put(`http://localhost:6700/api/supplier/${selectedsupplierId}`, values);
+            await axios.put(`${API_URL}/api/supplier/${selectedsupplierId}`, values);
             toast.success('កែប្រែអតិជនបានដោយជោគជ័យ', { autoClose: 3000 });
             GetAllsupplier();
             setIsUpdateModalOpen(false);

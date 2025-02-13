@@ -6,7 +6,7 @@ import Pagination from '../pagination/Pagination';
 import { FaClipboardList, FaPencilAlt, FaMoneyBillAlt, FaBookOpen, FaPowerOff } from "react-icons/fa";
 import { MdDelete, MdClose, MdOutlineMoneyOff } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
-
+import {API_URL} from '../../service/api'
 
 
 const Supplier = () => {
@@ -47,7 +47,7 @@ const Supplier = () => {
     //// get all bank type
     const getGroup_Customer = async () => {
         try {
-            const response = await axios.get('http://localhost:6700/api/group_customer');
+            const response = await axios.get(`${API_URL}/api/group_customer`);
             setGroup_Customer(response.data.group_customer);
             console.log(response.data)
         } catch (error) {
@@ -59,7 +59,7 @@ const Supplier = () => {
     const GetAllCustomer = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:6700/api/customer', {
+            const response = await axios.get(`${API_URL}/api/customer`, {
                 params: {
                     page,
                     limit,
@@ -156,7 +156,7 @@ const Supplier = () => {
             user_at: userLoginNames
         };
         try {
-            await axios.put(`http://localhost:6700/api/customer/${selectedcustomerId}`, values);
+            await axios.put(`${API_URL}/api/customer/${selectedcustomerId}`, values);
             toast.success('កែប្រែអតិជនបានដោយជោគជ័យ', { autoClose: 3000 });
             GetAllCustomer();
             setIsUpdateModalOpen(false);
@@ -183,7 +183,7 @@ const Supplier = () => {
     const deletecustomer = async () => {
         if (selectedcustomerId) {
             try {
-                await axios.delete(`http://localhost:6700/api/customer/${selectedcustomerId}`);
+                await axios.delete(`${API_URL}/api/customer/${selectedcustomerId}`);
                 toast.success('លុបអតិជនបានដោយជោគជ័យ', { autoClose: 3000 });
                 GetAllCustomer();
                 setIsDeleteModalOpen(false);
@@ -217,7 +217,7 @@ const Supplier = () => {
         };
 
         try {
-            const { data } = await axios.post('http://localhost:6700/api/customer', values);
+            const { data } = await axios.post(`${API_URL}/api/customer`, values);
             console.log(data);
             toast.success('បង្កើតអតិជនបានដោយជោគជ័យ ', { autoClose: 3000 });
 
@@ -329,13 +329,13 @@ const Supplier = () => {
                                                             onClick={() => openDeleteModal(customer)}
                                                             className="bg-red-300 p-2 flex text-xs text-white"
                                                         >
-                                                            <FaPowerOff className="text-red-500 mr-2" /> លុប
+                                                            <MdDelete className="text-red-500 mr-2" /> លុប
                                                         </button>
                                                     ) : (
                                                         <button
                                                             className="bg-red-300 p-2 flex text-xs text-white opacity-50 cursor-not-allowed"
                                                         >
-                                                            <FaPowerOff className="text-red-500 mr-2" /> លុប
+                                                            <MdDelete className="text-red-500 mr-2" /> លុប
                                                         </button>
                                                     )}
                                                 </>

@@ -2,10 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams, Link } from 'react-router-dom';
 import { IoPrint } from 'react-icons/io5';
-
-import Navbar from '../Navbar';
+import {API_URL} from '../../service/api'
 
 const AccountDetailTransfer = () => {
     const [paymentDetails, setPaymentDetails] = useState([]);
@@ -21,7 +19,7 @@ const AccountDetailTransfer = () => {
 
     const fetchPaymentDetails = async () => {
         try {
-            const response = await axios.get(`http://localhost:6700/api/account/paymentdetail`);
+            const response = await axios.get(`${API_URL}/api/account/paymentdetail`);
             setPaymentDetails(response.data);
             setFilteredDetails(response.data); // Initialize filteredDetails with all data
         } catch (error) {

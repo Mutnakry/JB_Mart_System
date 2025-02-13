@@ -10,6 +10,8 @@ import { formatDateToKhmer } from '../ForMartDateToKHmer';
 import { IoPrint } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import NullImage from '../../assets/image.png';
+import {API_URL} from '../../service/api'
+
 
 const Dashboard = () => {
   const [error, setError] = useState('');
@@ -33,7 +35,7 @@ const Dashboard = () => {
   const getAllProduct = async () => {
     setLoading(true);  // Set loading state to true
     try {
-      const response = await axios.get('http://localhost:6700/api/product', {
+      const response = await axios.get(`${API_URL}/api/product`, {
         params: {
           page,
           limit,
@@ -82,7 +84,7 @@ const Dashboard = () => {
   const deleteproduct = async () => {
     if (selectedproductId) {
       try {
-        await axios.delete(`http://localhost:6700/api/product/${selectedproductId}`);
+        await axios.delete(`${API_URL}/api/product/${selectedproductId}`);
         toast.success('លុបបានដោយជោគជ័យ!', { autoClose: 3000 });
         getAllProduct();
         setIsDeleteModalOpen(false);
@@ -114,7 +116,7 @@ const Dashboard = () => {
       status: status,
     };
     try {
-      await axios.put(`http://localhost:6700/api/product/updateproduct_status/${selectedproductId}`, values);
+      await axios.put(`${API_URL}/api/product/updateproduct_status/${selectedproductId}`, values);
       toast.success('កែប្រែបានដោយជោគជ័យ', { autoClose: 3000 });
       console.log(status);
       getAllProduct();

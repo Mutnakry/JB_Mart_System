@@ -7,6 +7,7 @@ import { IoPrint } from 'react-icons/io5';
 import Navbar from '../Navbar';
 import { formatDateToKhmer } from '../ForMartDateToKHmer';
 import NullImage from '../../assets/image.png';
+import {API_URL} from '../../service/api'
 
 
 
@@ -22,7 +23,7 @@ function PrintProduct() {
 
     const CostsID = async () => {
         try {
-            const response = await axios.get(`http://localhost:6700/api/product/product/${id}`);
+            const response = await axios.get(`${API_URL}/api/product/product/${id}`);
             setProducts(response.data);
             console.log(response.data);
         } catch (err) {
@@ -97,7 +98,7 @@ function PrintProduct() {
                         {Products[0]?.image ? (
                             <div className="">
                                 <img
-                                    src={`http://localhost:6700/image/${Products[0].image}`}
+                                    src={`${API_URL}/image/${Products[0].image}`}
                                     alt={Products[0].pro_names || "Character"}
                                     class="md:h-64 h-36 object-contain p-4 border border-gray-200"
                                 />

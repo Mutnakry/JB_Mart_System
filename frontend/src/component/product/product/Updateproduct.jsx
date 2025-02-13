@@ -4,6 +4,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import Navbar from '../../Navbar'
 import { useParams, useNavigate } from 'react-router-dom';
+import {API_URL} from '../../../service/api'
 
 function UpdateProduct() {
 
@@ -50,7 +51,7 @@ function UpdateProduct() {
 
   const GetProductID = async () => {
     try {
-      const response = await axios.get(`http://localhost:6700/api/product/product/${id}`);
+      const response = await axios.get(`${API_URL}/api/product/product/${id}`);
       const data = response.data[0];
       if (data) {
         setProNames(data.pro_names || '');
@@ -83,7 +84,7 @@ function UpdateProduct() {
   //// get all category
   const getALLCategorys = async () => {
     try {
-      const response = await axios.get('http://localhost:6700/categories');
+      const response = await axios.get(`${API_URL}/categories`);
       setCategorys(response.data.categories);
       console.log(response.data)
     } catch (error) {
@@ -93,7 +94,7 @@ function UpdateProduct() {
   //// get all brands
   const getALLBrands = async () => {
     try {
-      const response = await axios.get('http://localhost:6700/api/brands');
+      const response = await axios.get(`${API_URL}/api/brands`);
       setBrands(response.data.brands);
       console.log(response.data)
     } catch (error) {
@@ -103,7 +104,7 @@ function UpdateProduct() {
   //// get all unit
   const getALLUnits = async () => {
     try {
-      const response = await axios.get('http://localhost:6700/api/unit');
+      const response = await axios.get(`${API_URL}/api/unit`);
       setUnits(response.data.unit);
       console.log(response.data)
     } catch (error) {
@@ -207,7 +208,7 @@ function UpdateProduct() {
     }
     console.log(values)
     try {
-      await axios.put(`http://localhost:6700/api/product/updateproduct/${id}`, values, {
+      await axios.put(`${API_URL}/api/product/updateproduct/${id}`, values, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -227,9 +228,9 @@ function UpdateProduct() {
   return (
     <div>
       <Navbar />
-      <div className='py-12 px-6 md:ml-64 bg-gray-200 dark:bg-gray-950'>
+      <div className='py-12 px-6 sm:ml-64 md:w-auto w-[860px] bg-gray-200 dark:bg-gray-950'>
         <div className="w-full p-4 mt-10 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
-          <div className='flex items-center gap-2 pb-5'>
+           <div className='flex items-center gap-2 pb-5'>
             <p className='font-NotoSansKhmer font-bold text-3xl'>កែប្រែទំនិញ </p>
           </div>
 
@@ -343,7 +344,7 @@ function UpdateProduct() {
                         className="flex flex-col items-center justify-center w-32 h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50"
                       >
                         {image ? (
-                          <img src={image ? `http://localhost:6700/image/${image}` : image} alt="Uploaded Preview" className="w-full h-full object-contain rounded-lg" />
+                          <img src={image ? `${API_URL}/image/${image}` : image} alt="Uploaded Preview" className="w-full h-full object-contain rounded-lg" />
                         ) : (
                           <div className="flex flex-col items-center justify-center pt-5 pb-6">
                             <svg

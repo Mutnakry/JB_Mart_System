@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import banner from '../image/image.jpg'
+import {API_URL} from '../service/api'
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,7 +15,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:6700/api/auth/login', { email, pass: password });
+      const response = await axios.post(`${API_URL}/api/auth/login`, { email, pass: password });
       localStorage.setItem('token', response.data.token); // Save token
       localStorage.setItem('user_names', response.data.user_names);
       localStorage.setItem('user_rol', response.data.user_rol);
@@ -38,10 +39,10 @@ const Login = () => {
       <div
         className="h-screen bg-cover bg-opacity-40 bg-center bg-gray-800"
       >
-        <div className="h-screen max-w-sm mx-auto grid items-center">
+        <div className="h-screen max-w-sm mx-auto p-4 grid items-center">
           <div className="p-6 bg-slate-100  bg-opacity-40">
             <div className="flex justify-center py-6">
-              <h1 className="font-NotoSansKhmer font-bold text-2xl text-center">ហាងលក់ <br /> ទំនិញចែប៊ីម៉ាត</h1>
+              <h1 className=" font-KhmerMoul font-bold text-2xl text-center">ហាងលក់ <br /> ទំនិញចែប៊ីម៉ាត</h1>
             </div>
             <form onSubmit={handleLogin}>
               <div className="mb-5 space-y-2">

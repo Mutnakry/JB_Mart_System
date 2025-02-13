@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import Pagination from '../pagination/Pagination';
-import { FaClipboardList, FaFileCsv, FaFileExcel, FaPencilAlt } from "react-icons/fa";
+import { FaClipboardList, FaPencilAlt } from "react-icons/fa";
 import { MdDelete, MdClose } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
 import { formatDateToKhmer } from '../ForMartDateToKHmer';
+import {API_URL} from '../../service/api'
 
 
 
@@ -34,7 +35,7 @@ const Dashboard = () => {
   const getAllStudent = async () => {
     setLoading(true);  // Set loading state to true
     try {
-      const response = await axios.get('http://localhost:6700/categories', {
+      const response = await axios.get(`${API_URL}/categories`, {
         params: {
           page,
           limit,
@@ -94,7 +95,7 @@ const Dashboard = () => {
       detail: detail,
     }
     try {
-      await axios.put(`http://localhost:6700/categories/${selectedCategoryId}`, values);
+      await axios.put(`${API_URL}/categories/${selectedCategoryId}`, values);
       toast.success(`កែប្រែបានដោយជោគជ័យ ​« ${names} »`, { autoClose: 3000 });
       getAllStudent();
       setIsUpdateModalOpen(false);
@@ -119,7 +120,7 @@ const Dashboard = () => {
   const deleteCategory = async () => {
     if (selectedCategoryId) {
       try {
-        await axios.delete(`http://localhost:6700/categories/${selectedCategoryId}`);
+        await axios.delete(`${API_URL}/categories/${selectedCategoryId}`);
         toast.success(`លុបបានដោយជោគជ័យ  ​« ${names} » `, { autoClose: 3000 });
         getAllStudent();
         setIsDeleteModalOpen(false);
@@ -142,7 +143,7 @@ const Dashboard = () => {
       detail: detail,
     }
     try {
-      const res = await axios.post('http://localhost:6700/categories', values);
+      const res = await axios.post(`${API_URL}/categories`, values);
       console.log(res.data);
       toast.success(`បង្កើតបានដោយជោគជ័យ  ​« ${names} »`, { autoClose: 3000 });
       setNames('');

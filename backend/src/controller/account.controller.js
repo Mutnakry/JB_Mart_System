@@ -167,6 +167,7 @@ LEFT JOIN acount acout On acout.id = ad.account_out where ad.account_out=?`;
     });
 }
 
+
 // ///  /// មើលលំអិត acc pay to  ALL 
 exports.getPaymentDetailAll = (req, res) => {
     const sql = `SELECT acin.acc_names as acc_nameIn,acin.acc_num as acc_numIn,acout.acc_num as acc_numOut,acout.acc_names acc_nameOut,ad.detail_balance,ad.created_at,ad.description FROM account_detail ad

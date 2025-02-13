@@ -4,7 +4,8 @@ import { FaPencilAlt } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from 'react-toastify';
 import { MdClose } from "react-icons/md"; // For closing the modal
-  
+import {API_URL} from '../../service/api'
+
 
 export default function TableCurrency() {
     const [currency, setCurrency] = useState([]);
@@ -18,7 +19,7 @@ export default function TableCurrency() {
     const getCurrencyData = async () => {
         try {
             setLoading(true);
-            const response = await axios.get("http://localhost:6700/api/currency");
+            const response = await axios.get(`${API_URL}/api/currency`);
             const fetchedData = response.data;
             setCurrency(fetchedData);
         } catch (error) {
@@ -37,7 +38,7 @@ export default function TableCurrency() {
         e.preventDefault();
         const values = { rate }; 
         try {
-            const response = await axios.put(`http://localhost:6700/api/currency/${selectedcurrencyId}`, values);
+            const response = await axios.put(`${API_URL}/api/currency/${selectedcurrencyId}`, values);
             toast.success('បានកែប្រែការប្រាក់ដោយជោគជ័យ!', { autoClose: 3000 });
             console.log(response.data.message); // Successfully updated
             getCurrencyData(); // Refresh currency data after update

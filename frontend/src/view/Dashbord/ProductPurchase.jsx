@@ -86,7 +86,7 @@ const ChartPruchaeseDetail = () => {
 
             <div id="chart">
                 {state.series.length > 0 ? (
-                    <ReactApexChart options={state.options} series={state.series} type="pie" width={520} />
+                    <ReactApexChart options={state.options} series={state.series} type="pie" width={440} />
                 ) : (
                     <p>Loading chart...</p>
                 )}

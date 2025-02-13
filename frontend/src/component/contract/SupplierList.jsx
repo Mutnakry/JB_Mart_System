@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import Pagination from '../pagination/Pagination';
-import { FaRegThumbsUp, FaPencilAlt, FaMoneyBillAlt, FaBookOpen, FaPowerOff } from "react-icons/fa";
-import { MdDelete, MdClose, MdOutlineMoneyOff } from "react-icons/md";
+import { FaRegThumbsUp, FaPencilAlt} from "react-icons/fa";
+import { MdDelete, MdClose } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
-
+import {API_URL} from '../../service/api'
 
 
 const SupplierList = () => {
@@ -42,7 +42,7 @@ const SupplierList = () => {
     const GetAllsupplier = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:6700/api/supplier', {
+            const response = await axios.get(`${API_URL}/api/supplier`, {
                 params: {
                     page,
                     limit,
@@ -83,7 +83,6 @@ const SupplierList = () => {
         }
 
     };
-
 
     /// show modal insert
     const [isInsertModalOpen, setIsInsertModalOpen] = useState(false);
@@ -136,7 +135,7 @@ const SupplierList = () => {
             user_at: userLoginNames
         };
         try {
-            await axios.put(`http://localhost:6700/api/supplier/${selectedsupplierId}`, values);
+            await axios.put(`${API_URL}/supplier/${selectedsupplierId}`, values);
             toast.success('កែប្រែអតិជនបានដោយជោគជ័យ', { autoClose: 3000 });
             GetAllsupplier();
             setIsUpdateModalOpen(false);
@@ -163,7 +162,7 @@ const SupplierList = () => {
     const deletesupplier = async () => {
         if (selectedsupplierId) {
             try {
-                await axios.delete(`http://localhost:6700/api/supplier/${selectedsupplierId}`);
+                await axios.delete(`${API_URL}/api/supplier/${selectedsupplierId}`);
                 toast.success('លុបអតិជនបានដោយជោគជ័យ', { autoClose: 3000 });
                 GetAllsupplier();
                 setIsDeleteModalOpen(false);
@@ -199,7 +198,7 @@ const SupplierList = () => {
         };
 
         try {
-            const { data } = await axios.post('http://localhost:6700/api/supplier', values);
+            const { data } = await axios.post(`${API_URL}/api/supplier`, values);
             console.log(data);
             toast.success('បង្កើតអតិជនបានដោយជោគជ័យ ', { autoClose: 3000 });
 

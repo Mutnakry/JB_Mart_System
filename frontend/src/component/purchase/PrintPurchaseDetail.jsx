@@ -6,10 +6,10 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../Navbar";
-import { IoMdClose } from "react-icons/io";
 import { FaBackward } from "react-icons/fa6";
 import { IoPrint } from 'react-icons/io5';
 import { formatDateToKhmer } from '../ForMartDateToKHmer';
+import {API_URL} from '../../service/api'
 
 
 
@@ -46,7 +46,7 @@ const PurchaseDetails = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:6700/api/purchase/puchase/${id}`)
+      .get(`${API_URL}/api/purchase/puchase/${id}`)
       .then((response) => {
         setPurchaseData(response.data);
         console.log("Purchase Data:", response.data);
@@ -73,7 +73,7 @@ const PurchaseDetails = () => {
   const [editableData, setEditableData] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:6700/api/product/all")
+      .get(`${API_URL}/api/product/all`)
       .then((response) => {
         setProducts(response.data);
       })
@@ -107,7 +107,7 @@ const PurchaseDetails = () => {
   const [paymentType, setPaymentType] = useState([]);
   const getPaymentType = async () => {
     try {
-      const response = await axios.get('http://localhost:6700/api/payment_type');
+      const response = await axios.get(`${API_URL}/api/payment_type`);
       setPaymentType(response.data.payment_type);
       console.log(response.data)
     } catch (error) {
@@ -119,7 +119,7 @@ const PurchaseDetails = () => {
   const [accountBank, setAccountBank] = useState([]);
   const getAccountBank = async () => {
     try {
-      const response = await axios.get('http://localhost:6700/api/account');
+      const response = await axios.get(`${API_URL}/api/account`);
       setAccountBank(response.data.account);
       console.log(response.data)
     } catch (error) {
@@ -192,7 +192,7 @@ const PurchaseDetails = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`http://localhost:6700/api/purchase/${id}`, {
+      const response = await fetch(`${API_URL}/api/purchase/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(orderData),
@@ -233,40 +233,7 @@ const PurchaseDetails = () => {
 
 
 
-  const handleAmountDiscountChange = (e) => {
-    const value = parseFloat(e.target.value);
-    if (value < 0) {
-      setAmountDiscount(0);
-    } else {
-      setAmountDiscount(value);
-    }
-  };
 
-
-
-  const handleAmountTotalChange = (e) => {
-    const value = parseFloat(e.target.value);
-    if (value < 0) {
-      setAmountTotal(0);
-      setAmountTotalPay(0);
-    } else {
-      setAmountTotal(value);
-      setAmountTotalPay(value);
-    }
-  };
-
-  const handleAmountTotalPayChange = (e) => {
-    const value = parseFloat(e.target.value);
-    if (value < 0) {
-      setAmountTotalPay(0);
-    } else {
-      setAmountTotalPay(value);
-    }
-  };
-
-  const handleAmountPayDatelChange = (e) => {
-    setAmountPayDate(e.target.value);
-  };
 
 
   const totalAmount = editableData.reduce((sum, item) => {

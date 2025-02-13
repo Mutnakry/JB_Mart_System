@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {API_URL} from '../../service/api'
+
 
 const PurchaseDetails = () => {
   const [purchaseData, setPurchaseData] = useState([]);
@@ -29,7 +31,7 @@ const PurchaseDetails = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:6700/api/purchase/puchase/${id}`)
+      .get(`${API_URL}/api/purchase/puchase/${id}`)
       .then((response) => {
         setPurchaseData(response.data);
         console.log("Purchase Data:", response.data);
@@ -56,7 +58,7 @@ const PurchaseDetails = () => {
   const [editableData, setEditableData] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:6700/api/product")
+      .get(`${API_URL}/api/product`)
       .then((response) => {
         setProducts(response.data.product);
       })
@@ -76,7 +78,7 @@ const PurchaseDetails = () => {
   const fetchsupplier = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:6700/api/supplier');
+      const response = await axios.get(`${API_URL}/api/supplier`);
       setsupplier(response.data.supplier);
       setError('');
     } catch (error) {
@@ -90,7 +92,7 @@ const PurchaseDetails = () => {
   const [paymentType, setPaymentType] = useState([]);
   const getPaymentType = async () => {
     try {
-      const response = await axios.get('http://localhost:6700/api/payment_type');
+      const response = await axios.get(`${API_URL}/api/payment_type`);
       setPaymentType(response.data.payment_type);
       console.log(response.data)
     } catch (error) {
@@ -102,7 +104,7 @@ const PurchaseDetails = () => {
   const [accountBank, setAccountBank] = useState([]);
   const getAccountBank = async () => {
     try {
-      const response = await axios.get('http://localhost:6700/api/account');
+      const response = await axios.get(`${API_URL}/api/account`);
       setAccountBank(response.data.account);
       console.log(response.data)
     } catch (error) {
@@ -124,7 +126,7 @@ const PurchaseDetails = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put(`http://localhost:6700/api/purchase/purchase/${id}`, editableData)
+      .put(`${API_URL}/api/purchase/purchase/${id}`, editableData)
       .then((response) => {
         toast.success("Purchase details updated successfully!");
         setPurchaseData(editableData);

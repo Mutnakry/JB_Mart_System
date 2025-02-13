@@ -6,6 +6,7 @@ import { RiContactsBook3Fill } from "react-icons/ri";
 import ProductList from '../../component/product/product/ProductList';
 import ProductInfo from '../../component/product/ProductInfo';
 import AddBacode from '../../component/product/AddBacode';
+import Order_List from '../../component/order/Order_List';
 
 const Account = () => {
     const [activeTabIndex, setActiveTabIndex] = useState(0);
@@ -17,6 +18,9 @@ const Account = () => {
             name: 'ព័ត៍មានរបាយការណ៍ស្តុក',
         },
         {
+            name: 'របាយការណ៍លក់',
+        },
+        {
             name: 'បោះពុម្ភបាដកូដ',
         },
     ];
@@ -24,7 +28,7 @@ const Account = () => {
     return (
         <div>
             <Navbar />
-            <div className='py-12 px-6  ml-64 md:w-auto w-[860px] bg-gray-100 dark:bg-gray-950'>
+            <div className='md:py-12 py-2 px-6  sm:ml-64 md:w-auto w-[860px] bg-gray-100 dark:bg-gray-950'>
                 <div className="w-full p-4 mt-7 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
 
                     <div className="p-4 bg-white dark:border-gray-700 mt-5 ">
@@ -51,6 +55,9 @@ const Account = () => {
                                     </TabPanel>
                                     <TabPanel className="p-4 border border-gray-300 rounded-md">
                                         <ProductInfo />
+                                    </TabPanel>
+                                    <TabPanel className="p-4 border border-gray-300 rounded-md">
+                                        <Order_List />
                                     </TabPanel>
                                     <TabPanel className="p-4 border border-gray-300 rounded-md">
                                         <AddBacode />

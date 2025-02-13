@@ -1,11 +1,38 @@
-
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
-import { MdOutlineMoneyOff } from "react-icons/md";
-import { RiLuggageDepositFill } from "react-icons/ri";
+import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai";
 
+// import { NavLink } from 'react-router-dom';
+// import { MdOutlineMoneyOff } from "react-icons/md";
+// import { RiLuggageDepositFill } from "react-icons/ri";
+import { formatDateToKhmer, formatTimeToKhmer } from '../component/ForMartDateToKHmer';
 
-function Navbar() {
+const Navbar = () => {
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    // Refs for the sidebar and button
+    const sidebarRef = useRef(null);
+    const buttonRef = useRef(null);
+
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    };
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                sidebarRef.current && !sidebarRef.current.contains(event.target) &&
+                buttonRef.current && !buttonRef.current.contains(event.target)
+            ) {
+                setMenuOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
     // Load the initial theme from localStorage or default to "light"
     const [theme, setTheme] = useState(() => {
         return localStorage.getItem("theme") || "light";
@@ -51,19 +78,20 @@ function Navbar() {
     const [isUsersDropdown, setIsUsersDropdown] = useState(false);
     const [isReportsDropdown, setIsReportsDropdown] = useState(false);
     const [isCurrencyDropdown, setIsCurrencyDropdown] = useState(false);
-    // const [isUsersDropdown, setUser] = useState(false);
+    const [isProductDisDropdown, setIsProductDisDropdown] = useState(false);
 
-    // Routes
+    // Routes create_productdiscount
     const contactRoutes = ["/supplier", "/customer", "/groupcustomer"];
     const productsRoutes = ["/category", "/brands", "/udit", "/product", "/createproduct", "/varrenty", "/tests"];
-    const purchaseRoutes = ["/purchase", "/createpurchase"];
+    const purchaseRoutes = ["/purchase", "/createpurchase",'/order-Repay'];
     const topupRoutes = ['/topup', '/topupList']
     const exspenseRoutes = ['/cost', '/costtype']
     const accountRoutes = ['/account', '/account_list']
     const paymentRoutes = ['/paymenttype', '/payment_list']
     const usersRoutes = ['/user', '/createuser']
     const reportsRoutes = ['/reports', '/report_list']
-    const currentcyRoutes = ['/currency', '/currency_list']
+    const currentcyRoutes = ['/exchange', '/currency_list']
+    const ProductDisRoutes = ['/discount_product', '/create_discount_product']
 
     // Active route checks
     const isContactActive = contactRoutes.some((route) => location.pathname.startsWith(route));
@@ -76,6 +104,8 @@ function Navbar() {
     const isUsersActive = usersRoutes.some((route) => location.pathname.startsWith(route))
     const isReportsActive = reportsRoutes.some((route) => location.pathname.startsWith(route))
     const isCurrencyActive = currentcyRoutes.some((route) => location.pathname.startsWith(route))
+    const isProductDisActive = ProductDisRoutes.some((route) => location.pathname.startsWith(route))
+
 
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
@@ -90,6 +120,13 @@ function Navbar() {
         } else {
             setIsContactDropdown(false);
         }
+
+        if (isProductDisActive) {
+            setIsProductDisDropdown(true);
+        } else {
+            setIsProductDisDropdown(false);
+        }
+
 
         if (isProductsActive) {
             setIsProductDropdown(true);
@@ -166,6 +203,10 @@ function Navbar() {
         setIsContactDropdown(!isContactDropdown);
     };
 
+    const handleDropdownProductDiscount = () => {
+        setIsProductDisDropdown(!isProductDisDropdown);
+    };
+
     const handleProductDropdown = () => {
         setIsProductDropdown(!isProductDropdown);
     };
@@ -202,43 +243,58 @@ function Navbar() {
         setIsCurrencyDropdown(!isCurrencyDropdown)
     }
 
+    const [currentDateTime, setCurrentDateTime] = useState(new Date());
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentDateTime(new Date());
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, []);
+    const khmerToday = formatDateToKhmer(currentDateTime);
+    const khmerTime = formatTimeToKhmer(currentDateTime);
+
     return (
-        <div className=''>
-            <nav className="fixed top-0 z-50 w-full  bg-blue-700 border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-                <div className="py-3 px-4 ">
+        <div className='bg-gray-200'>
+            {/* Navbar */}
+            <nav className="md:fixed top-0 z-50 md:px-4 md:m-0 w-full">
+                <div className="py-3 px-4  sm:ml-64 bg-white border-b shadow border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                     <div className="flex items-center justify-between">
-                        <div className="flex items-center justify-between space-x-2 rtl:justify-end">
-                            <a href="/Dashboard" className=" md:me-8 hidden md:block">
-                                <span className="self-center text-xl text-white font-bold sm:text-2xl whitespace-nowrap dark:text-white">ហាងលក់ទំនិញចែប៊ីម៉ាត</span>
-                            </a>
-                            <button data-drawer-target="sidebar-multi-level-sidebar" data-drawer-toggle="sidebar-multi-level-sidebar" aria-controls="sidebar-multi-level-sidebar" type="button" class="inline-flex items-center  ms-3 text-sm text-white rounded-lg sm:hidden  focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-                                <span class="sr-only">Open sidebar</span>
-                                <svg class="w-8 h-8" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
-                                </svg>
-                            </button>
+                        <div className="flex items-center justify-between space-x-4 rtl:justify-end">
                             <button
-                                className="bg-slate-200 rounded-3xl p-1"
-                                onClick={handleThemeSwitch}
+                                ref={buttonRef}  // Attach ref to the button
+                                onClick={toggleMenu}
+                                type="button"
+                                className="inline-flex items-center text-sm text-gray-900 rounded-lg sm:hidden focus:outline-none"
                             >
-                                {theme === "dark" ? (
-                                    <img width="24" height="24" src="https://img.icons8.com/ios-filled/50/ffffff/sun--v1.png" alt="light mode icon" />
+                                {menuOpen ? (
+                                    <AiOutlineMenuUnfold size={24} />
                                 ) : (
-                                    <img width="24" height="24" src="https://img.icons8.com/ios-filled/50/000000/moon-symbol.png" alt="dark mode icon" />
+                                    <AiOutlineMenuFold size={24} />
                                 )}
                             </button>
+                            <p className='text-gray-700 font-NotoSansKhmer md:text-xl text-sm'>
+                                <span >{khmerToday}</span>
+                            </p>
                         </div>
                         <div className="flex items-center">
                             <div className='flex space-x-4'>
                                 <NavLink to="/index/pos" >
-                                    <p className='py-1 px-3 flex text-white items-center space-x-2 hover:bg-green-500 transition duration-300 text-lg font-medium bg-green-400'>
-                                        <RiLuggageDepositFill className='text-2xl' /> <span>pos</span>
+                                    <p className='px-6 py-2 flex text-white items-center space-x-2 hover:bg-blue-500 transition duration-300 text-lg font-medium bg-blue-500'>
+                                        <svg
+                                            className="flex-shrink-0 w-5 h-5 "
+                                            aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="currentColor"
+                                            viewBox="0 0 18 18"
+                                        >
+                                            <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
+                                        </svg>
                                     </p>
                                 </NavLink>
-                                <a href="#" className='py-1 px-3 flex items-center text-white space-x-2 hover:bg-green-500 transition duration-300 text-lg font-medium bg-green-400'>
-                                    <MdOutlineMoneyOff className='text-2xl' /> <span>ចំណូល</span>
-                                </a>
-                                <p className="text-lg text-white font-bold" role="none">
+
+                                <p className="text-sm translate-y-2 text-gray-700 font-bold" role="none">
                                     {userNames}
                                 </p>
                             </div>
@@ -247,9 +303,9 @@ function Navbar() {
                                     <button
                                         type="button"
                                         onClick={toggleDropdown}
-                                        className="flex rounded-full p-2 bg-white"
+                                        className="flex rounded-full p-2 bg-gray-300"
                                     >
-                                        <span className="sr-only">Open user menu</span>
+                                        <span className="sr-only ">Open user menu</span>
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             width="20"
@@ -268,8 +324,8 @@ function Navbar() {
                                     </button>
                                 </div>
                                 {isDropdownVisible && (
-                                    <div className="absolute z-10 top-4 w-44 p-2 bg-white shadow mt-10 -right-[20px] text-gray-600 -translate-x-16">
-                                        <div onClick={handleLogout} className=" items-center gap-1 cursor-pointer hover:text-red-400">
+                                    <div className="absolute z-10 top-4 w-44 p-2 bg-white shadow mt-12 -right-0 text-gray-600 -translate-x-2">
+                                        <div className=" items-center gap-1 text-sm cursor-pointer hover:text-red-400">
                                             <div className="px-4 py-3" role="none">
                                                 <p className="text-sm text-gray-900 font-bold" role="none">
                                                     Name: {userNames}
@@ -300,9 +356,16 @@ function Navbar() {
                 </div>
             </nav>
 
-            <aside id="sidebar-multi-level-sidebar" class="fixed top-12 left-0 z-40 w-64 h-screen bg-white transition-transform " aria-label="Sidebar">
-
-                <div className="h-full px-3 py-4 overflow-y-auto mb-4 shadow-lg dark:bg-gray-800 scrollbar-hidden pb-20">
+            {/* Sidebar */}
+            <aside
+                ref={sidebarRef}  // Attach ref to the sidebar
+                className={`fixed md:top-0 top-12 h-full bg-white left-0 z-40 w-64 overflow-y-auto scrollbar-hidden transition-transform shadow
+                ${menuOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
+            >
+                <div className="px-3 overflow-y-auto">
+                    <div className="my-4 text-center">
+                        <h1 className="text-xl font-bold font-NotoSansKhmer">ហាងលក់ <br /> ទំនិញចែប៊ីម៉ាត</h1>
+                    </div>
                     <ul className="space-y-2 font-medium">
                         <li>
                             <NavLink to="/dashboard" className={navLinkStyle}>
@@ -315,7 +378,6 @@ function Navbar() {
                             </NavLink>
                         </li>
 
-                        {/* Contact Dropdown */}
                         <li className="space-y-2">
                             <button
                                 onClick={handleDropdownContact}
@@ -384,8 +446,8 @@ function Navbar() {
                                     <p className="font-bold font-NotoSansKhmer">បញ្ជីផលិតផល</p>
                                 </NavLink>
 
-                                  {/* user add purchase admin and superadmin */}
-                                  
+                                {/* user add purchase admin and superadmin */}
+
                                 {(userRol === 'superadmin' || userRol === 'admin') ? (
                                     <NavLink to="/createproduct" className={navLinkStyle}>
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 ml-3">
@@ -473,7 +535,7 @@ function Navbar() {
                                     </div>
                                 )}
 
-                                <NavLink to="/purchase-list" className={navLinkStyle}>
+                                <NavLink to="/order-Repay" className={navLinkStyle}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 ml-3">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
                                     </svg>
@@ -501,30 +563,31 @@ function Navbar() {
 
                         {/* Topup Phone dropdown */}
                         <li className="space-y-2">
-                            <button onClick={handleTopupDropDown} className={`flex items-center p-3 w-full text-left justify-between ${isTopupDropdown ? "bg-blue-700 dark:bg-blue-500 text-white" : "text-gray-900 dark:text-white"}`}>
+                            <button onClick={handleDropdownProductDiscount} className={`flex items-center p-3 w-full text-left justify-between ${isProductDisDropdown ? "bg-blue-700 dark:bg-blue-500 text-white" : "text-gray-900 dark:text-white"}`}>
                                 <div className="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-receipt-text"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" /><path d="M14 8H8" /><path d="M16 12H8" /><path d="M13 16H8" /></svg>
                                     <span className="flex-1 ms-3 whitespace-nowrap font-NotoSansKhmer font-bold">
-                                        កាតទូរស័ព្ទ
+                                        បញ្ចុះតម្លៃផលិតផល
                                     </span>
                                 </div>
-                                <svg className={`w-4 h-4 transition-transform duration-300 ${isTopupDropdown ? "transform rotate-90" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg className={`w-4 h-4 transition-transform duration-300 ${isProductDisDropdown ? "transform rotate-90" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                 </svg>
                             </button>
 
-                            <div className={`overflow-hidden transition-all duration-500 space-y-2 ${isTopupDropdown ? "max-h-40 opacity-100" : "max-h-0"}`}>
-                                <NavLink to="/purchase" className={navLinkStyle}>
+                            <div className={`overflow-hidden transition-all duration-500 space-y-2 ${isProductDisDropdown ? "max-h-40 opacity-100" : "max-h-0"}`}>
+
+                                <NavLink to="/discount_product" className={navLinkStyle}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 ml-3">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
                                     </svg>
-                                    <p className="font-bold font-NotoSansKhmer">បង្កើតបញ្ជាទិញ</p>
+                                    <p className="font-bold font-NotoSansKhmer">បង្កើតផលិតផល</p>
                                 </NavLink>
-                                <NavLink to="/purchase-list" className={navLinkStyle}>
+                                <NavLink to="/create_discount_product" className={navLinkStyle}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 ml-3">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
                                     </svg>
-                                    <p className="font-bold font-NotoSansKhmer">បញ្ជីបញ្ជាទិញ</p>
+                                    <p className="font-bold font-NotoSansKhmer">បង្កើតផលិតផលបញ្ចុះតម្លៃ</p>
                                 </NavLink>
                             </div>
                         </li>
@@ -826,6 +889,6 @@ function Navbar() {
             </aside>
         </div>
     );
-}
+};
 
 export default Navbar;

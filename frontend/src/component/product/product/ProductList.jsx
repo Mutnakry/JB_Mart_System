@@ -3,14 +3,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import Pagination from '../../pagination/Pagination';
-import { FaClipboardList, FaFileCsv, FaFileExcel, FaPencilAlt } from "react-icons/fa";
+import { FaClipboardList, FaPencilAlt } from "react-icons/fa";
 import { MdDelete, MdClose } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
 import { formatDateToKhmer } from '../../ForMartDateToKHmer';
 import { IoPrint } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import NullImage from '../../../assets/image.png';
-
+import { API_URL } from '../../../service/api'
 
 
 const Dashboard = () => {
@@ -37,7 +37,7 @@ const Dashboard = () => {
     const getAllProduct = async () => {
         setLoading(true);  // Set loading state to true
         try {
-            const response = await axios.get('http://localhost:6700/api/product', {
+            const response = await axios.get(`${API_URL}/api/product`, {
                 params: {
                     page,
                     limit,
@@ -86,7 +86,7 @@ const Dashboard = () => {
     const deleteproduct = async () => {
         if (selectedproductId) {
             try {
-                await axios.delete(`http://localhost:6700/api/product/${selectedproductId}`);
+                await axios.delete(`${API_URL}/api/product/${selectedproductId}`);
                 toast.success('លុបបានដោយជោគជ័យ!', { autoClose: 3000 });
                 getAllProduct();
                 setIsDeleteModalOpen(false);
@@ -118,7 +118,7 @@ const Dashboard = () => {
             status: status,
         };
         try {
-            await axios.put(`http://localhost:6700/api/product/updateproduct_status/${selectedproductId}`, values);
+            await axios.put(`${API_URL}/api/product/updateproduct_status/${selectedproductId}`, values);
             toast.success('កែប្រែបានដោយជោគជ័យ', { autoClose: 3000 });
             console.log(status);
             getAllProduct();
@@ -136,6 +136,7 @@ const Dashboard = () => {
         exit: { opacity: 0, y: 20 }
     };
 
+    const [showRowActions, setShowRowActions] = useState(null);
 
     return (
         <div>
@@ -196,16 +197,19 @@ const Dashboard = () => {
                                     <th className=" px-4 py-2">តម្លៃទិញឯកតា</th>
                                     <th className=" px-4 py-2">តម្លៃលក់</th>
                                     <th className=" px-4 py-2">ពន្ធ</th>
-                                    <th className=" px-4 py-2">តម្លៃចំនេញ</th>
+                                    <th className=" px-4 py-2">បញ្ចុះតម្លៃ</th>
+                                    {/* <th className=" px-4 py-2">តម្លៃចំនេញ</th> */}
                                     <th className=" px-4 py-2">បច្ចុប្បន្នភាពស្តុក</th>
                                     <th className=" px-4 py-2">ប្រភេទផលិតផល</th>
                                     <th className=" px-4 py-2">ប្រភេទទំនិញ</th>
                                     <th className=" px-4 py-2">ម៉ាលយីយោ</th>
+                                    <th className=" px-4 py-2">ប្រភេទស្តុក</th>
                                     <th className=" px-4 py-2">ស្ថានភាព</th>
                                     <th className=" px-4 py-2">ថ្ងៃផុតកំណត់</th>
-                                    <th className=" px-4 py-2">ការណិពណ័នា</th>
-                                    <th className=" px-4 py-2">បង្កើត</th>
                                     <th className=" px-4 py-2">បន្ថែមដោយ</th>
+                                    <th className=" px-4 py-2">បង្កើត</th>
+
+                                    <th className=" px-4 py-2">ការណិពណ័នា</th>
                                     <th className=" px-4 py-2">សកម្មភាព</th>
 
                                 </tr>
@@ -226,13 +230,13 @@ const Dashboard = () => {
                                             exit="exit"
                                             variants={rowAnimation}
                                             transition={{ duration: 0.3 }}
-                                            className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100">
+                                            className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100 relative">
                                             <td className=" px-4 py-1">{index + 1}</td>
                                             <td>
                                                 {product.image ? (
                                                     <div className="flex items-center justify-center h-12">
                                                         <img
-                                                            src={`http://localhost:6700/image/${product.image}`}
+                                                            src={`${API_URL}/image/${product.image}`}
                                                             alt={product.pro_names}
                                                             className="object-contain h-full w-full rounded mb-2"
                                                         />
@@ -282,11 +286,21 @@ const Dashboard = () => {
                                             <td className=" px-4 py-1 whitespace-nowrap">{product.cost_price} $</td>
                                             <td className=" px-4 py-1 whitespace-nowrap">{product.exclude_tax} $</td>
                                             <td className=" px-4 py-1 whitespace-nowrap">{product.include_tax} $</td>
-                                            <td className=" px-4 py-1 whitespace-nowrap">{product.profit} $</td>
+                                            <td className=" px-4 py-1 whitespace-nowrap">{product.discount} $</td>
+                                            {/* <td className=" px-4 py-1 whitespace-nowrap">{product.profit} $</td> */}
                                             <td className="px-4 py-1">{product.qty} {product.unit_names}</td>
                                             <td className=" px-4 py-1">{product.product_type || 'N/A'}</td>
                                             <td className=" px-4 py-1">{product.cat_names || 'N/A'}</td>
                                             <td className="px-4 py-1">{product.brand_names || 'N/A'}</td>
+                                            <td className="px-4 py-1 whitespace-nowrap">
+                                                <button className=''>
+                                                    {product.mg_stock === 'enable' ? (
+                                                        <span >គ្រប់គ្រងស្តុក</span>
+                                                    ) : (
+                                                        <span >មិនគ្រប់គ្រងស្តុក</span>
+                                                    )}
+                                                </button>
+                                            </td>
                                             <td className=" px-4 py-1 whitespace-nowrap">
                                                 {(userRol === 'superadmin' || userRol === 'admin') ? (
                                                     <button onClick={() => openUpdateModal(product)}>
@@ -336,53 +350,98 @@ const Dashboard = () => {
                                                 })()}
 
                                             </td>
-                                            <td className=" px-4 py-1 line-clamp-2">{product.description || 'N/A'}</td>
-                                            <td className=" px-4 whitespace-nowrap py-1">{formatDateToKhmer(new Date(product.create_at))}</td>
                                             <td className=" px-4 py-1">{product.user_at}</td>
-                                            {(userRol === 'superadmin' || userRol === 'admin') ? (
-                                                <td className="px-4  space-x-2 flex">
-                                                    <button
-                                                        onClick={() => openDeleteModal(product)}
-                                                        className='bg-red-200  p-2 '
-                                                    >
-                                                        <MdDelete className='text-red-500' />
-                                                    </button>
-                                                    <Link
-                                                        to={`/updateproduct/${product.id}`}
-                                                        className="flex items-center gap-1 p-2 font-bold text-white bg-blue-300 hover:bg-blue-400"
+                                            <td className=" px-4 whitespace-nowrap py-1">{formatDateToKhmer(new Date(product.create_at))}</td>
 
-                                                    >
-                                                        <FaPencilAlt className='text-blue-500' />
-                                                    </Link>
-                                                    <Link
-                                                        to={`/product/${product.id}`}
-                                                        className="flex items-center gap-1 p-2 font-bold text-white bg-green-300 hover:bg-green-400"
+                                            <td className=" px-4 py-1 line-clamp-2">{product.description || 'N/A'}</td>
+                                            {/* <td>
+                                                {(userRol === 'superadmin' || userRol === 'admin') ? (
+                                                    <td className="px-4  space-x-2 flex">
+                                                        <button
+                                                            onClick={() => openDeleteModal(product)}
+                                                            className='bg-red-200  p-2 '
+                                                        >
+                                                            <MdDelete className='text-red-500' />
+                                                        </button>
+                                                        <Link
+                                                            to={`/updateproduct/${product.id}`}
+                                                            className="flex items-center gap-1 p-2 font-bold text-white bg-blue-300 hover:bg-blue-400"
 
-                                                    >
-                                                        <IoPrint />
-                                                    </Link>
-                                                </td>
-                                            ) : (
-                                                <td className="px-4  space-x-2 flex">
-                                                    <button
-                                                        className='bg-red-200  p-2 cursor-not-allowed opacity-50'
-                                                    >
-                                                        <MdDelete className='text-red-500' />
-                                                    </button>
-                                                    <span
-                                                        className="flex items-center gap-1 cursor-not-allowed opacity-50 p-2 font-bold text-white bg-blue-300 hover:bg-blue-400"
-                                                    >
-                                                        <FaPencilAlt className='text-blue-500' />
-                                                    </span>
-                                                    <Link
-                                                        to={`/product/${product.id}`}
-                                                        className="flex items-center gap-1 p-2 font-bold text-white bg-green-300 hover:bg-green-400"
+                                                        >
+                                                            <FaPencilAlt className='text-blue-500' />
+                                                        </Link>
+                                                        <Link
+                                                            to={`/product/${product.id}`}
+                                                            className="flex items-center gap-1 p-2 font-bold text-white bg-green-300 hover:bg-green-400"
 
-                                                    >
-                                                        <IoPrint />
-                                                    </Link>
-                                                </td>
-                                            )}
+                                                        >
+                                                            <IoPrint />
+                                                        </Link>
+                                                    </td>
+                                                ) : (
+                                                    <td className="px-4  space-x-2 flex">
+                                                        <button
+                                                            className='bg-red-200  p-2 cursor-not-allowed opacity-50'
+                                                        >
+                                                            <MdDelete className='text-red-500' />
+                                                        </button>
+                                                        <span
+                                                            className="flex items-center gap-1 cursor-not-allowed opacity-50 p-2 font-bold text-white bg-blue-300 hover:bg-blue-400"
+                                                        >
+                                                            <FaPencilAlt className='text-blue-500' />
+                                                        </span>
+                                                        <Link
+                                                            to={`/product/${product.id}`}
+                                                            className="flex items-center gap-1 p-2 font-bold text-white bg-green-300 hover:bg-green-400"
+
+                                                        >
+                                                            <IoPrint />
+                                                        </Link>
+                                                    </td>
+                                                )}
+
+                                            </td> */}
+
+                                            <td className="relative px-4 py-1">
+                                                {/* Button to Toggle   */}
+                                                <button
+                                                    onClick={() => setShowRowActions(prev => (prev === product.id ? null : product.id))}
+                                                    className="bg-gray-300 px-4 py-1"
+                                                >
+                                                    សកម្មភាព
+                                                </button>
+
+                                                {showRowActions === product.id && (
+                                                    <div className="absolute z-10 bg-white drop-shadow text-center p-3 rounded-lg w-44 mt-1">
+                                                        {userRol === "superadmin" || userRol === "admin" ? (
+                                                            <>
+                                                                <button onClick={() => openDeleteModal(product)} className="block w-full text-left px-4 py-2 text-red-500 hover:bg-gray-100">
+                                                                    <MdDelete className="inline mr-2" />លុប
+                                                                </button>
+                                                                <Link to={`/updateproduct/${product.id}`} className="block w-full text-left px-4 py-2 text-blue-500 hover:bg-gray-100">
+                                                                    <FaPencilAlt className="inline mr-2" />កែប្រែ
+                                                                </Link>
+                                                                <Link to={`/product/${product.id}`} className="block w-full text-left px-4 py-2 text-green-500 hover:bg-gray-100">
+                                                                    <IoPrint className="inline mr-2" />បោះពុម្ព
+                                                                </Link>
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <button className="block w-full text-left px-4 py-2 text-red-500 opacity-50 cursor-not-allowed">
+                                                                    <MdDelete className="inline mr-2" />លុប
+                                                                </button>
+                                                                <span className="block w-full text-left px-4 py-2 text-blue-500 opacity-50 cursor-not-allowed">
+                                                                    <FaPencilAlt className="inline mr-2" />កែប្រែ
+                                                                </span>
+                                                                <Link to={`/product/${product.id}`} className="block w-full text-left px-4 py-2 text-green-500 hover:bg-gray-100">
+                                                                    <IoPrint className="inline mr-2" />បោះពុម្ព
+                                                                </Link>
+                                                            </>
+                                                        )}
+                                                    </div>
+                                                )}
+
+                                            </td>
                                         </motion.tr>
                                     ))}
                                 </tbody>

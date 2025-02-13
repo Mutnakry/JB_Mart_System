@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Navbar from '../../Navbar';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {API_URL} from '../../../service/api'
 
 const ProductWarranties = () => {
   const [userLoginNames, setUserLoginNames] = useState('');
@@ -28,7 +29,7 @@ const ProductWarranties = () => {
   // Fetch all warranties from the API
   const getAllWarrenty = async () => {
     try {
-      const response = await axios.get('http://localhost:6700/api/warranty');
+      const response = await axios.get(`${API_URL}/api/warranty`);
       setWarrentys(response.data);
       setError(null);
     } catch (error) {
@@ -37,7 +38,7 @@ const ProductWarranties = () => {
   };
   const getProduct = async () => {
     try {
-      const response = await axios.get('http://localhost:6700/api/product/all');
+      const response = await axios.get(`${API_URL}/api/product/all`);
 
       setProducts(response.data);
       console.log(response.data)
@@ -76,7 +77,7 @@ const ProductWarranties = () => {
 
   const deleteWarranty = async () => {
     try {
-      await axios.delete(`http://localhost:6700/api/warranty/${selectedaccountId}`);
+      await axios.delete(`${API_URL}/api/warranty/${selectedaccountId}`);
       toast.success('Warranty deleted successfully!', { autoClose: 3000 });
       getAllWarrenty();
       setIsDeleteModalOpen(false);
@@ -118,7 +119,7 @@ const ProductWarranties = () => {
       description: description,
     }
     try {
-      const res = await axios.post('http://localhost:6700/api/warranty', values);
+      const res = await axios.post(`${API_URL}/api/warranty`, values);
       toast.success('បង្កើតបានដោយជោគជ័យ ', { autoClose: 3000 });
       console.log(res.data);
       ClearData();
@@ -142,7 +143,7 @@ const ProductWarranties = () => {
     };
 
     try {
-      const res = await axios.put(`http://localhost:6700/api/warranty/${selectedaccountId}`, values);
+      const res = await axios.put(`${API_URL}/api/warranty/${selectedaccountId}`, values);
       toast.success('ការកែប្រែបានជោគជ័យ', { autoClose: 3000 }); // Success message
       ClearData();
       getAllWarrenty(); // Refresh the warranties list
@@ -157,9 +158,9 @@ const ProductWarranties = () => {
   return (
     <div>
       <Navbar />
-      <div className="py-12 px-6 md:ml-64 bg-gray-100 dark:bg-gray-950">
-        <div className="w-full p-4 mt-7 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
-          <div className="flex items-center mb-3 gap-2">
+      <div className='Nav_bar'>
+      <div className=' Div_bar'>
+        <div className="flex items-center mb-3 gap-2">
             <p><FaCcApplePay className="text-lg" /></p>
             <p className="font-NotoSansKhmer font-bold">តារាងបញ្ជី</p>
           </div>

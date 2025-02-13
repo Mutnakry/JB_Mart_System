@@ -1,46 +1,46 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
+import { API_URL } from '../../service/api'
+
 function CountItems() {
     const [error, setError] = useState(null);
     const [constprice, setCostPrice] = useState([]);
+    const [sum_order, setSum_order] = useState([]);
     const [Products, setProducts] = useState([]);
+    const [CountCustomer, setCountCustomer] = useState([]);
+    const [sumPurchasePrice, setSumPurchaseprice] = useState([]);
     useEffect(() => {
         getCostprice(); /// ចំណាយ
-        GetProductCount();  // count product name
     }, [])
 
     const getCostprice = async () => {
         try {
-            const response = await axios.get('http://localhost:6700/api/dashbord/cost');
+            const response = await axios.get(`${API_URL}/api/dashbord/cost`);
+            const count_customer = await axios.get(`${API_URL}/api/dashbord/count_customer`);
+            const sumorder = await axios.get(`${API_URL}/api/dashbord/sum_order`);
+            const countProduct = await axios.get(`${API_URL}/api/dashbord/countproduct`);
+            const Sum_PurchasePrice = await axios.get(`${API_URL}/api/dashbord/sum_purchase`);
+            console.log(Sum_PurchasePrice.data)
+            setSumPurchaseprice(Sum_PurchasePrice.data);
+            setProducts(countProduct.data);
             setCostPrice(response.data);
-            console.log(response.data);
+            setCountCustomer(count_customer.data);
+            setSum_order(sumorder.data)
         } catch (error) {
             setError('Error fetching categories data');
             console.error(error);
         }
     };
-
-    const GetProductCount = async () => {
-        try {
-            const response = await axios.get('http://localhost:6700/api/dashbord/countproduct');
-            setProducts(response.data);
-            console.log(response.data);
-        } catch (error) {
-            setError('Error fetching categories data');
-            console.error(error);
-        }
-    };
-
 
     return (
         <div>
             <div class="">
-                <div class=" text-2xl mb-4 bg-gradient-to-r from-blue-500 to-blue-950 dark:from-gray-800 dark:to-gray-500 p-6">
-                    <span class="font-semibold text-white">សូមស្វាគមន៍</span>
+                <div class=" text-2xl mb-4 text-gray-500 dark:to-gray-500 px-4">
+                    <span class="font-semibold">ផ្ទាំងគ្រប់គ្រង</span>
                 </div>
-                <div className='p-6 rounded-xl shadow-sm bg-slate-100 m-4 border-t-4 border-slate-200'>
+                <div className=''>
 
-                    <div className="grid grid-cols-4 lg:grid-cols-4 gap-4 mb-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-4">
                         <div className="flex items-center h-24   bg-white border-t-2 border-blue-500">
 
                             <div className='flex items-center gap-4 mx-5'>
@@ -61,7 +61,6 @@ function CountItems() {
                                     </h3>
                                     <h3 className='font-bold font-NotoSansKhmer text-gray-600'>សរុបចំណាយ</h3>
                                 </div>
-
                             </div>
                         </div>
                         <div className="flex items-center h-24   bg-white border-t-2 border-green-500">
@@ -73,8 +72,59 @@ function CountItems() {
 
                                 </div>
                                 <div>
-                                    <h3 className='font-bold font-NotoSansKhmer text-gray-600'>4400</h3>
+                                    <h3 className="font-bold font-NotoSansKhmer text-gray-600">
+                                        {sumPurchasePrice.length > 0 && sumPurchasePrice[0].SumAmountTotal
+                                            ? new Intl.NumberFormat("en-US", {
+                                                style: "decimal",
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2,
+                                            }).format(parseFloat(sumPurchasePrice[0].SumAmountTotal))
+                                            : "0.00"} $
+                                    </h3>
+
                                     <h3 className='font-bold font-NotoSansKhmer text-gray-600'>ទិញសរុប</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center h-24 bg-white border-t-2 border-yellow-500 px-5">
+                            {/* Back Button */}
+                            <div className="flex items-center gap-4">
+                                <div className="bg-yellow-500/20 p-3 rounded-full">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 text-yellow-500">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M7.49 12 3.74 8.248m0 0 3.75-3.75m-3.75 3.75h16.5V19.5" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            {/* Title and Financial Info */}
+                            <div className="flex justify-between items-center w-full px-5 md:text-lg text-xs whitespace-nowrap">
+                                <h3 className="font-bold font-NotoSansKhmer text-gray-700">លក់សរុប​១</h3>
+                                <div className="text-right">
+                                    <h3 className="font-bold font-NotoSansKhmer text-gray-700">{sum_order[0]?.TotalAmountUSD || 0} $</h3>
+                                    <h3 className="font-bold font-NotoSansKhmer text-gray-700">{sum_order[0]?.TotalAmountKHR || 0} រៀល</h3>
+                                    <h3 className="font-bold font-NotoSansKhmer text-gray-700">{sum_order[0]?.TotalAmountTHB || 0} បាត</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center h-24 bg-white border-t-2 border-yellow-500 px-5 ">
+                            {/* Back Button */}
+                            <div className="flex items-center gap-4">
+                                <div className="bg-yellow-500/20 p-3 rounded-full">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 text-yellow-500">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M7.49 12 3.74 8.248m0 0 3.75-3.75m-3.75 3.75h16.5V19.5" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            {/* Title and Financial Info */}
+                            <div className="flex justify-between items-center w-full px-5 md:text-lg text-xs whitespace-nowrap">
+                                <h3 className="font-bold font-NotoSansKhmer text-gray-700">លក់ជំពាក់ 1</h3>
+                                <div className="text-right">
+                                    <h3 className="font-bold font-NotoSansKhmer text-gray-700">21923131{sum_order[0]?.ResultTotal_DiUSD || 0} $</h3>
+                                    <h3 className="font-bold font-NotoSansKhmer text-gray-700">{sum_order[0]?.ResultTotal_DiKHR || 0} រៀល</h3>
+                                    <h3 className="font-bold font-NotoSansKhmer text-gray-700">{sum_order[0]?.ResultTotal_DiTHB || 0} បាត</h3>
                                 </div>
                             </div>
                         </div>
@@ -88,27 +138,19 @@ function CountItems() {
 
                                 </div>
                                 <div>
-                                    <h3 className='font-bold font-NotoSansKhmer text-gray-600'>3030</h3>
-                                    <h3 className='font-bold font-NotoSansKhmer text-gray-600'>លក់ជំពាក់</h3>
+                                    <h3 className="font-bold font-NotoSansKhmer text-gray-600">
+                                        {sumPurchasePrice.length > 0 && sumPurchasePrice[0].SumAmountDue
+                                            ? new Intl.NumberFormat("en-US", {
+                                                style: "decimal",
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2,
+                                            }).format(parseFloat(sumPurchasePrice[0].SumAmountDue))
+                                            : "0.00"} $
+                                    </h3>
+                                    <h3 className='font-bold font-NotoSansKhmer text-gray-600'>ទិញជំពាក់</h3>
                                 </div>
                             </div>
                         </div>
-                        <div className="flex items-center h-24   bg-white border-t-2 border-yellow-500">
-                            <div className='flex items-center gap-4 mx-5'>
-                                <div className='bg-yellow-500/20 p-3 rounded-full'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 text-yellow-500">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M7.49 12 3.74 8.248m0 0 3.75-3.75m-3.75 3.75h16.5V19.5" />
-                                    </svg>
-
-
-                                </div>
-                                <div>
-                                    <h3 className='font-bold font-NotoSansKhmer text-gray-700'>300</h3>
-                                    <h3 className='font-bold font-NotoSansKhmer text-gray-700'>ទិញជំពាក់</h3>
-                                </div>
-                            </div>
-                        </div>
-
                         <div className="flex items-center h-24   bg-white border-t-2 border-red-500">
                             <div className='flex items-center gap-4 mx-5'>
                                 <div className='bg-red-500/20 p-3 rounded-full'>
@@ -129,8 +171,8 @@ function CountItems() {
 
                                 </div>
                                 <div>
-                                    <h3 className='font-bold font-NotoSansKhmer text-gray-600'>4400</h3>
-                                    <h3 className='font-bold font-NotoSansKhmer text-gray-600'>អតិថិជនសរុប</h3>
+                                    <h3 className='font-bold font-NotoSansKhmer text-gray-600'>{(CountCustomer[0]?.count_total) - 1} នាក់</h3>
+                                    <h3 className='font-bold font-NotoSansKhmer text-gray-600'>អតិថិជនសរុប 1</h3>
                                 </div>
                             </div>
                         </div>
@@ -152,7 +194,7 @@ function CountItems() {
                                 </div>
                                 <div>
                                     <h3 className='font-bold font-NotoSansKhmer text-gray-600'>{Products[0]?.count_total}</h3>
-                                    <h3 className='font-bold font-NotoSansKhmer text-gray-600'>ទំនិញប្តូរសរុប</h3>
+                                    <h3 className='font-bold font-NotoSansKhmer text-gray-600'>ទំនិញសរុប 1</h3>
                                 </div>
                             </div>
                         </div>

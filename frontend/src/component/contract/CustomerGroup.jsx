@@ -3,11 +3,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import Pagination from '../pagination/Pagination';
-import { FaLayerGroup, FaPencilAlt, FaMoneyBillAlt, FaBookOpen, FaPowerOff } from "react-icons/fa";
-import { MdDelete, MdClose, MdOutlineMoneyOff } from "react-icons/md";
+import { FaLayerGroup, FaPencilAlt } from "react-icons/fa";
+import { MdDelete, MdClose } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
-
-
+import {API_URL} from '../../service/api'
 
 const group_customer = () => {
     const [group_Names, setGroup_Names] = useState("");
@@ -33,7 +32,7 @@ const group_customer = () => {
     const getAllGroupCustomer = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:6700/api/group_customer', {
+            const response = await axios.get(`${API_URL}/api/group_customer`, {
                 params: {
                     page,
                     limit,
@@ -97,7 +96,7 @@ const group_customer = () => {
             user_at: userLoginNames
         }
         try {
-            await axios.put(`http://localhost:6700/api/group_customer/${selectedgroup_customerId}`, values);
+            await axios.put(`${API_URL}/api/group_customer/${selectedgroup_customerId}`, values);
             toast.success('កែប្រែក្រុមបានដោយជោគជ័យ', { autoClose: 3000 });
             getAllGroupCustomer();
             setIsUpdateModalOpen(false);
@@ -125,7 +124,7 @@ const group_customer = () => {
     const deletegroup_customer = async () => {
         if (selectedgroup_customerId) {
             try {
-                await axios.delete(`http://localhost:6700/api/group_customer/${selectedgroup_customerId}`);
+                await axios.delete(`${API_URL}/api/group_customer/${selectedgroup_customerId}`);
                 toast.success('លុបក្រុមបានដោយជោគជ័យ', { autoClose: 3000 });
                 getAllGroupCustomer();
                 setIsDeleteModalOpen(false);
@@ -148,7 +147,7 @@ const group_customer = () => {
             user_at: userLoginNames
         }
         try {
-            const res = await axios.post('http://localhost:6700/api/group_customer', values);
+            const res = await axios.post(`${API_URL}/api/group_customer`, values);
             console.log(res.data);
             toast.success('បង្កើតក្រុមបានដោយជោគជ័យ ', { autoClose: 3000 });
             setDetail('');
@@ -244,7 +243,7 @@ const group_customer = () => {
                                                 onClick={() => openDeleteModal(customer)}
                                                 className='bg-red-300 p-2  flex text-xs text-white'
                                             >
-                                                <FaPowerOff className='text-red-500 mr-2' /> លុប
+                                                <MdDelete className='text-red-500 mr-2' /> លុប
                                             </button>
                                         </td>
                                     </motion.tr>

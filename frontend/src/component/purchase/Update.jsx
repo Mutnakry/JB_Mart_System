@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../Navbar";
 import { IoMdClose } from "react-icons/io";
 import { FaBackward } from "react-icons/fa6";
+import {API_URL} from '../../service/api'
 
 
 const PurchaseDetails = () => {
@@ -43,7 +44,7 @@ const PurchaseDetails = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:6700/api/purchase/puchase/${id}`)
+      .get(`${API_URL}/api/purchase/puchase/${id}`)
       .then((response) => {
         setPurchaseData(response.data);
         console.log("Purchase Data:", response.data);
@@ -70,7 +71,7 @@ const PurchaseDetails = () => {
   const [editableData, setEditableData] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:6700/api/product/all")
+      .get(`${API_URL}/api/product/all`)
       .then((response) => {
         setProducts(response.data);
       })
@@ -90,7 +91,7 @@ const PurchaseDetails = () => {
   const fetchsupplier = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:6700/api/supplier');
+      const response = await axios.get(`${API_URL}/api/supplier`);
       setsupplier(response.data.supplier);
       setError('');
     } catch (error) {
@@ -104,7 +105,7 @@ const PurchaseDetails = () => {
   const [paymentType, setPaymentType] = useState([]);
   const getPaymentType = async () => {
     try {
-      const response = await axios.get('http://localhost:6700/api/payment_type');
+      const response = await axios.get(`${API_URL}/api/payment_type`);
       setPaymentType(response.data.payment_type);
       console.log(response.data)
     } catch (error) {
@@ -116,7 +117,7 @@ const PurchaseDetails = () => {
   const [accountBank, setAccountBank] = useState([]);
   const getAccountBank = async () => {
     try {
-      const response = await axios.get('http://localhost:6700/api/account');
+      const response = await axios.get(`${API_URL}/api/account`);
       setAccountBank(response.data.account);
       console.log(response.data)
     } catch (error) {
@@ -195,14 +196,14 @@ const PurchaseDetails = () => {
       let response;
       if (id) {
         // Update purchase
-        response = await fetch(`http://localhost:6700/api/purchase/${id}`, {
+        response = await fetch(`${API_URL}/api/purchase/${id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(orderData),
         });
       } else {
         // Insert new purchase
-        response = await fetch("http://localhost:6700/api/purchase1", {
+        response = await fetch(`${API_URL}/api/purchase`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(orderData),
@@ -285,14 +286,14 @@ const PurchaseDetails = () => {
       let response;
       if (id) {
         // Update purchase
-        response = await fetch(`http://localhost:6700/api/purchase/${id}`, {
+        response = await fetch(`${API_URL}/api/purchase/${id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(orderData),
         });
       } else {
         // Insert new purchase
-        response = await fetch("http://localhost:6700/api/purchase1", {
+        response = await fetch(`${API_URL}/api/purchase`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(orderData),

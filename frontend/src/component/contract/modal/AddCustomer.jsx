@@ -3,20 +3,9 @@ import { motion } from "framer-motion";
 import { MdClose } from "react-icons/md";
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import {API_URL} from '../../../service/api'
 
 function AddCustomer({ setIsModalCustomer }) {
-    // const [isTypwCustomer, setIsTypwCustomer] = useState("");
-    // const [customeNames, setCustomeNames] = useState("");
-    // const [halfcustomeNames, setHalfSupplierName] = useState("");
-    // const [groupCustomer, setGroupCustomer] = useState("");
-    // const [phoneNumber, setPhoneNumber] = useState("");
-    // const [businessName, setBussinessName] = useState("");
-    // const [businessPhone, setBussinessPhone] = useState("");
-    // const [supplierId, setSupplierId] = useState("");
-    // const [email, setEmail] = useState("");
-    // const [description, setDescription] = useState("");
-    // const [userLoginNames, setUserLoginNames] = useState('');
-    // const [error, setError] = useState('');
 
     const [isTypwCustomer, setIsTypwCustomer] = useState("");
     const [customeNames, setCustomeNames] = useState(null);
@@ -40,7 +29,7 @@ function AddCustomer({ setIsModalCustomer }) {
 
     const getGroup_Customer = async () => {
         try {
-            const response = await axios.get('http://localhost:6700/api/group_customer');
+            const response = await axios.get(`${API_URL}/api/group_customer`);
             setGroup_Customer(response.data.group_customer);
         } catch (error) {
             setError('Error fetching categories data');
@@ -85,7 +74,7 @@ function AddCustomer({ setIsModalCustomer }) {
         };
 
         try {
-            const { data } = await axios.post('http://localhost:6700/api/customer', values);
+            const { data } = await axios.post(`${API_URL}/api/customer`, values);
             console.log(data);
             toast.success('បង្កើតអតិជនបានដោយជោគជ័យ ', { autoClose: 3000 });
             setIsModalCustomer(false);
@@ -113,7 +102,7 @@ function AddCustomer({ setIsModalCustomer }) {
                 transition={{ duration: 0.2 }}
                 onClick={handleOverlayClick}
             >
-                <div className="relative w-full bg-white shadow mt-10 dark:bg-gray-700 max-w-4xl">
+                <div className="relative w-full bg-white m-4 shadow mt-10 dark:bg-gray-700 max-w-4xl">
                     <div className="modal_title">
                         <h3 className="">អតិជន</h3>
                         <MdClose className='text-2xl cursor-pointer' onClick={() => setIsModalCustomer(false)} />

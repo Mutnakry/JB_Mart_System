@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
-
+import {API_URL} from '../service/api'
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +26,7 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:6700/api/auth/register', { names, email, pass, rol });
+      const response = await axios.post(`${API_URL}/api/auth/register`, { names, email, pass, rol });
       console.log('Registration successful:', response.data);
       toast.success('Register successful!', {
         position: "top-center",

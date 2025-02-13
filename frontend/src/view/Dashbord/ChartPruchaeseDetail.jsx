@@ -84,15 +84,13 @@ const ChartPruchaeseDetail = () => {
             }));
         }
     }, [PruchaeseDetail]);
-
     return (
-        <div className="max-w-screen-2xl mx-auto">
-               <h2 className="text-2xl text-gray-600 font-NotoSansKhmer font-bold mb-4">ចំណាយទិញផលិតផលសរុបក្នុងឆ្នាំនេះ</h2>
+        <div className="max-w-screen-2xl mx-auto ">
+               <h2 className="md:text-2xl text-sm text-gray-600 font-NotoSansKhmer font-bold mb-4">ចំណាយទិញផលិតផលសរុបក្នុងឆ្នាំនេះ</h2>
             <div id="chart">
                 <ReactApexChart options={state.options} series={state.series} type="pie" width={520} />
             </div>
         </div>
     );
 };
-
 export default ChartPruchaeseDetail;

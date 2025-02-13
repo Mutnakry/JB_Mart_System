@@ -2,13 +2,11 @@ import Navbar from '../Navbar';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import Pagination from '../pagination/Pagination';
-import { FaClipboardList, FaFileCsv, FaFileExcel, FaPencilAlt, FaSearch } from "react-icons/fa";
-import { MdDelete, MdClose } from "react-icons/md";
-import { motion, AnimatePresence } from "framer-motion";
+import { FaSearch } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import BackgroundArrow from '../background/BackgroundArrow';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../../service/api'
 
 
 const CreatePurchase = () => {
@@ -124,7 +122,7 @@ const CreatePurchase = () => {
         // console.log(orderData)
         try {
             // Send data to backend
-            const response = await fetch('http://localhost:6700/api/purchase', {
+            const response = await fetch(`${API_URL}/api/purchase`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(orderData),
@@ -168,7 +166,7 @@ const CreatePurchase = () => {
     const fetchsupplier = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:6700/api/supplier');
+            const response = await axios.get(`${API_URL}/api/supplier`);
             setsupplier(response.data.supplier);
             setError('');
         } catch (error) {
@@ -181,7 +179,7 @@ const CreatePurchase = () => {
     const fetchProducts = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:6700/api/product/all');
+            const response = await axios.get(`${API_URL}/api/product/all`);
             setProducts(response.data);
             setError('');
         } catch (error) {
@@ -274,7 +272,7 @@ const CreatePurchase = () => {
     const [accountBank, setAccountBank] = useState([]);
     const getAccountBank = async () => {
         try {
-            const response = await axios.get('http://localhost:6700/api/account');
+            const response = await axios.get(`${API_URL}/api/account`);
             setAccountBank(response.data.account);
             console.log(response.data)
         } catch (error) {
@@ -286,7 +284,7 @@ const CreatePurchase = () => {
     const [paymentType, setPaymentType] = useState([]);
     const getPaymentType = async () => {
         try {
-            const response = await axios.get('http://localhost:6700/api/payment_type');
+            const response = await axios.get(`${API_URL}/api/payment_type`);
             setPaymentType(response.data.payment_type);
             console.log(response.data)
         } catch (error) {
@@ -297,7 +295,7 @@ const CreatePurchase = () => {
     return (
         <div>
             <Navbar />
-            <div className='py-12 px-6 ml-64 md:w-auto w-[860px] bg-gray-200 dark:bg-gray-950'>
+            <div className='py-12  px-6 sm:ml-64 md:w-auto w-[860px] bg-gray-200 dark:bg-gray-950'>
                 <div className="w-full p-4 mt-10 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
 
                     <div className='flex items-center gap-2 pb-5'>
@@ -647,9 +645,6 @@ const CreatePurchase = () => {
                         </div>
                     </div>
 
-                </div>
-                <div>
-                    <BackgroundArrow />
                 </div>
 
             </div>

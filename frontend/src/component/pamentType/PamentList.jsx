@@ -7,7 +7,7 @@ import { FaClipboardList, FaPencilAlt } from "react-icons/fa";
 import { MdDelete, MdClose } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
 import { formatDateToKhmer } from '../ForMartDateToKHmer';
-
+import {API_URL} from '../../service/api'
 
 
 const payment_type = () => {
@@ -31,7 +31,7 @@ const payment_type = () => {
     const getAllPayment = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:6700/api/payment_type', {
+            const response = await axios.get(`${API_URL}/api/payment_type`, {
                 params: {
                     page,
                     limit,
@@ -89,7 +89,7 @@ const payment_type = () => {
             pay_manes: pay_manes,
         }
         try {
-            await axios.put(`http://localhost:6700/api/payment_type/${selectedpayment_typeId}`, values);
+            await axios.put(`${API_URL}/api/payment_type/${selectedpayment_typeId}`, values);
             toast.success('កែប្រែម៉ាក់យីយោបានដោយជោគជ័យ', { autoClose: 3000 });
             getAllPayment();
             setIsUpdateModalOpen(false);
@@ -112,7 +112,7 @@ const payment_type = () => {
     const deletepayment_type = async () => {
         if (selectedpayment_typeId) {
             try {
-                await axios.delete(`http://localhost:6700/api/payment_type/${selectedpayment_typeId}`);
+                await axios.delete(`${API_URL}/api/payment_type/${selectedpayment_typeId}`);
                 toast.success('លុបម៉ាក់យីយោបានដោយជោគជ័យ', { autoClose: 3000 });
                 getAllPayment();
                 setIsDeleteModalOpen(false);
@@ -132,7 +132,7 @@ const payment_type = () => {
             pay_manes: pay_manes,
         }
         try {
-            const res = await axios.post('http://localhost:6700/api/payment_type', values);
+            const res = await axios.post(`${API_URL}/api/payment_type`, values);
             console.log(res.data);
             toast.success('បង្កើតម៉ាក់យីយោបានដោយជោគជ័យ ', { autoClose: 3000 });
             setpay_manes('');

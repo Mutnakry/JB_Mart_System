@@ -3,7 +3,8 @@
 // import axios from 'axios';
 // import { useCart } from './CartContext';
 // import { toast } from 'react-toastify';
-// import NullImage from '../../assets/image.png'
+// import NullImage from '../../assets/image.png';
+// import { API_URL } from '../../service/api'
 
 // const ProductGrid = () => {
 //   const [products, setProducts] = useState([]);
@@ -13,26 +14,39 @@
 //   const [loading, setLoading] = useState(false);
 //   const { addItem } = useCart();
 //   const [filterCategory, setFilterCategory] = useState('');
-//   const [filterBrande, setFilterBrande] = useState('');
+//   const [filterBrand, setFilterBrand] = useState('');
 //   const [isDropdownOpenCategory, setIsDropdownOpenCategory] = useState(false);
-//   const [isDropdownOpenBrand, setIsDropdownOpenBrand] = useState(false);
 //   const [selectedCategory, setSelectedCategory] = useState('');
+//   const [isDropdownOpenBrand, setIsDropdownOpenBrand] = useState(false);
 //   const [selectedBrand, setSelectedBrand] = useState('');
 
 //   useEffect(() => {
+//     fetchCategories(); // Fetch categories once when the component mounts
 //     getALLProduct();
-//     fetchCategories();
 //     fetchBrands();
-//   }, [filterCategory, filterBrande]); // Re-fetch products when filters change
+//   }, [filterCategory, filterBrand]); // Dependency on filterCategory
 
+//   // Fetch all products with category filter if available
 //   const getALLProduct = async () => {
 //     setLoading(true);
 //     try {
-//       let url = 'http://localhost:6700/api/product';
-//       if (filterCategory) url += `?category_id=${filterCategory}`;
-//       if (filterBrande) url += filterCategory ? `&brand_id=${filterBrande}` : `?brand_id=${filterBrande}`;
+//       let url = `${API_URL}/api/product/product`;
+//       const params = [];
+//       if (filterCategory) {
+//         params.push(`category_id=${filterCategory}`);
+//       }
+//       if (filterBrand) {
+//         params.push(`brand_id=${filterBrand}`);
+//       }
+//       if (params.length > 0) {
+//         url += `?${params.join('&')}`;
+//       }
 //       const response = await axios.get(url);
-//       setProducts(response.data.product);
+//       if (response.data && response.data.length > 0) {
+//         setProducts(response.data);
+//       } else {
+//         setProducts([]);
+//       }
 //     } catch (error) {
 //       setError('Error fetching product data');
 //     } finally {
@@ -40,9 +54,13 @@
 //     }
 //   };
 
+
+
+
+//   // Fetch available categories
 //   const fetchCategories = async () => {
 //     try {
-//       const response = await axios.get('http://localhost:6700/categories');
+//       const response = await axios.get(`${API_URL}/categories`);
 //       setCategories(response.data.categories);
 //     } catch (error) {
 //       setError('Error fetching categories data');
@@ -51,21 +69,38 @@
 
 //   const fetchBrands = async () => {
 //     try {
-//       const response = await axios.get('http://localhost:6700/api/brands');
+//       const response = await axios.get(`${API_URL}/api/brands`);
 //       setbrands(response.data.brands);
 //     } catch (error) {
 //       setError('Error fetching brands data');
 //     }
 //   };
 
+//   // Handle adding product to cart
 //   const handleAddToCart = (product) => {
 //     if (product.qty > 0) {
 //       addItem(product);
 //     } else {
-//       toast.warning('This product is out of stock');
+//       toast.warning('ផលិតផលនេះអស់ស្តុកហើយ។', {
+//         position: "top-right",
+//         autoClose: 800,
+//       });
 //     }
 //   };
 
+//   const handleBrandChange = (brand) => {
+//     if (brand.id === 'all') {
+//       setSelectedBrand('ម៉ាក់យីហោទាំងអស់');
+//       setFilterBrand('');  // Reset the brand filter
+//     } else {
+//       setSelectedBrand(brand.brand_names);
+//       setFilterBrand(brand.id);
+//     }
+//     setIsDropdownOpenBrand(false);
+//   };
+
+
+//   // Handle category change from dropdown
 //   const handleCategoryChange = (category) => {
 //     if (category.id === 'all') {
 //       // Handle "Select All"
@@ -73,23 +108,10 @@
 //       setFilterCategory('');
 //     } else {
 //       setSelectedCategory(category.cat_names);
-//       setFilterCategory(category.id);
+//       setFilterCategory(category.id);  // Set category filter
 //     }
 //     setIsDropdownOpenCategory(false);
 //   };
-
-//   const handleBrandChange = (brand) => {
-//     if (brand.id === 'all') {
-//       // Handle "Select All"
-//       setSelectedBrand('ម៉ាក់យីហោទាំងអស់');
-//       setFilterBrande(''); // Clear the brand filter to show all products
-//     } else {
-//       setSelectedBrand(brand.brand_names);
-//       setFilterBrande(brand.id);
-//     }
-//     setIsDropdownOpenBrand(false); // Close dropdown after selection
-//   };
-
 
 //   return (
 //     <div className="min-h-screen bg-gray-100 p-4">
@@ -126,7 +148,6 @@
 //             </div>
 //           )}
 //         </div>
-//         {/* Brand Dropdown */}
 //         <div className="relative w-[300px]">
 //           <div className="input_text cursor-pointer" onClick={() => setIsDropdownOpenBrand(!isDropdownOpenBrand)}>
 //             {selectedBrand || 'ម៉ាក់យីហោទាំងអស់'}
@@ -154,6 +175,7 @@
 //             </div>
 //           )}
 //         </div>
+
 //       </div>
 
 //       {error && <div className="text-red-500">{error}</div>}
@@ -164,19 +186,28 @@
 //             <path d="M32 3C35.8083 3 39.5794 3.75011 43.0978 5.20749C46.6163 6.66488 49.8132 8.80101 52.5061 11.4939C55.199 14.1868 57.3351 17.3837 58.7925 20.9022C60.2499 24.4206 61 28.1917 61 32C61 35.8083 60.2499 39.5794 58.7925 43.0978C57.3351 46.6163 55.199 49.8132 52.5061 52.5061C49.8132 55.199 46.6163 57.3351 43.0978 58.7925C39.5794 60.2499 35.8083 61 32 61C28.1917 61 24.4206 60.2499 20.9022 58.7925C17.3837 57.3351 14.1868 55.199 11.4939 52.5061C8.801 49.8132 6.66487 46.6163 5.20749 43.0978C3.7501 39.5794 3 35.8083 3 32C3 28.1917 3.75011 24.4206 5.2075 20.9022C6.66489 17.3837 8.80101 14.1868 11.4939 11.4939C14.1868 8.80099 17.3838 6.66487 20.9022 5.20749C24.4206 3.7501 28.1917 3 32 3L32 3Z" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
 //           </svg>
 //         </div>
+//       ) : products.length === 0 ? (
+//         <div>
+//           <div className="text-center text-gray-500 py-8 border-t">រកមិនឃើញផលិតផលសម្រាប់ដែលបានជ្រើសរើសទេ។</div>
+//           <div className="flex justify-center items-center">
+//             <svg className="text-gray-300 animate-spin" width="24" height="44" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+//               <path d="M32 3C35.8083 3 39.5794 3.75011 43.0978 5.20749C46.6163 6.66488 49.8132 8.80101 52.5061 11.4939C55.199 14.1868 57.3351 17.3837 58.7925 20.9022C60.2499 24.4206 61 28.1917 61 32C61 35.8083 60.2499 39.5794 58.7925 43.0978C57.3351 46.6163 55.199 49.8132 52.5061 52.5061C49.8132 55.199 46.6163 57.3351 43.0978 58.7925C39.5794 60.2499 35.8083 61 32 61C28.1917 61 24.4206 60.2499 20.9022 58.7925C17.3837 57.3351 14.1868 55.199 11.4939 52.5061C8.801 49.8132 6.66487 46.6163 5.20749 43.0978C3.7501 39.5794 3 35.8083 3 32C3 28.1917 3.75011 24.4206 5.2075 20.9022C6.66489 17.3837 8.80101 14.1868 11.4939 11.4939C14.1868 8.80099 17.3838 6.66487 20.9022 5.20749C24.4206 3.7501 28.1917 3 32 3L32 3Z" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+//             </svg>
+//           </div>
+//         </div>
 //       ) : (
 //         <div className="overflow-x-auto scrollbar-hidden h-[75vh] border-t-2">
 //           <div className="grid xl:grid-cols-4 lg:grid-cols-4 pt-4 md:grid-cols-3 grid-cols-3 gap-4">
-//             {products.map((product, index) => (
+//             {products && products.length > 0 && products.map((product, index) => (
 //               <div
 //                 key={index}
 //                 onClick={() => handleAddToCart(product)}
-//                 className="bg-white p-2 cursor-pointer shadow-md text-center"
+//                 className="bg-white p-2 cursor-pointer drop-shadow rounded-md text-center"
 //               >
 //                 {product.image ? (
 //                   <div className="flex items-center justify-center h-20">
 //                     <img
-//                       src={`http://localhost:6700/image/${product.image}`}
+//                       src={`${API_URL}/image/${product.image}`}
 //                       alt={product.pro_names}
 //                       className="object-contain h-full w-full rounded mb-2"
 //                     />
@@ -191,7 +222,7 @@
 //                   </div>
 //                 )}
 //                 <h2 className="text-lg font-semibold">{product.pro_names}</h2>
-//                 <p className="text-gray-500">{product.cost_price} $</p>
+//                 <p className="text-gray-500">{product.exclude_tax} $</p>
 //               </div>
 //             ))}
 
@@ -207,6 +238,12 @@
 
 
 
+////////////////////////////////
+
+
+
+
+
 
 
 import React, { useEffect, useState } from "react";
@@ -214,6 +251,8 @@ import axios from 'axios';
 import { useCart } from './CartContext';
 import { toast } from 'react-toastify';
 import NullImage from '../../assets/image.png';
+import { API_URL } from '../../service/api'
+import { FaChevronDown } from "react-icons/fa";
 
 const ProductGrid = () => {
   const [products, setProducts] = useState([]);
@@ -239,7 +278,7 @@ const ProductGrid = () => {
   const getALLProduct = async () => {
     setLoading(true);
     try {
-      let url = 'http://localhost:6700/api/product/product';
+      let url = `${API_URL}/api/product/product`;
       const params = [];
       if (filterCategory) {
         params.push(`category_id=${filterCategory}`);
@@ -269,7 +308,7 @@ const ProductGrid = () => {
   // Fetch available categories
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('http://localhost:6700/categories');
+      const response = await axios.get(`${API_URL}/categories`);
       setCategories(response.data.categories);
     } catch (error) {
       setError('Error fetching categories data');
@@ -278,7 +317,7 @@ const ProductGrid = () => {
 
   const fetchBrands = async () => {
     try {
-      const response = await axios.get('http://localhost:6700/api/brands');
+      const response = await axios.get(`${API_URL}/api/brands`);
       setbrands(response.data.brands);
     } catch (error) {
       setError('Error fetching brands data');
@@ -287,10 +326,24 @@ const ProductGrid = () => {
 
   // Handle adding product to cart
   const handleAddToCart = (product) => {
+    addItem(product);
+    // if (product.qty > 0) {
+    //   addItem(product);
+    // } else {
+    //   toast.warning('ផលិតផលនេះអស់ស្តុកហើយ1។', {
+    //     position: "top-right",
+    //     autoClose: 800,
+    //   });
+    // }
+  };
+  const handleAddToCart1 = (product) => {
     if (product.qty > 0) {
       addItem(product);
     } else {
-      toast.warning('This product is out of stock');
+      toast.warning('ផលិតផលនេះអស់ស្តុកហើយ1។', {
+        position: "top-right",
+        autoClose: 800,
+      });
     }
   };
 
@@ -325,14 +378,14 @@ const ProductGrid = () => {
         {/* Category Dropdown */}
         <div className="relative w-[300px]">
           <div
-            className="input_text cursor-pointer"
+            className="input_text cursor-pointer flex justify-between text-center items-center"
             onClick={() => setIsDropdownOpenCategory(!isDropdownOpenCategory)}
           >
-            {selectedCategory || 'ប្រភេទទាំងអស់'}
+            <span> {selectedCategory || 'ប្រភេទទាំងអស់'} </span> <FaChevronDown />
           </div>
 
           {isDropdownOpenCategory && (
-            <div className="absolute z-10 bg-white border rounded-md mt-2 w-[300px]">
+            <div className="absolute z-10 bg-white border mt-1 w-[300px]">
               {/* Select All Option */}
               <div
                 className="p-2 hover:bg-gray-100 cursor-pointer"
@@ -355,11 +408,11 @@ const ProductGrid = () => {
           )}
         </div>
         <div className="relative w-[300px]">
-          <div className="input_text cursor-pointer" onClick={() => setIsDropdownOpenBrand(!isDropdownOpenBrand)}>
-            {selectedBrand || 'ម៉ាក់យីហោទាំងអស់'}
+          <div  className="input_text cursor-pointer flex justify-between text-center items-center" onClick={() => setIsDropdownOpenBrand(!isDropdownOpenBrand)}>
+            <span> {selectedBrand || 'ម៉ាក់យីហោទាំងអស់'}  </span> <FaChevronDown />
           </div>
           {isDropdownOpenBrand && (
-            <div className="absolute z-10 bg-white border rounded-md mt-2 w-[300px]">
+            <div className="absolute z-10 bg-white border mt-1 w-[300px]">
               {/* Select All Option */}
               <div
                 className="p-2 hover:bg-gray-100 cursor-pointer"
@@ -408,12 +461,12 @@ const ProductGrid = () => {
               <div
                 key={index}
                 onClick={() => handleAddToCart(product)}
-                className="bg-white p-2 cursor-pointer shadow-md text-center"
+                className="bg-white p-2 cursor-pointer drop-shadow rounded-md text-center"
               >
                 {product.image ? (
                   <div className="flex items-center justify-center h-20">
                     <img
-                      src={`http://localhost:6700/image/${product.image}`}
+                      src={`${API_URL}/image/${product.image}`}
                       alt={product.pro_names}
                       className="object-contain h-full w-full rounded mb-2"
                     />

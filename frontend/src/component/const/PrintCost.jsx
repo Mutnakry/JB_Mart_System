@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Link, useParams } from 'react-router-dom';
 import { IoPrint } from 'react-icons/io5';
 import Navbar from '../Navbar';
+import {API_URL} from '../../service/api'
 
 function PrintCost() {
     const [costs, setCost] = useState([]);
@@ -18,7 +19,7 @@ function PrintCost() {
 
     const CostsID = async () => {
         try {
-            const response = await axios.get(`http://localhost:6700/api/cost/${id}`);
+            const response = await axios.get(`${API_URL}/api/cost/${id}`);
             setCost(response.data);
             console.log(response.data);
         } catch (err) {
@@ -39,10 +40,9 @@ function PrintCost() {
             <div className='print:hidden'>
                 <Navbar />
             </div>
-            <div className='py-12 px-6 md:ml-64 bg-gray-100 print:bg-white print:px-0 dark:bg-gray-950'>
-
-                <div className="w-full p-4 mt-7 print:mt-0 print:p-0 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
-                    <div>
+            <div className='Nav_bar'>
+            <div className=' Div_bar'> 
+                  <div>
                         <Link to="/cost" className="text-white py-2 px-4 bg-blue-500 rounded print:hidden">
                             Back
                         </Link>

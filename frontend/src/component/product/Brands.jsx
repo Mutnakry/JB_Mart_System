@@ -7,7 +7,7 @@ import { FaClipboardList, FaPencilAlt } from "react-icons/fa";
 import { MdDelete, MdClose } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
 import { formatDateToKhmer } from '../ForMartDateToKHmer';
-
+import {API_URL} from '../../service/api'
 
 
 const Brands = () => {
@@ -32,7 +32,7 @@ const Brands = () => {
     const getAllStudent = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:6700/api/brands', {
+            const response = await axios.get(`${API_URL}/api/brands`, {
                 params: {
                     page,
                     limit,
@@ -94,7 +94,7 @@ const Brands = () => {
             description: description,
         }
         try {
-            await axios.put(`http://localhost:6700/api/brands/${selectedBrandsId}`, values);
+            await axios.put(`${API_URL}/api/brands/${selectedBrandsId}`, values);
             toast.success(`កែប្រែម៉ាក់យីយោបានដោយជោគជ័យ ​« ${brand_names} ​»`, { autoClose: 3000 });
             getAllStudent();
             setIsUpdateModalOpen(false);
@@ -119,7 +119,7 @@ const Brands = () => {
     const deleteBrands = async () => {
         if (selectedBrandsId) {
             try {
-                await axios.delete(`http://localhost:6700/api/brands/${selectedBrandsId}`);
+                await axios.delete(`${API_URL}/api/brands/${selectedBrandsId}`);
                 toast.success('លុបម៉ាក់យីយោបានដោយជោគជ័យ', { autoClose: 3000 });
                 getAllStudent();
                 setIsDeleteModalOpen(false);
@@ -141,7 +141,7 @@ const Brands = () => {
             description: description,
         }
         try {
-            const res = await axios.post('http://localhost:6700/api/brands', values);
+            const res = await axios.post(`${API_URL}/api/brands`, values);
             console.log(res.data);
             toast.success('បង្កើតម៉ាក់យីយោបានដោយជោគជ័យ ', { autoClose: 3000 });
             setbrand_names('');

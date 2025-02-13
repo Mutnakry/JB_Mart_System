@@ -547,14 +547,16 @@ exports.UpdatePurchase = async (req, res) => {
   }
 };
 
+
+
 exports.DeletePurchase = (req, res) => {
   const { id } = req.params;
   const sql = "DELETE FROM purchase WHERE id = $1";
   db.query(sql, [id], (err, results) => {
-      if (err) {
-          return res.status(500).send(err);
-      }
-      res.json(results);
+    if (err) {
+      return res.status(500).send(err);
+    }
+    res.json(results);
   });
 }
 
