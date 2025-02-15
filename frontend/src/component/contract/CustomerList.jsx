@@ -6,7 +6,7 @@ import Pagination from '../pagination/Pagination';
 import { FaClipboardList, FaPencilAlt, FaMoneyBillAlt, FaBookOpen, FaPowerOff } from "react-icons/fa";
 import { MdDelete, MdClose, MdOutlineMoneyOff } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
-import {API_URL} from '../../service/api'
+import { API_URL } from '../../service/api'
 
 
 const Supplier = () => {
@@ -338,9 +338,11 @@ const Supplier = () => {
                                                             <MdDelete className="text-red-500 mr-2" /> លុប
                                                         </button>
                                                     )}
+
                                                 </>
                                             )}
-                                        </td>
+                                            {/* to={`/order-Repay/${product.order_detail_id}`} */}
+                                        </td> 
                                     </motion.tr>
                                 ))}
                             </tbody>
@@ -544,7 +546,7 @@ const Supplier = () => {
                             </div>
                             <div className="p-4 space-y-4">
                                 <p className="text-sm ">
-                                តើអ្នកប្រាកដថាចង់លុបអតិថិជននេះទេ? សកម្មភាពនេះមិនអាចត្រឡប់វិញបានទេ។
+                                    តើអ្នកប្រាកដថាចង់លុបអតិថិជននេះទេ? សកម្មភាពនេះមិនអាចត្រឡប់វិញបានទេ។
                                 </p>
                                 <div className="flex justify-end space-x-2">
                                     <button

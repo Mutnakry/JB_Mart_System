@@ -37,9 +37,9 @@ exports.OrderProduct = async (req, res) => {
 
     let OrderIdFromDB = customerId;
     if (!customerId) {
-      const { account_id,	paymenttype_id,	total_amount,total_amount_dola,balance_amount,changes,discount,type_currency,user_at,description } = req.body;
+      const { account_id,	paymenttype_id,	total_amount,total_amount_dola,balance_amount,changes,amount_discount,type_currency,user_at,description } = req.body;
       const sqlCustomer = "INSERT INTO `order_detail` (account_id,paymenttype_id,	total_amount,total_amount_dola,balance_amount,changes,discount,type_currency,user_at,description) VALUES (?,?,?,?,?,?,?,?,?,?)";
-      const customerValues = [account_id,	paymenttype_id,	total_amount,total_amount_dola,balance_amount,changes,discount,type_currency,user_at,description];
+      const customerValues = [account_id,	paymenttype_id,	total_amount,total_amount_dola,balance_amount,changes,amount_discount,type_currency,user_at,description];
       const [customerResult] = await db.promise().query(sqlCustomer, customerValues);
       OrderIdFromDB = customerResult.insertId;
     }

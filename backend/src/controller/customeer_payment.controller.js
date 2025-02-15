@@ -1,12 +1,35 @@
 const db = require("../utile/db");
 
+// Create all customer payment
+exports.GetPayCustomerment = (req, res) => {
+  const sql = "SELECT * FROM customer_payment";
+  db.query(sql, (err, data) => {
+      if (err) {
+          return res.status(500).send(err);
+      }
+      res.json(data);
+  });
+}
+
+
+
+exports.GetPayCustomermentBYID = (req, res) => {
+  const sql = "SELECT * FROM customer_payment";
+  db.query(sql, (err, data) => {
+      if (err) {
+          return res.status(500).send(err);
+      }
+      res.json(data);
+  });
+}
+
+
 // Create customer payment
 exports.CreatecustomerPay = (req, res) => {
-
-  const { customer_id, order_detail_id, balance, cash_change, type_currency, description, user_at } = req.body;
-  const sql = "INSERT INTO customer_payment (customer_id, order_detail_id, balance, cash_change, type_currency, description, user_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
-  const values = [customer_id, order_detail_id, balance, cash_change, type_currency, description, user_at];
-
+  const { customer_id, order_detail_id,account_id, balance,balance_usd, cash_change, type_currency, description, user_at } = req.body;
+  const sql = "INSERT INTO customer_payment (customer_id, order_detail_id,account_id, balance, balance_usd, cash_change, type_currency, description, user_at) VALUES (?, ?, ?, ?,?, ?, ?, ?, ?)";
+  const values = [customer_id, order_detail_id,account_id, balance, balance_usd, cash_change, type_currency, description, user_at];
+  
   db.query(sql, values, (err, results) => {
     if (err) {
       return res.status(500).json({ error: "Database error", details: err });

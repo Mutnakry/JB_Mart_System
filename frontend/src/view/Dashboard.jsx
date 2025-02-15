@@ -8,6 +8,8 @@ import CountItems from './Dashbord/CountItems';
 import SaleProductExchang from './Dashbord/SaleProductExchang'
 import SaleProductSumDay from './Dashbord/SaleProductSumDay';
 import CountProduct_QTY_Sale from './Dashbord/CountProductSale'
+import SumOrderAll from './Dashbord/SumOrderAll'
+import Check_StockIN_StockOUT_Product from './Dashbord/Check_StockIN_StockOUT_Product'
 
 const Dashboard = () => {
   return (
@@ -46,6 +48,12 @@ const Dashboard = () => {
             </div>
             <div className='col-span-1 items-center flex p-6 my-4 shadow-sm bg-slate-50  border-t-2 border-green-600'>
               <ChartPruchaeseDetail />
+            </div>
+            <div className='col-span-1 items-center flex p-6  bg-slate-50  border-t-2 border-pink-600'>
+              <SumOrderAll />
+            </div>
+            <div className='col-span-1 items-center flex p-6  bg-slate-50  border-t-2 border-pink-600'>
+              <Check_StockIN_StockOUT_Product />
             </div>
           </div>
         </div>

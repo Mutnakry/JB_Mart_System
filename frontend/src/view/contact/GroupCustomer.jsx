@@ -7,7 +7,7 @@ function Cost() {
         <div className=''>
             <Navbar />
             <div className='Nav_bar'>
-                <div className=' Div_bar'>
+                <div className=' Div_bar bg-white'>
                     <CustomerGroup />
                 </div>
             </div>

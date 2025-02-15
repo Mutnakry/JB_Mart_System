@@ -30,8 +30,9 @@ import Unit from './view/product/Unit';
 import Customer from './view/contact/Customer';
 import Supplier from './view/contact/Supplier';
 import GroupCustomer from './view/contact/GroupCustomer';
-
-
+//page Customer pament order
+import Customer_payment from './component/customer_payment/customer_payment';
+import Finh_CustomerPayment from './component/customer_payment/Finh_CustomerPayment';
 
 // import TestSelectSearch from './view/TestSelectSearch';
 // import ProductCategory from './component/pos/ProductCategory'
@@ -134,6 +135,10 @@ function App() {
           <Route path='/customer' element={isAuthenticated ? <Customer /> : <Navigate to="/" />} />
           <Route path='/supplier' element={isAuthenticated ? <Supplier /> : <Navigate to="/" />} />
           <Route path='/groupcustomer' element={isAuthenticated ? <GroupCustomer /> : <Navigate to="/" />} />
+
+          <Route path='/customer_payment/:id' element={<Customer_payment />} />
+          <Route path='/customer_payment' element={<Finh_CustomerPayment />} />
+          
 
           {/* form pos */}
           <Route path='/index/pos' element={<MainForm />} />

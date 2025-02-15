@@ -39,7 +39,7 @@ function Order_List() {
         <div>
             <div className=''>
                 <div className='flex items-center gap-2 pb-5'>
-                    <p className='font-NotoSansKhmer font-bold text-3xl'>របាយកាណ៍លក់ </p>
+                    <p className='font-NotoSansKhmer font-bold text-3xl'>បន្ថែមការទិញ </p>
 
                 </div>
                 <div class="relative overflow-x-auto h-screen scrollbar-hidden">
@@ -151,7 +151,7 @@ function Order_List() {
                                                     </span>
 
                                                     <Link
-                                                        to={`/order-Repay/${order.order_detail_id}`}
+                                                        to={`/customer_payment/${order.order_detail_id}`}
                                                         className="flex items-center gap-1 p-2 font-bold text-white bg-blue-300"
                                                         onClick={() => openModalPrintPage(customer)}
                                                     >

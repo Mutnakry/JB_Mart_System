@@ -185,7 +185,7 @@ FROM
 // ResultTotal_DiTHB
 
 exports.OrderSum = (req, res) => {
-    const sql = `
+    const sql1 = `
     SELECT 
     SUM(CASE WHEN od.type_currency = 'usd' THEN od.total_amount ELSE 0 END) AS TotalAmountUSD,
     SUM(CASE WHEN od.type_currency = 'khr' THEN od.total_amount ELSE 0 END) AS TotalAmountKHR,
@@ -198,10 +198,31 @@ exports.OrderSum = (req, res) => {
     (SUM(CASE WHEN od.type_currency = 'khr' THEN od.total_amount ELSE 0 END) - 
      SUM(CASE WHEN od.type_currency = 'khr' THEN od.balance_amount ELSE 0 END)) AS ResultTotal_DiKHR,
     (SUM(CASE WHEN od.type_currency = 'thb' THEN od.total_amount ELSE 0 END) - 
-     SUM(CASE WHEN od.type_currency = 'thb' THEN od.balance_amount ELSE 0 END)) AS ResultTotal_DiTHB
+     SUM(CASE WHEN od.type_currency = 'thb' THEN od.balance_amount ELSE 0 END)) AS ResultTotal_DiTHB,
+     od.create_at
     FROM order_detail od
 `;
 
+    const sql = `   SELECT 
+    SUM(CASE WHEN od.type_currency = 'usd' THEN od.total_amount ELSE 0 END) AS TotalAmountUSD,
+    SUM(CASE WHEN od.type_currency = 'khr' THEN od.total_amount ELSE 0 END) AS TotalAmountKHR1,
+        SUM(CASE WHEN od.type_currency = 'khr' THEN od.total_amount_dola ELSE 0 END) AS TotalAmountKHR,
+    SUM(CASE WHEN od.type_currency = 'thb' THEN od.total_amount ELSE 0 END) AS TotalAmountTHB1,
+      SUM(CASE WHEN od.type_currency = 'thb' THEN od.total_amount_dola ELSE 0 END) AS TotalAmountTHB,
+    SUM(CASE WHEN od.type_currency = 'usd' THEN od.balance_amount ELSE 0 END) AS AmountDi_USD,
+    SUM(CASE WHEN od.type_currency = 'khr' THEN od.balance_amount ELSE 0 END) AS AmountDi_KHR,
+    SUM(CASE WHEN od.type_currency = 'thb' THEN od.balance_amount ELSE 0 END) AS AmountDi_THB,
+    (SUM(CASE WHEN od.type_currency = 'usd' THEN od.total_amount ELSE 0 END) - 
+     SUM(CASE WHEN od.type_currency = 'usd' THEN od.balance_amount ELSE 0 END)) AS ResultTotal_DiUSD,
+    (SUM(CASE WHEN od.type_currency = 'khr' THEN od.total_amount ELSE 0 END) - 
+     SUM(CASE WHEN od.type_currency = 'khr' THEN od.balance_amount ELSE 0 END)) AS ResultTotal_DiKHR,
+    (SUM(CASE WHEN od.type_currency = 'thb' THEN od.total_amount ELSE 0 END) - 
+     SUM(CASE WHEN od.type_currency = 'thb' THEN od.balance_amount ELSE 0 END)) AS ResultTotal_DiTHB,
+       DATE(od.create_at) AS Date
+FROM order_detail od
+GROUP BY DATE(od.create_at) 
+ORDER BY Date;  
+`;
     db.query(sql, (err, results) => {
         if (err) {
             return res.status(500).send(err);
@@ -330,6 +351,28 @@ exports.CountProductQTYSale = (req, res) => {
     });
 };
 
+
+//// check stock in table product stock_in and stock_out
+exports.StockProduct = (req, res) => {
+    const sql = `
+      SELECT 
+    p.pro_names,
+    SUM(p.qty) AS stock_IN,
+    SUM(p.stock) AS stock_total ,
+    (SUM(p.stock) - SUM(p.qty)) AS stock_OUT
+FROM products p
+GROUP BY p.pro_names;
+    `;
+
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error("Error executing query:", err);
+            return res.status(500).send({ error: "An error occurred while fetching data" });
+        }
+
+        res.json(results);
+    });
+};
 
 
 

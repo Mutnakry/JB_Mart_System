@@ -170,7 +170,7 @@ const group_customer = () => {
         exit: { opacity: 0, y: 20 }
     };
     return (
-        <div>
+        <div className='border p-4'>
             <div className="flex items-center mb-3 gap-2 ">
                 <p><FaLayerGroup className="text-lg " /></p>
                 <p className="font-NotoSansKhmer font-bold ">តារាងបញ្ជីក្រុម</p>

@@ -103,7 +103,7 @@ function Navbar() {
                         </button>
                         {isHoverinHoldOrder && (
                             <div className="absolute z-10 text-gray-700 bg-white -translate-x-1/2 text-center p-3 rounded-lg w-44 mt-1">
-                                <p>រក្សាទុក្ខ</p>
+                                <p>ព្រៀងទុក</p>
                             </div>
                         )}
                     </div>

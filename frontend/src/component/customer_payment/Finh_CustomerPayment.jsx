@@ -50,7 +50,7 @@ function CreateDiscountProduct() {
             <div className='Nav_bar h-screen'>
                 <div className='Div_bar bg-white'>
                     <div className='border p-4 border-gray-200 dark:border-gray-700'>
-                    <p className='md:text-2xl text-sm text-gray-600 font-bold '>ស្វែងរកឈ្មោះអតិជនប្ដូរយកប្រាក់វិញ</p>
+                        <p className='md:text-2xl text-sm text-gray-600 font-bold '>ស្វែងរកឈ្មោះអតិជនបង់ប្រាក់</p>
                         <form action="">
                             <div className="md:w-[70%] w-[100%] mx-auto mt-12">
                                 <div className="relative items-center gap-3 mx-auto my-2">
@@ -74,11 +74,10 @@ function CreateDiscountProduct() {
                                                 {filteredOptionsProduct.length > 0 ? (
                                                     filteredOptionsProduct.map((product) => (
                                                         <Link
-                                                        to={`/order-Repay/${product.order_detail_id}`}
-                                                            // className=" text-gray-700 cursor-pointer w-full hover:bg-gray-200 hover:text-black"
+                                                            to={`/customer_payment/${product.order_detail_id}`}
                                                         >
                                                             <li
-                                                               
+
                                                                 key={product.order_detail_id}
                                                                 className="p-2 text-gray-700 cursor-pointer hover:bg-gray-200 hover:text-black"
 

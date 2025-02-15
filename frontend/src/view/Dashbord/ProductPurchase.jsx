@@ -78,10 +78,10 @@ const ChartPruchaeseDetail = () => {
                 }));
             }
         }
-    }, [purchaseDetail]); // Use updated purchaseDetail
+    }, [purchaseDetail]); 
 
     return (
-        <div className="max-w-screen-2xl mx-auto px-6">
+        <div className="max-w-screen-2xl w-full mx-auto px-6">
             <h2 className="text-2xl text-gray-600 font-NotoSansKhmer font-bold mb-4">បញ្ចាទិញផលិតផលក្នុងឆ្នាំនេះ</h2>
 
             <div id="chart">

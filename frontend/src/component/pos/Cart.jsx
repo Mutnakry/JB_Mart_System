@@ -601,7 +601,7 @@ const Cart = () => {
           <button onClick={holdOrder} className='bg-pink-600 text-md p-2 text-white flex' aria-label="Add expense">
             <span className="flex items-center">
               <FaHandHoldingMedical className="mr-1" />
-              រក្សាទុក
+              ព្រៀងទុក
             </span>
           </button>
         </div>

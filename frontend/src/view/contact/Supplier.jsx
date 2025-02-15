@@ -21,7 +21,7 @@ const Customer = () => {
         <div>
             <Navbar />
             <div className='Nav_bar'>
-            <div className=' Div_bar'>
+            <div className=' Div_bar  bg-white'>
                     <div className='flex items-center gap-2 pb-5'>
                         <RiContactsBook3Fill className='text-lg' />
                         <p className='font-NotoSansKhmer font-bold text-lg'>អ្នកផ្គត់ភ្កង់</p>

@@ -6,6 +6,7 @@ import { RiContactsBook3Fill } from "react-icons/ri";
 import CustomerList from '../../component/contract/CustomerList';
 import CustomerGroup from '../../component/contract/CustomerGroup';
 import CustomerInfo from '../../component/contract/CustomerInfo';
+import Customer_payment_Info from '../../component/customer_payment/Customer_payment_Info';
 
 const Customer = () => {
     const [activeTabIndex, setActiveTabIndex] = useState(0);
@@ -26,8 +27,8 @@ const Customer = () => {
         <div>
             <Navbar />
             <div className='Nav_bar'>
-                <div className="Div_bar ">
-                    <div className="p-4 bg-white dark:border-gray-700 mt-5 ">
+                <div className="Div_bar bg-white">
+                    <div className="  dark:border-gray-700 mt-5 ">
                         <div className='flex items-center gap-2 pb-5'>
                             <RiContactsBook3Fill className='text-lg' />
                             <p className='font-NotoSansKhmer font-bold text-lg'>អតិជន</p>
@@ -53,7 +54,7 @@ const Customer = () => {
                                         <CustomerGroup />
                                     </TabPanel>
                                     <TabPanel className="p-4 border border-gray-300 rounded-md">
-                                        <CustomerInfo />
+                                        <Customer_payment_Info />
                                     </TabPanel>
                                 </TabPanels>
                             </TabGroup>

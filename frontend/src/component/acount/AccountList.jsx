@@ -421,7 +421,7 @@ const account = () => {
                                                 <span className='bg-red-500 py-1 px-4 rounded-lg hover:bg-red-300 text-white dark:bg-red-300'>កំពុងបិទ</span>
                                             )}
                                         </td>
-                                        <td className="px-4 py-1">{customer.balance.toFixed(2)}$</td>
+                                        <td className="px-4 py-1">{customer.balance} $</td>
                                         <td className=" px-4 py-1">{customer.description || 'N/A'}</td>
                                         <td className="px-4 py-1">{customer.user_at}</td>
 
@@ -863,7 +863,7 @@ const account = () => {
                                                     <label className="font-NotoSansKhmer font-bold">សមតុល្យបើក</label>
                                                     <input
                                                         type="number"
-                                                        value={balance.toFixed(2)}
+                                                        value={balance}
                                                         readOnly
                                                         min={0}
                                                         onChange={e => setBalance(e.target.value)}
@@ -997,7 +997,7 @@ const account = () => {
                                                     <label className="font-NotoSansKhmer font-bold">សមតុល្យបើក</label>
                                                     <input
                                                         type="number"
-                                                        value={balance.toFixed(2)}
+                                                        value={balance}
                                                         readOnly
                                                         min={0}
                                                         onChange={e => setBalance(e.target.value)}

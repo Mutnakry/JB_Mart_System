@@ -21,6 +21,7 @@ const CreatePurchase = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [customer_id, setCustomer_id] = useState(1);
 
 
     const { id } = useParams();
@@ -67,7 +68,7 @@ const CreatePurchase = () => {
                 const formattedDate = data[0]?.date_order ? data[0].date_order.split(" ")[0] : today;
                 setCreateDob(data[0]?.date_order);
                 setSustomer(data[0]?.full_names || data[0]?.business_names)
-                // setAmounPay(data[0]?.balance_amount);
+                setCustomer_id(data[0]?.customer_id);
                 // setAmounDiscount(data[0]?.discount);
             } catch (err) {
                 setError(err.message);
@@ -107,6 +108,16 @@ const CreatePurchase = () => {
         );
     };
 
+    const handleDescription = (index, value) => {
+        setSelectedProducts((prevProducts) =>
+            prevProducts.map((product, i) =>
+                i === index
+                    ? { ...product, description: value } // Update description of specific product
+                    : product
+            )
+        );
+    };
+
 
     const handleRemoveProduct = (index) => {
         setSelectedProducts((prevProducts) =>
@@ -118,73 +129,73 @@ const CreatePurchase = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Prevent duplicate submissions
+        if (isSubmitting) return;
 
+        // Start submission process
+        setIsSubmitting(true);
+        setLoading(true);
 
-        // Calculate total amounts
-        const totalSum = selectedProducts.reduce((sum, product) => {
-            return sum + ((product.qty * product.price) - (product.totalDiscount * product.qty));
-        }, 0);
+        try {
+            // Calculate total amounts
+            const totalSum = selectedProducts.reduce((sum, product) => {
+                return sum + ((product.qty * product.price) - (product.totalDiscount * product.qty));
+            }, 0);
 
-        const finalAmount = totalSum - amountDiscount;
+            const finalAmount = totalSum - amountDiscount;
 
-        if (account_ID === null) {
-            
-        } else if (account_ID !== null) {
-            if (Number(finalAmount) > Number(getCustomerDiscount)) {
+            // Check account balance
+            if (account_ID && Number(finalAmount) > parseFloat(getCustomerDiscount || 0)) {
                 toast.error('ទឺកប្រាក់មិនគ្រប់គ្រាន់មិនអាចផ្ទេចេញបានទេ!', {
                     position: "top-center",
                     autoClose: 2000,
                 });
                 return;
             }
+
+            // Construct payload for API request
+            const productsData = selectedProducts.map(product => ({
+                product_id: product.product_id,
+                productName: product.pro_names,
+                qty: product.qty,
+                price: product.price,
+                discount: product.totalDiscount,
+                total: ((product.qty * product.price) - (product.totalDiscount * product.qty)).toFixed(2),
+                description: product.description || 'នៅដូចដើម',
+            }));
+
+            const purchaseData = {
+                customer_id: customer_id,
+                payment_date: payDob,
+                total_amount: totalSum,
+                discount_amount: amountDiscount,
+                account_id: account_ID,
+                balance_payment: finalAmount,
+                products: productsData,
+                user_at: userLoginNames
+            };
+
+            console.log(purchaseData);
+
+            // Send request to API
+            const response = await axios.post(`${API_URL}/api/repay`, purchaseData);
+
+            // Success message
+            toast.success("ការរក្សាទុកដោយជោគជ័យ.");
+            navigate(`/order-Repay`);
+
+        } catch (error) {
+            console.error("Error saving purchase:", error);
+            toast.error("Failed to save purchase.");
+        } finally {
+            // Reset state after completion
+            setIsSubmitting(false);
+            setLoading(false);
         }
-        
-
-        // Construct payload for API request
-        const productsData = selectedProducts.map(product => ({
-            productId: product.id,
-            productName: product.pro_names,
-            quantity: product.qty,
-            unitPrice: product.price,
-            discount: product.totalDiscount,
-            total: ((product.qty * product.price) - (product.totalDiscount * product.qty)).toFixed(2)
-        }));
-
-        const purchaseData = {
-            customerName: customer,
-            createDate: createDob,
-            paymentDate: payDob,
-            totalAmount: totalSum,
-            discountAmount: amountDiscount,
-            account_ID: account_ID,
-            finalPayable: finalAmount,
-            products: productsData,
-            user_at: userLoginNames
-        };
-
-        setIsSubmitting(true);
-        setLoading(true);
-
-        console.log(purchaseData);
-        // try {
-        //     // Send request to API
-        //     const response = await axios.post(`${API_URL}/purchase`, purchaseData);
-
-        //     // Success message
-        //     toast.success("Purchase saved successfully.");
-
-        //     // Redirect to the purchase details page or list
-        //     navigate(`/purchases/${response.data.id}`);
-
-        // } catch (error) {
-        //     console.error("Error saving purchase:", error);
-        //     toast.error("Failed to save purchase.
-
-
-    }
+    };
 
     const totalSum = selectedProducts.reduce((sum, product) => {
-        return sum + ((product.qty * product.price) - (product.totalDiscount * product.qty));
+        return sum + ((product.qty * product.price) - (product.pro_discount * product.qty));
     }, 0).toFixed(2);
 
 
@@ -237,11 +248,12 @@ const CreatePurchase = () => {
                                         <thead className="p-2 text-white bg-blue-600/90">
                                             <tr>
                                                 <th className="p-2 border w-[7%]">លេខរៀង</th>
-                                                <th className="p-2 border w-[20%]">ឈ្មោះផលិតផល</th>
+                                                <th className="p-2 border w-[10%]">ឈ្មោះផលិតផល</th>
                                                 <th className="p-2 border w-[10%]">តម្លៃដើម(ឯកតា)</th>
+                                                <th className="p-2 border w-[15%]">ពណ៍នា</th>
                                                 <th className="p-2 border w-[10%]">បរិមាណទិញចូល</th>
                                                 <th className="p-2 border w-[10%]">បញ្ចុះតម្លៃ</th>
-                                                <th className="p-2 border w-[15%]">សរុប</th>
+                                                <th className="p-2 border w-[10%]">សរុប</th>
                                                 <th className="p-2 border w-[5%}">
                                                     <p className="text-center">ស្ថានភាព</p>
                                                 </th>
@@ -254,7 +266,7 @@ const CreatePurchase = () => {
                                                         <tr key={product.id}>
                                                             <td className="p-2 w-[7%]">{index + 1}</td>
                                                             <td className="p-2">
-                                                                {product.pro_names}
+                                                                {product.pro_names}  {product.product_id}
                                                                 <p className="text-xs text-gray-500">
                                                                     {product.unit_names}
                                                                 </p>
@@ -272,16 +284,30 @@ const CreatePurchase = () => {
                                                                 />
                                                                 <span className='text-xs'> {product.unit_names}</span>
                                                             </td>
+                                                            <td className="w-[15%] text-center">
+                                                                <select name=""
+                                                                    className="input_text"
+                                                                    value={product.description || 'នៅដូចដើម'}
+                                                                    onChange={(e) => handleDescription(index, e.target.value)}
+                                                                    id="">
+                                                                    <option value="នៅដូចដើម">នៅដូចដើម</option>
+                                                                    <option value="ថ្មី">ថ្មី</option>
+                                                                    <option value="មធ្យោម">មធ្យោម</option>
+                                                                    <option value="ចាស់">ចាស់</option>
+
+                                                                </select>
+                                                            </td>
+
                                                             <td className="w-[10%]">
 
                                                                 <p className='input_text'>$ {product.price}</p>
                                                             </td>
                                                             <td className="w-[10%]">
-                                                                <p className='input_text'>$ {product.totalDiscount}</p>
+                                                                <p className='input_text'>$ {product.pro_discount}</p>
                                                             </td>
-                                                            <td className="w-[15%]">
+                                                            <td className="w-[10%]">
 
-                                                                <p className='input_text'>$ {((product.qty * product.price) - (product.totalDiscount * product.qty)).toFixed(2)}</p>
+                                                                <p className='input_text'>$ {((product.qty * product.price) - (product.pro_discount * product.qty)).toFixed(2)}</p>
                                                             </td>
                                                             <td className="p-2 w-[5%]">
                                                                 <div className="flex justify-center">
@@ -310,7 +336,7 @@ const CreatePurchase = () => {
                                         <br />
                                         <tr
                                             className='bg-gray-300'>
-                                            <td colSpan="3" className="font-bold text-center h-20">របាយការណ៍ចាស់</td>
+                                            <td colSpan="4" className="font-bold text-center h-20">របាយការណ៍ចាស់</td>
                                             <td colSpan="2" className="font-bold space-y-3 text-gray-700  py-2">
                                                 <p>សរុប</p>
                                                 <hr />
@@ -326,18 +352,31 @@ const CreatePurchase = () => {
                                                         {selectedProducts?.[0]?.total_amount_dola ?? "0.00"} $ <br />
                                                     </span>
                                                 )}
-                                                {selectedProducts?.[0]?.balance_amount ?? "0.00"}<span className='uppercase'> {selectedProducts?.[0]?.type_currency}</span>
+                                                <span className='uppercase'> {selectedProducts?.[0]?.total_amount}
+                                                </span><span className='uppercase'> {selectedProducts?.[0]?.type_currency}</span>
+                                                {/* {selectedProducts?.[0]?.balance_amount ?? "0.00"}<span className='uppercase'> {selectedProducts?.[0]?.type_currency}</span> */}
                                                 <hr />
                                                 <span className='uppercase'> {selectedProducts?.[0]?.discount || '0.00'} $</span>
                                                 <hr />
                                                 <p>
-                                                    <span className='uppercase'> {selectedProducts?.[0]?.total_amount}
-                                                    </span><span className='uppercase'> {selectedProducts?.[0]?.type_currency}</span>
+
+                                                    {selectedProducts?.[0]?.balance_amount ?? "0.00"}<span className='uppercase'> {selectedProducts?.[0]?.type_currency}</span>
+
                                                 </p>
                                                 <hr />
                                                 <p className='text-red-500'>
-                                                    <span className='uppercase'> {(selectedProducts?.[0]?.total_amount) - (selectedProducts?.[0]?.balance_amount)} <span className='uppercase'> {selectedProducts?.[0]?.type_currency}</span>
-                                                    </span>
+                                                    <p className='text-red-500'>
+                                                        <span className='uppercase'>
+                                                            {(
+                                                                (parseFloat(selectedProducts?.[0]?.total_amount) || 0) - ((parseFloat(selectedProducts?.[0]?.balance_amount) || 0) + (parseFloat(selectedProducts?.[0]?.discount) || 0) )
+                                                               
+                                                            ).toFixed(2)}
+                                                            <span className='uppercase'> {selectedProducts?.[0]?.type_currency || ''}</span>
+                                                        </span>
+                                                    </p>
+
+                                                    {/* <span className='uppercase'> {(selectedProducts?.[0]?.total_amount) - (selectedProducts?.[0]?.balance_amount)} <span className='uppercase'> {selectedProducts?.[0]?.type_currency}</span>
+                                                    </span> */}
                                                 </p>
                                             </td>
                                         </tr>
@@ -394,10 +433,10 @@ const CreatePurchase = () => {
                                             <select
                                                 className='input_text'
                                                 id="bank"
-                                                value={account_ID  || null}
+                                                value={account_ID || null}
                                                 onChange={e => setAccount_ID(e.target.value)}
                                             >
-                                                 {account_ID === null && <option value="">មិនមាន</option>}
+                                                {account_ID === null && <option value="">មិនមាន</option>}
                                                 {accountBank?.map((items) => (
                                                     <option key={items.id} value={items.id} disabled={items.status === 'off'}>
                                                         {items.acc_names}
