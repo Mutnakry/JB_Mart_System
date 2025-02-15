@@ -354,7 +354,7 @@ exports.CountProductQTYSale = (req, res) => {
 
 //// check stock in table product stock_in and stock_out
 exports.StockProduct = (req, res) => {
-    const sql = `
+    const sql1 = `
       SELECT 
     p.pro_names,
     SUM(p.qty) AS stock_IN,
@@ -363,6 +363,18 @@ exports.StockProduct = (req, res) => {
 FROM products p
 GROUP BY p.pro_names;
     `;
+
+    const sql = `
+   SELECT 
+    p.pro_names,
+    SUM(p.qty) AS stock_IN,
+    SUM(p.stock) AS stock_total ,
+    (SUM(p.stock) - SUM(p.qty)) AS stock_OUT,
+    u.names as unit_names
+FROM products p
+INNER JOIN unit u ON u.id = p.unit_id
+GROUP BY p.pro_names;
+  `;
 
     db.query(sql, (err, results) => {
         if (err) {

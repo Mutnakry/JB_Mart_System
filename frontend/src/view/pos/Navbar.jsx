@@ -61,7 +61,6 @@ function Navbar() {
         return localStorage.getItem("theme") || "light";
     });
 
-
     return (
         <div className="bg-gray-400 dark:bg-slate-600 flex fixed top-0 left-0 right-0 justify-between md:px-20 p-1 text-center z-50">
             <div className='flex justify-between w-full'>
