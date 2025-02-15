@@ -15,8 +15,8 @@ const Dashboard = () => {
   return (
     <div className=''>
       <Navbar />
-      <div className='Nav_bar'>
-        <div className='p-2 Div_bar md:p-4'>
+      <div className='h-auto overflow-hidden bg-gray-100 md:pt-16 sm:ml-64 dark:bg-gray-950'>
+        <div className='p-6 m-2 md:m-4 border-slate-200 md:p-0'>
           <div>
             < CountItems />
           </div>
@@ -30,29 +30,29 @@ const Dashboard = () => {
                 <ProductPurchase />
               </div>
             </div>
-            <div className='flex items-center col-span-1 p-6 border-t-2 border-yellow-600 bg-slate-50'>
+            <div className='flex items-center col-span-1 p-6 bg-white border-t-2 border-yellow-600'>
               <ChartPruchaeseDetail_InMonth />
             </div>
             <div className='grid grid-cols-1 gap-4 my-4 xl:grid-cols-2'>
-              <div className='flex items-center col-span-1 p-6 border-t-2 border-yellow-600 bg-slate-50'>
+              <div className='flex items-center col-span-1 p-6 bg-white border-t-2 border-yellow-600'>
                 <SaleproductInDayDolla />
 
               </div>
-              <div className='flex items-center col-span-1 p-6 border-t-2 border-green-600 shadow-sm bg-slate-50'>
+              <div className='flex items-center col-span-1 p-6 bg-white border-t-2 border-green-600 shadow-sm'>
                 <SaleProductSumDay />
               </div>
             </div>
 
-            <div className='flex items-center col-span-1 p-6 border-t-2 border-pink-600 bg-slate-50'>
+            <div className='flex items-center col-span-1 p-6 bg-white border-t-2 border-pink-600'>
               <SaleProductExchang />
             </div>
-            <div className='flex items-center col-span-1 p-6 my-4 border-t-2 border-green-600 shadow-sm bg-slate-50'>
+            <div className='flex items-center col-span-1 p-6 my-4 bg-white border-t-2 border-green-600 shadow-sm'>
               <ChartPruchaeseDetail />
             </div>
-            <div className='flex items-center col-span-1 p-6 border-t-2 border-pink-600 bg-slate-50'>
+            <div className='flex items-center col-span-1 p-6 bg-white border-t-2 border-pink-600'>
               <SumOrderAll />
             </div>
-            <div className='flex items-center col-span-1 p-6 border-t-2 border-pink-600 bg-slate-50'>
+            <div className='flex items-center col-span-1 p-6 mt-2 bg-white border-t-2 border-pink-600'>
               <Check_StockIN_StockOUT_Product />
             </div>
           </div>

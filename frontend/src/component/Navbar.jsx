@@ -259,7 +259,7 @@ const Navbar = () => {
         <div className='bg-gray-200'>
             {/* Navbar */}
             <nav className="top-0 z-50 w-full md:fixed md:px-4 md:m-0">
-                <div className="px-4 py-3 bg-white border-b border-gray-200 shadow sm:ml-64 dark:bg-gray-800 dark:border-gray-700">
+                <div className="px-4 py-3 bg-white border-b border-gray-200 sm:ml-64 dark:bg-gray-800 dark:border-gray-700">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center justify-between space-x-4 rtl:justify-end">
                             <button
@@ -284,7 +284,7 @@ const Navbar = () => {
                         <div className="flex items-center">
                             <div className='flex space-x-4'>
                                 <NavLink to="/index/pos" >
-                                    <p className='flex items-center px-6 py-2 space-x-2 text-lg font-medium transition duration-300 text-black/60 '>
+                                    <div className='relative flex items-center px-6 py-2 space-x-2 text-lg font-medium transition duration-300 text-black/60'>
                                         <svg
                                             className="flex-shrink-0 w-5 h-5 "
                                             aria-hidden="true"
@@ -294,8 +294,15 @@ const Navbar = () => {
                                         >
                                             <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
                                         </svg>
-                                    </p>
+
+                                        <div className='absolute -top-2 px-1.5  text-[10px] text-white'>
+                                            <span className='px-1 bg-red-500 rounded-full'>POS</span>
+                                        </div>
+                                    </div>
+
+                                  
                                 </NavLink>
+                                
 
                                 <div className="flex items-center gap-1">
                                     <span className="font-bold font-NotoSansKhmer">ប្រវត្តិរូប:</span>

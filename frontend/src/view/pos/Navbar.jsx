@@ -62,29 +62,33 @@ function Navbar() {
     });
 
     return (
-        <div className="bg-gray-400 dark:bg-slate-600 flex fixed top-0 left-0 right-0 justify-between md:px-20 p-1 text-center z-50">
+        <div className="fixed top-0 left-0 right-0 z-50 flex justify-between p-2 text-center bg-white shadow dark:bg-slate-600 md:px-20">
             <div className='flex justify-between w-full'>
 
-                <div className="text-white font-bold font-NotoSansKhmer flex gap-5 text-center items-center">
-                    <Link className="p-1 bg-blue-600 px-4 text-white" to="/" aria-label="Go Back">
-                        <IoChevronBackSharp  />
+                <div className="flex items-center gap-5 font-bold text-center text-black font-NotoSansKhmer">
+                    <Link className="p-1 px-2 py-2 text-white bg-blue-600 shadow-lg hover:bg-blue-700" to="/" aria-label="Go Back">
+                        <IoChevronBackSharp />
                     </Link>
                     <h2 className="hidden font-KhmerMoul md:block">ចែប៊ីម៉ាត</h2>
-                    <span className="text-white font-NotoSansKhmer">{khmerToday}</span> <span>ម៉ោង : {khmerTime}</span>
+                    <div className='space-x-2 font-bold'>
+                        <span>កាលបរិច្ឆេត:</span>
+                        <span className="text-black font-NotoSansKhmer">ថ្ងៃទី{khmerToday}</span>
+                        {/* <span>ម៉ោង : {khmerTime}</span> */}
+                    </div>
                 </div>
-                <div className="flex text-lg p-1 gap-2">
+                <div className="flex gap-2 p-1 text-lg">
                     <div
                         className="relative"
                         onMouseEnter={() => setIsHoveringPayCost(true)}
                         onMouseLeave={() => setIsHoveringPayCost(false)}
                     >
-                        <button className='p-1 bg-purple-600 text-sm text-white flex' aria-label="Add expense">
+                        <button className='flex p-1 text-sm text-white bg-purple-600' aria-label="Add expense">
                             <span className="flex items-center">
-                                <GrSubtractCircle className='text-xs mr-1'  /> បន្ថែមការចំណាយ
+                                <GrSubtractCircle className='mr-1 text-xs' /> បន្ថែមការចំណាយ
                             </span>
                         </button>
                         {isHoveringPayCost && (
-                            <div className="absolute z-10 bg-white  text-center p-3 rounded-lg shadow w-44 mt-1">
+                            <div className="absolute z-10 p-3 mt-1 text-center bg-white rounded-lg shadow w-44">
                                 <p>បន្ថែមការចំណាយ</p>
                             </div>
                         )}
@@ -94,14 +98,14 @@ function Navbar() {
                         onMouseEnter={() => setIsHoveringHoldOrder(true)}
                         onMouseLeave={() => setIsHoveringHoldOrder(false)}
                     >
-                        <button onClick={openHoldOrder} className='p-1 px-2 space-x-2 items-center bg-pink-600 text-sm text-white flex' aria-label="Add expense">
+                        <button onClick={openHoldOrder} className='flex items-center p-1 px-2 space-x-2 text-sm text-white bg-pink-600' aria-label="Add expense">
                             <span className="">
-                                <FaHandHoldingMedical className='text-xs'  />
+                                <FaHandHoldingMedical className='text-xs' />
                             </span>
-                            <span>រក្សាទុក្ខ</span>
+                            <span>ព្រៀងទុក</span>
                         </button>
                         {isHoverinHoldOrder && (
-                            <div className="absolute z-10 text-gray-700 bg-white -translate-x-1/2 text-center p-3 rounded-lg w-44 mt-1">
+                            <div className="absolute z-10 p-3 mt-1 text-center text-gray-700 -translate-x-1/2 bg-white rounded-lg w-44">
                                 <p>ព្រៀងទុក</p>
                             </div>
                         )}
@@ -112,11 +116,11 @@ function Navbar() {
                         onMouseEnter={() => setIsHoveringCost(true)}
                         onMouseLeave={() => setIsHoveringCost(false)}
                     >
-                        <button onClick={openInsertCustomer} className='p-2 bg-red-500 text-white' aria-label="Equals">
+                        <button onClick={openInsertCustomer} className='p-2 text-white bg-red-500' aria-label="Equals">
                             <FaEquals className='text-xs' />
                         </button>
                         {isHoveringCost && (
-                            <div className="absolute z-10 text-gray-700 bg-white -translate-x-1/2 text-center p-3 rounded-lg w-44 mt-1">
+                            <div className="absolute z-10 p-3 mt-1 text-center text-gray-700 -translate-x-1/2 bg-white rounded-lg w-44">
                                 <p>ប្រភេទចំណាយ</p>
                             </div>
                         )}
@@ -127,11 +131,11 @@ function Navbar() {
                         onMouseEnter={() => setIsHoveringExpence(true)}
                         onMouseLeave={() => setIsHoveringExpence(false)}
                     >
-                        <button onClick={openInsertExchangRate} className='p-2 px-2 bg-pink-500 text-white' aria-label="Open Box">
-                            <FaMoneyBillAlt  className='text-xs' />
+                        <button onClick={openInsertExchangRate} className='p-2 px-2 text-white bg-pink-500' aria-label="Open Box">
+                            <FaMoneyBillAlt className='text-xs' />
                         </button>
                         {isHoveringExpence && (
-                            <div className="absolute z-10 bg-white -translate-x-1/2 text-center p-3 rounded-lg w-44 mt-1">
+                            <div className="absolute z-10 p-3 mt-1 text-center -translate-x-1/2 bg-white rounded-lg w-44">
                                 <p>អត្រាប្តូប្រាក់</p>
                             </div>
                         )}
@@ -143,11 +147,11 @@ function Navbar() {
                         onMouseLeave={() => setIsHoveringSale(false)}
                         ref={dropdownRef}>
 
-                        <button onClick={toggleDropdown} className="p-2 bg-yellow-500 text-white" aria-label="Calculator">
+                        <button onClick={toggleDropdown} className="p-2 text-white bg-yellow-500" aria-label="Calculator">
                             <FaCalculator className='text-xs' />
                         </button>
                         {isHoveringSale && (
-                            <div className="absolute z-10 -translate-x-1/2 bg-white text-center p-3 rounded-lg  w-44 mt-1">
+                            <div className="absolute z-10 p-3 mt-1 text-center -translate-x-1/2 bg-white rounded-lg w-44">
                                 <p>ម៉ាស៊ីនគិតលេខ</p>
                             </div>
                         )}
@@ -155,7 +159,7 @@ function Navbar() {
                         <AnimatePresence>
                             {isDropdownOpen && (
                                 <motion.div
-                                    className="absolute z-20 right-0 w-64 bg-white rounded-lg shadow-lg"
+                                    className="absolute right-0 z-20 w-64 bg-white rounded-lg shadow-lg"
                                     initial={{ opacity: 0, y: -10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -10 }}

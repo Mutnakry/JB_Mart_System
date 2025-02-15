@@ -114,12 +114,12 @@
 //   };
 
 //   return (
-//     <div className="min-h-screen bg-gray-100 p-4">
-//       <div className="flex space-x-4 mb-2 w-full">
+//     <div className="min-h-screen p-4 bg-gray-100">
+//       <div className="flex w-full mb-2 space-x-4">
 //         {/* Category Dropdown */}
 //         <div className="relative w-[300px]">
 //           <div
-//             className="input_text cursor-pointer"
+//             className="cursor-pointer input_text"
 //             onClick={() => setIsDropdownOpenCategory(!isDropdownOpenCategory)}
 //           >
 //             {selectedCategory || 'ប្រភេទទាំងអស់'}
@@ -129,7 +129,7 @@
 //             <div className="absolute z-10 bg-white border rounded-md mt-2 w-[300px]">
 //               {/* Select All Option */}
 //               <div
-//                 className="p-2 hover:bg-gray-100 cursor-pointer"
+//                 className="p-2 cursor-pointer hover:bg-gray-100"
 //                 onClick={() => handleCategoryChange({ id: 'all', cat_names: 'Select All' })}
 //               >
 //                 ប្រភេទទាំងអស់
@@ -139,7 +139,7 @@
 //               {categories.map((category) => (
 //                 <div
 //                   key={category.id}
-//                   className="p-2 hover:bg-gray-100 cursor-pointer"
+//                   className="p-2 cursor-pointer hover:bg-gray-100"
 //                   onClick={() => handleCategoryChange(category)}
 //                 >
 //                   {category.cat_names}
@@ -149,14 +149,14 @@
 //           )}
 //         </div>
 //         <div className="relative w-[300px]">
-//           <div className="input_text cursor-pointer" onClick={() => setIsDropdownOpenBrand(!isDropdownOpenBrand)}>
+//           <div className="cursor-pointer input_text" onClick={() => setIsDropdownOpenBrand(!isDropdownOpenBrand)}>
 //             {selectedBrand || 'ម៉ាក់យីហោទាំងអស់'}
 //           </div>
 //           {isDropdownOpenBrand && (
 //             <div className="absolute z-10 bg-white border rounded-md mt-2 w-[300px]">
 //               {/* Select All Option */}
 //               <div
-//                 className="p-2 hover:bg-gray-100 cursor-pointer"
+//                 className="p-2 cursor-pointer hover:bg-gray-100"
 //                 onClick={() => handleBrandChange({ id: 'all', brand_names: 'ម៉ាក់យីហោទាំងអស់' })}
 //               >
 //                 ម៉ាក់យីហោទាំងអស់
@@ -166,7 +166,7 @@
 //               {brands.map((brand) => (
 //                 <div
 //                   key={brand.id}
-//                   className="p-2 hover:bg-gray-100 cursor-pointer"
+//                   className="p-2 cursor-pointer hover:bg-gray-100"
 //                   onClick={() => handleBrandChange(brand)}
 //                 >
 //                   {brand.brand_names}
@@ -181,15 +181,15 @@
 //       {error && <div className="text-red-500">{error}</div>}
 
 //       {loading ? (
-//         <div className="flex justify-center items-center">
+//         <div className="flex items-center justify-center">
 //           <svg className="text-gray-300 animate-spin" width="24" height="24" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
 //             <path d="M32 3C35.8083 3 39.5794 3.75011 43.0978 5.20749C46.6163 6.66488 49.8132 8.80101 52.5061 11.4939C55.199 14.1868 57.3351 17.3837 58.7925 20.9022C60.2499 24.4206 61 28.1917 61 32C61 35.8083 60.2499 39.5794 58.7925 43.0978C57.3351 46.6163 55.199 49.8132 52.5061 52.5061C49.8132 55.199 46.6163 57.3351 43.0978 58.7925C39.5794 60.2499 35.8083 61 32 61C28.1917 61 24.4206 60.2499 20.9022 58.7925C17.3837 57.3351 14.1868 55.199 11.4939 52.5061C8.801 49.8132 6.66487 46.6163 5.20749 43.0978C3.7501 39.5794 3 35.8083 3 32C3 28.1917 3.75011 24.4206 5.2075 20.9022C6.66489 17.3837 8.80101 14.1868 11.4939 11.4939C14.1868 8.80099 17.3838 6.66487 20.9022 5.20749C24.4206 3.7501 28.1917 3 32 3L32 3Z" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
 //           </svg>
 //         </div>
 //       ) : products.length === 0 ? (
 //         <div>
-//           <div className="text-center text-gray-500 py-8 border-t">រកមិនឃើញផលិតផលសម្រាប់ដែលបានជ្រើសរើសទេ។</div>
-//           <div className="flex justify-center items-center">
+//           <div className="py-8 text-center text-gray-500 border-t">រកមិនឃើញផលិតផលសម្រាប់ដែលបានជ្រើសរើសទេ។</div>
+//           <div className="flex items-center justify-center">
 //             <svg className="text-gray-300 animate-spin" width="24" height="44" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
 //               <path d="M32 3C35.8083 3 39.5794 3.75011 43.0978 5.20749C46.6163 6.66488 49.8132 8.80101 52.5061 11.4939C55.199 14.1868 57.3351 17.3837 58.7925 20.9022C60.2499 24.4206 61 28.1917 61 32C61 35.8083 60.2499 39.5794 58.7925 43.0978C57.3351 46.6163 55.199 49.8132 52.5061 52.5061C49.8132 55.199 46.6163 57.3351 43.0978 58.7925C39.5794 60.2499 35.8083 61 32 61C28.1917 61 24.4206 60.2499 20.9022 58.7925C17.3837 57.3351 14.1868 55.199 11.4939 52.5061C8.801 49.8132 6.66487 46.6163 5.20749 43.0978C3.7501 39.5794 3 35.8083 3 32C3 28.1917 3.75011 24.4206 5.2075 20.9022C6.66489 17.3837 8.80101 14.1868 11.4939 11.4939C14.1868 8.80099 17.3838 6.66487 20.9022 5.20749C24.4206 3.7501 28.1917 3 32 3L32 3Z" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
 //             </svg>
@@ -197,19 +197,19 @@
 //         </div>
 //       ) : (
 //         <div className="overflow-x-auto scrollbar-hidden h-[75vh] border-t-2">
-//           <div className="grid xl:grid-cols-4 lg:grid-cols-4 pt-4 md:grid-cols-3 grid-cols-3 gap-4">
+//           <div className="grid grid-cols-3 gap-4 pt-4 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3">
 //             {products && products.length > 0 && products.map((product, index) => (
 //               <div
 //                 key={index}
 //                 onClick={() => handleAddToCart(product)}
-//                 className="bg-white p-2 cursor-pointer drop-shadow rounded-md text-center"
+//                 className="p-2 text-center bg-white rounded-md cursor-pointer drop-shadow"
 //               >
 //                 {product.image ? (
 //                   <div className="flex items-center justify-center h-20">
 //                     <img
 //                       src={`${API_URL}/image/${product.image}`}
 //                       alt={product.pro_names}
-//                       className="object-contain h-full w-full rounded mb-2"
+//                       className="object-contain w-full h-full mb-2 rounded"
 //                     />
 //                   </div>
 //                 ) : (
@@ -217,7 +217,7 @@
 //                     <img
 //                       src={NullImage}
 //                       alt={product.pro_names}
-//                       className="object-contain h-full w-full rounded mb-2"
+//                       className="object-contain w-full h-full mb-2 rounded"
 //                     />
 //                   </div>
 //                 )}
@@ -373,12 +373,12 @@ const ProductGrid = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      <div className="flex space-x-4 mb-2 w-full">
+    <div className="min-h-screen p-4 mt-3 bg-gray-50">
+      <div className="flex w-full p-3 mb-2 space-x-4 bg-white">
         {/* Category Dropdown */}
         <div className="relative w-[300px]">
           <div
-            className="input_text cursor-pointer flex justify-between text-center items-center"
+            className="flex items-center justify-between text-center cursor-pointer input_text"
             onClick={() => setIsDropdownOpenCategory(!isDropdownOpenCategory)}
           >
             <span> {selectedCategory || 'ប្រភេទទាំងអស់'} </span> <FaChevronDown />
@@ -388,7 +388,7 @@ const ProductGrid = () => {
             <div className="absolute z-10 bg-white border mt-1 w-[300px]">
               {/* Select All Option */}
               <div
-                className="p-2 hover:bg-gray-100 cursor-pointer"
+                className="p-2 cursor-pointer hover:bg-gray-100"
                 onClick={() => handleCategoryChange({ id: 'all', cat_names: 'Select All' })}
               >
                 ប្រភេទទាំងអស់
@@ -398,7 +398,7 @@ const ProductGrid = () => {
               {categories.map((category) => (
                 <div
                   key={category.id}
-                  className="p-2 hover:bg-gray-100 cursor-pointer"
+                  className="p-2 cursor-pointer hover:bg-gray-100"
                   onClick={() => handleCategoryChange(category)}
                 >
                   {category.cat_names}
@@ -408,14 +408,14 @@ const ProductGrid = () => {
           )}
         </div>
         <div className="relative w-[300px]">
-          <div  className="input_text cursor-pointer flex justify-between text-center items-center" onClick={() => setIsDropdownOpenBrand(!isDropdownOpenBrand)}>
+          <div  className="flex items-center justify-between text-center cursor-pointer input_text" onClick={() => setIsDropdownOpenBrand(!isDropdownOpenBrand)}>
             <span> {selectedBrand || 'ម៉ាក់យីហោទាំងអស់'}  </span> <FaChevronDown />
           </div>
           {isDropdownOpenBrand && (
             <div className="absolute z-10 bg-white border mt-1 w-[300px]">
               {/* Select All Option */}
               <div
-                className="p-2 hover:bg-gray-100 cursor-pointer"
+                className="p-2 cursor-pointer hover:bg-gray-100"
                 onClick={() => handleBrandChange({ id: 'all', brand_names: 'ម៉ាក់យីហោទាំងអស់' })}
               >
                 ម៉ាក់យីហោទាំងអស់
@@ -425,7 +425,7 @@ const ProductGrid = () => {
               {brands.map((brand) => (
                 <div
                   key={brand.id}
-                  className="p-2 hover:bg-gray-100 cursor-pointer"
+                  className="p-2 cursor-pointer hover:bg-gray-100"
                   onClick={() => handleBrandChange(brand)}
                 >
                   {brand.brand_names}
@@ -440,35 +440,35 @@ const ProductGrid = () => {
       {error && <div className="text-red-500">{error}</div>}
 
       {loading ? (
-        <div className="flex justify-center items-center">
+        <div className="flex items-center justify-center">
           <svg className="text-gray-300 animate-spin" width="24" height="24" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M32 3C35.8083 3 39.5794 3.75011 43.0978 5.20749C46.6163 6.66488 49.8132 8.80101 52.5061 11.4939C55.199 14.1868 57.3351 17.3837 58.7925 20.9022C60.2499 24.4206 61 28.1917 61 32C61 35.8083 60.2499 39.5794 58.7925 43.0978C57.3351 46.6163 55.199 49.8132 52.5061 52.5061C49.8132 55.199 46.6163 57.3351 43.0978 58.7925C39.5794 60.2499 35.8083 61 32 61C28.1917 61 24.4206 60.2499 20.9022 58.7925C17.3837 57.3351 14.1868 55.199 11.4939 52.5061C8.801 49.8132 6.66487 46.6163 5.20749 43.0978C3.7501 39.5794 3 35.8083 3 32C3 28.1917 3.75011 24.4206 5.2075 20.9022C6.66489 17.3837 8.80101 14.1868 11.4939 11.4939C14.1868 8.80099 17.3838 6.66487 20.9022 5.20749C24.4206 3.7501 28.1917 3 32 3L32 3Z" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
         </div>
       ) : products.length === 0 ? (
         <div>
-          <div className="text-center text-gray-500 py-8 border-t">រកមិនឃើញផលិតផលសម្រាប់ដែលបានជ្រើសរើសទេ។</div>
-          <div className="flex justify-center items-center">
+          <div className="py-8 text-center text-gray-500 border-t">រកមិនឃើញផលិតផលសម្រាប់ដែលបានជ្រើសរើសទេ។</div>
+          <div className="flex items-center justify-center">
             <svg className="text-gray-300 animate-spin" width="24" height="44" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M32 3C35.8083 3 39.5794 3.75011 43.0978 5.20749C46.6163 6.66488 49.8132 8.80101 52.5061 11.4939C55.199 14.1868 57.3351 17.3837 58.7925 20.9022C60.2499 24.4206 61 28.1917 61 32C61 35.8083 60.2499 39.5794 58.7925 43.0978C57.3351 46.6163 55.199 49.8132 52.5061 52.5061C49.8132 55.199 46.6163 57.3351 43.0978 58.7925C39.5794 60.2499 35.8083 61 32 61C28.1917 61 24.4206 60.2499 20.9022 58.7925C17.3837 57.3351 14.1868 55.199 11.4939 52.5061C8.801 49.8132 6.66487 46.6163 5.20749 43.0978C3.7501 39.5794 3 35.8083 3 32C3 28.1917 3.75011 24.4206 5.2075 20.9022C6.66489 17.3837 8.80101 14.1868 11.4939 11.4939C14.1868 8.80099 17.3838 6.66487 20.9022 5.20749C24.4206 3.7501 28.1917 3 32 3L32 3Z" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
           </div>
         </div>
       ) : (
-        <div className="overflow-x-auto scrollbar-hidden h-[75vh] border-t-2">
-          <div className="grid xl:grid-cols-4 lg:grid-cols-4 pt-4 md:grid-cols-3 grid-cols-3 gap-4">
+        <div className="overflow-x-auto scrollbar-hidden h-[75vh] bg-white">
+          <div className="grid grid-cols-3 gap-4 p-2 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3">
             {products && products.length > 0 && products.map((product, index) => (
               <div
                 key={index}
                 onClick={() => handleAddToCart(product)}
-                className="bg-white p-2 cursor-pointer drop-shadow rounded-md text-center"
+                className="p-2 p-3 text-center bg-white border cursor-pointer"
               >
                 {product.image ? (
                   <div className="flex items-center justify-center h-20">
                     <img
                       src={`${API_URL}/image/${product.image}`}
                       alt={product.pro_names}
-                      className="object-contain h-full w-full rounded mb-2"
+                      className="object-contain w-full h-full mb-2 rounded"
                     />
                   </div>
                 ) : (
@@ -476,7 +476,7 @@ const ProductGrid = () => {
                     <img
                       src={NullImage}
                       alt={product.pro_names}
-                      className="object-contain h-full w-full rounded mb-2"
+                      className="object-contain w-full h-full mb-2 rounded"
                     />
                   </div>
                 )}
