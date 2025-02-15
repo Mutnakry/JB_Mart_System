@@ -406,9 +406,9 @@ const Cart = () => {
 
 
   return (
-    <div className="min-h-screen overflow-y-auto bg-gray-100 p-5 px-2 print:hidden">
+    <div className="min-h-screen p-5 px-2 mt-3 overflow-y-auto bg-gray-50 print:hidden">
       {/* Top Section */}
-      <div className="grid gap-2 xl:grid-cols-2 md:grid-cols-1 pb-2 justify-between ">
+      <div className="grid justify-between gap-2 p-3 mb-2 bg-white xl:grid-cols-2 md:grid-cols-1">
 
         <div>
           <div className="flex items-center">
@@ -427,7 +427,7 @@ const Cart = () => {
                 ))}
               </select>
             </div>
-            <button onClick={openInsertCustomer} className="bg-blue-500 text-white border border-blue-500 px-4 py-2">+</button>
+            <button onClick={openInsertCustomer} className="px-4 py-2 text-white bg-blue-500 border border-blue-500">+</button>
           </div>
           <span className='text-red-600'> {messageAmountDi && <p>{messageAmountDi}</p>}</span>
         </div>
@@ -439,26 +439,26 @@ const Cart = () => {
 
 
       {/* Table Section */}
-      <div className="overflow-x-auto h-[60vh] bg-white p-1 shadow-md scrollbar-hidden">
+      <div className="overflow-x-auto h-[60vh] bg-white p-1  scrollbar-hidden">
         <table className="min-w-full text-center">
           <thead>
-            <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal whitespace-nowrap">
-              <th className="py-3 w-8 px-1">#</th>
-              <th className="py-3 px-6">រូបភាព</th>
-              <th className="py-3 px-2">ឈ្មោះ</th>
-              <th className="py-3 px-6 hidden">stock</th>
+            <tr className="text-sm leading-normal text-gray-600 uppercase bg-gray-200 whitespace-nowrap">
+              <th className="w-8 px-1 py-3">#</th>
+              <th className="px-6 py-3">រូបភាព</th>
+              <th className="px-2 py-3">ឈ្មោះ</th>
+              <th className="hidden px-6 py-3">stock</th>
               <th className="py-3">បរិមាណ</th>
-              <th className="py-3 px-6">តម្លៃ+ពន្ធ</th>
-              <th className="py-3 px-6">បន្ចុះតម្លៃ</th>
-              <th className="py-3 px-6">សរុប</th>
-              <th className="py-3 text-red-600 px-6"><MdDeleteForever /></th>
+              <th className="px-6 py-3">តម្លៃ+ពន្ធ</th>
+              <th className="px-6 py-3">បន្ចុះតម្លៃ</th>
+              <th className="px-6 py-3">សរុប</th>
+              <th className="px-6 py-3 ">លុប</th>
             </tr>
           </thead>
 
-          <tbody className="text-gray-600 text-sm">
+          <tbody className="text-sm text-gray-600">
             {cart.map((item, index) => (
               <tr className="border-b border-gray-200" key={index}>
-                <td className="py-3 px-2">{index + 1}</td>
+                <td className="px-2 py-3">{index + 1}</td>
                 <td>
                   {/* <img className='h-8' src={`${API_URL}/image/${item.image}`} alt={item.name} /> */}
                   {item.image ? (
@@ -466,7 +466,7 @@ const Cart = () => {
                       <img
                         src={`${API_URL}/image/${item.image}`}
                         alt={item.pro_names}
-                        className="object-contain h-full w-full "
+                        className="object-contain w-full h-full "
                       />
                     </div>
                   ) : (
@@ -474,15 +474,15 @@ const Cart = () => {
                       <img
                         src={NullImage}
                         alt={item.pro_names}
-                        className="object-contain h-full w-full "
+                        className="object-contain w-full h-full "
                       />
                     </div>
                   )}
                 </td>
                 <td className="py-3 whitespace-nowrap">{item.pro_names}</td>
-                <td className="py-3 px-6 hidden">{item.qty}</td>
+                <td className="hidden px-6 py-3">{item.qty}</td>
                 <td>
-                  <div className="flex items-center border border-pink-500 justify-between">
+                  <div className="flex items-center justify-between border border-pink-500">
                     <button
                       type="button"
                       className={`text-gray-500 text-xl w-full hover:text-white  px-4 ${item.quantity <= 1 ? 'cursor-not-allowed bg-gray-200' : 'hover:bg-pink-400'}`}
@@ -493,25 +493,25 @@ const Cart = () => {
                     </button>
                     <input
                       type="text"
-                      className="w-12 text-center border-l text-xl border-r border-pink-500"
+                      className="w-12 text-xl text-center border-l border-r border-pink-500"
                       value={item.quantity}
                       readOnly
                     />
                     <button
                       type="button"
-                      className="text-gray-500 text-xl w-full hover:text-white hover:bg-pink-400 px-4"
+                      className="w-full px-4 text-xl text-gray-500 hover:text-white hover:bg-pink-400"
                       onClick={() => handleQuantityChange(item, 1)}
                     >
                       +
                     </button>
                   </div>
-                  <input type="text" className='input_text text-center' value={item.unit_names} readOnly />
+                  <input type="text" className='text-center input_text' value={item.unit_names} readOnly />
                 </td>
-                <td className="py-3 px-6">$ {(item.exclude_tax)} </td>
-                <td className="py-3 px-6">$ {(item.discount)}</td>
-                <td className="py-3 px-6">$ {((item.quantity * item.exclude_tax) - (item.discount * item.quantity)).toFixed(2)}</td>
-                <td className="py-3 px-6">
-                  <MdDeleteForever onClick={() => handleRemoveItem(item.id)} className="cursor-pointer text-red-600 text-xl" />
+                <td className="px-6 py-3">$ {(item.exclude_tax)} </td>
+                <td className="px-6 py-3">$ {(item.discount)}</td>
+                <td className="px-6 py-3">$ {((item.quantity * item.exclude_tax) - (item.discount * item.quantity)).toFixed(2)}</td>
+                <td className="px-6 py-3">
+                  <MdDeleteForever onClick={() => handleRemoveItem(item.id)} className="text-xl text-red-600 cursor-pointer" />
                 </td>
               </tr>
 
@@ -520,7 +520,7 @@ const Cart = () => {
         </table>
       </div>
 
-      <div className="grid grid-cols-4 gap-4 text-sm bg-gray-200 px-6 py-4">
+      <div className="grid grid-cols-4 gap-4 px-6 py-4 text-sm bg-gray-200">
 
         <div className='space-y-1'>
           <p>សរុប:</p>
@@ -532,7 +532,7 @@ const Cart = () => {
             </>
           )}
         </div>
-        <div className='s space-y-1'>
+        <div className='space-y-1 s'>
           <p>ការបញ្ចុះតំលៃ:</p>
           <p>${discountTotal.toFixed(2)}</p>
           {discountTotal !== 0 && (
@@ -542,33 +542,33 @@ const Cart = () => {
             </>
           )}
         </div>
-        <div className='s space-y-1'>
+        <div className='space-y-1 s'>
           <p>បន្ថែម:</p>
           <p>${getCustomerDiscount}</p>
           <div className='col-span-4'>
 
             <p>{TotalAmount_type_currency === "usd" ? (
               <div>
-                <span className="block text-lg mb-2">
+                <span className="block mb-2 text-lg">
                   {total_amount_di_sum} $
                 </span>
               </div>
             ) : TotalAmount_type_currency === "khr" ? (
               <div>
-                <span className="block text-lg mb-2">
+                <span className="block mb-2 text-lg">
                   {total_amount_di_sum} រៀល
                 </span>
               </div>
             ) : TotalAmount_type_currency === "thb" ? (
               <div>
-                <span className="block text-lg mb-2">
+                <span className="block mb-2 text-lg">
                   {total_amount_di_sum} បាត
                 </span>
               </div>
             ) : null}</p>
           </div>
         </div>
-        <div className='s space-y-1'>
+        <div className='space-y-1 s'>
           <p>សរុបចុងក្រោយ:</p>
           <p>${finalTotal.toFixed(2)}</p>
           {finalTotal !== 0 && (
@@ -582,23 +582,23 @@ const Cart = () => {
       </div>
 
 
-      <footer class="fixed  bottom-0 left-0 z-20 w-full flex p-4 space-x-4 ">
+      <footer className="fixed bottom-0 left-0 z-20 flex w-full p-4 space-x-4 ">
         <div>
-          <button onClick={openInsertModal} className='p-2 bg-green-600 text-md text-white flex' aria-label="Add expense">
+          <button onClick={openInsertModal} className='flex p-2 text-white bg-green-600 text-md' aria-label="Add expense">
             <span className="flex items-center">
               <FaRegIdCard className="mr-1" /> ការទូទាត់ច្រើនទម្រង់
             </span>
           </button>
         </div>
         <div>
-          <button disabled={isSubmitting} onClick={handleSaveData} className='bg-purple-600 text-md p-2 text-white flex' aria-label="Add expense">
+          <button disabled={isSubmitting} onClick={handleSaveData} className='flex p-2 text-white bg-purple-600 text-md' aria-label="Add expense">
             <span className="flex items-center">
               <FaMoneyBill className="mr-1" />  {isSubmitting ? 'សាច់ប្រាក់...' : 'សាច់ប្រាក់'}
             </span>
           </button>
         </div>
         <div>
-          <button onClick={holdOrder} className='bg-pink-600 text-md p-2 text-white flex' aria-label="Add expense">
+          <button onClick={holdOrder} className='flex p-2 text-white bg-pink-600 text-md' aria-label="Add expense">
             <span className="flex items-center">
               <FaHandHoldingMedical className="mr-1" />
               ព្រៀងទុក
@@ -606,14 +606,14 @@ const Cart = () => {
           </button>
         </div>
         <div>
-          <button className='bg-red-600 text-md p-2 text-white flex' aria-label="Add expense">
+          <button className='flex p-2 text-white bg-red-600 text-md' aria-label="Add expense">
             <span className="flex items-center" onClick={handleClearCart}>
               <MdDeleteForever className="mr-1" /> បោះបង់
             </span>
           </button>
         </div>
         <div>
-          <button className='bg-gray-500 text-md p-2 cursor-text text-white flex' aria-label="Add expense">
+          <button className='flex p-2 text-white bg-gray-500 text-md cursor-text' aria-label="Add expense">
             <span className="flex items-center">
               <FaRegMoneyBillAlt className="mr-1" /> សាច់ប្រាក់សរុបត្រូវបង់ <span> $ {finalTotal.toFixed(2)}</span>
             </span>
@@ -628,7 +628,7 @@ const Cart = () => {
       <AnimatePresence>
         {isInsertModalOpen && (
           <motion.div
-            className="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 modal"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
@@ -636,7 +636,7 @@ const Cart = () => {
 
           >
             <div className="modal_center max-w-[1024px] bg-white mx-6">
-              <div className="modal_title flex justify-between items-center">
+              <div className="flex items-center justify-between modal_title">
                 <h3 className="">ការទូទាត់</h3>
                 <MdClose
                   className='text-2xl cursor-pointer'
@@ -645,33 +645,33 @@ const Cart = () => {
                 />
               </div>
               <div className='px-5 mb-2'>
-                <p className='font-bold font-NotoSansKhmer flex space-x-3'><span>សមតុល្យសាច់ប្រាក់លើកមុន: </span>
+                <p className='flex space-x-3 font-bold font-NotoSansKhmer'><span>សមតុល្យសាច់ប្រាក់លើកមុន: </span>
                   <span className=''>
                     {TotalAmount_type_currency === "usd" ? (
                       <div>
-                        <span className="block text-lg mb-2  text-red-500">
+                        <span className="block mb-2 text-lg text-red-500">
                           {total_amount_di_sum} $
                         </span>
                       </div>
                     ) : TotalAmount_type_currency === "khr" ? (
                       <div>
-                        <span className="block text-lg mb-2  text-red-500">
+                        <span className="block mb-2 text-lg text-red-500">
                           {total_amount_di_sum} រៀល
                         </span>
                       </div>
                     ) : TotalAmount_type_currency === "thb" ? (
                       <div>
-                        <span className="block text-lg mb-2 ">
+                        <span className="block mb-2 text-lg ">
                           {total_amount_di_sum} បាត
                         </span>
                       </div>
                     ) : null}</span>
                 </p>
-                <div class=" flex gap-5 w-full">
-                  <div className='w-3/4 drop-shadow p-3 bg-gray-200'>
-                    <div class="flex mb-4">
-                      <div class="w-1/2 pr-2">
-                        <label for="method" class="block text-sm font-medium text-gray-700">ចំនួន: *</label>
+                <div className="flex w-full gap-5 ">
+                  <div className='w-3/4 p-3 bg-gray-200 drop-shadow'>
+                    <div className="flex mb-4">
+                      <div className="w-1/2 pr-2">
+                        <label for="method" className="block text-sm font-medium text-gray-700">ចំនួន: *</label>
                         <input
                           type="number"
                           id="price"
@@ -681,28 +681,28 @@ const Cart = () => {
                           min={0}
                           step={0.01}
                           onChange={handleChangeMoney}
-                          class="input_text bg-white font-NotoSansKhmer"
+                          className="bg-white input_text font-NotoSansKhmer"
                           // placeholder={finalTotal.toFixed(2)} 
                           required
                         />
                       </div>
-                      <div class="w-1/2 pr-2">
-                        <label for="bank" class="block text-sm font-medium text-gray-700">បង់ជាសាចប្រាក់:</label>
+                      <div className="w-1/2 pr-2">
+                        <label for="bank" className="block text-sm font-medium text-gray-700">បង់ជាសាចប្រាក់:</label>
                         <select id="paymenttype"
                           value={ispaymentTypeCurrency}
                           onChange={handleChangepaymentType}
-                          class="input_text bg-white  font-NotoSansKhmer">
+                          className="bg-white input_text font-NotoSansKhmer">
                           <option value="usd">ដុល្លារ</option>
                           <option value="khr">រៀល</option>
                           <option value="thb">បាត</option>
                         </select>
                       </div>
 
-                      <div class="w-1/2 pr-2 ">
-                        <label for="method" className="block text-sm font-medium font-NotoSansKhmer text-gray-700">វិធី​សា​ស្រ្ត​ទូទាត់ប្រាក់: *</label>
+                      <div className="w-1/2 pr-2 ">
+                        <label for="method" className="block text-sm font-medium text-gray-700 font-NotoSansKhmer">វិធី​សា​ស្រ្ត​ទូទាត់ប្រាក់: *</label>
 
                         <select
-                          class="input_text bg-white  font-NotoSansKhmer"
+                          className="bg-white input_text font-NotoSansKhmer"
                           id="bank"
                           value={paymentType_ID}
                           onChange={e => setPaymentType_ID(e.target.value)}
@@ -716,11 +716,11 @@ const Cart = () => {
 
                         </select>
                       </div>
-                      <div class="w-1/2 pl-2">
+                      <div className="w-1/2 pl-2">
                         <div className="">
-                          <label htmlFor="groupCustomer" className="block text-sm font-medium font-NotoSansKhmer text-gray-700">វិធីសាស្ត្របង់ប្រាក់:</label>
+                          <label htmlFor="groupCustomer" className="block text-sm font-medium text-gray-700 font-NotoSansKhmer">វិធីសាស្ត្របង់ប្រាក់:</label>
                           <select
-                            class="input_text bg-white  font-NotoSansKhmer"
+                            className="bg-white input_text font-NotoSansKhmer"
                             id="bank"
                             value={account_ID}
                             onChange={e => setAccount_ID(e.target.value)}
@@ -736,25 +736,25 @@ const Cart = () => {
                         </div>
                       </div>
                     </div>
-                    <div class="space-y-2">
-                      <label for="comments" class="block text-sm font-medium text-gray-700">កំណត់ចំណាំការទូទាត់:</label>
+                    <div className="space-y-2">
+                      <label for="comments" className="block text-sm font-medium text-gray-700">កំណត់ចំណាំការទូទាត់:</label>
                       <textarea
                         value={description}
                         onChange={e => setDescription(e.target.value)}
-                        id="comments" class="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        id="comments" className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"></textarea>
                     </div>
                   </div>
 
-                  <div class="bg-blue-500 w-1/4 drop-shadow text-white text-center py-4">
-                    <div class="mb-4 border-b border-gray-400">
-                      <span class="block font-semibold">អីវ៉ាន់សរុប:</span>
-                      <span class="block text-lg mb-2">{totalItemCount}</span>
+                  <div className="w-1/4 py-4 text-center text-white bg-blue-500 drop-shadow">
+                    <div className="mb-4 border-b border-gray-400">
+                      <span className="block font-semibold">អីវ៉ាន់សរុប:</span>
+                      <span className="block mb-2 text-lg">{totalItemCount}</span>
                     </div>
 
                     {/* //////////// */}
-                    <div class="mb-4 border-b border-gray-400">
-                      <span class="block font-semibold">ប្រាក់សរុបត្រូវបង់:</span>
-                      <span class="block text-lg mb-2">{finalTotal.toFixed(2)} $</span>
+                    <div className="mb-4 border-b border-gray-400">
+                      <span className="block font-semibold">ប្រាក់សរុបត្រូវបង់:</span>
+                      <span className="block mb-2 text-lg">{finalTotal.toFixed(2)} $</span>
                       {totalAmount !== 0 && (
                         <>
                           <p>{(finalTotal * exchangeRateKHR).toFixed(2)} រៀល</p>
@@ -763,96 +763,96 @@ const Cart = () => {
                       )}
 
                     </div>
-                    <div class="mb-4 border-b border-gray-400">
-                      <span class="block font-semibold">ការបញ្ចុះតំលៃ:</span>
+                    <div className="mb-4 border-b border-gray-400">
+                      <span className="block font-semibold">ការបញ្ចុះតំលៃ:</span>
                       {ispaymentTypeCurrency === "usd" ? (
                         <div>
-                          <span className="block text-lg mb-2">
-                            <span class="block text-lg mb-2">{Number(getCustomerDiscount).toFixed(2)} $</span>
+                          <span className="block mb-2 text-lg">
+                            <span className="block mb-2 text-lg">{Number(getCustomerDiscount).toFixed(2)} $</span>
                           </span>
                         </div>
                       ) : ispaymentTypeCurrency === "khr" ? (
                         <div>
-                          <span className="block text-lg mb-2">
+                          <span className="block mb-2 text-lg">
                             <p>{(Number(getCustomerDiscount) * exchangeRateKHR).toFixed(2)} រៀល</p>
                           </span>
                         </div>
                       ) : ispaymentTypeCurrency === "thb" ? (
                         <div>
-                          <span className="block text-lg mb-2">
+                          <span className="block mb-2 text-lg">
                             <p>{(Number(getCustomerDiscount) * (exchangeRateKHR / thbToKhrRateTHB)).toFixed(2)} បាត</p>                          </span>
                         </div>
                       ) : null}
 
 
                     </div>
-                    <div class="mb-4 border-b border-gray-400">
-                      <span class="block font-semibold">ការទូទាត់សរុប:</span>
+                    <div className="mb-4 border-b border-gray-400">
+                      <span className="block font-semibold">ការទូទាត់សរុប:</span>
                       {ispaymentTypeCurrency === "usd" ? (
                         <div>
-                          <span className="block text-lg mb-2">
+                          <span className="block mb-2 text-lg">
                             {payment > 0 ? payment.toFixed(2) : finalTotal.toFixed(2)} $
                           </span>
                         </div>
                       ) : ispaymentTypeCurrency === "khr" ? (
                         <div>
-                          <span className="block text-lg mb-2">
+                          <span className="block mb-2 text-lg">
                             {payment > 0 ? payment.toFixed(2) : (finalTotal * exchangeRateKHR).toFixed(2)} រៀល
                           </span>
                         </div>
                       ) : ispaymentTypeCurrency === "thb" ? (
                         <div>
-                          <span className="block text-lg mb-2">
+                          <span className="block mb-2 text-lg">
                             {payment > 0 ? payment.toFixed(2) : (finalTotal * (exchangeRateKHR / thbToKhrRateTHB)).toFixed(2)} បាត
                           </span>
                         </div>
                       ) : null}
                     </div>
-                    <div class="mb-4 border-b border-gray-400">
+                    <div className="mb-4 border-b border-gray-400">
 
-                      <span class="block font-semibold">សាច់ប្រាក់នៅសល់:</span>
+                      <span className="block font-semibold">សាច់ប្រាក់នៅសល់:</span>
                       {ispaymentTypeCurrency === "usd" ? (
                         <div>
-                          <span className="block text-lg mb-2">
-                            <span class="block text-red-600  text-lg mb-2">
+                          <span className="block mb-2 text-lg">
+                            <span className="block mb-2 text-lg text-red-600">
                               {Math.max(finalTotal - (payMoney || finalTotal), 0).toFixed(2) + ' $'}
                             </span>
                           </span>
                         </div>
                       ) : ispaymentTypeCurrency === "khr" ? (
                         <div>
-                          <span className="block text-lg mb-2">
-                            <span class="block text-red-600  text-lg mb-2">
+                          <span className="block mb-2 text-lg">
+                            <span className="block mb-2 text-lg text-red-600">
                               {Math.max((finalTotal * exchangeRateKHR) - (payMoney || finalTotal), 0).toFixed(2) + ' រៀល'}
                             </span>
                           </span>
                         </div>
                       ) : ispaymentTypeCurrency === "thb" ? (
                         <div>
-                          <span className="block text-lg mb-2">
-                            <span class="block text-red-600  text-lg mb-2"> {Math.max((finalTotal * (exchangeRateKHR / thbToKhrRateTHB)) - (payMoney || finalTotal), 0).toFixed(2) + ' បាត'}
+                          <span className="block mb-2 text-lg">
+                            <span className="block mb-2 text-lg text-red-600"> {Math.max((finalTotal * (exchangeRateKHR / thbToKhrRateTHB)) - (payMoney || finalTotal), 0).toFixed(2) + ' បាត'}
                             </span>
                           </span>
                         </div>
                       ) : null}
                     </div>
-                    <div class="mb-2">
-                      <span class="block font-semibold">សរុបសំរាប់:</span>
+                    <div className="mb-2">
+                      <span className="block font-semibold">សរុបសំរាប់:</span>
                       {ispaymentTypeCurrency === "usd" ? (
                         <div>
-                          <span className="block text-lg mb-2">
+                          <span className="block mb-2 text-lg">
                             {Deposit.toFixed(2)} $
                           </span>
                         </div>
                       ) : ispaymentTypeCurrency === "khr" ? (
                         <div>
-                          <span className="block text-lg mb-2">
+                          <span className="block mb-2 text-lg">
                             {Deposit.toFixed(2)} រៀល
                           </span>
                         </div>
                       ) : ispaymentTypeCurrency === "thb" ? (
                         <div>
-                          <span className="block text-lg mb-2">
+                          <span className="block mb-2 text-lg">
                             {Deposit.toFixed(2)} បាត
                           </span>
                         </div>
@@ -861,11 +861,11 @@ const Cart = () => {
                   </div>
                 </div>
               </div>
-              <div class="flex justify-end border-t py-4">
-                <div className='flex  gap-4 px-4'>
-                  <button onClick={() => setIsInsertModalOpen(false)} class="button_only_close hover:text-red-500">បិទ</button>
+              <div className="flex justify-end py-4 border-t">
+                <div className='flex gap-4 px-4'>
+                  <button onClick={() => setIsInsertModalOpen(false)} className="button_only_close hover:text-red-500">បិទ</button>
 
-                  <button disabled={isSubmitting} onClick={handleSaveData} class="button_only_submit">
+                  <button disabled={isSubmitting} onClick={handleSaveData} className="button_only_submit">
                     {isSubmitting ? 'បញ្ចប់ការទូទាត់...' : 'បញ្ចប់ការទូទាត់'}
                   </button>
                 </div>
