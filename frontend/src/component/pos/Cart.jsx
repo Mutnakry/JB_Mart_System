@@ -633,7 +633,6 @@ const Cart = () => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.2 }}
-
           >
             <div className="modal_center max-w-[1024px] bg-white mx-6">
               <div className="modal_title flex justify-between items-center">
