@@ -2,7 +2,6 @@ const db = require("../utile/db");
 
 // show data customer
 exports.GetAll = (req, res) => {
-     const sql1 = "SELECT c.*,g.discount FROM customer as c LEFT JOIN group_customer as g ON c.group_id = g.id";
     const sql =` SELECT vc.*,vd.total_amount_difference_sum,vd.type_currency from V_totalamount_di_customer vd
 RIGHT JOIN V_customer_group vc ON vc.id = vd.customer_id;`;
     db.query(sql, (err, results) => {

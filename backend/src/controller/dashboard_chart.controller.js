@@ -2,7 +2,9 @@ const db = require("../utile/db");
 
 // // sum purchase Detail in year
 exports.PurchaseDetailAll = (req, res) => {
-    const sqlyear = `SELECT 
+    const sqlyear = `
+    
+    SELECT 
     p.amount_total,
     p.amount_discount,
     p.amount_pay,
@@ -11,6 +13,8 @@ exports.PurchaseDetailAll = (req, res) => {
     p.create_at
 FROM purchase_detail p
 WHERE YEAR(p.pay_date) = YEAR(CURDATE()) 
+
+
 `
     db.query(sqlyear, (err, results) => {
         if (err) {
@@ -18,6 +22,7 @@ WHERE YEAR(p.pay_date) = YEAR(CURDATE())
         }
         res.json(results);
     });
+    
 }
 
 // // sum purchase Detail in one year
