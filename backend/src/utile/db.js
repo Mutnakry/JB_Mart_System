@@ -2,9 +2,6 @@
 const mysql = require('mysql2');
 require('dotenv').config(); // Load environment variables from .env
 
-require('dotenv').config(); // Load environment variables from .env
-
-
 // Using createPool is recommended over createConnection for better management
 const db = mysql.createConnection({
     host: process.env.DB_HOST,
