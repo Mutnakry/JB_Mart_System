@@ -111,7 +111,7 @@
 //             <div className=''>
 //                 <div className="flex items-center gap-2 ">
 //                     <p><FaClipboardList className="text-lg " /></p>
-//                     <p className="font-NotoSansKhmer font-bold ">តារាងបញ្ជីប្រភេទទំនិញ</p>
+//                     <p className="font-bold font-NotoSansKhmer ">តារាងបញ្ជីប្រភេទទំនិញ</p>
 //                 </div>
 //                 <div className="flex justify-end">
 //                     <Link className="button_only_submit" to="/createpurchase">
@@ -119,7 +119,7 @@
 //                     </Link>
 //                 </div>
 
-//                 <div className="flex justify-between items-center my-3">
+//                 <div className="flex items-center justify-between my-3">
 //                     <div className="flex flex-col gap-2 font-bold font-NotoSansKhmer">
 //                         <label htmlFor="">ច្រោះតាមចំនួន</label>
 //                         <select
@@ -141,21 +141,21 @@
 //                 <div class="relative overflow-x-auto h-screen scrollbar-hidden">
 //                     <AnimatePresence>
 //                         <table className="min-w-full table-auto">
-//                             <thead className="bg-blue-600/95 text-white">
-//                                 <tr className="font-NotoSansKhmer font-bold">
-//                                     <th className=" px-4 py-2">លេខរៀង</th>
-//                                     <th className=" px-4 py-2">កាលបរិច្ឆេទ</th>
-//                                     <th className=" px-4 py-2">រូបភាព</th>
-//                                     <th className=" px-4 py-2">ផលិតផល</th>
-//                                     <th className=" px-4 py-2">ថ្លៃទិញឯកតា</th>
-//                                     <th className=" px-4 py-2">តម្លៃលក់</th>
-//                                     <th className=" px-4 py-2">ស្ថានភាពទិញ</th>
-//                                     <th className=" px-4 py-2">ចំនួនក្នុងស្តុក</th>
-//                                     <th className=" px-4 py-2">បញ្ចុះតម្លៃ</th>
-//                                     <th className=" px-4 py-2">ពន្ធ</th>
-//                                     <th className=" px-4 py-2">សរុប</th>
-//                                     <th className=" px-4 py-2">បន្ថែមដោយ</th>
-//                                     <th className=" px-4 py-2">សកម្មភាព</th>
+//                             <thead className="text-white bg-blue-600/95">
+//                                 <tr className="font-bold font-NotoSansKhmer">
+//                                     <th className="px-4 py-2 ">លេខរៀង</th>
+//                                     <th className="px-4 py-2 ">កាលបរិច្ឆេទ</th>
+//                                     <th className="px-4 py-2 ">រូបភាព</th>
+//                                     <th className="px-4 py-2 ">ផលិតផល</th>
+//                                     <th className="px-4 py-2 ">ថ្លៃទិញឯកតា</th>
+//                                     <th className="px-4 py-2 ">តម្លៃលក់</th>
+//                                     <th className="px-4 py-2 ">ស្ថានភាពទិញ</th>
+//                                     <th className="px-4 py-2 ">ចំនួនក្នុងស្តុក</th>
+//                                     <th className="px-4 py-2 ">បញ្ចុះតម្លៃ</th>
+//                                     <th className="px-4 py-2 ">ពន្ធ</th>
+//                                     <th className="px-4 py-2 ">សរុប</th>
+//                                     <th className="px-4 py-2 ">បន្ថែមដោយ</th>
+//                                     <th className="px-4 py-2 ">សកម្មភាព</th>
 
 //                                 </tr>
 //                             </thead>
@@ -164,7 +164,7 @@
 //                             ) : error ? (
 //                                 <p>{error}</p>
 //                             ) : purchases.length === 0 ? (
-//                                 <p className="text-start py-4 px-10 text-red-500">រកមិនឃើញប្រភេទ ? {searchQuery}</p>
+//                                 <p className="px-10 py-4 text-red-500 text-start">រកមិនឃើញប្រភេទ ? {searchQuery}</p>
 //                             ) : (
 //                                 <tbody>
 //                                     {purchases.map((purchase, index) => (
@@ -174,7 +174,7 @@
 //                                             exit="exit"
 //                                             variants={rowAnimation}
 //                                             transition={{ duration: 0.3 }}
-//                                             className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100">
+//                                             className="text-sm duration-100 font-NotoSansKhmer hover:scale-y-110">
 //                                             <td className="px-4 py-1">{index + 1}</td>
 //                                             <td className="px-4 py-1">{formatDateToKhmer(new Date(purchase.date_by))}</td>
 //                                             <td>
@@ -183,22 +183,22 @@
 //                                             <td className="px-4 py-1">{purchase.pro_names}</td>
 //                                             <td className="px-4 py-1">{purchase.cost_price} $</td>
 //                                             <td className="px-4 py-1">{purchase.excluded_tax} $</td>
-//                                             <td className="px-4 text-center whitespace-nowrap py-1">
+//                                             <td className="px-4 py-1 text-center whitespace-nowrap">
 //                                                 <button onClick={() => openUpdateModal(purchase)}>
 //                                                     {purchase.status === 'active' ? (
-//                                                         <span className='bg-red-500 py-1 px-4 rounded-lg text-white'>
+//                                                         <span className='px-4 py-1 text-white bg-red-500 rounded-lg'>
 //                                                             កំពុងរងចាំ
 //                                                         </span>
 //                                                     ) : purchase.status === 'pending' ? (
-//                                                         <span className='bg-yellow-500 py-1 px-4 rounded-lg text-white'>
+//                                                         <span className='px-4 py-1 text-white bg-yellow-500 rounded-lg'>
 //                                                             បានបញ្ជាទិញ
 //                                                         </span>
 //                                                     ) : purchase.status === 'completed' ? (
-//                                                         <span className='bg-green-500 py-1 px-4 rounded-lg text-white'>
+//                                                         <span className='px-4 py-1 text-white bg-green-500 rounded-lg'>
 //                                                             បានទទួល
 //                                                         </span>
 //                                                     ) : (
-//                                                         <span className='bg-gray-500 py-1 px-4 rounded-lg text-white'>
+//                                                         <span className='px-4 py-1 text-white bg-gray-500 rounded-lg'>
 //                                                             មិនមានស្ថានភាព
 //                                                         </span>
 //                                                     )}
@@ -209,18 +209,18 @@
 //                                             <td className="px-4 py-1 text-center">{purchase.included_tax} $</td>
 //                                             <td className="px-4 py-1 text-center">{purchase.total} $</td>
 //                                             <td className="px-4 py-1 text-center">{purchase.user_at || 'Unknown'}</td>
-//                                             <td className="px-4  space-x-2 flex">
+//                                             <td className="flex px-4 space-x-2">
 //                                                 <button
-//                                                     className='bg-red-300 p-2 '
+//                                                     className='p-2 bg-red-300 '
 //                                                 >
 //                                                     <MdDelete className='text-red-500' />
 //                                                 </button>
 //                                                 {purchase.status === 'completed' ? (
-//                                                     <span className="bg-blue-200 p-2 cursor-not-allowed opacity-50">
+//                                                     <span className="p-2 bg-blue-200 opacity-50 cursor-not-allowed">
 //                                                         <FaPencilAlt className='text-blue-500' />
 //                                                     </span>
 //                                                 ) : (
-//                                                     <Link className="bg-blue-300 p-2" to={`/purchase/${purchase.purchasedetail_id}`}>
+//                                                     <Link className="p-2 bg-blue-300" to={`/purchase/${purchase.purchasedetail_id}`}>
 //                                                         <FaPencilAlt className='text-blue-500' />
 //                                                     </Link>
 //                                                 )}
@@ -256,7 +256,7 @@
 //                         exit={{ opacity: 0, scale: 0.8 }}
 //                         transition={{ duration: 0.2 }}
 //                     >
-//                         <div className="relative w-full bg-white shadow mt-20 dark:bg-gray-700 max-w-lg">
+//                         <div className="relative w-full max-w-lg mt-20 bg-white shadow dark:bg-gray-700">
 //                             <div className="modal_title">
 //                                 <h3 className="">កែប្រែផលិតផលមកដល់ស្តុក</h3>
 //                                 <MdClose className='text-2xl cursor-pointer' onClick={() => setIsModalUpdateStatus(false)} />
@@ -461,7 +461,7 @@ const Dashboard = () => {
             <div className=''>
                 <div className="flex items-center gap-2 ">
                     <p><FaClipboardList className="text-lg " /></p>
-                    <p className="font-NotoSansKhmer font-bold ">តារាងបញ្ជីទំនិញ</p>
+                    <p className="font-bold font-NotoSansKhmer ">តារាងបញ្ជីទំនិញ</p>
                 </div>
                 <div className="flex justify-end">
                     {(userRol === 'superadmin' || userRol === 'admin') ? (
@@ -469,13 +469,13 @@ const Dashboard = () => {
                             + បង្កើតទំនិញថ្មី
                         </Link>
                     ) : (
-                        <span className="button_only_submit cursor-not-allowed">
+                        <span className="cursor-not-allowed button_only_submit">
                             + បង្កើតទំនិញថ្មី
                         </span>
                     )}
                 </div>
 
-                <div className="flex justify-between items-center my-3">
+                <div className="flex items-center justify-between my-3">
                     <div className="flex flex-col gap-2 font-bold font-NotoSansKhmer">
                         <label htmlFor="">ច្រោះតាមចំនួន</label>
                         <select
@@ -497,20 +497,20 @@ const Dashboard = () => {
                 <div class="relative overflow-x-auto h-screen scrollbar-hidden">
                     <AnimatePresence>
                         <table className="min-w-full table-auto">
-                            <thead className="bg-blue-600/95 text-white">
-                                <tr className="font-NotoSansKhmer font-bold">
-                                    <th className=" px-4 py-2">លេខរៀង</th>
-                                    <th className=" px-4 py-2">កាលបរិច្ឆេទ</th>
-                                    <th className=" px-4 py-2">អ្នកផ្គត់ផ្កង់</th>
-                                    <th className=" px-4 py-2">ចំនួនដែលបានបន្ថែម</th>
-                                    <th className=" px-4 py-2">ស្ថានភាពទិញ</th>
-                                    <th className=" px-4 py-2">ពន្ធ</th>
-                                    <th className=" px-4 py-2">បញ្ចុះតម្លៃ</th>
-                                    <th className=" px-4 py-2">សរុប</th>
-                                    <th className=" px-4 py-2">បានបង់សរុប</th>
-                                    <th className=" px-4 py-2">ប្រាក់នៅជុំពាក់</th>
-                                    <th className=" px-4 py-2">បន្ថែមដោយ</th>
-                                    <th className=" px-4 py-2">សកម្មភាព</th>
+                            <thead className="text-white bg-blue-600/95">
+                                <tr className="font-bold font-NotoSansKhmer">
+                                    <th className="px-4 py-2 ">លេខរៀង</th>
+                                    <th className="px-4 py-2 ">កាលបរិច្ឆេទ</th>
+                                    <th className="px-4 py-2 ">អ្នកផ្គត់ផ្កង់</th>
+                                    <th className="px-4 py-2 ">ចំនួនដែលបានបន្ថែម</th>
+                                    <th className="px-4 py-2 ">ស្ថានភាពទិញ</th>
+                                    <th className="px-4 py-2 ">ពន្ធ</th>
+                                    <th className="px-4 py-2 ">បញ្ចុះតម្លៃ</th>
+                                    <th className="px-4 py-2 ">សរុប</th>
+                                    <th className="px-4 py-2 ">បានបង់សរុប</th>
+                                    <th className="px-4 py-2 ">ប្រាក់នៅជុំពាក់</th>
+                                    <th className="px-4 py-2 ">បន្ថែមដោយ</th>
+                                    <th className="px-4 py-2 ">សកម្មភាព</th>
 
                                 </tr>
                             </thead>
@@ -519,7 +519,7 @@ const Dashboard = () => {
                             ) : error ? (
                                 <p>{error}</p>
                             ) : purchases.length === 0 ? (
-                                <p className="text-start py-4 px-10 text-red-500">រកមិនឃើញប្រភេទ ? {searchQuery}</p>
+                                <p className="px-10 py-4 text-red-500 text-start">រកមិនឃើញប្រភេទ ? {searchQuery}</p>
                             ) : (
                                 <tbody>
                                     {purchases?.map((purchase, index) => (
@@ -529,50 +529,50 @@ const Dashboard = () => {
                                             exit="exit"
                                             variants={rowAnimation}
                                             transition={{ duration: 0.3 }}
-                                            className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100">
+                                            className="text-sm duration-100 font-NotoSansKhmer hover:scale-y-110">
                                             <td className="px-4 py-1">{index + 1}</td>
                                             <td className="px-4 py-1">{formatDateToKhmer(new Date(purchase.purchase_date))}</td>
 
                                             <td className="px-4 py-1">{purchase.business_names} {purchase.supplier_name}</td>
                                             {/* <td className="px-4 py-1 text-center">{purchase.product_names}</td> */}
                                             <td className="px-4 py-1">{purchase.total_qty}</td>
-                                            <td className="px-4 text-center whitespace-nowrap py-1">
+                                            <td className="px-4 py-1 text-center whitespace-nowrap">
                                                 {(userRol === 'superadmin' || userRol === 'admin') ? (
                                                     <button onClick={() => openUpdateModal(purchase)}>
                                                         {purchase.status === 'active' ? (
-                                                            <span className='bg-red-500 py-1 px-4 rounded text-white'>
+                                                            <span className='px-1 text-xs text-white bg-red-500 rounded '>
                                                                 កំពុងរងចាំ
                                                             </span>
                                                         ) : purchase.status === 'pending' ? (
-                                                            <span className='bg-yellow-500 py-1 px-4 rounded text-white'>
+                                                            <span className='px-1 text-xs text-white bg-yellow-500 rounded'>
                                                                 បានបញ្ជាទិញ
                                                             </span>
                                                         ) : purchase.status === 'completed' ? (
-                                                            <span className='bg-green-500 py-1 px-4 rounded text-white'>
+                                                            <span className='px-1 text-xs text-white bg-green-500 rounded'>
                                                                 បានទទួល
                                                             </span>
                                                         ) : (
-                                                            <span className='bg-gray-500 py-1 px-4 rounded text-white'>
+                                                            <span className='px-1 text-xs text-white bg-gray-500 rounded '>
                                                                 មិនមានស្ថានភាព
                                                             </span>
                                                         )}
                                                     </button>
                                                 ) : (
-                                                    <button className='cursor-not-allowed opacity-50'>
+                                                    <button className='opacity-50 cursor-not-allowed'>
                                                         {purchase.status === 'active' ? (
-                                                            <span className='bg-red-500 py-1 px-4 rounded text-white'>
+                                                            <span className='px-1 text-xs text-white bg-red-500 '>
                                                                 កំពុងរងចាំ
                                                             </span>
                                                         ) : purchase.status === 'pending' ? (
-                                                            <span className='bg-yellow-500 py-1 px-4 rounded text-white'>
+                                                            <span className='px-1 text-xs text-white bg-yellow-500 rounded'>
                                                                 បានបញ្ជាទិញ
                                                             </span>
                                                         ) : purchase.status === 'completed' ? (
-                                                            <span className='bg-green-500 py-1 px-4 rounded text-white'>
+                                                            <span className='px-1 text-xs text-white bg-green-500 rounded'>
                                                                 បានទទួល
                                                             </span>
                                                         ) : (
-                                                            <span className='bg-gray-500 py-1 px-4 rounded text-white'>
+                                                            <span className='px-1 text-xs text-white bg-gray-500 rounded'>
                                                                 មិនមានស្ថានភាព
                                                             </span>
                                                         )}
@@ -586,45 +586,45 @@ const Dashboard = () => {
                                             <td className="px-4 py-1 text-center">{((purchase.total_amount) - (purchase.amount_pay)).toFixed(2)} $</td>
                                             <td className="px-4 py-1 text-center">{purchase.user_at || 'Unknown'}</td>
                                             {(userRol === 'superadmin' || userRol === 'admin') ? (
-                                                <td className="px-4  space-x-2 flex">
+                                                <td className="flex px-4 space-x-2">
                                                     <button
-                                                        className='bg-red-300 p-2 '
+                                                        className='p-2 bg-red-500 '
                                                         onClick={() => openDeletePurchase(purchase)}
                                                     >
-                                                        <MdDelete className='text-red-500' />
+                                                        <MdDelete className='text-white' />
                                                     </button>
                                                     {purchase.status === 'completed' ? (
-                                                        <span className="bg-blue-200 p-2 cursor-not-allowed opacity-50">
-                                                            <FaPencilAlt className='text-blue-500' />
+                                                        <span className="p-2 bg-blue-500 opacity-50 cursor-not-allowed">
+                                                            <FaPencilAlt className='text-white' />
                                                         </span>
                                                     ) : (
-                                                        <Link className="bg-blue-300 p-2" to={`/purchase/${purchase.purchasedetail_id}`}>
-                                                            <FaPencilAlt className='text-blue-500' />
+                                                        <Link className="p-2 bg-blue-500" to={`/purchase/${purchase.purchasedetail_id}`}>
+                                                            <FaPencilAlt className='text-white' />
                                                         </Link>
                                                     )}
 
                                                     <Link
                                                         to={`/createpurchase/${purchase.purchasedetail_id}`}
-                                                        className="flex items-center gap-1 p-2 font-bold text-white bg-green-300 hover:bg-green-400"
+                                                        className="flex items-center gap-1 p-2 font-bold text-white bg-green-500 hover:bg-green-400"
                                                         onClick={() => openModalPrintPage(customer)}
                                                     >
                                                         <IoPrint />
                                                     </Link>
                                                 </td>
                                             ) : (
-                                                <td className="px-4  space-x-2 flex">
+                                                <td className="flex px-4 space-x-2">
                                                     <button
-                                                        className='bg-red-300 p-2 cursor-not-allowed opacity-50'
+                                                        className='p-2 bg-red-500 opacity-50 cursor-not-allowed'
                                                     >
-                                                        <MdDelete className='text-red-500' />
+                                                        <MdDelete className='text-white' />
                                                     </button>
-                                                    <span className="bg-blue-200 p-2 cursor-not-allowed opacity-50 ">
-                                                        <FaPencilAlt className='text-blue-500' />
+                                                    <span className="p-2 bg-blue-500 opacity-50 cursor-not-allowed ">
+                                                        <FaPencilAlt className='text-white' />
                                                     </span>
 
                                                     <Link
                                                         to={`/createpurchase/${purchase.purchasedetail_id}`}
-                                                        className="flex items-center gap-1 p-2 font-bold text-white bg-green-300 hover:bg-green-400"
+                                                        className="flex items-center gap-1 p-2 font-bold text-white bg-green-500 hover:bg-green-400"
                                                         onClick={() => openModalPrintPage(customer)}
                                                     >
                                                         <IoPrint />
@@ -644,7 +644,7 @@ const Dashboard = () => {
                                 variants={rowAnimation}
                                 transition={{ duration: 0.3 }}
                                 className='bg-gray-300'>
-                                <td colSpan="4" className="font-bold text-center h-20">សរុប :</td>
+                                <td colSpan="4" className="h-20 font-bold text-center">សរុប :</td>
                                 <td>
                                     {purchases.filter(purchase => purchase.status === 'active').length > 0 && (
                                         <span className="text-red-500">
@@ -664,7 +664,7 @@ const Dashboard = () => {
                                         </span>
                                     )}
                                 </td>
-                                <td className="font-bold px-4 py-1">
+                                <td className="px-4 py-1 font-bold">
                                     {purchases
                                         .reduce((total, customer) => total + (Number(customer.total_include_tax) || 0), 0)
                                         .toLocaleString('en-US', {
@@ -674,7 +674,7 @@ const Dashboard = () => {
                                         })}{' '}
                                     $
                                 </td>
-                                <td className="font-bold px-4 py-1">
+                                <td className="px-4 py-1 font-bold">
                                     {purchases
                                         .reduce((total, customer) => total + (Number(customer.amount_discount) || 0), 0)
                                         .toLocaleString('en-US', {
@@ -685,7 +685,7 @@ const Dashboard = () => {
                                     $
                                 </td>
 
-                                <td className="font-bold px-4 py-1">
+                                <td className="px-4 py-1 font-bold">
                                     {purchases
                                         .reduce((total, customer) => total + (Number(customer.total_amount) || 0), 0)
                                         .toLocaleString('en-US', {
@@ -696,7 +696,7 @@ const Dashboard = () => {
                                     $
                                 </td>
 
-                                <td className="font-bold px-4 py-1">
+                                <td className="px-4 py-1 font-bold">
                                     {purchases
                                         .reduce((total, customer) => total + (Number(customer.amount_pay) || 0), 0)
                                         .toLocaleString('en-US', {
@@ -706,7 +706,7 @@ const Dashboard = () => {
                                         })}{' '}
                                     $
                                 </td>
-                                <td className="font-bold px-4 py-1">
+                                <td className="px-4 py-1 font-bold">
                                     {purchases
                                         .reduce((total, customer) => total + ((Number(customer.total_amount) - (Number(customer.amount_pay))) || 0), 0)
                                         .toLocaleString('en-US', {
@@ -741,7 +741,7 @@ const Dashboard = () => {
                         exit={{ opacity: 0, scale: 0.8 }}
                         transition={{ duration: 0.2 }}
                     >
-                        <div className="relative w-full bg-white shadow mt-20 dark:bg-gray-700 max-w-lg">
+                        <div className="relative w-full max-w-lg mt-20 bg-white shadow dark:bg-gray-700">
                             <div className="modal_title">
                                 <h3 className="">កែប្រែផលិតផលមកដល់ស្តុក</h3>
                                 <MdClose className='text-2xl cursor-pointer' onClick={() => setIsModalUpdateStatus(false)} />
@@ -789,7 +789,7 @@ const Dashboard = () => {
                         exit={{ opacity: 0, scale: 0.8 }}
                         transition={{ duration: 0.2 }}
                     >
-                        <div className="modal_center max-w-sm">
+                        <div className="max-w-sm modal_center">
                             <div className="modal_title">
                                 <h3 className="">លុបទំនិញ</h3>
                                 <MdClose className='text-2xl cursor-pointer' onClick={() => setIsModalDelete(false)} />

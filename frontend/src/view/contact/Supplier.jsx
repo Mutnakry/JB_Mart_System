@@ -10,10 +10,10 @@ const Customer = () => {
     const [activeTabIndex, setActiveTabIndex] = useState(0);
     const categories = [
         {
-            name: 'បញ្ជីឈ្មោះអ្នកផ្គត់ភ្កង់',
+            name: 'បញ្ជីឈ្មោះអ្នកផ្គត់ផ្គង់',
         },
         {
-            name: 'ព័ត៍មានរបស់អ្នកផ្គត់ភ្កង់',
+            name: 'ព័ត៍មានរបស់អ្នកផ្គត់ផ្គង់',
         },
     ];
 
@@ -21,10 +21,10 @@ const Customer = () => {
         <div>
             <Navbar />
             <div className='Nav_bar'>
-            <div className=' Div_bar  bg-white'>
+            <div className='bg-white Div_bar'>
                     <div className='flex items-center gap-2 pb-5'>
                         <RiContactsBook3Fill className='text-lg' />
-                        <p className='font-NotoSansKhmer font-bold text-lg'>អ្នកផ្គត់ភ្កង់</p>
+                        <p className='text-lg font-bold font-NotoSansKhmer'>អ្នកផ្គត់ផ្គង់</p>
                     </div>
                     <div className="w-full">
                         <TabGroup selectedIndex={activeTabIndex} onChange={setActiveTabIndex}>

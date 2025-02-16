@@ -39,26 +39,26 @@ function Order_List() {
         <div>
             <div className=''>
                 <div className='flex items-center gap-2 pb-5'>
-                    <p className='font-NotoSansKhmer font-bold text-3xl'>បន្ថែមការទិញ </p>
+                    <p className='text-xl font-bold font-NotoSansKhmer'>បន្ថែមការទិញ </p>
 
                 </div>
                 <div class="relative overflow-x-auto h-screen scrollbar-hidden">
                     <AnimatePresence>
                         <table className="min-w-full table-auto">
-                            <thead className="bg-blue-600/95 text-white">
-                                <tr className="font-NotoSansKhmer font-bold">
-                                    <th className=" px-4 py-2">#</th>
-                                    <th className=" px-4 py-2">កាលបរិច្ឆេទ</th>
-                                    <th className=" px-4 py-2">អតិជន</th>
-                                    <th className=" px-4 py-2">ចំនួន</th>
-                                    <th className=" px-4 py-2">ចំនួនទឺកប្រាក់សរុប</th>
-                                    <th className=" px-4 py-2">ចំនួនទឺកប្រាក់សរុបជា ($)</th>
-                                    <th className=" px-4 py-2">ទឺកប្រាក់ដែលបានបង់</th>
-                                    <th className=" px-4 py-2">នៅនៅខ្វះទឺកប្រាក់</th>
-                                    <th className=" px-4 py-2">បញ្ចុះតម្លៃ</th>
-                                    <th className=" px-4 py-2">ពណ៍នា</th>
-                                    <th className=" px-4 py-2">បន្ថែមដោយ</th>
-                                    <th className=" px-4 py-2">សកម្មភាព</th>
+                            <thead className="text-white bg-blue-600/95">
+                                <tr className="font-bold font-NotoSansKhmer">
+                                    <th className="px-4 py-2 ">#</th>
+                                    <th className="px-4 py-2 ">កាលបរិច្ឆេទ</th>
+                                    <th className="px-4 py-2 ">អតិជន</th>
+                                    <th className="px-4 py-2 ">ចំនួន</th>
+                                    <th className="px-4 py-2 ">ចំនួនទឺកប្រាក់សរុប</th>
+                                    <th className="px-4 py-2 ">ចំនួនទឺកប្រាក់សរុបជា ($)</th>
+                                    <th className="px-4 py-2 ">ទឺកប្រាក់ដែលបានបង់</th>
+                                    <th className="px-4 py-2 ">នៅនៅខ្វះទឺកប្រាក់</th>
+                                    <th className="px-4 py-2 ">បញ្ចុះតម្លៃ</th>
+                                    <th className="px-4 py-2 ">ពណ៍នា</th>
+                                    <th className="px-4 py-2 ">បន្ថែមដោយ</th>
+                                    <th className="px-4 py-2 ">សកម្មភាព</th>
                                 </tr>
                             </thead>
                             {loading ? (
@@ -66,7 +66,7 @@ function Order_List() {
                             ) : error ? (
                                 <p>{error}</p>
                             ) : orders.length === 0 ? (
-                                <p className="text-start py-4 px-10 text-red-500">រកមិនឃើញប្រភេទ</p>
+                                <p className="px-10 py-4 text-red-500 text-start">រកមិនឃើញប្រភេទ</p>
                             ) : (
                                 <tbody>
                                     {orders?.map((order, index) => {
@@ -84,7 +84,7 @@ function Order_List() {
                                                 exit="exit"
                                                 variants={rowAnimation}
                                                 transition={{ duration: 0.3 }}
-                                                className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100">
+                                                className="text-sm duration-100 font-NotoSansKhmer hover:scale-y-110">
 
                                                 <td className={`px-4 py-1 whitespace-nowrap ${remainingAmount > 0 ? 'bg-red-200' : ''}`}>{index + 1}</td>
                                                 <td className={`px-4 py-1 whitespace-nowrap ${remainingAmount > 0 ? 'bg-red-200' : ''}`}>{formatDateToKhmer(new Date(order.date_order))}</td>
@@ -146,16 +146,16 @@ function Order_List() {
                                                 <td  className={`px-4 py-1 whitespace-nowrap ${remainingAmount > 0 ? 'bg-red-200' : ''}`}>{order.user_at || 'Unknown'}</td>
 
                                                 <td  className={`px-4 py-1 flex space-x-2 whitespace-nowrap ${remainingAmount > 0 ? 'bg-red-200' : ''}`}>
-                                                    <span className="text-pink-400 p-2 bg-green-300 hover:bg-green-400">
+                                                    <span onClick={() => window.print()} className="p-2 text-white bg-green-500 hover:bg-green-400">
                                                         <IoPrint />
                                                     </span>
 
                                                     <Link
                                                         to={`/customer_payment/${order.order_detail_id}`}
-                                                        className="flex items-center gap-1 p-2 font-bold text-white bg-blue-300"
+                                                        className="flex items-center gap-1 p-2 font-bold text-white bg-blue-500"
                                                         onClick={() => openModalPrintPage(customer)}
                                                     >
-                                                        <FaPencilAlt className="text-blue-500" />
+                                                        <FaPencilAlt className="text-white" />
                                                     </Link>
                                                 </td>
                                             </motion.tr>

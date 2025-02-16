@@ -245,17 +245,17 @@ function customer_payment() {
             <Navbar />
             <div className='md:py-12 py-6  px-4 sm:ml-64 md:w-auto w-[560px] bg-gray-200 dark:bg-gray-950'>
                 <div className="w-full p-4 mt-10 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
-                    <div className='border p-4'>
-                        <div className=" pb-6">
-                            <p htmlFor="email" className="font-NotoSansKhmer text-gray-600 text-xl font-bold">
+                    <div className='p-4 border'>
+                        <div className="pb-6 ">
+                            <p htmlFor="email" className="text-xl font-bold text-gray-600 font-NotoSansKhmer">
                                 របាយការណ៍អតិជនបង់ប្រាក់
                             </p>
                         </div>
-                        <form class="" onSubmit={handleSubmit} >
-                            <div className='grid xl:grid-cols-2 md:grid-cols-1 gap-4'>
-                                <div className='grid md:grid-cols-2 gap-3 p-2 rounded-md border-x border-t-2 border-blue-500'>
+                        <form  onSubmit={handleSubmit} >
+                            <div className='grid gap-4 xl:grid-cols-2 md:grid-cols-1'>
+                                <div className='grid gap-3 p-2 border-2 md:grid-cols-2 border-x'>
                                     <div className="col-span-2 gap-2">
-                                        <p htmlFor="email" className="font-NotoSansKhmer text-gray-600 text-xl text-center font-bold">
+                                        <p htmlFor="email" className="text-xl font-bold text-center text-gray-600 font-NotoSansKhmer">
                                             របាយការណ៍ទូទាត់ថ្មី
                                         </p>
                                     </div>
@@ -271,7 +271,7 @@ function customer_payment() {
                                         />
                                     </div>
                                     <div className="col-span-1 space-y-2">
-                                        <label className="font-NotoSansKhmer font-bold">កាលបរិច្ឆេទទិញ</label>
+                                        <label className="font-bold font-NotoSansKhmer">កាលបរិច្ឆេទទិញ</label>
                                         <input
                                             type="text"
                                             id="price"
@@ -283,7 +283,7 @@ function customer_payment() {
                                         />
                                     </div>
                                     <div className="col-span-1 gap-2 space-y-2">
-                                        <label htmlFor="email" className="font-NotoSansKhmer font-bold">
+                                        <label htmlFor="email" className="font-bold font-NotoSansKhmer">
                                             ចំនួនការទូទាត់សរុប <span className='text-red-600'>: *</span>
                                         </label>
                                         <input
@@ -295,14 +295,14 @@ function customer_payment() {
                                             placeholder="ចំនួនការទូទាត់សរុប"
                                         />
                                     </div>
-                                    <div className="col-span-1  gap-2 space-y-2">
-                                        <label htmlFor="email" className="font-NotoSansKhmer font-bold">
+                                    <div className="col-span-1 gap-2 space-y-2">
+                                        <label htmlFor="email" className="font-bold font-NotoSansKhmer">
                                             ចំនួនការទូទាត់សរុបនៅជុំពាក់
                                         </label>
                                         <div className='flex'>
                                             <input
                                                 type="number"
-                                                className="input_text text-center"
+                                                className="text-center input_text"
                                                 readOnly
                                                 value={((parseFloat(selectedProducts?.[0]?.total_amount) || 0) - ((parseFloat(selectedProducts?.[0]?.balance_amount) || 0) ) - amountPay).toFixed(2)}
                                                 placeholder="ចំនួនការទូទាត់សរុប"
@@ -311,7 +311,7 @@ function customer_payment() {
                                                 disabled
                                                 value={ispaymentTypeCurrency}
                                                 onChange={handleChangepaymentType}
-                                                class="input_text w-20 text-white bg-blue-500 border-0 font-NotoSansKhmer"
+                                                className="w-20 text-white bg-blue-500 border-0 input_text font-NotoSansKhmer"
 
                                             >
                                                 <option value="usd">ដុល្លារ</option>
@@ -339,7 +339,7 @@ function customer_payment() {
                                     </div>
 
                                     <div className="col-span-2 gap-2 space-y-2">
-                                        <label htmlFor="email" className="font-NotoSansKhmer font-bold">
+                                        <label htmlFor="email" className="font-bold font-NotoSansKhmer">
                                             ពណ៍នា
                                         </label>
                                         <textarea
@@ -355,13 +355,13 @@ function customer_payment() {
                                     </div>
                                 </div>
 
-                                <div className='grid gap-3 p-2 border-t-2 border-x border-pink-500 rounded-md'>
+                                <div className='grid gap-3 p-2 border-2'>
                                     <div className="">
-                                        <p htmlFor="email" className="font-NotoSansKhmer text-gray-600 text-xl text-center font-bold">
+                                        <p htmlFor="email" className="text-xl font-bold text-center text-gray-600 font-NotoSansKhmer">
                                             របាយការណ៍ចាស់
                                         </p>
                                     </div>
-                                    <table className=" border-collapse w-full">
+                                    <table className="w-full border-collapse ">
                                         <thead className="p-2 text-white bg-blue-600/90">
                                             <tr>
                                                 <th className="p-2 border w-[10%]">លេខរៀង</th>
@@ -421,8 +421,8 @@ function customer_payment() {
                                         <br />
                                         <tr
                                             className='bg-gray-300'>
-                                            <td colSpan="2" className="font-bold text-center h-20">របាយការណ៍ចាស់</td>
-                                            <td colSpan="2" className="font-bold space-y-3 text-gray-700  py-2">
+                                            <td colSpan="2" className="h-20 font-bold text-center">របាយការណ៍ចាស់</td>
+                                            <td colSpan="2" className="py-2 space-y-3 font-bold text-gray-700">
                                                 <p>សរុប</p>
                                                 <hr />
                                                 <span>បញ្ចុះតម្លៃ</span>
@@ -431,7 +431,7 @@ function customer_payment() {
                                                 <hr />
                                                 <span className='text-red-500'>នៅនៅខ្វះ</span>
                                             </td>
-                                            <td colSpan="2" className="font-bold space-y-3 text-gray-700   py-2">
+                                            <td colSpan="2" className="py-2 space-y-3 font-bold text-gray-700">
                                                 {selectedProducts?.[0]?.type_currency !== "usd" && (
                                                     <span>
                                                         {selectedProducts?.[0]?.total_amount_dola ?? "0.00"} $ <br />
@@ -529,7 +529,7 @@ function customer_payment() {
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className="px-4 py-2 font-semibold text-white font-NotoSansKhmer bg-blue-500 hover:bg-blue-600"
+                                    className="px-4 py-2 font-semibold text-white bg-blue-500 font-NotoSansKhmer hover:bg-blue-600"
                                 >
 
                                     {isSubmitting ? 'រក្សាទុក...' : 'រក្សាទុក'}

@@ -434,7 +434,7 @@ const Navbar = () => {
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
                                     </svg>
-                                    <p className="font-bold font-NotoSansKhmer">ស្វែងរកឈ្មោះអតិជនបង់ប្រាក់</p>
+                                    <p className="font-bold font-NotoSansKhmer">ស្វែងរកអតិជនបង់ប្រាក់</p>
                                 </NavLink>
 
                             </div>
@@ -534,7 +534,7 @@ const Navbar = () => {
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
                                     </svg>
-                                    <p className="font-bold font-NotoSansKhmer">រាយបញ្ជីតិញ</p>
+                                    <p className="font-bold font-NotoSansKhmer">រាយបញ្ជីទិញ</p>
                                 </NavLink>
 
                                 {/* user add purchase admin and superadmin */}

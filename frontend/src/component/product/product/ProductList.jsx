@@ -143,19 +143,19 @@ const Dashboard = () => {
             <div>
                 <div className="flex items-center gap-2 ">
                     <p><FaClipboardList className="text-lg " /></p>
-                    <p className="font-NotoSansKhmer font-bold ">តារាងបញ្ជីប្រភេទទំនិញ</p>
+                    <p className="font-bold font-NotoSansKhmer ">តារាងបញ្ជីផលិតផល</p>
                 </div>
                 <div className="flex justify-end">
                     {(userRol === 'superadmin' || userRol === 'admin') ? (
-                        <Link to={'/createproduct'} className="button_only_submit">+ បង្កើតប្រភេទថ្មី</Link>
+                        <Link to={'/createproduct'} className="button_only_submit">+ បង្កើតផលិតផលថ្មី</Link>
 
                     ) : (
-                        <button to={'/createproduct'} className="button_only_submit opacity-50 cursor-not-allowed">+ បង្កើតប្រភេទថ្មី</button>
+                        <button to={'/createproduct'} className="opacity-50 cursor-not-allowed button_only_submit">+ បង្កើតផលិតផលថ្មី</button>
 
                     )}
                 </div>
 
-                <div className="md:flex justify-between items-center my-3 overflow-hidden space-y-2">
+                <div className="items-center justify-between my-3 space-y-2 overflow-hidden md:flex">
                     <div className="flex flex-col gap-2 font-bold font-NotoSansKhmer">
                         <label htmlFor="">ច្រោះតាមចំនួន</label>
                         <select
@@ -183,34 +183,34 @@ const Dashboard = () => {
                         <input type="text"
                             value={searchQuery}
                             onChange={handleSearch}
-                            className="input_text w-[300px]" placeholder="ស្វែងរកអ្នកផ្គត់ផ្គង់..." />
+                            className="input_text w-[300px]" placeholder="ស្វែងរកផលិតផល..." />
                     </div>
                 </div>
-                <div class="relative overflow-x-auto h-screen scrollbar-hidden">
+                <div className="relative h-screen overflow-x-auto scrollbar-hidden">
                     <AnimatePresence>
                         <table className="min-w-full table-auto">
-                            <thead className="bg-blue-600/95 text-white">
-                                <tr className="font-NotoSansKhmer font-bold">
-                                    <th className=" px-4 py-2">លេខរៀង</th>
-                                    <th className=" px-4 py-2 whitespace-nowrap">រូបភាព</th>
-                                    <th className=" px-4 py-2 whitespace-nowrap">ឈ្មោះផលិតផល</th>
-                                    <th className=" px-4 py-2">តម្លៃទិញឯកតា</th>
-                                    <th className=" px-4 py-2">តម្លៃលក់</th>
-                                    <th className=" px-4 py-2">ពន្ធ</th>
-                                    <th className=" px-4 py-2">បញ្ចុះតម្លៃ</th>
-                                    {/* <th className=" px-4 py-2">តម្លៃចំនេញ</th> */}
-                                    <th className=" px-4 py-2">បច្ចុប្បន្នភាពស្តុក</th>
-                                    <th className=" px-4 py-2">ប្រភេទផលិតផល</th>
-                                    <th className=" px-4 py-2">ប្រភេទទំនិញ</th>
-                                    <th className=" px-4 py-2">ម៉ាលយីយោ</th>
-                                    <th className=" px-4 py-2">ប្រភេទស្តុក</th>
-                                    <th className=" px-4 py-2">ស្ថានភាព</th>
-                                    <th className=" px-4 py-2">ថ្ងៃផុតកំណត់</th>
-                                    <th className=" px-4 py-2">បន្ថែមដោយ</th>
-                                    <th className=" px-4 py-2">បង្កើត</th>
+                            <thead className="text-white bg-blue-600/95">
+                                <tr className="font-bold font-NotoSansKhmer">
+                                    <th className="px-4 py-2 ">លេខរៀង</th>
+                                    <th className="px-4 py-2 whitespace-nowrap">រូបភាព</th>
+                                    <th className="px-4 py-2 whitespace-nowrap">ឈ្មោះផលិតផល</th>
+                                    <th className="px-4 py-2 ">តម្លៃទិញឯកតា</th>
+                                    <th className="px-4 py-2 ">តម្លៃលក់</th>
+                                    <th className="px-4 py-2 ">ពន្ធ</th>
+                                    <th className="px-4 py-2 ">បញ្ចុះតម្លៃ</th>
+                                    {/* <th className="px-4 py-2 ">តម្លៃចំនេញ</th> */}
+                                    <th className="px-4 py-2 ">បច្ចុប្បន្នភាពស្តុក</th>
+                                    <th className="px-4 py-2 ">ប្រភេទផលិតផល</th>
+                                    <th className="px-4 py-2 ">ប្រភេទទំនិញ</th>
+                                    <th className="px-4 py-2 ">ម៉ាលយីយោ</th>
+                                    <th className="px-4 py-2 ">ប្រភេទស្តុក</th>
+                                    <th className="px-4 py-2 ">ស្ថានភាព</th>
+                                    <th className="px-4 py-2 ">ថ្ងៃផុតកំណត់</th>
+                                    <th className="px-4 py-2 ">បន្ថែមដោយ</th>
+                                    <th className="px-4 py-2 ">បង្កើត</th>
 
-                                    <th className=" px-4 py-2">ការណិពណ័នា</th>
-                                    <th className=" px-4 py-2">សកម្មភាព</th>
+                                    <th className="px-4 py-2 ">ការណិពណ័នា</th>
+                                    <th className="px-4 py-2 ">សកម្មភាព</th>
 
                                 </tr>
                             </thead>
@@ -219,7 +219,7 @@ const Dashboard = () => {
                             ) : error ? (
                                 <p>{error}</p>
                             ) : product.length === 0 ? (
-                                <p className="text-start py-4 px-10 text-red-500 whitespace-nowrap ">រកមិនឃើញប្រភេទ ? {searchQuery}</p>
+                                <p className="px-10 py-4 text-red-500 text-start whitespace-nowrap ">រកមិនឃើញប្រភេទ ? {searchQuery}</p>
                             ) : (
                                 <tbody>
                                     {product.map((product, index) => (
@@ -230,15 +230,15 @@ const Dashboard = () => {
                                             exit="exit"
                                             variants={rowAnimation}
                                             transition={{ duration: 0.3 }}
-                                            className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100 relative">
-                                            <td className=" px-4 py-1">{index + 1}</td>
+                                            className="relative text-sm duration-100 font-NotoSansKhmer hover:scale-y-110">
+                                            <td className="px-4 py-1 ">{index + 1}</td>
                                             <td>
                                                 {product.image ? (
                                                     <div className="flex items-center justify-center h-12">
                                                         <img
                                                             src={`${API_URL}/image/${product.image}`}
                                                             alt={product.pro_names}
-                                                            className="object-contain h-full w-full rounded mb-2"
+                                                            className="object-contain w-full h-full mb-2 rounded"
                                                         />
                                                     </div>
                                                 ) : (
@@ -246,7 +246,7 @@ const Dashboard = () => {
                                                         <img
                                                             src={NullImage}
                                                             alt={product.pro_names}
-                                                            className="object-contain h-full w-full rounded mb-2"
+                                                            className="object-contain w-full h-full mb-2 rounded"
                                                         />
                                                     </div>
                                                 )}
@@ -283,14 +283,14 @@ const Dashboard = () => {
 
                                             </td>
                                             {/* <td className="px-4 py-1">{product.pro_names}</td> */}
-                                            <td className=" px-4 py-1 whitespace-nowrap">{product.cost_price} $</td>
-                                            <td className=" px-4 py-1 whitespace-nowrap">{product.exclude_tax} $</td>
-                                            <td className=" px-4 py-1 whitespace-nowrap">{product.include_tax} $</td>
-                                            <td className=" px-4 py-1 whitespace-nowrap">{product.discount} $</td>
-                                            {/* <td className=" px-4 py-1 whitespace-nowrap">{product.profit} $</td> */}
+                                            <td className="px-4 py-1 whitespace-nowrap">{product.cost_price} $</td>
+                                            <td className="px-4 py-1 whitespace-nowrap">{product.exclude_tax} $</td>
+                                            <td className="px-4 py-1 whitespace-nowrap">{product.include_tax} $</td>
+                                            <td className="px-4 py-1 whitespace-nowrap">{product.discount} $</td>
+                                            {/* <td className="px-4 py-1 whitespace-nowrap">{product.profit} $</td> */}
                                             <td className="px-4 py-1">{product.qty} {product.unit_names}</td>
-                                            <td className=" px-4 py-1">{product.product_type || 'N/A'}</td>
-                                            <td className=" px-4 py-1">{product.cat_names || 'N/A'}</td>
+                                            <td className="px-4 py-1 ">{product.product_type || 'N/A'}</td>
+                                            <td className="px-4 py-1 ">{product.cat_names || 'N/A'}</td>
                                             <td className="px-4 py-1">{product.brand_names || 'N/A'}</td>
                                             <td className="px-4 py-1 whitespace-nowrap">
                                                 <button className=''>
@@ -301,21 +301,21 @@ const Dashboard = () => {
                                                     )}
                                                 </button>
                                             </td>
-                                            <td className=" px-4 py-1 whitespace-nowrap">
+                                            <td className="px-4 py-1 whitespace-nowrap">
                                                 {(userRol === 'superadmin' || userRol === 'admin') ? (
                                                     <button onClick={() => openUpdateModal(product)}>
                                                         {product.status === 'active' ? (
-                                                            <span className='bg-green-500 py-1 px-4 rounded hover:bg-green-300 dark:bg-green-300 text-white'>កំពុងលក់</span>
+                                                            <span className='px-2 text-xs text-white bg-green-500 rounded hover:bg-green-300 dark:bg-green-300'>កំពុងលក់</span>
                                                         ) : (
-                                                            <span className='bg-red-500 py-1 px-4 rounded hover:bg-red-300 text-white dark:bg-red-300'>បិទការលក់</span>
+                                                            <span className='px-2 text-xs text-white bg-red-500 rounded hover:bg-red-300 dark:bg-red-300'>បិទការលក់</span>
                                                         )}
                                                     </button>
                                                 ) : (
                                                     <button className='opacity-50 cursor-not-allowed'>
                                                         {product.status === 'active' ? (
-                                                            <span className='bg-green-500 py-1 px-4 rounded hover:bg-green-300 dark:bg-green-300 text-white'>កំពុងលក់</span>
+                                                            <span className='px-2 text-white bg-green-500 rounded hover:bg-green-300 dark:bg-green-300'>កំពុងលក់</span>
                                                         ) : (
-                                                            <span className='bg-red-500 py-1 px-4 rounded hover:bg-red-300 text-white dark:bg-red-300'>បិទការលក់</span>
+                                                            <span className='px-2 text-white bg-red-500 rounded hover:bg-red-300 dark:bg-red-300'>បិទការលក់</span>
                                                         )}
                                                     </button>
                                                 )}
@@ -350,16 +350,18 @@ const Dashboard = () => {
                                                 })()}
 
                                             </td>
-                                            <td className=" px-4 py-1">{product.user_at}</td>
-                                            <td className=" px-4 whitespace-nowrap py-1">{formatDateToKhmer(new Date(product.create_at))}</td>
+                                            <td className="px-4 py-1 ">{product.user_at}</td>
+                                            <td className="px-4 py-1 whitespace-nowrap">{formatDateToKhmer(new Date(product.create_at))}</td>
 
-                                            <td className=" px-4 py-1 line-clamp-2">{product.description || 'N/A'}</td>
+                                            <td className="px-4 py-1 ">
+                                                <span>{product.description || 'មិនមាន'}</span>
+                                            </td>
                                             {/* <td>
                                                 {(userRol === 'superadmin' || userRol === 'admin') ? (
-                                                    <td className="px-4  space-x-2 flex">
+                                                    <td className="flex px-4 space-x-2">
                                                         <button
                                                             onClick={() => openDeleteModal(product)}
-                                                            className='bg-red-200  p-2 '
+                                                            className='p-2 bg-red-200 '
                                                         >
                                                             <MdDelete className='text-red-500' />
                                                         </button>
@@ -379,14 +381,14 @@ const Dashboard = () => {
                                                         </Link>
                                                     </td>
                                                 ) : (
-                                                    <td className="px-4  space-x-2 flex">
+                                                    <td className="flex px-4 space-x-2">
                                                         <button
-                                                            className='bg-red-200  p-2 cursor-not-allowed opacity-50'
+                                                            className='p-2 bg-red-200 opacity-50 cursor-not-allowed'
                                                         >
                                                             <MdDelete className='text-red-500' />
                                                         </button>
                                                         <span
-                                                            className="flex items-center gap-1 cursor-not-allowed opacity-50 p-2 font-bold text-white bg-blue-300 hover:bg-blue-400"
+                                                            className="flex items-center gap-1 p-2 font-bold text-white bg-blue-300 opacity-50 cursor-not-allowed hover:bg-blue-400"
                                                         >
                                                             <FaPencilAlt className='text-blue-500' />
                                                         </span>
@@ -406,34 +408,34 @@ const Dashboard = () => {
                                                 {/* Button to Toggle   */}
                                                 <button
                                                     onClick={() => setShowRowActions(prev => (prev === product.id ? null : product.id))}
-                                                    className="bg-gray-300 px-4 py-1"
+                                                    className="px-4 py-1 bg-gray-300"
                                                 >
                                                     សកម្មភាព
                                                 </button>
 
                                                 {showRowActions === product.id && (
-                                                    <div className="absolute z-10 bg-white drop-shadow text-center p-3 rounded-lg w-44 mt-1">
+                                                    <div className="z-50 p-3 mt-1 text-center bg-white rounded-md drop-shadow w-44">
                                                         {userRol === "superadmin" || userRol === "admin" ? (
                                                             <>
-                                                                <button onClick={() => openDeleteModal(product)} className="block w-full text-left px-4 py-2 text-red-500 hover:bg-gray-100">
+                                                                <button onClick={() => openDeleteModal(product)} className="block w-full px-4 py-2 text-left text-red-500 hover:bg-gray-100">
                                                                     <MdDelete className="inline mr-2" />លុប
                                                                 </button>
-                                                                <Link to={`/updateproduct/${product.id}`} className="block w-full text-left px-4 py-2 text-blue-500 hover:bg-gray-100">
+                                                                <Link to={`/updateproduct/${product.id}`} className="block w-full px-4 py-2 text-left text-blue-500 hover:bg-gray-100">
                                                                     <FaPencilAlt className="inline mr-2" />កែប្រែ
                                                                 </Link>
-                                                                <Link to={`/product/${product.id}`} className="block w-full text-left px-4 py-2 text-green-500 hover:bg-gray-100">
+                                                                <Link to={`/product/${product.id}`} className="block w-full px-4 py-2 text-left text-green-500 hover:bg-gray-100">
                                                                     <IoPrint className="inline mr-2" />បោះពុម្ព
                                                                 </Link>
                                                             </>
                                                         ) : (
                                                             <>
-                                                                <button className="block w-full text-left px-4 py-2 text-red-500 opacity-50 cursor-not-allowed">
+                                                                <button className="block w-full px-4 py-2 text-left text-red-500 opacity-50 cursor-not-allowed">
                                                                     <MdDelete className="inline mr-2" />លុប
                                                                 </button>
-                                                                <span className="block w-full text-left px-4 py-2 text-blue-500 opacity-50 cursor-not-allowed">
+                                                                <span className="block w-full px-4 py-2 text-left text-blue-500 opacity-50 cursor-not-allowed">
                                                                     <FaPencilAlt className="inline mr-2" />កែប្រែ
                                                                 </span>
-                                                                <Link to={`/product/${product.id}`} className="block w-full text-left px-4 py-2 text-green-500 hover:bg-gray-100">
+                                                                <Link to={`/product/${product.id}`} className="block w-full px-4 py-2 text-left text-green-500 hover:bg-gray-100">
                                                                     <IoPrint className="inline mr-2" />បោះពុម្ព
                                                                 </Link>
                                                             </>
@@ -469,7 +471,7 @@ const Dashboard = () => {
                         exit={{ opacity: 0, scale: 0.8 }}
                         transition={{ duration: 0.2 }}
                     >
-                        <div className="modal_center max-w-sm">
+                        <div className="max-w-sm modal_center">
                             <div className="modal_title">
                                 <h3 className="">លុបទំនិញ</h3>
 
@@ -510,7 +512,7 @@ const Dashboard = () => {
                         exit={{ opacity: 0, scale: 0.8 }}
                         transition={{ duration: 0.2 }}
                     >
-                        <div className="relative w-full bg-white shadow mt-20 dark:bg-gray-700 max-w-lg">
+                        <div className="relative w-full max-w-lg mt-20 bg-white shadow dark:bg-gray-700">
                             <div className="modal_title">
                                 <h3 className="">កែប្រែផលិតផលមកដល់ស្តុក</h3>
                                 <MdClose className='text-2xl cursor-pointer' onClick={() => setIsModalUpdateStatus(false)} />
@@ -546,7 +548,7 @@ const Dashboard = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
-            <div className='flex space-x-8 py-2'>
+            <div className='flex py-2 space-x-8'>
                 <p className='text-red-500'>ឈ្មោះផលិតផល « ក្រហម » ថ្ងៃផុតកំណត់</p>
                 <p className='text-blue-500'>ឈ្មោះផលិតផល « ខៀវ » នៅសល់៧ថ្ងៃផុតកំណត់</p>
                 <p className='text-green-500'>ឈ្មោះផលិតផល « បៃតង » នៅសល់15ថ្ងៃផុតកំណត់</p>

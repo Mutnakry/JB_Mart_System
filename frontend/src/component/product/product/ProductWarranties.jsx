@@ -160,9 +160,9 @@ const ProductWarranties = () => {
       <Navbar />
       <div className='Nav_bar'>
       <div className=' Div_bar'>
-        <div className="flex items-center mb-3 gap-2">
+        <div className="flex items-center gap-2 mb-3">
             <p><FaCcApplePay className="text-lg" /></p>
-            <p className="font-NotoSansKhmer font-bold">តារាងបញ្ជី</p>
+            <p className="font-bold font-NotoSansKhmer">តារាងបញ្ជី</p>
           </div>
           <div className="flex justify-end">
             <button className="button_only_submit" onClick={openInsertModal}>+ បង្កើតគណនីថ្មី</button>
@@ -177,12 +177,12 @@ const ProductWarranties = () => {
             />
           </div>
 
-          <div className="relative overflow-x-auto h-screen scrollbar-hidden">
+          <div className="relative h-screen overflow-x-auto scrollbar-hidden">
             <AnimatePresence>
 
               <table className="min-w-full table-auto">
-                <thead className="bg-blue-600/95 text-white">
-                  <tr className="font-NotoSansKhmer font-bold">
+                <thead className="text-white bg-blue-600/95">
+                  <tr className="font-bold font-NotoSansKhmer">
                     <th className="px-4 py-2">លេខរៀង</th>
                     <th className="px-4 py-2">ឈ្មោះទំនិញ</th>
                     <th className="px-4 py-2">រយៈពេល</th>
@@ -191,7 +191,7 @@ const ProductWarranties = () => {
                   </tr>
                 </thead>
                 {searchQuery && filteredWarrentys.length === 0 ? (
-                  <div className="text-center py-4 text-red-500">រកមិនឃើញផលិតផល "{searchQuery}"</div>
+                  <div className="py-4 text-center text-red-500">រកមិនឃើញផលិតផល "{searchQuery}"</div>
                 ) : (
                   <tbody>
                     {filteredWarrentys.map((customer, index) => (
@@ -202,24 +202,24 @@ const ProductWarranties = () => {
                         exit="exit"
                         variants={rowAnimation}
                         transition={{ duration: 0.3 }}
-                        className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100"
+                        className="text-sm duration-100 font-NotoSansKhmer hover:scale-y-110"
                       >
                         <td className="px-4 py-1">{index + 1}</td>
                         <td className="px-4 py-1">{customer.pro_names}</td>
                         <td className="px-4 py-1 capitalize">{customer.duration} {customer.type}</td>
                         <td className="px-4 py-1">{customer.description || 'N/A'}</td>
-                        <td className="px-4 space-x-2 flex">
+                        <td className="flex px-4 space-x-2">
                           <button
                             onClick={() => openUpdateModal(customer)}
-                            className="bg-blue-300 p-2 flex text-xs text-white"
+                            className="flex p-2 text-xs text-white bg-blue-500"
                           >
-                            <FaPencilAlt className="text-blue-500 mr-2" /> កែសម្រួល
+                            <FaPencilAlt className="text-white " /> 
                           </button>
                           <button
                             onClick={() => openDeleteModal(customer)}
-                            className="bg-red-300 p-2 flex text-xs text-white"
+                            className="flex p-2 text-xs text-white bg-red-500"
                           >
-                            <MdDelete className="text-red-500 mr-2" /> លុប
+                            <MdDelete className="text-white" />
                           </button>
                         </td>
                       </motion.tr>
@@ -242,17 +242,17 @@ const ProductWarranties = () => {
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.2 }}
           >
-            <div className="modal_center max-w-xl">
+            <div className="max-w-xl modal_center">
               <div className="modal_title">
                 <h3 className="">ផលិតផល</h3>
                 <MdClose className='text-2xl cursor-pointer' onClick={() => setIsInsertModalOpen(false)} />
               </div>
               <div className="modal_form">
-                <form class="" onSubmit={CreateWarrenty}>
+                <form className="" onSubmit={CreateWarrenty}>
                   <div className="">
-                    <div class="grid gap-4 mb-4 grid-cols-2">
-                      <div class="col-span-2">
-                        <label className="font-NotoSansKhmer font-bold">ឈ្មោះផលិតផល: *</label>
+                    <div className="grid grid-cols-2 gap-4 mb-4">
+                      <div className="col-span-2">
+                        <label className="font-bold font-NotoSansKhmer">ឈ្មោះផលិតផល: *</label>
                         <select
                           className='input_text'
                           id="bank"
@@ -269,8 +269,8 @@ const ProductWarranties = () => {
                         </select>
                       </div>
                       
-                      <div class="col-span-1">
-                        <label className="font-NotoSansKhmer font-bold">រយៈពេល:*</label>
+                      <div className="col-span-1">
+                        <label className="font-bold font-NotoSansKhmer">រយៈពេល:*</label>
                         <input
                           type="number"
                           value={duration}
@@ -280,8 +280,8 @@ const ProductWarranties = () => {
                           placeholder="លេខគណនី" required
                         />
                       </div>
-                      <div class="col-span-1">
-                        <label className="font-NotoSansKhmer font-bold">ប្រភេទ: *</label>
+                      <div className="col-span-1">
+                        <label className="font-bold font-NotoSansKhmer">ប្រភេទ: *</label>
                         <select
                           className='input_text'
                           id="bank"
@@ -294,13 +294,13 @@ const ProductWarranties = () => {
                           <option value="ឆ្នាំ" >ឆ្នាំ</option>
                         </select>
                       </div>
-                      <div class="col-span-2">
-                        <label className="font-NotoSansKhmer font-bold">ចំណាំ</label>
+                      <div className="col-span-2">
+                        <label className="font-bold font-NotoSansKhmer">ចំណាំ</label>
                         <textarea id="description"
                           rows="4"
                           value={description}
                           onChange={e => setdescription(e.target.value)}
-                          class="input_text"
+                          className="input_text"
                           placeholder="ចំណាំ">
                         </textarea>
                       </div>
@@ -331,7 +331,7 @@ const ProductWarranties = () => {
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.2 }}
           >
-            <div className="modal_center max-w-sm">
+            <div className="max-w-sm modal_center">
               <div className="modal_title">
                 <h3 className="">លុបប្រគណនី</h3>
 
@@ -362,6 +362,7 @@ const ProductWarranties = () => {
           </motion.div>
         )}
       </AnimatePresence >
+      
       {/* update */}
       <AnimatePresence>
         {isUpdateModalOpen && (
@@ -372,7 +373,7 @@ const ProductWarranties = () => {
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.2 }}
           >
-            <div className="modal_center max-w-xl">
+            <div className="max-w-xl modal_center">
               <div className="modal_title">
                 <h3>កែប្រែផលិតផល</h3>
                 <MdClose className='text-2xl cursor-pointer' onClick={() => setIsUpdateModalOpen(false)} />
@@ -380,9 +381,9 @@ const ProductWarranties = () => {
               <div className="modal_form">
                 <form onSubmit={UpdateAccount}>
                   <div className="">
-                    <div className="grid gap-4 mb-4 grid-cols-2">
+                    <div className="grid grid-cols-2 gap-4 mb-4">
                       <div className="col-span-2">
-                        <label className="font-NotoSansKhmer font-bold">ឈ្មោះផលិតផល: *</label>
+                        <label className="font-bold font-NotoSansKhmer">ឈ្មោះផលិតផល: *</label>
                         <select
                           className="input_text"
                           value={pro_names}
@@ -398,7 +399,7 @@ const ProductWarranties = () => {
                         </select>
                       </div>
                       <div className="col-span-1">
-                        <label className="font-NotoSansKhmer font-bold">រយៈពេល:*</label>
+                        <label className="font-bold font-NotoSansKhmer">រយៈពេល:*</label>
                         <input
                           type="number"
                           value={duration}
@@ -409,7 +410,7 @@ const ProductWarranties = () => {
                         />
                       </div>
                       <div className="col-span-1">
-                        <label className="font-NotoSansKhmer font-bold">ប្រភេទ: *</label>
+                        <label className="font-bold font-NotoSansKhmer">ប្រភេទ: *</label>
                         <select
                           className="input_text"
                           value={type}
@@ -422,7 +423,7 @@ const ProductWarranties = () => {
                         </select>
                       </div>
                       <div className="col-span-2">
-                        <label className="font-NotoSansKhmer font-bold">ចំណាំ</label>
+                        <label className="font-bold font-NotoSansKhmer">ចំណាំ</label>
                         <textarea
                           value={description}
                           onChange={(e) => setdescription(e.target.value)}

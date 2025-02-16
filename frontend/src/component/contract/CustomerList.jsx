@@ -240,14 +240,14 @@ const Supplier = () => {
 
     return (
         <div>
-            <div className="flex items-center mb-3 gap-2 ">
+            <div className="flex items-center gap-2 mb-3 ">
                 <p><FaClipboardList className="text-lg " /></p>
-                <p className="font-NotoSansKhmer font-bold ">តារាងបញ្ជីអតិជន</p>
+                <p className="font-bold font-NotoSansKhmer ">តារាងបញ្ជីអតិជន</p>
             </div>
             <div className="flex justify-end">
                 <button className="button_only_submit" onClick={openInsertModal}>+ បង្កើតអតិជនថ្មី</button>
             </div>
-            <div className="flex justify-between items-center my-3">
+            <div className="flex items-center justify-between my-3">
                 <div className="flex flex-col gap-2 font-bold font-NotoSansKhmer">
                     <label htmlFor="">ច្រោះតាមចំនួន</label>
                     <select
@@ -266,11 +266,11 @@ const Supplier = () => {
                         className="input_text w-[300px]" placeholder="ស្វែងរកឈ្មោះអជីវកម្ម និង អតិជន......." />
                 </div>
             </div>
-            <div class="relative overflow-x-auto h-screen scrollbar-hidden">
+            <div className="relative h-screen overflow-x-auto scrollbar-hidden">
                 <AnimatePresence>
                     <table className="min-w-full table-auto">
-                        <thead className="bg-blue-600/95 text-white">
-                            <tr className="font-NotoSansKhmer font-bold">
+                        <thead className="text-white bg-blue-600/95">
+                            <tr className="font-bold font-NotoSansKhmer">
                                 <th className="px-4 py-2">លេខរៀង</th>
                                 <th className="px-4 py-2">ឈ្មោះអជីវកម្ម</th>
                                 <th className="px-4 py-2">ឈ្មោះអតិជន</th>
@@ -291,7 +291,7 @@ const Supplier = () => {
                         ) : error ? (
                             <p>{error}</p>
                         ) : customers.length === 0 ? (
-                            <p className="text-start py-4 px-10 text-red-500">រកមិនឃើញប្រភេទ ? {searchQuery}</p>
+                            <p className="px-10 py-4 text-red-500 text-start">រកមិនឃើញប្រភេទ ? {searchQuery}</p>
                         ) : (
                             <tbody>
                                 {customers.map((customer, index) => (
@@ -302,7 +302,7 @@ const Supplier = () => {
                                         exit="exit"
                                         variants={rowAnimation}
                                         transition={{ duration: 0.3 }}
-                                        className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100">
+                                        className="text-sm duration-100 font-NotoSansKhmer hover:scale-y-110">
                                         <td className="px-4 py-1">{index + 1}</td>
                                         <td className="px-4 py-1">{customer.business_names}</td>
                                         <td className="px-4 py-1">{customer.full_names}</td>
@@ -314,28 +314,28 @@ const Supplier = () => {
                                         <td className="px-4 py-1">{customer.contect_phone || 'N/A'}</td>
                                         <td className="px-4 py-1">{customer.description || 'N/A'}</td>
                                         <td className="px-4 py-1">{customer.user_at || 'Unknown'}</td>
-                                        <td className="px-4 space-x-2 flex">
+                                        <td className="flex px-4 space-x-2">
                                             {/* Conditional rendering for buttons */}
                                             {customer.full_names !== 'Walk-In Customer' && (
                                                 <>
                                                     <button
                                                         onClick={() => openUpdateModal(customer)}
-                                                        className="bg-blue-300 p-2 flex text-xs text-white"
+                                                        className="flex p-2 text-xs text-white bg-blue-500"
                                                     >
-                                                        <FaPencilAlt className="text-blue-600 mr-2" /> កែសម្រួល
+                                                        <FaPencilAlt className="text-white" /> 
                                                     </button>
                                                     {(userRol === 'superadmin' || userRol === 'admin') ? (
                                                         <button
                                                             onClick={() => openDeleteModal(customer)}
-                                                            className="bg-red-300 p-2 flex text-xs text-white"
+                                                            className="flex p-2 text-sm text-white bg-red-500"
                                                         >
-                                                            <MdDelete className="text-red-500 mr-2" /> លុប
+                                                            <MdDelete className="text-white" />
                                                         </button>
                                                     ) : (
                                                         <button
-                                                            className="bg-red-300 p-2 flex text-xs text-white opacity-50 cursor-not-allowed"
+                                                            className="flex p-2 text-sm text-white bg-red-500 opacity-50 cursor-not-allowed"
                                                         >
-                                                            <MdDelete className="text-red-500 mr-2" /> លុប
+                                                            <MdDelete className="text-white" />
                                                         </button>
                                                     )}
 
@@ -369,7 +369,7 @@ const Supplier = () => {
                         exit={{ opacity: 0, scale: 0.8 }}
                         transition={{ duration: 0.2 }}
                     >
-                        <div className="modal_center max-w-2xl">
+                        <div className="max-w-2xl modal_center">
                             <div className="modal_title">
                                 <h3 className="">អតិជន</h3>
                                 <MdClose className='text-2xl cursor-pointer' onClick={() => setIsInsertModalOpen(false)} />
@@ -378,7 +378,7 @@ const Supplier = () => {
                                 <form onSubmit={createCustomer}>
                                     <div className="my-2">
                                         <div className="flex flex-col gap-2">
-                                            <label htmlFor="supplierType" className="font-NotoSansKhmer font-bold">
+                                            <label htmlFor="supplierType" className="font-bold font-NotoSansKhmer">
                                                 ប្រភេទអតិជន: *
                                             </label>
                                             <select
@@ -397,7 +397,7 @@ const Supplier = () => {
                                     {isTypwCustomer === 'ផ្ទាល់ខ្លួន' && (
                                         <div>
                                             <div className="flex flex-col gap-2">
-                                                <label htmlFor="customeNames" className="font-NotoSansKhmer font-bold">ឈ្មោះអតិជន</label>
+                                                <label htmlFor="customeNames" className="font-bold font-NotoSansKhmer">ឈ្មោះអតិជន</label>
                                                 <input
                                                     type="text"
                                                     id="customeNames"
@@ -410,11 +410,11 @@ const Supplier = () => {
                                             </div>
                                         </div>
                                     )}
-                                    <div className="flex flex-wrap gap-3 items-center w-full">
+                                    <div className="flex flex-wrap items-center w-full gap-3">
                                         {isTypwCustomer === "ផ្ទាល់ខ្លួន" && (
                                             <div className="grid grid-cols-2 gap-2">
                                                 <div className="col-span-1 gap-2">
-                                                    <label htmlFor="halfcustomeNames" className="font-NotoSansKhmer font-bold">ឈ្មោះអតិជន(ឈ្មោះកាត់)</label>
+                                                    <label htmlFor="halfcustomeNames" className="font-bold font-NotoSansKhmer">ឈ្មោះអតិជន(ឈ្មោះកាត់)</label>
                                                     <input
                                                         type="text"
                                                         id="halfcustomeNames"
@@ -425,7 +425,7 @@ const Supplier = () => {
                                                     />
                                                 </div>
                                                 <div className="col-span-1 gap-2">
-                                                    <label htmlFor="phoneNumber" className="font-NotoSansKhmer font-bold">លេខទូរស័ព្ទ: *</label>
+                                                    <label htmlFor="phoneNumber" className="font-bold font-NotoSansKhmer">លេខទូរស័ព្ទ: *</label>
                                                     <input
                                                         type="text"
                                                         id="phoneNumber"
@@ -441,7 +441,7 @@ const Supplier = () => {
                                         {isTypwCustomer === "អជីវកម្ម" && (
                                             <div className="grid grid-cols-2 gap-2">
                                                 <div className="col-span-1 gap-2">
-                                                    <label htmlFor="businessName" className="font-NotoSansKhmer font-bold">ឈ្មោះអជីវកម្ម: *</label>
+                                                    <label htmlFor="businessName" className="font-bold font-NotoSansKhmer">ឈ្មោះអជីវកម្ម: *</label>
                                                     <input
                                                         type="text"
                                                         id="businessName"
@@ -453,7 +453,7 @@ const Supplier = () => {
                                                     />
                                                 </div>
                                                 <div className="col-span-1 gap-2">
-                                                    <label htmlFor="businessPhone" className="font-NotoSansKhmer font-bold">លេខទូរស័ព្ទ: *</label>
+                                                    <label htmlFor="businessPhone" className="font-bold font-NotoSansKhmer">លេខទូរស័ព្ទ: *</label>
                                                     <input
                                                         type="text"
                                                         id="businessPhone"
@@ -468,7 +468,7 @@ const Supplier = () => {
                                         )}
                                         <div className='grid grid-cols-2 gap-3'>
                                             <div className="col-span-1 gap-2">
-                                                <label htmlFor="supplierID" className="font-NotoSansKhmer font-bold">លេខសម្គាល់ទំនាក់ទំនង</label>
+                                                <label htmlFor="supplierID" className="font-bold font-NotoSansKhmer">លេខសម្គាល់ទំនាក់ទំនង</label>
                                                 <input
                                                     type="text"
                                                     id="supplierID"
@@ -479,7 +479,7 @@ const Supplier = () => {
                                                 />
                                             </div>
                                             <div className="col-span-1 gap-2">
-                                                <label htmlFor="email" className="font-NotoSansKhmer font-bold">អ៊ីម៉ែល</label>
+                                                <label htmlFor="email" className="font-bold font-NotoSansKhmer">អ៊ីម៉ែល</label>
                                                 <input
                                                     type="text"
                                                     id="email"
@@ -492,7 +492,7 @@ const Supplier = () => {
                                         </div>
                                     </div>
                                     <div className="flex flex-col gap-2">
-                                        <label htmlFor="groupCustomer" className="font-NotoSansKhmer font-bold">ក្រុមអតិជន: *</label>
+                                        <label htmlFor="groupCustomer" className="font-bold font-NotoSansKhmer">ក្រុមអតិជន: *</label>
                                         <select
                                             className='input_text'
                                             id="bank"
@@ -509,12 +509,12 @@ const Supplier = () => {
                                         </select>
                                     </div>
                                     <div className="col-span-2 gap-3 mt-3">
-                                        <label htmlFor="description" className="font-NotoSansKhmer font-bold">ពិពណ៌នា</label>
+                                        <label htmlFor="description" className="font-bold font-NotoSansKhmer">ពិពណ៌នា</label>
                                         <textarea
                                             id="description"
                                             value={description}
                                             onChange={(e) => setDescription(e.target.value)}
-                                            className="input_text w-full py-5"
+                                            className="w-full py-5 input_text"
                                             placeholder="ពិពណ៌នា"
                                         />
                                     </div>
@@ -538,7 +538,7 @@ const Supplier = () => {
                         exit={{ opacity: 0, scale: 0.8 }}
                         transition={{ duration: 0.2 }}
                     >
-                        <div className="modal_center max-w-sm">
+                        <div className="max-w-sm modal_center">
                             <div className="modal_title">
                                 <h3 className="">លុបប្រអតិជន</h3>
 
@@ -554,7 +554,7 @@ const Supplier = () => {
                                         className="button_only_close"
                                         onClick={() => setIsDeleteModalOpen(false)}
                                     >
-                                        មិនលុប
+                                        បោះបង់
                                     </button>
                                     <button
                                         type="button"
@@ -579,7 +579,7 @@ const Supplier = () => {
                         exit={{ opacity: 0, scale: 0.8 }}
                         transition={{ duration: 0.2 }}
                     >
-                        <div className="modal_center max-w-xl">
+                        <div className="max-w-xl modal_center">
                             <div className="modal_title">
                                 <h3 className="">កែប្រែអតិជន</h3>
                                 <MdClose className='text-2xl cursor-pointer' onClick={() => setIsUpdateModalOpen(false)} />
@@ -589,7 +589,7 @@ const Supplier = () => {
                                 <form onSubmit={UpdateCustomer}>
                                     <div className="my-2">
                                         <div className="flex flex-col gap-2">
-                                            <label htmlFor="supplierType" className="font-NotoSansKhmer font-bold">
+                                            <label htmlFor="supplierType" className="font-bold font-NotoSansKhmer">
                                                 ប្រភេទអតិជន: *
                                             </label>
                                             <select
@@ -608,7 +608,7 @@ const Supplier = () => {
                                     {isTypwCustomer === 'ផ្ទាល់ខ្លួន' && (
                                         <div>
                                             <div className="flex flex-col gap-2">
-                                                <label htmlFor="customeNames" className="font-NotoSansKhmer font-bold">ឈ្មោះអតិជន</label>
+                                                <label htmlFor="customeNames" className="font-bold font-NotoSansKhmer">ឈ្មោះអតិជន</label>
                                                 <input
                                                     type="text"
                                                     id="customeNames"
@@ -621,11 +621,11 @@ const Supplier = () => {
                                             </div>
                                         </div>
                                     )}
-                                    <div className="flex flex-wrap gap-3 items-center w-full">
+                                    <div className="flex flex-wrap items-center w-full gap-3">
                                         {isTypwCustomer === "ផ្ទាល់ខ្លួន" && (
                                             <div className="grid grid-cols-2 gap-2">
                                                 <div className="col-span-1 gap-2">
-                                                    <label htmlFor="halfcustomeNames" className="font-NotoSansKhmer font-bold">ឈ្មោះអតិជន(ឈ្មោះកាត់)</label>
+                                                    <label htmlFor="halfcustomeNames" className="font-bold font-NotoSansKhmer">ឈ្មោះអតិជន(ឈ្មោះកាត់)</label>
                                                     <input
                                                         type="text"
                                                         id="halfcustomeNames"
@@ -636,7 +636,7 @@ const Supplier = () => {
                                                     />
                                                 </div>
                                                 <div className="col-span-1 gap-2">
-                                                    <label htmlFor="phoneNumber" className="font-NotoSansKhmer font-bold">លេខទូរស័ព្ទ: *</label>
+                                                    <label htmlFor="phoneNumber" className="font-bold font-NotoSansKhmer">លេខទូរស័ព្ទ: *</label>
                                                     <input
                                                         type="text"
                                                         id="phoneNumber"
@@ -652,7 +652,7 @@ const Supplier = () => {
                                         {isTypwCustomer === "អជីវកម្ម" && (
                                             <div className="grid grid-cols-2 gap-2">
                                                 <div className="col-span-1 gap-2">
-                                                    <label htmlFor="businessName" className="font-NotoSansKhmer font-bold">ឈ្មោះអជីវកម្ម: *</label>
+                                                    <label htmlFor="businessName" className="font-bold font-NotoSansKhmer">ឈ្មោះអជីវកម្ម: *</label>
                                                     <input
                                                         type="text"
                                                         id="businessName"
@@ -664,7 +664,7 @@ const Supplier = () => {
                                                     />
                                                 </div>
                                                 <div className="col-span-1 gap-2">
-                                                    <label htmlFor="businessPhone" className="font-NotoSansKhmer font-bold">លេខទូរស័ព្ទ: *</label>
+                                                    <label htmlFor="businessPhone" className="font-bold font-NotoSansKhmer">លេខទូរស័ព្ទ: *</label>
                                                     <input
                                                         type="text"
                                                         id="businessPhone"
@@ -680,7 +680,7 @@ const Supplier = () => {
 
                                         <div className='grid grid-cols-2 gap-3'>
                                             <div className="col-span-1 gap-2">
-                                                <label htmlFor="supplierID" className="font-NotoSansKhmer font-bold">លេខសម្គាល់ទំនាក់ទំនង</label>
+                                                <label htmlFor="supplierID" className="font-bold font-NotoSansKhmer">លេខសម្គាល់ទំនាក់ទំនង</label>
                                                 <input
                                                     type="text"
                                                     id="supplierID"
@@ -691,7 +691,7 @@ const Supplier = () => {
                                                 />
                                             </div>
                                             <div className="col-span-1 gap-2">
-                                                <label htmlFor="email" className="font-NotoSansKhmer font-bold">អ៊ីម៉ែល</label>
+                                                <label htmlFor="email" className="font-bold font-NotoSansKhmer">អ៊ីម៉ែល</label>
                                                 <input
                                                     type="text"
                                                     id="email"
@@ -704,7 +704,7 @@ const Supplier = () => {
                                         </div>
                                     </div>
                                     <div className="flex flex-col gap-2">
-                                        <label htmlFor="groupCustomer" className="font-NotoSansKhmer font-bold">ក្រុមអតិជន: *</label>
+                                        <label htmlFor="groupCustomer" className="font-bold font-NotoSansKhmer">ក្រុមអតិជន: *</label>
                                         <select
                                             className='input_text'
                                             id="bank"
@@ -721,12 +721,12 @@ const Supplier = () => {
                                         </select>
                                     </div>
                                     <div className="col-span-2 gap-3 mt-3">
-                                        <label htmlFor="description" className="font-NotoSansKhmer font-bold">ពិពណ៌នា</label>
+                                        <label htmlFor="description" className="font-bold font-NotoSansKhmer">ពិពណ៌នា</label>
                                         <textarea
                                             id="description"
                                             value={description}
                                             onChange={(e) => setDescription(e.target.value)}
-                                            className="input_text w-full py-5"
+                                            className="w-full py-5 input_text"
                                             placeholder="ពិពណ៌នា"
                                         />
                                     </div>
