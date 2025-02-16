@@ -191,25 +191,25 @@ function CreateProduct() {
       <div className='py-12 px-6 sm:ml-64 md:w-auto w-[860px] bg-gray-200 dark:bg-gray-950'>
         <div className="w-full p-4 mt-10 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
           <div className='flex items-center gap-2 pb-5'>
-            <p className='font-NotoSansKhmer font-bold text-3xl'>បន្ថែមការទិញ </p>
+            <p className='text-2xl font-bold font-NotoSansKhmer'>+ បង្កើតផលិតផលថ្មី </p>
           </div>
 
-          <form class="" onSubmit={Createproduct}>
+          <form className="" onSubmit={Createproduct}>
             <div className="">
-              <div className='grid gap-4 mb-4 md:grid-cols-3 grid-cols-2'>
-                <div class="col-span-1 space-y-2">
-                  <label className="font-NotoSansKhmer font-bold">ឈ្មោះផលិតផល: *</label>
+              <div className='grid grid-cols-2 gap-4 mb-4 md:grid-cols-3'>
+                <div className="col-span-1 space-y-2">
+                  <label className="font-bold font-NotoSansKhmer">ឈ្មោះផលិតផល: *</label>
                   <input
                     type="text"
                     value={ProNames}
                     onChange={e => setProNames(e.target.value)}
                     id="price"
-                    class="input_text "
+                    className="input_text "
                     placeholder="ឈ្មោះទំនិញ" required
                   />
                 </div>
-                <div class="col-span-1 space-y-2">
-                  <label className="font-NotoSansKhmer font-bold">ប្រភេទបាកូដ:*</label>
+                <div className="col-span-1 space-y-2">
+                  <label className="font-bold font-NotoSansKhmer">ប្រភេទបាកូដ:*</label>
                   <select
                     name=""
                     value={barcode_type}
@@ -226,10 +226,10 @@ function CreateProduct() {
                   </select>
                 </div>
               </div>
-              <div className='border-t-2 border-yellow-600 shadow p-4 mb-4 rounded-lg'>
-                <div class="grid gap-4 mb-4 md:grid-cols-3 grid-cols-2">
-                  <div class="col-span-1  space-y-2">
-                    <label className="font-NotoSansKhmer font-bold">ឯកតា:* </label>
+              <div className='p-4 mb-4 border-t-2 border-yellow-600 shadow'>
+                <div className="grid grid-cols-2 gap-4 mb-4 md:grid-cols-3">
+                  <div className="col-span-1 space-y-2">
+                    <label className="font-bold font-NotoSansKhmer">ឯកតា:* </label>
                     <select
                       className='input_text'
                       id="unit_ID"
@@ -246,8 +246,8 @@ function CreateProduct() {
 
                     </select>
                   </div>
-                  <div class="col-span-1  space-y-2">
-                    <label className="font-NotoSansKhmer font-bold">ម៉ាកយីហោ:</label>
+                  <div className="col-span-1 space-y-2">
+                    <label className="font-bold font-NotoSansKhmer">ម៉ាកយីហោ:</label>
                     <select
                       className='input_text'
                       id="brand_ID"
@@ -264,8 +264,8 @@ function CreateProduct() {
 
                     </select>
                   </div>
-                  <div class="col-span-1  space-y-2">
-                    <label className="font-NotoSansKhmer font-bold">ប្រភេទទំនេញ:</label>
+                  <div className="col-span-1 space-y-2">
+                    <label className="font-bold font-NotoSansKhmer">ប្រភេទទំនេញ:</label>
                     <select
                       className='input_text'
                       value={category_ID}
@@ -281,22 +281,22 @@ function CreateProduct() {
                     </select>
                   </div>
 
-                  <div class="col-span-1  space-y-2">
-                    <label className="font-NotoSansKhmer font-bold">ថ្ងៃផុតកំណត់</label>
+                  <div className="col-span-1 space-y-2">
+                    <label className="font-bold font-NotoSansKhmer">ថ្ងៃផុតកំណត់</label>
                     <input
                       type="date"
                       value={expiry}
                       onChange={e => setExpiry(e.target.value)}
                       id="price"
                       min={today}
-                      class="input_text "
+                      className="input_text "
                     />
                   </div>
 
 
-                  <div className="flex justify-center items-center">
+                  <div className="flex items-center justify-center">
                     <div className="col-span-1 space-y-2 text-center">
-                      <label className="font-NotoSansKhmer border-dashed rounded-lg cursor-pointer bg-gray-50 font-bold">
+                      <label className="font-bold border-dashed rounded-lg cursor-pointer font-NotoSansKhmer bg-gray-50">
                         រូបភាពផលិតផល
                       </label>
 
@@ -305,7 +305,7 @@ function CreateProduct() {
                         className="flex flex-col items-center justify-center w-32 h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50"
                       >
                         {image ? (
-                          <img src={image} alt="Uploaded Preview" className="w-full h-full object-contain rounded-lg" />
+                          <img src={image} alt="Uploaded Preview" className="object-contain w-full h-full rounded-lg" />
                         ) : (
                           <div className="flex flex-col items-center justify-center pt-5 pb-6">
                             <svg
@@ -338,7 +338,7 @@ function CreateProduct() {
                   </div>
 
 
-                  <div className="grid grid-cols-2 gap-5 col-span-2">
+                  <div className="grid grid-cols-2 col-span-2 gap-5">
                     {/* Toggle Switch */}
                     <label className="inline-flex items-center mb-5 cursor-pointer">
                       <input
@@ -348,7 +348,7 @@ function CreateProduct() {
                         className="sr-only peer"
                       />
                       <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                      <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+                      <span className="text-sm font-medium text-gray-900 ms-3 dark:text-gray-300">
                         {enabled === 'enable' ? 'គ្រប់គ្រងស្តុក' : 'បិទគ្រប់គ្រងស្តុក'}
                       </span>
                     </label>
@@ -357,7 +357,7 @@ function CreateProduct() {
                     {enabled === 'enable' && (
                       <div className="space-y-2">
                         <div className="col-span-1 space-y-2">
-                          <label className="font-NotoSansKhmer font-bold">ជូនដំណឹងពីបរិមាណៈ</label>
+                          <label className="font-bold font-NotoSansKhmer">ជូនដំណឹងពីបរិមាណៈ</label>
                           <input
                             type="number"
                             value={note_QTY}
@@ -371,23 +371,23 @@ function CreateProduct() {
                     )}
                   </div>
 
-                  <div class="col-span-3">
-                    <label className="font-NotoSansKhmer font-bold">ការណិពណ័នា</label>
+                  <div className="col-span-3">
+                    <label className="font-bold font-NotoSansKhmer">ការណិពណ័នា</label>
                     <textarea id="description"
                       rows="4"
                       value={description}
                       onChange={e => setDescription(e.target.value)}
-                      class="input_text"
+                      className="input_text"
                       placeholder="ការណិពណ័នា">
                     </textarea>
                   </div>
                 </div>
               </div>
 
-              <div className='border-t-2 border-blue-600 shadow p-4 mb-4 rounded-lg'>
-                <div className='grid gap-4 mb-4 md:grid-cols-3 grid-cols-2'>
-                  <div class="col-span-1  space-y-2">
-                    <label className="font-NotoSansKhmer font-bold">ប្រភេទផលិតផល: *</label>
+              <div className='p-4 mb-4 border-t-2 border-blue-600 shadow'>
+                <div className='grid grid-cols-2 gap-4 mb-4 md:grid-cols-3'>
+                  <div className="col-span-1 space-y-2">
+                    <label className="font-bold font-NotoSansKhmer">ប្រភេទផលិតផល: *</label>
                     <select
                       className='input_text'
                       value={product_type}
@@ -397,8 +397,8 @@ function CreateProduct() {
                       <option value="កញ្ចប់">កញ្ចប់</option>
                     </select>
                   </div>
-                  <div class="col-span-1  space-y-2">
-                    <label className="font-NotoSansKhmer font-bold">ប្រភេទពន្ធលើតម្លៃលក់: *</label>
+                  <div className="col-span-1 space-y-2">
+                    <label className="font-bold font-NotoSansKhmer">ប្រភេទពន្ធលើតម្លៃលក់: *</label>
                     <select
                       className='input_text'
                       value={type_Tax}
@@ -509,13 +509,13 @@ function CreateProduct() {
                   </div>
                 </div>
               </div>
-              <div className='flex justify-end mb-10 py-4 space-x-4'>
+              <div className='flex justify-end py-4 mb-10 space-x-4'>
                 <button
                   name='savetoproduct'
                   type="submit"
-                  className="button_only_submit text-center flex justify-center items-center px-16 py-2 bg-blue-500 text-white hover:bg-blue-600 transition"
+                  className="flex items-center justify-center px-16 py-2 text-center text-white transition bg-blue-500 button_only_submit hover:bg-blue-600"
                 >
-                  រក្សាទុក្ខ
+                  រក្សាទុក
                 </button>
               </div>
             </div>

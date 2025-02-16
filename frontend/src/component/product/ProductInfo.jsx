@@ -140,12 +140,12 @@ const Dashboard = () => {
       <div>
         <div className="flex items-center gap-2 ">
           <p><FaClipboardList className="text-lg " /></p>
-          <p className="font-NotoSansKhmer font-bold ">តារាងបញ្ជីប្រភេទទំនិញ</p>
+          <p className="font-bold font-NotoSansKhmer ">តារាងបញ្ជីប្រភេទទំនិញ</p>
         </div>
         <div className="flex justify-end">
           <Link to={'/createproduct'} className="button_only_submit">+ បង្កើតប្រភេទថ្មី</Link>
         </div>
-        <div className="md:flex justify-between items-center my-3 overflow-hidden space-y-2">
+        <div className="items-center justify-between my-3 space-y-2 overflow-hidden md:flex">
           <div className="flex flex-col gap-2 font-bold font-NotoSansKhmer">
             <label htmlFor="">ច្រោះតាមចំនួន</label>
             <select
@@ -164,28 +164,28 @@ const Dashboard = () => {
               className="input_text w-[300px]" placeholder="ស្វែងរកអ្នកផ្គត់ផ្គង់..." />
           </div>
         </div>
-        <div class="relative overflow-x-auto h-screen scrollbar-hidden">
+        <div className="relative h-screen overflow-x-auto scrollbar-hidden">
           <AnimatePresence>
             <table className="min-w-full table-auto">
-              <thead className="bg-blue-600/95 text-white">
-                <tr className="font-NotoSansKhmer font-bold text-sm">
-                  <th className=" px-4 py-2">លេខរៀង</th>
-                  <th className=" px-4 py-2 whitespace-nowrap">ឈ្មោះផលិតផល</th>
-                  <th className=" px-4 py-2">ប្រភេទទំនិញ</th>
-                  <th className=" px-4 py-2">ម៉ាលយីយោ</th>
-                  <th className=" px-4 py-2">ប្រភេទផលិតផល</th>
-                  <th className=" px-4 py-2">បង្កើតនៅថ្ងៃទី</th>
-                  <th className=" px-4 py-2">តម្លៃទិញចូលក្នុងមួយឯកតា</th>
-                  <th className=" px-4 py-2">តម្លៃលក់ចេញក្នុងមួយឯកតា</th>
-                  <th className=" px-4 py-2">ពន្ធ</th>
-                  <th className=" px-4 py-2">តម្លៃចំនេញ</th>
-                  <th className=" px-4 py-2">បច្ចុប្បន្នភាពស្តុក</th>
-                  <th className=" px-4 py-2">សរុបចំនួនស្តុក</th>
-                  <th className=" px-4 py-2">ចំនួនលក់សរុប sto - qt</th>
-                  <th className=" px-4 py-2">	តម្លៃស្ដុកបច្ចុប្បន្ន(ដោយថ្លៃទិញចូល)</th>
-                  <th className=" px-4 py-2">តម្លៃស្ដុកបច្ចុប្បន្ន(ដោយថ្លៃលក់ចេញ)</th>
-                  <th className=" px-4 py-2">សាច់ប្រាក់ចំណេញសក្ដានុពល</th>
-                  <th className=" px-4 py-2">សកម្មភាព</th>
+              <thead className="text-white bg-blue-600/95">
+                <tr className="text-sm font-bold font-NotoSansKhmer">
+                  <th className="px-4 py-2 ">លេខរៀង</th>
+                  <th className="px-4 py-2 whitespace-nowrap">ឈ្មោះផលិតផល</th>
+                  <th className="px-4 py-2 ">ប្រភេទទំនិញ</th>
+                  <th className="px-4 py-2 ">ម៉ាលយីយោ</th>
+                  <th className="px-4 py-2 ">ប្រភេទផលិតផល</th>
+                  <th className="px-4 py-2 ">បង្កើតនៅថ្ងៃទី</th>
+                  <th className="px-4 py-2 ">តម្លៃទិញចូលក្នុងមួយឯកតា</th>
+                  <th className="px-4 py-2 ">តម្លៃលក់ចេញក្នុងមួយឯកតា</th>
+                  <th className="px-4 py-2 ">ពន្ធ</th>
+                  <th className="px-4 py-2 ">តម្លៃចំនេញ</th>
+                  <th className="px-4 py-2 ">បច្ចុប្បន្នភាពស្តុក</th>
+                  <th className="px-4 py-2 ">សរុបចំនួនស្តុក</th>
+                  <th className="px-4 py-2 ">ចំនួនលក់សរុប sto - qt</th>
+                  <th className="px-4 py-2 ">	តម្លៃស្ដុកបច្ចុប្បន្ន(ដោយថ្លៃទិញចូល)</th>
+                  <th className="px-4 py-2 ">តម្លៃស្ដុកបច្ចុប្បន្ន(ដោយថ្លៃលក់ចេញ)</th>
+                  <th className="px-4 py-2 ">សាច់ប្រាក់ចំណេញសក្ដានុពល</th>
+                  <th className="px-4 py-2 ">សកម្មភាព</th>
                 </tr>
               </thead>
               {loading ? (
@@ -193,7 +193,7 @@ const Dashboard = () => {
               ) : error ? (
                 <p>{error}</p>
               ) : product.length === 0 ? (
-                <p className="text-start py-4 px-10 text-red-500 whitespace-nowrap ">រកមិនឃើញប្រភេទ ? {searchQuery}</p>
+                <p className="px-10 py-4 text-red-500 text-start whitespace-nowrap ">រកមិនឃើញប្រភេទ ? {searchQuery}</p>
               ) : (
                 <tbody>
                   {product.map((product, index) => (
@@ -204,8 +204,8 @@ const Dashboard = () => {
                       exit="exit"
                       variants={rowAnimation}
                       transition={{ duration: 0.3 }}
-                      className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100">
-                      <td className=" px-4 py-1">{index + 1}</td>
+                      className="text-sm duration-100 font-NotoSansKhmer hover:scale-y-110">
+                      <td className="px-4 py-1 ">{index + 1}</td>
                       <td className='whitespace-nowrap'>
                         {(() => {
                           if (!product.expiry) {
@@ -235,22 +235,22 @@ const Dashboard = () => {
                           }
                         })()}
                       </td>
-                      <td className=" px-4 py-1">{product.cat_names || 'N/A'}</td>
+                      <td className="px-4 py-1 ">{product.cat_names || 'N/A'}</td>
                       <td className="px-4 py-1">{product.brand_names || 'N/A'}</td>
-                      <td className=" px-4 py-1">{product.product_type || 'N/A'}</td>
-                      <td className=" px-4 whitespace-nowrap py-1">{formatDateToKhmer(new Date(product.create_at))}</td>
+                      <td className="px-4 py-1 ">{product.product_type || 'N/A'}</td>
+                      <td className="px-4 py-1 whitespace-nowrap">{formatDateToKhmer(new Date(product.create_at))}</td>
 
-                      <td className=" px-4 py-1 whitespace-nowrap">{product.cost_price} $</td>
-                      <td className=" px-4 py-1 whitespace-nowrap">{product.exclude_tax} $</td>
-                      <td className=" px-4 py-1 whitespace-nowrap">{product.include_tax} $</td>
-                      <td className=" px-4 py-1 whitespace-nowrap">{product.profit} $</td>
-                      <td className="px-4 py-1  whitespace-nowrap">{product.qty} {product.unit_names}</td>
-                      <td className="px-4 py-1  whitespace-nowrap">{product.stock} {product.unit_names}</td>
-                      <td className="px-4 py-1  whitespace-nowrap">{(product.stock) - (product.qty)} {product.unit_names}</td>
-                      <td className="px-4 py-1  whitespace-nowrap">{((product.cost_price) * (product.qty)).toFixed(2)} $</td>
-                      <td className="px-4 py-1  whitespace-nowrap">{((product.exclude_tax) * (product.qty)).toFixed(2)} $</td>
-                      <td className="px-4 py-1  whitespace-nowrap">{((product.profit) * (product.qty)).toFixed(2)} $</td>
-                      <td className="px-4  space-x-2 flex">
+                      <td className="px-4 py-1 whitespace-nowrap">{product.cost_price} $</td>
+                      <td className="px-4 py-1 whitespace-nowrap">{product.exclude_tax} $</td>
+                      <td className="px-4 py-1 whitespace-nowrap">{product.include_tax} $</td>
+                      <td className="px-4 py-1 whitespace-nowrap">{product.profit} $</td>
+                      <td className="px-4 py-1 whitespace-nowrap">{product.qty} {product.unit_names}</td>
+                      <td className="px-4 py-1 whitespace-nowrap">{product.stock} {product.unit_names}</td>
+                      <td className="px-4 py-1 whitespace-nowrap">{(product.stock) - (product.qty)} {product.unit_names}</td>
+                      <td className="px-4 py-1 whitespace-nowrap">{((product.cost_price) * (product.qty)).toFixed(2)} $</td>
+                      <td className="px-4 py-1 whitespace-nowrap">{((product.exclude_tax) * (product.qty)).toFixed(2)} $</td>
+                      <td className="px-4 py-1 whitespace-nowrap">{((product.profit) * (product.qty)).toFixed(2)} $</td>
+                      <td className="flex px-4 space-x-2">
                         <Link
                           to={`/product/${product.id}`}
                           className="flex items-center gap-1 p-2 font-bold text-white bg-green-300 hover:bg-green-400"

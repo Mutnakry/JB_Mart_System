@@ -170,15 +170,15 @@ const group_customer = () => {
         exit: { opacity: 0, y: 20 }
     };
     return (
-        <div className='border p-4'>
-            <div className="flex items-center mb-3 gap-2 ">
+        <div className='p-4 border'>
+            <div className="flex items-center gap-2 mb-3 ">
                 <p><FaLayerGroup className="text-lg " /></p>
-                <p className="font-NotoSansKhmer font-bold ">តារាងបញ្ជីក្រុម</p>
+                <p className="font-bold font-NotoSansKhmer ">តារាងបញ្ជីក្រុម</p>
             </div>
             <div className="flex justify-end">
                 <button className="button_only_submit" onClick={openInsertModal}>+ បង្កើតក្រុមថ្មី</button>
             </div>
-            <div className="flex justify-between items-center my-3">
+            <div className="flex items-center justify-between my-3">
                 <div className="flex flex-col gap-2 font-bold font-NotoSansKhmer">
                     <label htmlFor="">ច្រោះតាមចំនួន</label>
                     <select
@@ -197,17 +197,17 @@ const group_customer = () => {
                         className="input_text w-[300px]" placeholder="ស្វែងរកក្រុម..." />
                 </div>
             </div>
-            <div class="relative overflow-x-auto h-screen scrollbar-hidden">
+            <div className="relative h-screen overflow-x-auto scrollbar-hidden">
                 <AnimatePresence>
                     <table className="min-w-full table-auto">
-                        <thead className="bg-blue-600/95 text-white">
-                            <tr className="font-NotoSansKhmer font-bold">
-                                <th className=" px-4 py-2">លេខរៀង</th>
-                                <th className=" px-4 py-2">ឈ្មោះក្រុម</th>
-                                <th className=" px-4 py-2">បញ្ចុំតម្លៃថេរ</th>
-                                <th className=" px-4 py-2">ព័ត៌មានលម្អិតក្រុម</th>
-                                <th className=" px-4 py-2">បានបន្ថែមដោយ</th>
-                                <th className=" px-4 py-2 text-center">សកម្មភាព</th>
+                        <thead className="text-white bg-blue-600/95">
+                            <tr className="font-bold font-NotoSansKhmer">
+                                <th className="px-4 py-2 ">លេខរៀង</th>
+                                <th className="px-4 py-2 ">ឈ្មោះក្រុម</th>
+                                <th className="px-4 py-2 ">បញ្ចុំតម្លៃថេរ</th>
+                                <th className="px-4 py-2 ">ព័ត៌មានលម្អិតក្រុម</th>
+                                <th className="px-4 py-2 ">បានបន្ថែមដោយ</th>
+                                <th className="px-4 py-2 text-center ">សកម្មភាព</th>
 
                             </tr>
                         </thead>
@@ -216,7 +216,7 @@ const group_customer = () => {
                         ) : error ? (
                             <p>{error}</p>
                         ) : group_customer.length === 0 ? (
-                            <p className="text-start py-4 px-10 text-red-500">រកមិនឃើញប្រភេទ ? {searchQuery}</p>
+                            <p className="px-10 py-4 text-red-500 text-start">រកមិនឃើញប្រភេទ ? {searchQuery}</p>
                         ) : (
                             <tbody>
                                 {group_customer.map((customer, index) => (
@@ -227,23 +227,23 @@ const group_customer = () => {
                                         exit="exit"
                                         variants={rowAnimation}
                                         transition={{ duration: 0.3 }}
-                                        className="text-sm font-NotoSansKhmer hover:scale-y-110 duration-100">
-                                        <td className=" px-4 py-1">{index + 1}</td>
+                                        className="text-sm duration-100 font-NotoSansKhmer hover:scale-y-110">
+                                        <td className="px-4 py-1 ">{index + 1}</td>
                                         <td className="px-4 py-1">{customer.group_names}</td>
                                         <td className="px-4 py-1">{customer.discount} $</td>
                                         <td className="px-4 py-1">{customer.detail || 'N/A'}</td>
                                         <td className="px-4 py-1">{customer.user_at}</td>
-                                        <td className="px-4  space-x-2 flex">
+                                        <td className="flex px-4 space-x-2">
                                             <button
                                                 onClick={() => openUpdateModal(customer)}
-                                                className='bg-blue-300 p-2 flex text-xs text-white'                        >
-                                                <FaPencilAlt className='text-blue-500 mr-2' /> កែសម្រួល
+                                                className='flex p-2 text-xs text-white bg-blue-500'                        >
+                                                <FaPencilAlt className='text-white' />
                                             </button>
                                             <button
                                                 onClick={() => openDeleteModal(customer)}
-                                                className='bg-red-300 p-2  flex text-xs text-white'
+                                                className='flex p-2 text-xs text-white bg-red-500'
                                             >
-                                                <MdDelete className='text-red-500 mr-2' /> លុប
+                                                <MdDelete className='text-white' /> 
                                             </button>
                                         </td>
                                     </motion.tr>
@@ -272,7 +272,7 @@ const group_customer = () => {
                         exit={{ opacity: 0, scale: 0.8 }}
                         transition={{ duration: 0.2 }}
                     >
-                        <div className="modal_center max-w-2xl">
+                        <div className="max-w-2xl modal_center">
                             <div className="modal_title">
                                 <h3 className="">អតិជន</h3>
                                 <MdClose className='text-2xl cursor-pointer' onClick={() => setIsInsertModalOpen(false)} />
@@ -282,7 +282,7 @@ const group_customer = () => {
                                     <div className='grid grid-cols-2 gap-3'>
 
                                         <div className="col-span-1 gap-2">
-                                            <label htmlFor="email" className="font-NotoSansKhmer font-bold">
+                                            <label htmlFor="email" className="font-bold font-NotoSansKhmer">
                                                 ឈ្មោះក្រុម
                                             </label>
                                             <input
@@ -296,7 +296,7 @@ const group_customer = () => {
                                             />
                                         </div>
                                         <div className="col-span-1 gap-2">
-                                            <label htmlFor="email" className="font-NotoSansKhmer font-bold">
+                                            <label htmlFor="email" className="font-bold font-NotoSansKhmer">
                                                 បញ្ចុំតម្លៃជាថេរ
                                             </label>
                                             <input
@@ -311,14 +311,14 @@ const group_customer = () => {
                                         </div>
                                     </div>
                                     <div className="col-span-2 gap-3 mt-3">
-                                        <label htmlFor="description" className="font-NotoSansKhmer font-bold">
+                                        <label htmlFor="description" className="font-bold font-NotoSansKhmer">
                                             ពិពណ៌នា
                                         </label>
                                         <textarea
                                             id="description"
                                             value={detail}
                                             onChange={(e) => setDetail(e.target.value)}
-                                            className="input_text w-full py-5"
+                                            className="w-full py-5 input_text"
                                             placeholder="ពិពណ៌នា"
                                         />
                                     </div>
@@ -341,7 +341,7 @@ const group_customer = () => {
                         exit={{ opacity: 0, scale: 0.8 }}
                         transition={{ duration: 0.2 }}
                     >
-                        <div className="modal_center max-w-sm">
+                        <div className="max-w-sm modal_center">
                             <div className="modal_title">
                                 <h3 className="">លុបប្រក្រុម</h3>
 
@@ -382,7 +382,7 @@ const group_customer = () => {
                         exit={{ opacity: 0, scale: 0.8 }}
                         transition={{ duration: 0.2 }}
                     >
-                        <div className="modal_center max-w-xl">
+                        <div className="max-w-xl modal_center">
                             <div className="modal_title">
                                 <h3 className="">កែប្រែក្រុម</h3>
                                 <MdClose className='text-2xl cursor-pointer' onClick={() => setIsUpdateModalOpen(false)} />
@@ -394,7 +394,7 @@ const group_customer = () => {
                                     <div className='grid grid-cols-2 gap-3'>
 
                                         <div className="col-span-1 gap-2">
-                                            <label htmlFor="email" className="font-NotoSansKhmer font-bold">
+                                            <label htmlFor="email" className="font-bold font-NotoSansKhmer">
                                                 ឈ្មោះក្រុម
                                             </label>
                                             <input
@@ -408,7 +408,7 @@ const group_customer = () => {
                                             />
                                         </div>
                                         <div className="col-span-1 gap-2">
-                                            <label htmlFor="email" className="font-NotoSansKhmer font-bold">
+                                            <label htmlFor="email" className="font-bold font-NotoSansKhmer">
                                                 បញ្ចុំតម្លៃជាថេរ
                                             </label>
                                             <input
@@ -423,14 +423,14 @@ const group_customer = () => {
                                         </div>
                                     </div>
                                     <div className="col-span-2 gap-3 mt-3">
-                                        <label htmlFor="description" className="font-NotoSansKhmer font-bold">
+                                        <label htmlFor="description" className="font-bold font-NotoSansKhmer">
                                             ពិពណ៌នា
                                         </label>
                                         <textarea
                                             id="description"
                                             value={detail}
                                             onChange={(e) => setDetail(e.target.value)}
-                                            className="input_text w-full py-5"
+                                            className="w-full py-5 input_text"
                                             placeholder="ពិពណ៌នា"
                                         />
                                     </div>

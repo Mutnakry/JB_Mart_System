@@ -13,4 +13,5 @@ const db = mysql.createConnection({
     connectionLimit: 10,
 });
 
+
 module.exports = db;

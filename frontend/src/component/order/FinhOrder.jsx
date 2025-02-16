@@ -47,10 +47,10 @@ function CreateDiscountProduct() {
     return (
         <div>
             <Navbar />
-            <div className='Nav_bar h-screen'>
-                <div className='Div_bar bg-white'>
-                    <div className='border p-4 border-gray-200 dark:border-gray-700'>
-                    <p className='md:text-2xl text-sm text-gray-600 font-bold '>ស្វែងរកឈ្មោះអតិជនប្ដូរយកប្រាក់វិញ</p>
+            <div className='h-screen Nav_bar'>
+                <div className='bg-white Div_bar'>
+                    <div className='p-4 border border-gray-200 dark:border-gray-700'>
+                    <p className='text-sm font-bold text-gray-600 md:text-xl '>ស្វែងរកឈ្មោះអតិជនប្ដូរយកប្រាក់វិញ</p>
                         <form action="">
                             <div className="md:w-[70%] w-[100%] mx-auto mt-12">
                                 <div className="relative items-center gap-3 mx-auto my-2">
@@ -63,7 +63,7 @@ function CreateDiscountProduct() {
                                                 value={searchQuery}
                                                 onChange={handleSearchChange}
                                             />
-                                            <div className="absolute right-[4%] top-3.5">
+                                            <div className="absolute right-[2%] top-3.5">
                                                 <FaSearch className="text-gray-400" />
                                             </div>
                                         </div>
@@ -75,7 +75,7 @@ function CreateDiscountProduct() {
                                                     filteredOptionsProduct.map((product) => (
                                                         <Link
                                                         to={`/order-Repay/${product.order_detail_id}`}
-                                                            // className=" text-gray-700 cursor-pointer w-full hover:bg-gray-200 hover:text-black"
+                                                            // className="w-full text-gray-700 cursor-pointer hover:bg-gray-200 hover:text-black"
                                                         >
                                                             <li
                                                                

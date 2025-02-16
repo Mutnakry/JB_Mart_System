@@ -27,15 +27,15 @@ const Customer = () => {
         <div>
             <Navbar />
             <div className='Nav_bar'>
-                <div className="Div_bar bg-white">
-                    <div className="  dark:border-gray-700 mt-5 ">
+                <div className="bg-white Div_bar">
+                    <div className="mt-5 dark:border-gray-700">
                         <div className='flex items-center gap-2 pb-5'>
                             <RiContactsBook3Fill className='text-lg' />
-                            <p className='font-NotoSansKhmer font-bold text-lg'>អតិជន</p>
+                            <p className='text-lg font-bold font-NotoSansKhmer'>អតិជន</p>
                         </div>
                         <div className="w-full">
                             <TabGroup selectedIndex={activeTabIndex} onChange={setActiveTabIndex}>
-                                <TabList className="flex">
+                                <TabList className="flex gap-1">
                                     {categories.map(({ name }, index) => (
                                         <Tab
                                             key={name}
@@ -46,14 +46,14 @@ const Customer = () => {
                                     ))}
                                 </TabList>
 
-                                <TabPanels className="mt-3">
+                                <TabPanels className="mt-3 ">
                                     <TabPanel className="p-4 border">
                                         <CustomerList />
                                     </TabPanel>
                                     <TabPanel className="p-4 border">
                                         <CustomerGroup />
                                     </TabPanel>
-                                    <TabPanel className="p-4 border border-gray-300 rounded-md">
+                                    <TabPanel className="p-4 border border-gray-300 ">
                                         <Customer_payment_Info />
                                     </TabPanel>
                                 </TabPanels>

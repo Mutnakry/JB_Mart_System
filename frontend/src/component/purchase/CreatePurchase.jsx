@@ -418,13 +418,13 @@ const CreatePurchase = () => {
                 <div className="w-full p-4 mt-10 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
 
                     <div className='flex items-center gap-2 pb-5'>
-                        <p className='font-NotoSansKhmer font-bold text-3xl'>បន្ថែមការទិញ {TotalBalanceAcc}</p>
+                        <p className='text-xl font-bold font-NotoSansKhmer'>បន្ថែមការទិញ </p>
 
                     </div>
                     <div className="w-full">
                         <div className="modal_form">
                             <form onSubmit={handleSubmit}>
-                                <div className='py-8 px-4 shadow-md  border-t-4 border-blue-600 rounded-md'>
+                                <div className='px-4 py-8 border-t-2 border-blue-600 shadow-md'>
                                     <div className='grid grid-cols-3 gap-4'>
                                         <div className="space-y-2">
                                             <label htmlFor="groupCustomer" className="font-NotoSansKhmer">ឈ្មោះអ្នកផ្គត់ផ្គង:</label>
@@ -448,7 +448,7 @@ const CreatePurchase = () => {
 
                                         {/* Date Input */}
                                         <div className="col-span-1 space-y-2">
-                                            <label className="font-NotoSansKhmer font-bold">កាលបរិច្ឆេទទិញ: *</label>
+                                            <label className="font-bold font-NotoSansKhmer">កាលបរិច្ឆេទទិញ: *</label>
                                             <input
                                                 type="date"
                                                 id="price"
@@ -490,7 +490,7 @@ const CreatePurchase = () => {
                                                         value={product_ID}
                                                         onChange={handleProductSearchChange}
                                                     />
-                                                    <div className="absolute right-[15%] top-3.5">
+                                                    <div className="absolute right-[18%] top-3.5">
                                                         <FaSearch className="text-gray-400" />
                                                     </div>
                                                 </div>
@@ -517,7 +517,7 @@ const CreatePurchase = () => {
                                                             ))
                                                         ) : (
                                                             <li className="p-2 text-gray-500 font-NotoSansKhmer">
-                                                                មិនមានកាត ឈ្មោះនេះ​ <span className="font-bold">{product_ID}</span> ទេ!
+                                                                មិនមានកាត ឈ្មោះនេះ<span className="font-bold">{product_ID}</span> ទេ!
                                                             </li>
                                                         )}
                                                     </ul>
@@ -528,10 +528,10 @@ const CreatePurchase = () => {
 
                                 </div>
 
-                                <div className='pb-12 pt-6 px-4 shadow-md mt-8  border-t-4 border-pink-600 rounded-md'>
+                                <div className='px-4 pt-6 pb-12 mt-8 border-t-2 border-pink-600 shadow-md'>
 
                                     <h3 className="text-lg font-semibold">កំណត់ការបញ្ជាទិញ</h3>
-                                    <table className="mt-4 border-collapse w-full">
+                                    <table className="w-full mt-4 border-collapse">
                                         <thead className="p-2 text-white bg-blue-600/90">
                                             <tr>
                                                 <th className="p-2 border w-[7%]">#</th>
@@ -655,10 +655,10 @@ const CreatePurchase = () => {
                                     </table>
                                 </div>
 
-                                <div className="pb-12 pt-6 px-4 shadow-md mt-8  border-t-4 border-green-600 rounded-md">
+                                <div className="px-4 pt-6 pb-12 mt-8 border-t-2 border-green-600 shadow-md">
                                     <h3 className="text-lg font-semibold">បន្ថែមការទូទាត់</h3>
                                     <hr className="my-2" />
-                                    <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2 gap-3">
+                                    <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 md:grid-cols-2">
                                         <div className="space-y-2">
                                             <label htmlFor="">ចំនួនការទូទាត់សរុប($)</label>
                                             <input
