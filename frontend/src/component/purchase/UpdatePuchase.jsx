@@ -1490,7 +1490,7 @@ const PurchaseDetails = () => {
   const [status, setStatus] = useState('completed');
   const [supplier_id, setSupplier_ID] = useState('');
   const [paymentType_ID, setPaymentType_ID] = useState(null);
-  const [account_ID, setAccount_ID] = useState(null);
+  const [account_ID, setAccount_ID] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [userLoginNames, setUserLoginNames] = useState('');
   const navigate = useNavigate();
@@ -2255,12 +2255,13 @@ const PurchaseDetails = () => {
                       <select
                         className='input_text'
                         id="bank"
-                        value={account_ID}
+                        disabled
+                        value={account_ID || ''}
                         onChange={e => setAccount_ID(e.target.value)}
                       >
                         <option value="" >សូមជ្រើសរើស</option>
                         {accountBank?.map((items) => (
-                          <option key={items.id} value={items.id}>
+                          <option key={items.id} value={items.id} disabled>
                             {items.acc_names}
                           </option>
                         ))}

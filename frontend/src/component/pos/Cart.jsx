@@ -365,7 +365,7 @@ const Cart = () => {
     // setIsSubmitting(true);
     console.log("Order Data:", orderData);
 
-    navigate('/index/invoce');
+    // navigate('/index/invoce');
     // try {
     //   setIsSubmitting(true);
     //   const response = await fetch(`${API_URL}/api/order`, {

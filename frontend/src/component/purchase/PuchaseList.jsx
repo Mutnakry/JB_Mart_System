@@ -461,16 +461,16 @@ const Dashboard = () => {
             <div className=''>
                 <div className="flex items-center gap-2 ">
                     <p><FaClipboardList className="text-lg " /></p>
-                    <p className="font-NotoSansKhmer font-bold ">តារាងបញ្ជីប្រភេទទំនិញ</p>
+                    <p className="font-NotoSansKhmer font-bold ">តារាងបញ្ជីទំនិញ</p>
                 </div>
                 <div className="flex justify-end">
                     {(userRol === 'superadmin' || userRol === 'admin') ? (
                         <Link className="button_only_submit" to="/createpurchase">
-                            + បង្កើតម៉ាកយីហោថ្មី
+                            + បង្កើតទំនិញថ្មី
                         </Link>
                     ) : (
                         <span className="button_only_submit cursor-not-allowed">
-                            + បង្កើតម៉ាកយីហោថ្មី
+                            + បង្កើតទំនិញថ្មី
                         </span>
                     )}
                 </div>
@@ -491,7 +491,7 @@ const Dashboard = () => {
                         <input type="text"
                             value={searchQuery}
                             onChange={handleSearch}
-                            className="input_text w-[300px]" placeholder="ស្វែងរកម៉ាកយីហោ..." />
+                            className="input_text w-[300px]" placeholder="ស្វែងរកទំនិញ....." />
                     </div>
                 </div>
                 <div class="relative overflow-x-auto h-screen scrollbar-hidden">
@@ -508,7 +508,7 @@ const Dashboard = () => {
                                     <th className=" px-4 py-2">បញ្ចុះតម្លៃ</th>
                                     <th className=" px-4 py-2">សរុប</th>
                                     <th className=" px-4 py-2">បានបង់សរុប</th>
-                                    <th className=" px-4 py-2">នៅនៅខ្វះ</th>
+                                    <th className=" px-4 py-2">ប្រាក់នៅជុំពាក់</th>
                                     <th className=" px-4 py-2">បន្ថែមដោយ</th>
                                     <th className=" px-4 py-2">សកម្មភាព</th>
 

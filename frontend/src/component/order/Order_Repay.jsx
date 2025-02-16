@@ -206,7 +206,7 @@ const CreatePurchase = () => {
                 <div className="w-full p-4 mt-10 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
 
                     <div className='flex items-center gap-2 pb-5'>
-                        <p className='font-NotoSansKhmer font-bold text-3xl text-gray-600'>ការទិញដែលប្ដូរយលវិញ</p>
+                        <p className='font-NotoSansKhmer font-bold text-2xl text-gray-600'>ការទិញដែលប្ដូរយលវិញ</p>
                     </div>
                     <div className="w-full">
                         <div className="modal_form">

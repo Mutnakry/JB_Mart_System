@@ -26,7 +26,7 @@ const CreatePurchase = () => {
     const [payDob, setPayDob] = useState(today);
     const [createDob, setCreateDob] = useState(today);
     const [supplier_id, setSupplier_ID] = useState('');
-    const [statuss, setStatus] = useState('completed');
+    const [statuss, setStatus] = useState('active');
     const [account_ID, setAccount_ID] = useState(null);
     const [paymentType_ID, setPaymentType_ID] = useState(null);
     const [userLoginNames, setUserLoginNames] = useState('');
@@ -64,7 +64,7 @@ const CreatePurchase = () => {
         setAmountTotal(total);
     }, [selectedProducts, quantities, discounts, taxes, salePrices]);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit១ = async (e) => {
         e.preventDefault();
 
         // Validation
@@ -150,6 +150,108 @@ const CreatePurchase = () => {
         }
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        // Validation
+        if (selectedProducts.length === 0) {
+            alert("Please add a product to cart");
+            return;
+        }
+
+        let totalAmount = 0;
+        let totalDiscount = 0;
+
+        const productsData = selectedProducts.map(product => {
+            const qty = quantities[product.id] || 1;
+            const discount = discounts[product.id] || 0;
+            const tax = taxes[product.id] || 0;
+            const saleprice = salePrices[product.id] || product.exclude_tax;
+            const Originale_price = originalPrice[product.id] || product.cost_price;
+            const totalPrice = qty * Originale_price;
+            const grandTotal = (totalPrice - (discount + tax));
+
+            // Accumulate totals
+            totalAmount += grandTotal;
+            totalDiscount += discount;
+            return {
+                supplier_id: supplier_id,
+                product_id: product.id,
+                date_by: createDob,
+                qty: qty,
+                total: grandTotal,
+                discount: discount,
+                cost_price: Originale_price,
+                included_tax: tax,
+                excluded_tax: saleprice,
+                // total: grandTotal,
+                status: statuss,
+                user_at: userLoginNames,
+            };
+        });
+
+        /// chack បើចំនួនpay ធំ ជាង សរុប
+        let newPayment = amountPay + amountDiscount;
+        if (newPayment > totalAmount) {
+            newPayment = totalAmount - amountDiscount;
+        } else if (amountPay < totalAmount) {
+            newPayment = amountPay
+        }
+
+        if (account_ID != null) {
+            if (TotalBalanceAcc < newPayment) {
+                toast.error(`ចំនួនទឹកប្រាក់នៅក្នុងគណនីមិនគ្រប់គ្រាន់!`, {
+                    position: "top-right",
+                    autoClose: 3000,
+                });
+                return;
+            }
+        }else if(account_ID === null){
+
+        }
+
+
+        const orderData = {
+            paymenttype_id: paymentType_ID,
+            account_id: account_ID,
+            amount_total: totalAmount,
+            amount_discount: amountDiscount,
+            amount_pay: newPayment,
+            pay_date: payDob,
+            products: productsData,
+        };
+        setIsSubmitting(true); // Set submitting state
+        console.log(orderData)
+        // try {
+        //     // Send data to backend
+        //     const response = await fetch(`${API_URL}/api/purchase`, {
+        //         method: 'POST',
+        //         headers: { 'Content-Type': 'application/json' },
+        //         body: JSON.stringify(orderData),
+        //     });
+
+        //     const result = await response.json();
+
+        //     if (response.ok) {
+        //         toast.success(`បន្ថែមទំនិញដោយជោគជ័យ`, {
+        //             position: "top-right",
+        //             autoClose: 3000,
+        //         });
+        //         navigate('/purchase')
+        //         clearCart();
+        //     } else {
+        //         // toast.error(result.message || 'Failed to place the order!');
+        //     }
+        // } catch (error) {
+        //     toast.error('Failed to place the order!', {
+        //         position: "top-right",
+        //         autoClose: 1000,
+        //     });
+        // } finally {
+        //     setIsSubmitting(false);
+        // }
+    };
+
     const clearCart = () => {
         setSelectedProducts([]);
         setPaymentType_ID('');
@@ -162,6 +264,33 @@ const CreatePurchase = () => {
         setAmounPay('');
         setPayDob(today);
     };
+
+
+    ///// get account 
+    const [accountBank, setAccountBank] = useState([]);
+    const getAccountBank = async () => {
+        try {
+            const response = await axios.get(`${API_URL}/api/account`);
+            setAccountBank(response.data.account);
+            console.log(response.data)
+        } catch (error) {
+            setError('Error fetching categories data');
+        }
+    };
+
+    // const [selectedCustomerName, setSelectedCustomerName] = useState("");
+    const [TotalBalanceAcc, setTotalBalanceAcc] = useState(0);
+
+    useEffect(() => {
+        if (account_ID) {
+            const selectedAccount = accountBank.find((account) => account.id === parseInt(account_ID));
+            if (selectedAccount) {
+                setTotalBalanceAcc(selectedAccount.balance);
+                console.log('selectedAccount Balance:', selectedAccount.balance);
+            }
+        }
+    }, [account_ID, accountBank]);
+
 
     const fetchsupplier = async () => {
         setLoading(true);
@@ -268,17 +397,7 @@ const CreatePurchase = () => {
     );
 
 
-    ///// get account 
-    const [accountBank, setAccountBank] = useState([]);
-    const getAccountBank = async () => {
-        try {
-            const response = await axios.get(`${API_URL}/api/account`);
-            setAccountBank(response.data.account);
-            console.log(response.data)
-        } catch (error) {
-            setError('Error fetching categories data');
-        }
-    };
+
 
     ///// get payment Type 
     const [paymentType, setPaymentType] = useState([]);
@@ -299,7 +418,7 @@ const CreatePurchase = () => {
                 <div className="w-full p-4 mt-10 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
 
                     <div className='flex items-center gap-2 pb-5'>
-                        <p className='font-NotoSansKhmer font-bold text-3xl'>បន្ថែមការទិញ </p>
+                        <p className='font-NotoSansKhmer font-bold text-3xl'>បន្ថែមការទិញ {TotalBalanceAcc}</p>
 
                     </div>
                     <div className="w-full">
@@ -353,8 +472,8 @@ const CreatePurchase = () => {
                                                 className="input_text font-NotoSansKhmer"
                                             >
                                                 <option value="" disabled>--ជ្រើសរើស--</option>
-                                                <option value="completed">បានទទួល</option>
                                                 <option value="active">រងចាំ</option>
+                                                <option value="completed">បានទទួល</option>
                                                 <option value="pending">បានបញ្ជាទិញ</option>
                                             </select>
                                         </div>
@@ -415,11 +534,11 @@ const CreatePurchase = () => {
                                     <table className="mt-4 border-collapse w-full">
                                         <thead className="p-2 text-white bg-blue-600/90">
                                             <tr>
-                                                <th className="p-2 border w-[7%]">លេខរៀង</th>
+                                                <th className="p-2 border w-[7%]">#</th>
                                                 <th className="p-2 border w-[20%]">ឈ្មោះផលិតផល</th>
-                                                <th className="p-2 border w-[10%]">តម្លៃដើម(ឯកតា)</th>
+                                                <th className="p-2 border w-[10%]">តម្លៃទិញដើម(ឯកតា)</th>
                                                 <th className="p-2 border w-[10%]">បរិមាណទិញចូល</th>
-                                                <th className="p-2 border w-[10%]">តម្លៃដើមលក់ចេញ(ឯកតា)</th>
+                                                <th className="p-2 border w-[10%]">តម្លៃលក់ចេញ(ឯកតា)</th>
                                                 <th className="p-2 border w-[10%]">បញ្ចុះតម្លៃ</th>
                                                 <th className="p-2 border w-[10%]">ពន្ធសរុប</th>
                                                 <th className="p-2 border w-[15%]">សរុប</th>
@@ -440,7 +559,7 @@ const CreatePurchase = () => {
                                                     const grandTotal = totalPrice - discount + tax;
                                                     return (
                                                         <tr key={product.id}>
-                                                            <td className="p-2 w-[7%]">{index + 1}</td>
+                                                            <td className="p-2 w-[5%]">{index + 1}</td>
                                                             <td className="p-2">
                                                                 {product.pro_names}
                                                                 <p className="text-xs text-gray-500">
@@ -539,7 +658,7 @@ const CreatePurchase = () => {
                                 <div className="pb-12 pt-6 px-4 shadow-md mt-8  border-t-4 border-green-600 rounded-md">
                                     <h3 className="text-lg font-semibold">បន្ថែមការទូទាត់</h3>
                                     <hr className="my-2" />
-                                    <div className="grid grid-cols-3 gap-3">
+                                    <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2 gap-3">
                                         <div className="space-y-2">
                                             <label htmlFor="">ចំនួនការទូទាត់សរុប($)</label>
                                             <input
@@ -562,7 +681,7 @@ const CreatePurchase = () => {
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <label htmlFor="">ទូទាត់សាច់ប្រាក់($): * </label>
+                                            <label htmlFor="">ទូទាត់សាច់ប្រាក់($)<span className='text-red-500'> : *</span> </label>
                                             <input
                                                 type="number"
                                                 value={amountPay}
@@ -582,6 +701,28 @@ const CreatePurchase = () => {
                                                 onChange={(e) => setPayDob(e.target.value)}
                                                 min={today}
                                                 className="input_text"
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label htmlFor="">ចំនួនទឹកប្រាក់នៅជុំពាក់ ($)</label>
+                                            <input
+                                                type="number"
+                                                placeholder="0.0"
+                                                value={(amountTotal - amountDiscount - amountPay) < 0 ? 0.00 : (amountTotal - amountDiscount - amountPay).toFixed(2)}
+                                                readOnly
+                                                className="bg-gray-100 input_text"
+                                            />
+                                            {/* You may want to display the dollar sign outside the input if needed */}
+                                            {/* <span>$</span> */}
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label htmlFor="">ចំនួនទឹកប្រាក់ត្រូវអាប់​ ($)</label>
+                                            <input
+                                                type="number"
+                                                placeholder="0.0"
+                                                value={((amountDiscount + amountPay) - amountTotal) < 0 ? 0.00 : (((amountDiscount + amountPay) - amountTotal)).toFixed(2)}
+                                                readOnly
+                                                className="bg-gray-100 input_text"
                                             />
                                         </div>
                                         <div className="space-y-2">
@@ -606,30 +747,21 @@ const CreatePurchase = () => {
                                             <select
                                                 className='input_text'
                                                 id="bank"
-                                                value={account_ID}
+                                                value={account_ID || null}
+                                                //   value={account_ID === null ? "" : account_ID} // Use "" for null
+
                                                 onChange={e => setAccount_ID(e.target.value)}
                                             >
-                                                <option value="" >សូមជ្រើសរើស</option>
+                                                <option value="" disabled>សូមជ្រើសរើស</option>
                                                 {accountBank?.map((items) => (
-                                                    <option key={items.id} value={items.id}>
+                                                    <option key={items.id} value={items.id} disabled={items.status === 'off'}>
                                                         {items.acc_names}
                                                     </option>
                                                 ))}
 
                                             </select>
                                         </div>
-                                        <div className="space-y-2">
-                                            <label htmlFor="">ចំនួននៅសល់($)</label>
-                                            <input
-                                                type="number"
-                                                placeholder="0.0"
-                                                value={(amountTotal - amountDiscount - amountPay) < 0 ? 0.00 : (amountTotal - amountDiscount - amountPay).toFixed(2)}
-                                                readOnly
-                                                className="bg-gray-100 input_text"
-                                            />
-                                            {/* You may want to display the dollar sign outside the input if needed */}
-                                            {/* <span>$</span> */}
-                                        </div>
+
 
                                     </div>
                                 </div>
