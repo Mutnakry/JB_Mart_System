@@ -10,6 +10,7 @@ import SaleProductSumDay from './Dashbord/SaleProductSumDay';
 import CountProduct_QTY_Sale from './Dashbord/CountProductSale'
 import SumOrderAll from './Dashbord/SumOrderAll'
 import Check_StockIN_StockOUT_Product from './Dashbord/Check_StockIN_StockOUT_Product'
+import Check_NoteQTYProdut from './Dashbord/Check_NoteQTYProdut'  ///  check MG_stock qty <= not-qty 
 
 const Dashboard = () => {
   return (
@@ -21,6 +22,10 @@ const Dashboard = () => {
             < CountItems />
           </div>
           <div className=''>
+          {/* check MG_stock qty <= not-qty */}
+            <div className='flex items-center col-span-1 p-6 my-4 bg-white border-t-2 border-green-600 shadow-sm'>
+              <Check_NoteQTYProdut />
+            </div>
             <div className='grid grid-cols-1 p-6 mb-3 bg-white border-t-2 border-blue-600 shadow-sm xl:grid-cols-2'>
               <div className='flex items-center justify-center md:border-r-2'>
 

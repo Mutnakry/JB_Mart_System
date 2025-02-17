@@ -397,6 +397,33 @@ GROUP BY p.pro_names;
 
 
 
+
+//// check MG_stock qty <= not-qty
+exports.Check_NoteQTY = (req, res) => {
+    const sql = `
+   SELECT p.pro_names, p.qty as stock_IN,
+    u.names as unit_names
+FROM products p
+INNER JOIN unit u ON u.id = p.unit_id
+WHERE p.qty <= p.note_qty AND p.mg_stock = 'enable'
+ORDER BY p.qty ASC;
+  `;
+
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error("Error executing query:", err);
+            return res.status(500).send({ error: "An error occurred while fetching data" });
+        }
+
+        res.json(results);
+    });
+};
+
+
+
+
+
+
 ////////////////////
 // SELECT p.id, SUM(p.total) AS total_amount, MONTH(p.create_at) AS month
 //         FROM purchase p
