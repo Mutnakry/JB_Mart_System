@@ -22,7 +22,7 @@ WHERE YEAR(p.pay_date) = YEAR(CURDATE())
         }
         res.json(results);
     });
-    
+
 }
 
 // // sum purchase Detail in one year
@@ -111,11 +111,15 @@ ORDER BY DAY(od.create_at);
 
 // sum purchase product in year
 exports.PurchaseProduct = (req, res) => {
-    const sqlall = `SELECT 
-        pro.pro_names, SUM(p.qty) AS total_quantity
-    FROM purchase p
-    INNER JOIN products pro ON p.product_id = pro.id
-    GROUP BY pro.pro_names`;
+    const sql_month = `SELECT 
+    pro.pro_names, 
+    SUM(p.qty) AS total_quantity
+FROM purchase p
+INNER JOIN products pro ON p.product_id = pro.id
+WHERE MONTH(p.date_by) = MONTH(CURDATE()) 
+AND YEAR(p.date_by) = YEAR(CURDATE())  -- Ensure it's the current year
+GROUP BY pro.pro_names;
+`;
 
     const sqlyear = `SELECT 
     pro.pro_names, 
@@ -127,7 +131,7 @@ WHERE YEAR(p.date_by) = YEAR(CURDATE())
 GROUP BY pro.pro_names;
 `;
 
-    db.query(sqlyear, (err, results) => {
+    db.query(sql_month, (err, results) => {
         if (err) {
             return res.status(500).send(err);
         }
@@ -306,7 +310,7 @@ exports.SumTotalSale_Dolla_INYear = (req, res) => {
     });
 };
 
-/////  count  product qty sale  in day
+/////  count  product qty sale  in day  a
 
 exports.CountProductQTYSale = (req, res) => {
     const sql = `

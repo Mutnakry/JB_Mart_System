@@ -23,12 +23,16 @@ const Dashboard = () => {
           <div className=''>
             <div className='grid grid-cols-1 p-6 mb-3 bg-white border-t-2 border-blue-600 shadow-sm xl:grid-cols-2'>
               <div className='flex items-center justify-center md:border-r-2'>
-                <CountProduct_QTY_Sale />
 
+                <ChartPruchaeseDetail />
               </div>
               <div className='flex items-center justify-center '>
                 <ProductPurchase />
               </div>
+            </div>
+            <div className='flex items-center col-span-1 p-6 my-4 bg-white border-t-2 border-green-600 shadow-sm'>
+              {/* <ChartPruchaeseDetail /> */}
+              <CountProduct_QTY_Sale />
             </div>
             <div className='flex items-center col-span-1 p-6 bg-white border-t-2 border-yellow-600'>
               <ChartPruchaeseDetail_InMonth />
@@ -46,9 +50,7 @@ const Dashboard = () => {
             <div className='flex items-center col-span-1 p-6 bg-white border-t-2 border-pink-600'>
               <SaleProductExchang />
             </div>
-            <div className='flex items-center col-span-1 p-6 my-4 bg-white border-t-2 border-green-600 shadow-sm'>
-              <ChartPruchaeseDetail />
-            </div>
+
             <div className='flex items-center col-span-1 p-6 bg-white border-t-2 border-pink-600'>
               <SumOrderAll />
             </div>

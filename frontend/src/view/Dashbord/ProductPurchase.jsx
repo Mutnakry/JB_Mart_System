@@ -82,7 +82,7 @@ const ChartPruchaeseDetail = () => {
 
     return (
         <div className="max-w-screen-2xl w-full mx-auto px-6">
-            <h2 className="text-2xl text-gray-600 font-NotoSansKhmer font-bold mb-4">បញ្ចាទិញផលិតផលក្នុងឆ្នាំនេះ</h2>
+            <h2 className="text-2xl text-gray-600 font-NotoSansKhmer font-bold mb-4">បញ្ចាទិញផលិតផលក្នុងខែនេះ</h2>
 
             <div id="chart">
                 {state.series.length > 0 ? (

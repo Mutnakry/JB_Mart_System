@@ -183,6 +183,7 @@ function CreateProduct() {
       console.error(err);
       toast.error('សូមលោកព្យាយាមម្ដងទៀត ស្មោះមានរួចហើយ !', { autoClose: 3000 });
     }
+
   };
 
   return (
@@ -391,10 +392,11 @@ function CreateProduct() {
                     <select
                       className='input_text'
                       value={product_type}
+                      disabled
                       onChange={handleChangeProductType}
                     >
                       <option value="មួយ">មួយ</option>
-                      <option value="កញ្ចប់">កញ្ចប់</option>
+                      {/* <option value="កញ្ចប់">កញ្ចប់</option> */}
                     </select>
                   </div>
                   <div className="col-span-1 space-y-2">
@@ -422,7 +424,7 @@ function CreateProduct() {
                             តម្លៃដើម(មិនរួមពន្ធ)
                           </th>
                           <th className="p-2 border w-[10%]">បូកពន្ធ</th>
-                          <th className="p-2 border w-[15%]">តម្លៃលក់ដើម($)</th>
+                          <th className="p-2 border w-[15%]">តម្លៃលក់($)</th>
                           <th className="p-2 border w-[15%]">ប្រាក់ចំណេញ($)</th>
                           <th className="p-2 border w-[15%]">សរុប($)</th>
                         </tr>

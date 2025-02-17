@@ -430,6 +430,7 @@ function UpdateProduct() {
                     <select
                       className='input_text'
                       value={product_type}
+                      disabled
                       onChange={handleChangeProductType}
                     >
                       <option value="មួយ">មួយ</option>
