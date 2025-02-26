@@ -89,7 +89,7 @@ const Navbar = () => {
     const accountRoutes = ['/account', '/account_list']
     const paymentRoutes = ['/paymenttype', '/payment_list']
     const usersRoutes = ['/user', '/createuser']
-    const reportsRoutes = ['/reports', '/report_list']
+    const reportsRoutes = ['/InvocePurchase', '/report_list']
     const currentcyRoutes = ['/exchange', '/currency_list']
     const ProductDisRoutes = ['/discount_product', '/create_discount_product']
 
@@ -300,9 +300,9 @@ const Navbar = () => {
                                         </div>
                                     </div>
 
-                                  
+
                                 </NavLink>
-                                
+
 
                                 <div className="flex items-center gap-1">
                                     <span className="font-bold font-NotoSansKhmer">ប្រវត្តិរូប:</span>
@@ -412,12 +412,14 @@ const Navbar = () => {
                             </button>
 
                             <div className={`overflow-hidden transition-all duration-500 space-y-2 ${isContactDropdown ? "max-h-96 opacity-100" : "max-h-0"}`}>
-                                <NavLink to="/supplier" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">អ្នកផ្គត់ផ្គង់</p>
-                                </NavLink>
+                                {(userRol === 'superadmin' || userRol === 'user' || userRol === 'admin') && (
+                                    <NavLink to="/supplier" className={navLinkStyle}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                        </svg>
+                                        <p className="font-bold font-NotoSansKhmer">អ្នកផ្គត់ផ្គង់</p>
+                                    </NavLink>
+                                )}
                                 <NavLink to="/customer" className={navLinkStyle}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
@@ -439,129 +441,133 @@ const Navbar = () => {
 
                             </div>
                         </li>
-
-                        {/* Product Dropdown */}
-                        <li className="space-y-2">
-                            <button onClick={handleProductDropdown} className={`flex items-center p-3 w-full text-left justify-between ${isProductDropdown ? "bg-blue-700 dark:bg-blue-500 text-white" : "text-gray-900 dark:text-white"}`}>
-                                <div className="flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-package-open">
-                                        <path d="M12 22v-9" />
-                                        <path d="M15.17 2.21a1.67 1.67 0 0 1 1.63 0L21 4.57a1.93 1.93 0 0 1 0 3.36L8.82 14.79a1.655 1.655 0 0 1-1.64 0L3 12.43a1.93 1.93 0 0 1 0-3.36z" />
-                                        <path d="M20 13v3.87a2.06 2.06 0 0 1-1.11 1.83l-6 3.08a1.93 1.93 0 0 1-1.78 0l-6-3.08A2.06 2.06 0 0 1 4 16.87V13" />
-                                        <path d="M21 12.43a1.93 1.93 0 0 0 0-3.36L8.83 2.2a1.64 1.64 0 0 0-1.63 0L3 4.57a1.93 1.93 0 0 0 0 3.36l12.18 6.86a1.636 1.636 0 0 0 1.63 0z" />
-                                    </svg>
-                                    <span className="flex-1 font-bold ms-3 whitespace-nowrap font-NotoSansKhmer">ផលិតផល</span>
-                                </div>
-                                <svg className={`w-4 h-4 transition-transform duration-300 ${isProductDropdown ? "transform rotate-90" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-
-                            <div className={`overflow-hidden transition-all duration-500 space-y-2 ${isProductDropdown ? "max-h-96 opacity-100" : "max-h-0"}`}>
-                                <NavLink to="/product" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">បញ្ជីផលិតផល</p>
-                                </NavLink>
-
-                                {/* user add purchase admin and superadmin */}
-
-                                {(userRol === 'superadmin' || userRol === 'admin') ? (
-                                    <NavLink to="/createproduct" className={navLinkStyle}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                        {(userRol === 'superadmin' || userRol === 'user' || userRol === 'admin') && (
+                            <div>
+                                {/* Product Dropdown */}
+                                <li className="space-y-2">
+                                    <button onClick={handleProductDropdown} className={`flex items-center p-3 w-full text-left justify-between ${isProductDropdown ? "bg-blue-700 dark:bg-blue-500 text-white" : "text-gray-900 dark:text-white"}`}>
+                                        <div className="flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-package-open">
+                                                <path d="M12 22v-9" />
+                                                <path d="M15.17 2.21a1.67 1.67 0 0 1 1.63 0L21 4.57a1.93 1.93 0 0 1 0 3.36L8.82 14.79a1.655 1.655 0 0 1-1.64 0L3 12.43a1.93 1.93 0 0 1 0-3.36z" />
+                                                <path d="M20 13v3.87a2.06 2.06 0 0 1-1.11 1.83l-6 3.08a1.93 1.93 0 0 1-1.78 0l-6-3.08A2.06 2.06 0 0 1 4 16.87V13" />
+                                                <path d="M21 12.43a1.93 1.93 0 0 0 0-3.36L8.83 2.2a1.64 1.64 0 0 0-1.63 0L3 4.57a1.93 1.93 0 0 0 0 3.36l12.18 6.86a1.636 1.636 0 0 0 1.63 0z" />
+                                            </svg>
+                                            <span className="flex-1 font-bold ms-3 whitespace-nowrap font-NotoSansKhmer">ផលិតផល</span>
+                                        </div>
+                                        <svg className={`w-4 h-4 transition-transform duration-300 ${isProductDropdown ? "transform rotate-90" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                         </svg>
-                                        <p className="font-bold font-NotoSansKhmer">បន្ថែមផលិតផល</p>
-                                    </NavLink>
-                                ) : (
-                                    <div className='flex items-center gap-2 p-3 cursor-not-allowed "bg-blue-600 dark:bg-blue-500 text-gray-800 dark:text-white'>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                        </svg>
-                                        <p className="font-bold font-NotoSansKhmer">បន្ថែមផលិតផល</p>
+                                    </button>
+
+                                    <div className={`overflow-hidden transition-all duration-500 space-y-2 ${isProductDropdown ? "max-h-96 opacity-100" : "max-h-0"}`}>
+                                        <NavLink to="/product" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">បញ្ជីផលិតផល</p>
+                                        </NavLink>
+
+                                        {/* user add purchase admin and superadmin */}
+
+                                        {(userRol === 'superadmin' || userRol === 'admin') ? (
+                                            <NavLink to="/createproduct" className={navLinkStyle}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                                </svg>
+                                                <p className="font-bold font-NotoSansKhmer">បន្ថែមផលិតផល</p>
+                                            </NavLink>
+                                        ) : (
+                                            <div className='flex items-center gap-2 p-3 cursor-not-allowed "bg-blue-600 dark:bg-blue-500 text-gray-800 dark:text-white'>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                                </svg>
+                                                <p className="font-bold font-NotoSansKhmer">បន្ថែមផលិតផល</p>
+                                            </div>
+                                        )}
+                                        <NavLink to="/tests" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">បញ្ចូលផលិតផល</p>
+                                        </NavLink>
+                                        <NavLink to="/udit" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">ឯកតា</p>
+                                        </NavLink>
+                                        <NavLink to="/category" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">ប្រភេទទំនិញ</p>
+                                        </NavLink>
+                                        <NavLink to="/brands" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">ម៉ាកយីហោ</p>
+                                        </NavLink>
+                                        <NavLink to="/varrenty" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">ការធានា</p>
+                                        </NavLink>
                                     </div>
-                                )}
-                                <NavLink to="/tests" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">បញ្ចូលផលិតផល</p>
-                                </NavLink>
-                                <NavLink to="/udit" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">ឯកតា</p>
-                                </NavLink>
-                                <NavLink to="/category" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">ប្រភេទទំនិញ</p>
-                                </NavLink>
-                                <NavLink to="/brands" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">ម៉ាកយីហោ</p>
-                                </NavLink>
-                                <NavLink to="/varrenty" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">ការធានា</p>
-                                </NavLink>
-                            </div>
-                        </li>
+                                </li>
 
-                        {/* Purchase Dropdown */}
-                        <li className="space-y-2">
-                            <button onClick={handlePurchaseDropdown} className={`flex items-center p-3 w-full text-left justify-between ${isPurchaseDropdown ? "bg-blue-700 dark:bg-blue-500 text-white" : "text-gray-900 dark:text-white"}`}>
-                                <div className="flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M7.49 12 3.74 8.248m0 0 3.75-3.75m-3.75 3.75h16.5V19.5" />
-                                    </svg>
-                                    <span className="flex-1 font-bold ms-3 whitespace-nowrap font-NotoSansKhmer">បញ្ជាទិញទំនិញ</span>
-                                </div>
-                                <svg className={`w-4 h-4 transition-transform duration-300 ${isPurchaseDropdown ? "transform rotate-90" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-
-                            <div className={`overflow-hidden transition-all duration-500 space-y-2 ${isPurchaseDropdown ? "max-h-40 opacity-100" : "max-h-0"}`}>
-                                <NavLink to="/purchase" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">រាយបញ្ជីទិញ</p>
-                                </NavLink>
-
-                                {/* user add purchase admin and superadmin */}
-                                {(userRol === 'superadmin' || userRol === 'admin') ? (
-                                    <NavLink to="/createpurchase" className={navLinkStyle}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                {/* Purchase Dropdown */}
+                                <li className="space-y-2">
+                                    <button onClick={handlePurchaseDropdown} className={`flex items-center p-3 w-full text-left justify-between ${isPurchaseDropdown ? "bg-blue-700 dark:bg-blue-500 text-white" : "text-gray-900 dark:text-white"}`}>
+                                        <div className="flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M7.49 12 3.74 8.248m0 0 3.75-3.75m-3.75 3.75h16.5V19.5" />
+                                            </svg>
+                                            <span className="flex-1 font-bold ms-3 whitespace-nowrap font-NotoSansKhmer">បញ្ជាទិញទំនិញ</span>
+                                        </div>
+                                        <svg className={`w-4 h-4 transition-transform duration-300 ${isPurchaseDropdown ? "transform rotate-90" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                         </svg>
-                                        <p className="font-bold font-NotoSansKhmer">បន្ថែមការបញ្ជាទិញ</p>
-                                    </NavLink>
-                                ) : (
-                                    <div className='flex items-center gap-2 p-3 cursor-not-allowed "bg-blue-600 dark:bg-blue-500 text-gray-800 dark:text-white'>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                        </svg>
-                                        <p className="font-bold font-NotoSansKhmer">បន្ថែមការបញ្ជាទិញ</p>
+                                    </button>
+
+                                    <div className={`overflow-hidden transition-all duration-500 space-y-2 ${isPurchaseDropdown ? "max-h-40 opacity-100" : "max-h-0"}`}>
+                                        <NavLink to="/purchase" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">រាយបញ្ជីទិញ</p>
+                                        </NavLink>
+
+                                        {/* user add purchase admin and superadmin */}
+                                        {(userRol === 'superadmin' || userRol === 'admin') ? (
+                                            <NavLink to="/createpurchase" className={navLinkStyle}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                                </svg>
+                                                <p className="font-bold font-NotoSansKhmer">បន្ថែមការបញ្ជាទិញ</p>
+                                            </NavLink>
+                                        ) : (
+                                            <div className='flex items-center gap-2 p-3 cursor-not-allowed "bg-blue-600 dark:bg-blue-500 text-gray-800 dark:text-white'>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                                </svg>
+                                                <p className="font-bold font-NotoSansKhmer">បន្ថែមការបញ្ជាទិញ</p>
+                                            </div>
+                                        )}
+
+                                        <NavLink to="/order-Repay" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">ការទិញដែលប្តូរយកវិញ</p>
+                                        </NavLink>
                                     </div>
-                                )}
-
-                                <NavLink to="/order-Repay" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">ការទិញដែលប្តូរយកវិញ</p>
-                                </NavLink>
+                                </li>
                             </div>
-                        </li>
+                        )}
+
                         {/* Purchase POS */}
                         <li>
                             <NavLink to="/index/pos" className={navLinkStyle}>
@@ -580,329 +586,331 @@ const Navbar = () => {
                             </NavLink>
                         </li>
 
-                        {/* Topup Phone dropdown */}
-                        <li className="space-y-2">
-                            <button onClick={handleDropdownProductDiscount} className={`flex items-center p-3 w-full text-left justify-between ${isProductDisDropdown ? "bg-blue-700 dark:bg-blue-500 text-white" : "text-gray-900 dark:text-white"}`}>
-                                <div className="flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-receipt-text"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" /><path d="M14 8H8" /><path d="M16 12H8" /><path d="M13 16H8" /></svg>
-                                    <span className="flex-1 font-bold ms-3 whitespace-nowrap font-NotoSansKhmer">
-                                        បញ្ចុះតម្លៃផលិតផល
-                                    </span>
-                                </div>
-                                <svg className={`w-4 h-4 transition-transform duration-300 ${isProductDisDropdown ? "transform rotate-90" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
+                        {(userRol === 'superadmin' || userRol === 'user' || userRol === 'admin') && (
+                            <div>
+                                {/* Topup Phone dropdown */}
+                                <li className="space-y-2">
+                                    <button onClick={handleDropdownProductDiscount} className={`flex items-center p-3 w-full text-left justify-between ${isProductDisDropdown ? "bg-blue-700 dark:bg-blue-500 text-white" : "text-gray-900 dark:text-white"}`}>
+                                        <div className="flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-receipt-text"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" /><path d="M14 8H8" /><path d="M16 12H8" /><path d="M13 16H8" /></svg>
+                                            <span className="flex-1 font-bold ms-3 whitespace-nowrap font-NotoSansKhmer">
+                                                បញ្ចុះតម្លៃផលិតផល
+                                            </span>
+                                        </div>
+                                        <svg className={`w-4 h-4 transition-transform duration-300 ${isProductDisDropdown ? "transform rotate-90" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </button>
 
-                            <div className={`overflow-hidden transition-all duration-500 space-y-2 ${isProductDisDropdown ? "max-h-40 opacity-100" : "max-h-0"}`}>
+                                    <div className={`overflow-hidden transition-all duration-500 space-y-2 ${isProductDisDropdown ? "max-h-40 opacity-100" : "max-h-0"}`}>
 
-                                <NavLink to="/discount_product" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">បង្កើតផលិតផល</p>
-                                </NavLink>
-                                <NavLink to="/create_discount_product" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">បង្កើតផលិតផលបញ្ចុះតម្លៃ</p>
-                                </NavLink>
-                            </div>
-                        </li>
-                        {/*  Currency Dropdown */}
-                        <li className="space-y-2">
-                            <button onClick={handleCurrencyDropdown} className={`flex items-center p-3 w-full text-left justify-between ${isCurrencyDropdown ? "bg-blue-700 dark:bg-blue-500 text-white" : "text-gray-900 dark:text-white"}`}>
-                                <div className="flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-receipt"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" /><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" /><path d="M12 17.5v-11" /></svg>
-                                    <span className="flex-1 font-bold ms-3 whitespace-nowrap font-NotoSansKhmer">
-                                        រូបិយប័ណ្ណ
-                                    </span>
-                                </div>
-                                <svg className={`w-4 h-4 transition-transform duration-300 ${isCurrencyDropdown ? "transform rotate-90" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-
-                            <div className={`overflow-hidden transition-all duration-500 space-y-2 ${isCurrencyDropdown ? "max-h-40 opacity-100" : "max-h-0"}`}>
-                                <NavLink to="/exchange" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">បង្កើតបញ្ជាទិញ</p>
-                                </NavLink>
-                                <NavLink to="/purchase-list" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">បញ្ជីបញ្ជាទិញ</p>
-                                </NavLink>
-                            </div>
-                        </li>
-
-                        {/*  Extense Dropdown */}
-                        <li className="space-y-2">
-                            <button onClick={handleExspenseDropdown} className={`flex items-center p-3 w-full text-left justify-between ${isExpenseDropdown ? "bg-blue-700 dark:bg-blue-500 text-white" : "text-gray-900 dark:text-white"}`}>
-                                <div className="flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.99 7.5 8.24 3.75m0 0L4.49 7.5m3.75-3.75v16.499h11.25" />
-                                    </svg>
-                                    <span className="flex-1 font-bold ms-3 whitespace-nowrap font-NotoSansKhmer">
-                                        ចំណាយ
-                                    </span>
-                                </div>
-                                <svg className={`w-4 h-4 transition-transform duration-300 ${isExpenseDropdown ? "transform rotate-90" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-
-                            <div className={`overflow-hidden transition-all duration-500 space-y-2 ${isExpenseDropdown ? "max-h-40 opacity-100" : "max-h-0"}`}>
-                                <NavLink to="/cost" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">បញ្ជីចំណាយ</p>
-                                </NavLink>
-                                <NavLink to="/costtype" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">ប្រភេទនៃការចំណាយ</p>
-                                </NavLink>
-                            </div>
-                        </li>
-
-
-                        {/*  Account Dropdown */}
-                        <li className="space-y-2">
-                            <button onClick={handleAccountDropdown} className={`flex items-center p-3 w-full text-left justify-between ${isAccountDropdown ? "bg-blue-700 dark:bg-blue-500 text-white" : "text-gray-900 dark:text-white"}`}>
-                                <div className="flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-credit-card"><rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" /></svg>
-                                    <span className="flex-1 font-bold ms-3 whitespace-nowrap font-NotoSansKhmer">
-                                        គណនី
-                                    </span>
-                                </div>
-                                <svg className={`w-4 h-4 transition-transform duration-300 ${isAccountDropdown ? "transform rotate-90" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-
-                            <div className={`overflow-hidden transition-all duration-500 space-y-2 ${isAccountDropdown ? "max-h-96 opacity-100" : "max-h-0"}`}>
-                                <NavLink to="/account" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">បញ្ជីឈ្មោះគណនី</p>
-                                </NavLink>
-                                <NavLink to="/purchase-list" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">តុល្យការ</p>
-                                </NavLink>
-                                <NavLink to="/purchase" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">តារាងតុល្យភាព</p>
-                                </NavLink>
-                                <NavLink to="/purchase-list" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">លំហូរសាច់ប្រាក់</p>
-                                </NavLink>
-                                <NavLink to="/purchase-list" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">របាយការណ៍គណនីចំណាយ</p>
-                                </NavLink>
-                            </div>
-                        </li>
-
-                        {/*  Payment method dropdown */}
-                        <li className="space-y-2">
-                            <button onClick={handlepaymentDropdown} className={`flex items-center p-3 w-full text-left justify-between ${isPaymentMethodDropdown ? "bg-blue-700 dark:bg-blue-500 text-white" : "text-gray-900 dark:text-white"}`}>
-                                <div className="flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-hand-coins"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17" /><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" /><path d="m2 16 6 6" /><circle cx="16" cy="9" r="2.9" /><circle cx="6" cy="5" r="3" /></svg>                                    <span className="flex-1 font-bold ms-3 whitespace-nowrap font-NotoSansKhmer">
-                                        វិធីសាស្រ្តបង់ប្រាក់
-                                    </span>
-                                </div>
-                                <svg className={`w-4 h-4 transition-transform duration-300 ${isPaymentMethodDropdown ? "transform rotate-90" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-
-                            <div className={`overflow-hidden transition-all duration-500 space-y-2 ${isPaymentMethodDropdown ? "max-h-40 opacity-100" : "max-h-0"}`}>
-                                <NavLink to="/paymenttype" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">បញ្ជីបង់ប្រាក់</p>
-                                </NavLink>
-                                <NavLink to="/purchase-list" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">បញ្ជីបង់ប្រាក់</p>
-                                </NavLink>
-                            </div>
-                        </li>
-
-                        {userRol === 'superadmin' || userRol === 'admin' && (
-                            <li className="space-y-2">
-                                <button onClick={handleUsersDropdown} className={`flex items-center p-3 w-full text-left justify-between ${isUsersDropdown ? "bg-blue-700 dark:bg-blue-500 text-white" : "text-gray-900 dark:text-white"}`}>
-                                    <div className="flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-users-round"><path d="M18 21a8 8 0 0 0-16 0" /><circle cx="10" cy="8" r="5" /><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" /></svg>                                    <span className="flex-1 font-bold ms-3 whitespace-nowrap font-NotoSansKhmer">
-                                            អ្នកប្រើប្រាស់
-                                        </span>
+                                        <NavLink to="/discount_product" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">បង្កើតផលិតផល</p>
+                                        </NavLink>
+                                        <NavLink to="/create_discount_product" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">បង្កើតផលិតផលបញ្ចុះតម្លៃ</p>
+                                        </NavLink>
                                     </div>
-                                    <svg className={`w-4 h-4 transition-transform duration-300 ${isUsersDropdown ? "transform rotate-90" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                    </svg>
-                                </button>
+                                </li>
 
-
-                                <div className={`overflow-hidden transition-all duration-500 space-y-2 ${isUsersDropdown ? "max-h-40 opacity-100" : "max-h-0"}`}>
-                                    <NavLink to="/user" className={navLinkStyle}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                {/*  Currency Dropdown */}
+                                <li className="space-y-2">
+                                    <button onClick={handleCurrencyDropdown} className={`flex items-center p-3 w-full text-left justify-between ${isCurrencyDropdown ? "bg-blue-700 dark:bg-blue-500 text-white" : "text-gray-900 dark:text-white"}`}>
+                                        <div className="flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-receipt"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" /><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" /><path d="M12 17.5v-11" /></svg>
+                                            <span className="flex-1 font-bold ms-3 whitespace-nowrap font-NotoSansKhmer">
+                                                រូបិយប័ណ្ណ
+                                            </span>
+                                        </div>
+                                        <svg className={`w-4 h-4 transition-transform duration-300 ${isCurrencyDropdown ? "transform rotate-90" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                         </svg>
-                                        <p className="font-bold font-NotoSansKhmer">បញ្ជីឈ្មោះអ្នកប្រើប្រាស់</p>
-                                    </NavLink>
-                                    <NavLink to="/createuser" className={navLinkStyle}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                    </button>
+
+                                    <div className={`overflow-hidden transition-all duration-500 space-y-2 ${isCurrencyDropdown ? "max-h-40 opacity-100" : "max-h-0"}`}>
+                                        <NavLink to="/exchange" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">បង្កើតបញ្ជាទិញ</p>
+                                        </NavLink>
+                                        <NavLink to="/purchase-list" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">បញ្ជីបញ្ជាទិញ</p>
+                                        </NavLink>
+                                    </div>
+                                </li>
+                                {/*  Extense Dropdown */}
+                                <li className="space-y-2">
+                                    <button onClick={handleExspenseDropdown} className={`flex items-center p-3 w-full text-left justify-between ${isExpenseDropdown ? "bg-blue-700 dark:bg-blue-500 text-white" : "text-gray-900 dark:text-white"}`}>
+                                        <div className="flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M11.99 7.5 8.24 3.75m0 0L4.49 7.5m3.75-3.75v16.499h11.25" />
+                                            </svg>
+                                            <span className="flex-1 font-bold ms-3 whitespace-nowrap font-NotoSansKhmer">
+                                                ចំណាយ
+                                            </span>
+                                        </div>
+                                        <svg className={`w-4 h-4 transition-transform duration-300 ${isExpenseDropdown ? "transform rotate-90" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                         </svg>
-                                        <p className="font-bold font-NotoSansKhmer">បន្ថែមអ្នកប្រើប្រាស់</p>
-                                    </NavLink>
-                                </div>
-                            </li>
+                                    </button>
 
-                        )}
+                                    <div className={`overflow-hidden transition-all duration-500 space-y-2 ${isExpenseDropdown ? "max-h-40 opacity-100" : "max-h-0"}`}>
+                                        <NavLink to="/cost" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">បញ្ជីចំណាយ</p>
+                                        </NavLink>
+                                        <NavLink to="/costtype" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">ប្រភេទនៃការចំណាយ</p>
+                                        </NavLink>
+                                    </div>
+                                </li>
 
-                        {/*  Report dropdown report */}
-                        <li className="space-y-2">
-                            <button onClick={handleReportDropdown} className={`flex items-center p-3 w-full text-left justify-between ${isReportsDropdown ? "bg-blue-700 dark:bg-blue-500 text-white" : "text-gray-900 dark:text-white"}`}>
-                                <div className="flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
-                                    </svg>
-                                    <span className="flex-1 font-bold ms-3 whitespace-nowrap font-NotoSansKhmer">
-                                        របាយការណ៍
-                                    </span>
-                                </div>
-                                <svg className={`w-4 h-4 transition-transform duration-300 ${isReportsDropdown ? "transform rotate-90" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
+                                {/*  Account Dropdown using to super addmin */}
+                                {userRol === 'superadmin' && (
+                                    <li className="space-y-2">
+                                        <button onClick={handleAccountDropdown} className={`flex items-center p-3 w-full text-left justify-between ${isAccountDropdown ? "bg-blue-700 dark:bg-blue-500 text-white" : "text-gray-900 dark:text-white"}`}>
+                                            <div className="flex items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-credit-card"><rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" /></svg>
+                                                <span className="flex-1 font-bold ms-3 whitespace-nowrap font-NotoSansKhmer">
+                                                    គណនី
+                                                </span>
+                                            </div>
+                                            <svg className={`w-4 h-4 transition-transform duration-300 ${isAccountDropdown ? "transform rotate-90" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </button>
+
+                                        <div className={`overflow-hidden transition-all duration-500 space-y-2 ${isAccountDropdown ? "max-h-96 opacity-100" : "max-h-0"}`}>
+                                            <NavLink to="/account" className={navLinkStyle}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                                </svg>
+                                                <p className="font-bold font-NotoSansKhmer">បញ្ជីឈ្មោះគណនី</p>
+                                            </NavLink>
+                                            <NavLink to="/purchase-list" className={navLinkStyle}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                                </svg>
+                                                <p className="font-bold font-NotoSansKhmer">តុល្យការ</p>
+                                            </NavLink>
+                                            <NavLink to="/purchase" className={navLinkStyle}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                                </svg>
+                                                <p className="font-bold font-NotoSansKhmer">តារាងតុល្យភាព</p>
+                                            </NavLink>
+                                            <NavLink to="/purchase-list" className={navLinkStyle}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                                </svg>
+                                                <p className="font-bold font-NotoSansKhmer">លំហូរសាច់ប្រាក់</p>
+                                            </NavLink>
+                                            <NavLink to="/purchase-list" className={navLinkStyle}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                                </svg>
+                                                <p className="font-bold font-NotoSansKhmer">របាយការណ៍គណនីចំណាយ</p>
+                                            </NavLink>
+                                        </div>
+                                    </li>
+                                )}
+                                {/*  Payment method dropdown using to super addmin */}
+                                <li className="space-y-2">
+                                    <button onClick={handlepaymentDropdown} className={`flex items-center p-3 w-full text-left justify-between ${isPaymentMethodDropdown ? "bg-blue-700 dark:bg-blue-500 text-white" : "text-gray-900 dark:text-white"}`}>
+                                        <div className="flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-hand-coins"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17" /><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" /><path d="m2 16 6 6" /><circle cx="16" cy="9" r="2.9" /><circle cx="6" cy="5" r="3" /></svg>                                    <span className="flex-1 font-bold ms-3 whitespace-nowrap font-NotoSansKhmer">
+                                                វិធីសាស្រ្តបង់ប្រាក់
+                                            </span>
+                                        </div>
+                                        <svg className={`w-4 h-4 transition-transform duration-300 ${isPaymentMethodDropdown ? "transform rotate-90" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </button>
+
+                                    <div className={`overflow-hidden transition-all duration-500 space-y-2 ${isPaymentMethodDropdown ? "max-h-40 opacity-100" : "max-h-0"}`}>
+                                        <NavLink to="/paymenttype" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">បញ្ជីបង់ប្រាក់</p>
+                                        </NavLink>
+                                        <NavLink to="/purchase-list" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">បញ្ជីបង់ប្រាក់</p>
+                                        </NavLink>
+                                    </div>
+                                </li>
+
+                                {userRol === 'superadmin' && (
+                                    <li className="space-y-2">
+                                        <button onClick={handleUsersDropdown} className={`flex items-center p-3 w-full text-left justify-between ${isUsersDropdown ? "bg-blue-700 dark:bg-blue-500 text-white" : "text-gray-900 dark:text-white"}`}>
+                                            <div className="flex items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-users-round"><path d="M18 21a8 8 0 0 0-16 0" /><circle cx="10" cy="8" r="5" /><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" /></svg>                                    <span className="flex-1 font-bold ms-3 whitespace-nowrap font-NotoSansKhmer">
+                                                    អ្នកប្រើប្រាស់
+                                                </span>
+                                            </div>
+                                            <svg className={`w-4 h-4 transition-transform duration-300 ${isUsersDropdown ? "transform rotate-90" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </button>
 
 
-                            <div className={`overflow-hidden transition-all duration-500 ${isReportsDropdown ? "max-h-[900px] opacity-100" : "max-h-0"}`}>
-                                <NavLink to="/purchase" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer whitespace-nowrap">របាយការណ៍ចំណេញ/ខាត</p>
-                                </NavLink>
-                                <NavLink to="/purchase-list" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">ទិញ & លក់</p>
-                                </NavLink>
-                                <NavLink to="/purchase-list" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">របាយការណ៍ពន្ធ</p>
-                                </NavLink>
-                                <NavLink to="/purchase-list" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer whitespace-nowrap">អតិថិជន​ & អ្នកផ្គត់ផ្គង់</p>
-                                </NavLink>
-                                <NavLink to="/purchase-list" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">របាយការណ៍ក្រុមអតិថិជន</p>
-                                </NavLink>
-                                <NavLink to="/purchase" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer whitespace-nowrap">របាយការណ៍ស្តុក</p>
-                                </NavLink>
-                                <NavLink to="/purchase-list" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">របាយការណ៍កែប្រែស្តុក</p>
-                                </NavLink>
-                                <NavLink to="/purchase-list" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">ផលិតផលពេញនិយម</p>
-                                </NavLink>
-                                <NavLink to="/purchase-list" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer whitespace-nowrap">របាយការណ៍សម្ភារៈ</p>
-                                </NavLink>
-                                <NavLink to="/purchase-list" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">របាយការណ៍ទិញផលិតផល</p>
-                                </NavLink>
+                                        <div className={`overflow-hidden transition-all duration-500 space-y-2 ${isUsersDropdown ? "max-h-40 opacity-100" : "max-h-0"}`}>
+                                            <NavLink to="/user" className={navLinkStyle}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                                </svg>
+                                                <p className="font-bold font-NotoSansKhmer">បញ្ជីឈ្មោះអ្នកប្រើប្រាស់</p>
+                                            </NavLink>
+                                            <NavLink to="/createuser" className={navLinkStyle}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                                </svg>
+                                                <p className="font-bold font-NotoSansKhmer">បន្ថែមអ្នកប្រើប្រាស់</p>
+                                            </NavLink>
+                                        </div>
+                                    </li>
+
+                                )}
+
+                                {/*  Report dropdown report */}
+                                <li className="space-y-2">
+                                    <button onClick={handleReportDropdown} className={`flex items-center p-3 w-full text-left justify-between ${isReportsDropdown ? "bg-blue-700 dark:bg-blue-500 text-white" : "text-gray-900 dark:text-white"}`}>
+                                        <div className="flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
+                                            </svg>
+                                            <span className="flex-1 font-bold ms-3 whitespace-nowrap font-NotoSansKhmer">
+                                                របាយការណ៍
+                                            </span>
+                                        </div>
+                                        <svg className={`w-4 h-4 transition-transform duration-300 ${isReportsDropdown ? "transform rotate-90" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </button>
+
+
+                                    <div className={`overflow-hidden transition-all duration-500 ${isReportsDropdown ? "max-h-[900px] opacity-100" : "max-h-0"}`}>
+                                        <NavLink to="/InvocePurchase" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer whitespace-nowrap">របាយការណ៍ចំណេញ/ខាត</p>
+                                        </NavLink>
+                                        <NavLink to="/purchase-list" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">ទិញ & លក់</p>
+                                        </NavLink>
+                                        <NavLink to="/purchase-list" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">របាយការណ៍ពន្ធ</p>
+                                        </NavLink>
+                                        <NavLink to="/purchase-list" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer whitespace-nowrap">អតិថិជន​ & អ្នកផ្គត់ផ្គង់</p>
+                                        </NavLink>
+                                        <NavLink to="/purchase-list" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">របាយការណ៍ក្រុមអតិថិជន</p>
+                                        </NavLink>
+                                        <NavLink to="/purchase" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer whitespace-nowrap">របាយការណ៍ស្តុក</p>
+                                        </NavLink>
+                                        <NavLink to="/purchase-list" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">របាយការណ៍កែប្រែស្តុក</p>
+                                        </NavLink>
+                                        <NavLink to="/purchase-list" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">ផលិតផលពេញនិយម</p>
+                                        </NavLink>
+                                        <NavLink to="/purchase-list" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer whitespace-nowrap">របាយការណ៍សម្ភារៈ</p>
+                                        </NavLink>
+                                        <NavLink to="/purchase-list" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">របាយការណ៍ទិញផលិតផល</p>
+                                        </NavLink>
 
 
 
-                                <NavLink to="/purchase" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer whitespace-nowrap">របាយការណ៍លក់ផលិតផល</p>
-                                </NavLink>
-                                <NavLink to="/purchase-list" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">របាយការណ៍ទូទាត់ការទិញ</p>
-                                </NavLink>
-                                <NavLink to="/purchase-list" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">របាយការណ៍ទូទាត់ការលក់</p>
-                                </NavLink>
-                                <NavLink to="/purchase-list" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer whitespace-nowrap">របាយការណ៍ចំណាយ</p>
-                                </NavLink>
-                                <NavLink to="/purchase-list" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">របាយការណ៍ការបើកផ្ទាំងលក់</p>
-                                </NavLink>
-                                <NavLink to="/purchase-list" className={navLinkStyle}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                    </svg>
-                                    <p className="font-bold font-NotoSansKhmer">របាយការណ៍តំណាងនៃការលក់</p>
-                                </NavLink>
+                                        <NavLink to="/purchase" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer whitespace-nowrap">របាយការណ៍លក់ផលិតផល</p>
+                                        </NavLink>
+                                        <NavLink to="/purchase-list" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">របាយការណ៍ទូទាត់ការទិញ</p>
+                                        </NavLink>
+                                        <NavLink to="/purchase-list" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">របាយការណ៍ទូទាត់ការលក់</p>
+                                        </NavLink>
+                                        <NavLink to="/purchase-list" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer whitespace-nowrap">របាយការណ៍ចំណាយ</p>
+                                        </NavLink>
+                                        <NavLink to="/purchase-list" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">របាយការណ៍ការបើកផ្ទាំងលក់</p>
+                                        </NavLink>
+                                        <NavLink to="/purchase-list" className={navLinkStyle}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                            <p className="font-bold font-NotoSansKhmer">របាយការណ៍តំណាងនៃការលក់</p>
+                                        </NavLink>
+                                    </div>
+                                </li>
                             </div>
-                        </li>
-
-
+                        )}
                     </ul>
                 </div>
             </aside>

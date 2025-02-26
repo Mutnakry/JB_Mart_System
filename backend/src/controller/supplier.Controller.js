@@ -92,20 +92,6 @@ exports.Create = (req, res) => {
     });
 };
 
-
-// update data supplier
-// exports.Update = (req, res) => {
-//     const {id} = req.params;
-//     const {contect_type,contect_phone,mobile_phone,business_names,full_names,half_names,description,email,user_at}=req.body;
-//     const sql = "UPDATE supplier set contect_type=?,contect_phone=?,mobile_phone=?,business_names=?,full_names=?,half_names=?,description=?,email=?,user_update=? where id=?";
-//     db.query(sql,[contect_type,contect_phone,mobile_phone,business_names,full_names,half_names,description,email,user_at,id], (err, results) => {
-//         if (err) {
-//             return res.status(500).send(err);
-//         }
-//         res.json(results);
-//     });
-// }
-
 // Update supplier data
 exports.Update = (req, res) => {
     const { id } = req.params;

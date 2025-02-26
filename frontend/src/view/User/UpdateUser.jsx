@@ -73,8 +73,8 @@ const Register = () => {
     return (
         <div>
             <Navbar />
-            <div className='px-6 dm:ml-64  bg-gray-200 dark:bg-gray-950'>
-                <div className="w-full grid md:grid-cols-2 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
+            <div className='px-4 md:ml-64  bg-gray-200 dark:bg-gray-950'>
+                <div className="w-full bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
                     <div
                         className="h-screen bg-cover bg-opacity-40 bg-center bg-gray-800"
                     >
@@ -149,8 +149,6 @@ const Register = () => {
                         </div>
                     </div>
 
-                    {/* Background Image */}
-                    <div className="h-screen bg-cover bg-gray-950 bg-center hidden md:block" style={{ backgroundImage: `url(${banner})` }}></div>
                 </div>
             </div>
         </div>

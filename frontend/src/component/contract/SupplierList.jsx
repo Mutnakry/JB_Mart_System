@@ -124,18 +124,20 @@ const SupplierList = () => {
         setError('');
         setError('');
         const values = {
-            contect_type: isTypwsupplier,
-            contect_phone: businessPhone,
-            mobile_phone: phoneNumber,
-            business_names: businessName,
-            full_names: customeNames,
-            half_names: halfcustomeNames,
-            description: description,
-            email: email,
+            contect_type: isTypwsupplier  || null,
+            contect_phone: businessPhone  || null,
+            mobile_phone: phoneNumber  || null,
+            business_names: businessName  || null,
+            full_names: customeNames  || null,
+            half_names: halfcustomeNames  || null,
+            description: description || null,
+            email: email  || null,
             user_at: userLoginNames
         };
+
+        console.log(values)
         try {
-            await axios.put(`${API_URL}/supplier/${selectedsupplierId}`, values);
+            await axios.put(`${API_URL}/api/supplier/${selectedsupplierId}`, values);
             toast.success('កែប្រែអតិជនបានដោយជោគជ័យ', { autoClose: 3000 });
             GetAllsupplier();
             setIsUpdateModalOpen(false);
@@ -149,9 +151,6 @@ const SupplierList = () => {
             toast.error(errorMessage, { autoClose: 3000 });
         }
     };
-
-
-
 
     // modal delete
     const openDeleteModal = cat => {
@@ -186,17 +185,17 @@ const SupplierList = () => {
         setError('');
 
         const values = {
-            contect_type: isTypwsupplier,
-            contect_phone: businessPhone,
-            mobile_phone: phoneNumber,
-            business_names: businessName,
-            full_names: customeNames,
-            half_names: halfcustomeNames,
-            description: description,
-            email: email,
+            contect_type: isTypwsupplier || null,
+            contect_phone: businessPhone || null,
+            mobile_phone: phoneNumber || null,
+            business_names: businessName || null,
+            full_names: customeNames || null,
+            half_names: halfcustomeNames || null,
+            description: description || null,
+            email: email || null,
             user_at: userLoginNames
         };
-
+        console.log(values)
         try {
             const { data } = await axios.post(`${API_URL}/api/supplier`, values);
             console.log(data);
@@ -535,6 +534,8 @@ const SupplierList = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
+
+
             {/* Update Modal */}
             <AnimatePresence>
                 {isUpdateModalOpen && (

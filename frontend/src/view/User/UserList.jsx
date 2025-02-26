@@ -128,7 +128,7 @@ const UserList = () => {
                                                     <td className="px-4 py-4">{index + 1}</td>
                                                     <td className="px-4 py-1">{customer.user_names}</td>
                                                     <td className="px-4 py-1">{customer.user_email}</td>
-                                                    <td className="px-4 py-1">{"*".repeat(customer.user_pass.length)}</td>
+                                                    <td className="px-4 py-1 text-center">* * * * * * * * * * *</td>
                                                     <td className="px-4 py-1">{customer.user_rol}</td>
                                                     <td className="px-4 space-x-2 flex">
                                                         {customer.user_names !== userLoginNames && (

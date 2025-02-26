@@ -222,34 +222,34 @@ const CreatePurchase = () => {
         };
         setIsSubmitting(true); // Set submitting state
         console.log(orderData)
-        // try {
-        //     // Send data to backend
-        //     const response = await fetch(`${API_URL}/api/purchase`, {
-        //         method: 'POST',
-        //         headers: { 'Content-Type': 'application/json' },
-        //         body: JSON.stringify(orderData),
-        //     });
+        try {
+            // Send data to backend
+            const response = await fetch(`${API_URL}/api/purchase`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(orderData),
+            });
 
-        //     const result = await response.json();
+            const result = await response.json();
 
-        //     if (response.ok) {
-        //         toast.success(`បន្ថែមទំនិញដោយជោគជ័យ`, {
-        //             position: "top-right",
-        //             autoClose: 3000,
-        //         });
-        //         navigate('/purchase')
-        //         clearCart();
-        //     } else {
-        //         // toast.error(result.message || 'Failed to place the order!');
-        //     }
-        // } catch (error) {
-        //     toast.error('Failed to place the order!', {
-        //         position: "top-right",
-        //         autoClose: 1000,
-        //     });
-        // } finally {
-        //     setIsSubmitting(false);
-        // }
+            if (response.ok) {
+                toast.success(`បន្ថែមទំនិញដោយជោគជ័យ`, {
+                    position: "top-right",
+                    autoClose: 3000,
+                });
+                navigate('/purchase')
+                clearCart();
+            } else {
+                // toast.error(result.message || 'Failed to place the order!');
+            }
+        } catch (error) {
+            toast.error('Failed to place the order!', {
+                position: "top-right",
+                autoClose: 1000,
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const clearCart = () => {
@@ -397,8 +397,6 @@ const CreatePurchase = () => {
     );
 
 
-
-
     ///// get payment Type 
     const [paymentType, setPaymentType] = useState([]);
     const getPaymentType = async () => {
@@ -427,7 +425,7 @@ const CreatePurchase = () => {
                                 <div className='px-4 py-8 border-t-2 border-blue-600 shadow-md'>
                                     <div className='grid grid-cols-3 gap-4'>
                                         <div className="space-y-2">
-                                            <label htmlFor="groupCustomer" className="font-NotoSansKhmer">ឈ្មោះអ្នកផ្គត់ផ្គង:</label>
+                                            <label htmlFor="groupCustomer" className="font-NotoSansKhmer">ឈ្មោះអ្នកផ្គត់ផ្គង <span className='text-red-500'> : *</span></label>
                                             <select
                                                 className='input_text'
                                                 id="bank"
@@ -448,7 +446,7 @@ const CreatePurchase = () => {
 
                                         {/* Date Input */}
                                         <div className="col-span-1 space-y-2">
-                                            <label className="font-bold font-NotoSansKhmer">កាលបរិច្ឆេទទិញ: *</label>
+                                            <label className="font-bold font-NotoSansKhmer">កាលបរិច្ឆេទទិញ</label>
                                             <input
                                                 type="date"
                                                 id="price"
@@ -460,7 +458,7 @@ const CreatePurchase = () => {
                                             />
                                         </div>
                                         <div className="col-span-1 space-y-2">
-                                            <label htmlFor="" className="font-bold font-NotoSansKhmer">ស្ថានភាព: *</label>
+                                            <label htmlFor="" className="font-bold font-NotoSansKhmer">ស្ថានភាព <span className='text-red-500'> : *</span></label>
                                             <select
                                                 required
                                                 value={statuss}
@@ -693,7 +691,7 @@ const CreatePurchase = () => {
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <label htmlFor="">កាលបរិច្ឆេតបង់ប្រាក់ : *</label>
+                                            <label htmlFor="">កាលបរិច្ឆេតបង់ប្រាក់</label>
                                             <input type="date"
                                                 required
                                                 placeholder="0.0"
@@ -752,7 +750,7 @@ const CreatePurchase = () => {
 
                                                 onChange={e => setAccount_ID(e.target.value)}
                                             >
-                                                <option value="" disabled>សូមជ្រើសរើស</option>
+                                                <option value="" >សូមជ្រើសរើស</option>
                                                 {accountBank?.map((items) => (
                                                     <option key={items.id} value={items.id} disabled={items.status === 'off'}>
                                                         {items.acc_names}

@@ -87,6 +87,9 @@ import Order_List from './component/order/Order_List';
 import Order_Repay from './component/order/Order_Repay'
 import FinhOrder from './component/order/FinhOrder'
 
+///// invoice
+import InvocePurchase from './component/invoie/Purchase'
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -179,6 +182,9 @@ function App() {
           <Route path='/order_List' element={<Order_List />} />
           <Route path='/order-Repay' element={<FinhOrder />} />
           <Route path='/order-Repay/:id' element={<Order_Repay />} />
+
+            {/* invoive */}
+            <Route path='/InvocePurchase' element={<InvocePurchase />} />
           
         </Routes>
         <ToastContainer />

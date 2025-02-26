@@ -599,3 +599,4 @@ const PurchaseDetails = () => {
 
 export default PurchaseDetails;
 
+

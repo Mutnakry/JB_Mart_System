@@ -593,6 +593,9 @@ const Dashboard = () => {
                                                     >
                                                         <MdDelete className='text-white' />
                                                     </button>
+                                                    <Link className="p-2 bg-blue-500" to={`/purchase/${purchase.purchasedetail_id}`}>
+                                                            <FaPencilAlt className='text-white' />
+                                                        </Link>
                                                     {purchase.status === 'completed' ? (
                                                         <span className="p-2 bg-blue-500 opacity-50 cursor-not-allowed">
                                                             <FaPencilAlt className='text-white' />

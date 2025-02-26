@@ -21,7 +21,6 @@ const StockChart = () => {
         }
     });
 
-
     useEffect(() => {
         const fetchStockData = async () => {
             try {

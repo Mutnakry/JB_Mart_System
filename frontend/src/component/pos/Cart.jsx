@@ -324,7 +324,6 @@ const Cart = () => {
     }
 
     setPayMoney(calculatedPayMoney);
-
     let newPayment = payMoney;
     if (payMoney > calculatedPayMoney) {
       newPayment = calculatedPayMoney
@@ -334,6 +333,18 @@ const Cart = () => {
 
     if (total_amount_di_sum > 0) {
 
+    }
+
+    let convertedAmountUSD = newPayment;
+    let exchangesPayment = 1;
+    if (ispaymentTypeCurrency === "usd") {
+      convertedAmountUSD = newPayment;
+    } else if (ispaymentTypeCurrency === "khr" && exchangeRateKHR) {
+      convertedAmountUSD = newPayment / exchangeRateKHR;
+      exchangesPayment = 1 / exchangeRateKHR;
+    } else if (ispaymentTypeCurrency === "thb" && exchangeRateKHR && thbToKhrRateTHB) {
+      convertedAmountUSD = (newPayment * thbToKhrRateTHB) / exchangeRateKHR;
+      exchangesPayment = thbToKhrRateTHB / exchangeRateKHR;
     }
 
     if (total_amount_di_sum > 0) {
@@ -357,6 +368,7 @@ const Cart = () => {
       changes: exchanges,
       amount_discount: Number(getCustomerDiscount),
       type_currency: ispaymentTypeCurrency,
+      balance_amount_usd: convertedAmountUSD || calculatedPayMoney,
       description: description,
       user_at: userLoginNames,
       products: productsData,

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 16, 2025 at 05:56 AM
+-- Generation Time: Feb 25, 2025 at 02:50 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -682,17 +682,17 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `pro_names`, `category_id`, `brand_id`, `unit_id`, `qty`, `stock`, `discount`, `note_qty`, `mg_stock`, `cost_price`, `included_tax`, `include_tax`, `exclude_tax`, `profit`, `expiry`, `status`, `type_of_tax`, `product_type`, `image`, `barcode`, `description`, `user_at`, `user_update`, `create_at`, `update_at`, `delete_at`, `barcode_type`) VALUES
-(1, 'ស្រាបៀABCដប', 1, 1, 1, 2, 0, 0.50, 5, 'disable', 2.50, NULL, 0.00, 6.00, 1.00, NULL, 'inactive', 'ផ្ដាច់មុខ', 'មួយ', '1729669329976_download (10).jpg', 'A062512875', NULL, 'admin', 'admin', '2024-10-23 07:25:20', '2025-02-09 14:07:57', NULL, NULL),
-(2, 'ការហ្វេ', 1, 1, 1, 2, 0, 1.00, 1, 'enable', 2.50, NULL, 0.00, 6.00, 1.00, NULL, 'active', 'រួមបញ្ចូលគ្នា', 'មួយ', '1729668526878_coffee.jpg', 'B062512875', NULL, 'admin', 'admin', '2024-10-23 07:28:46', '2025-02-14 17:52:57', NULL, NULL),
-(3, 'ក្រែម', 1, 5, 1, 1, 1, 0.50, 10, 'enable', 10.00, NULL, 0.00, 12.00, 2.00, '2024-10-25', 'inactive', 'ផ្ដាច់មុខ', 'បណ្ដុំ', '1729704000068_images (1).jpg', 'B012875', NULL, 'admin', NULL, '2024-10-23 17:20:00', '2025-02-09 14:08:39', NULL, NULL),
+(1, 'ស្រាបៀABCដប', 1, 1, 1, 10, 12, 0.50, 5, 'disable', 3.00, NULL, 0.00, 7.00, 1.00, NULL, 'inactive', 'ផ្ដាច់មុខ', 'មួយ', '1729669329976_download (10).jpg', 'A062512875', NULL, 'admin', 'admin', '2024-10-23 07:25:20', '2025-02-25 13:47:52', NULL, NULL),
+(2, 'ការហ្វេ', 1, 1, 1, 2, 3, 1.00, 1, 'enable', 2.50, NULL, 0.00, 6.00, 1.00, NULL, 'active', 'រួមបញ្ចូលគ្នា', 'មួយ', '1729668526878_coffee.jpg', 'B062512875', NULL, 'admin', 'admin', '2024-10-23 07:28:46', '2025-02-25 07:46:00', NULL, NULL),
+(3, 'ក្រែម', 1, 5, 1, 5, 6, 0.50, 10, 'enable', 10.00, NULL, 0.00, 12.00, 2.00, '2024-10-25', 'inactive', 'ផ្ដាច់មុខ', 'បណ្ដុំ', '1729704000068_images (1).jpg', 'B012875', NULL, 'admin', NULL, '2024-10-23 17:20:00', '2025-02-25 07:45:28', NULL, NULL),
 (5, 'ឆាក្ដៅសាច់ទា', 1, 4, 2, 3, 10, 0.00, 31, 'enable', 11.90, NULL, 0.00, 31.00, 1.10, NULL, 'inactive', 'ផ្ដាច់មុខ', 'អថេរ', '1729710113801_images (13).jpg', 'C06275', NULL, 'admin', 'admin1', '2024-10-23 17:35:48', '2025-02-15 03:59:44', NULL, NULL),
-(6, 'ប្រហុកអាំង', 11, 5, 4, 3, 3, 0.00, 10, 'enable', 1.00, NULL, 0.00, 1.50, 0.50, '2026-06-24', 'inactive', 'រួមបញ្ចូលគ្នា', 'មួយ', '1738294086034_images (16).jpg', 'D00012875', 'yes', 'admin', 'admin', '2024-10-23 18:01:51', '2025-02-09 14:08:30', NULL, NULL),
+(6, 'ប្រហុកអាំង', 11, 5, 4, 3, 4, 0.00, 10, 'enable', 1.00, NULL, 0.00, 1.50, 0.50, '2026-06-24', 'inactive', 'រួមបញ្ចូលគ្នា', 'មួយ', '1738294086034_images (16).jpg', 'D00012875', 'yes', 'admin', 'admin', '2024-10-23 18:01:51', '2025-02-25 07:46:13', NULL, NULL),
 (7, 'ត្រី', 8, 5, 2, 1, 5, 1.20, 1, 'enable', 10.00, NULL, 0.00, 13.00, 3.00, NULL, 'inactive', 'ផ្ដាច់មុខ', 'មួយ', '1729741995726_images (17).jpg', 'F00512875', '', 'admin', 'admin', '2024-10-23 19:08:08', '2025-02-09 14:08:22', NULL, NULL),
 (8, 'Pizza', 1, 1, 1, 0, 0, 3.00, 1, 'enable', 2.50, NULL, 0.00, 4.00, 1.00, '2024-11-01', 'inactive', 'រួមបញ្ចូលគ្នា', 'មួយ', NULL, 'G00012875', 'null', 'admin', NULL, '2024-10-28 06:59:30', '2025-02-09 07:09:22', NULL, NULL),
-(9, 'ABC', 4, 5, 3, 1, 3, 0.00, 1, 'disable', 20.00, NULL, 2.00, 30.00, 8.00, '2025-01-31', 'active', 'រួមបញ្ចូលគ្នា', 'មួយ', NULL, '00000000299', NULL, 'admin', NULL, '2025-01-30 06:47:34', '2025-02-15 04:02:02', NULL, 'Code-128'),
+(9, 'ABC', 4, 5, 3, 4, 6, 0.00, 1, 'disable', 30.00, NULL, 0.00, 35.00, 8.00, '2025-01-31', 'active', 'រួមបញ្ចូលគ្នា', 'មួយ', NULL, '00000000299', NULL, 'admin', NULL, '2025-01-30 06:47:34', '2025-02-25 13:49:31', NULL, 'Code-128'),
 (10, 'ត្រីខមំប៉ុង', 8, 1, 4, 0, 0, 0.00, 1, 'enable', 10.00, NULL, 0.00, 15.00, 5.00, '2025-02-01', 'inactive', 'ផ្ដាច់មុខ', 'មួយ', NULL, '00000706363', '', 'admin', 'admin', '2025-01-30 07:04:32', '2025-01-31 16:04:10', NULL, NULL),
-(11, 'ប្រហិតអាំង', NULL, NULL, 3, 2, 0, 0.00, 1, 'enable', 1.00, NULL, 0.00, 1.50, 0.50, '2025-02-03', 'active', 'ផ្ដាច់មុខ', 'មួយ', '1738220986787_food1.jpg', '00000665798', '', 'admin', 'admin', '2025-01-30 07:09:46', '2025-01-31 15:28:05', NULL, NULL),
-(12, 'ជើងមានអាំង', 8, 1, 2, 1, 0, 1.50, 1, 'disable', 0.99, NULL, 0.00, 1.79, 0.80, '2025-02-01', 'active', 'ផ្ដាច់មុខ', 'មួយ', '1738221609109_download (13).jpg', '00062512875', '', 'admin', 'admin', '2025-01-30 07:20:09', '2025-02-14 04:11:34', NULL, NULL),
+(11, 'ប្រហិតអាំង', NULL, NULL, 3, 2, 5, 0.00, 1, 'enable', 1.00, NULL, 0.00, 1.50, 0.50, '2025-02-03', 'active', 'ផ្ដាច់មុខ', 'មួយ', '1738220986787_food1.jpg', '00000665798', '', 'admin', 'admin', '2025-01-30 07:09:46', '2025-02-25 07:46:09', NULL, NULL),
+(12, 'ជើងមានអាំង', 8, 1, 2, 1, 1, 1.50, 1, 'disable', 0.99, NULL, 0.00, 1.79, 0.80, '2025-02-01', 'active', 'ផ្ដាច់មុខ', 'មួយ', '1738221609109_download (13).jpg', '00062512875', '', 'admin', 'admin', '2025-01-30 07:20:09', '2025-02-25 07:45:20', NULL, NULL),
 (13, 'មាន់ដុតកូកាកូឡា', 4, 1, 2, 0, 0, 0.00, 1, 'enable', 4.92, NULL, 4.00, 11.89, 2.97, '2025-02-10', 'active', 'ផ្ដាច់មុខ', 'មួយ', '1738223019885_Meatballs.jpg', '00069607756', 'មាន់ដុតកូកាកូឡា', 'admin', 'admin', '2025-01-30 07:43:39', '2025-02-06 02:41:03', NULL, NULL),
 (14, 'មាន់ដុតស្ទឹង', NULL, NULL, 2, 0, 0, 0.00, 2, 'disable', 200.00, NULL, 1.00, 6.00, 3.00, '2025-03-01', 'inactive', 'ផ្ដាច់មុខ', 'មួយ', NULL, '00000950632', '', 'admin', 'admin', '2025-01-30 07:58:52', '2025-02-15 18:39:57', NULL, NULL),
 (16, 'កញ្ញាបុផ្ផាស្រស់', NULL, NULL, 3, 0, 0, 0.00, 1, 'enable', 0.00, NULL, 0.00, 0.00, 0.00, NULL, 'inactive', 'ផ្ដាច់មុខ', 'មួយ', NULL, '00020336606', NULL, 'admin', NULL, '2025-01-31 04:34:03', '2025-01-31 07:08:03', NULL, 'Code-128'),
@@ -787,17 +787,78 @@ CREATE TABLE `purchase` (
 INSERT INTO `purchase` (`id`, `supplier_id`, `product_id`, `purchasedetail_id`, `date_by`, `qty`, `discount`, `cost_price`, `include_tax`, `exclude_tax`, `profit`, `total`, `status`, `user_at`, `user_update`, `create_at`, `update_at`, `delete_at`) VALUES
 (44, 1, 1, 94, '2024-10-31', 3, 1.00, 2.22, 2.00, 8.80, NULL, 7.66, 'pending', 'admin1', 'admin', '2024-10-31 08:40:05', '2025-02-12 05:36:08', NULL),
 (53, 3, 7, 98, '2025-01-08', 2, 0.00, 10.00, 0.00, 30.00, NULL, 20.00, 'active', 'admin', 'admin', '2025-01-08 07:23:41', '2025-02-15 19:36:25', NULL),
-(55, 3, 1, 98, '2025-01-08', 2, 0.00, 3.00, 0.00, 6.00, NULL, 6.00, 'active', 'admin', 'admin', '2025-02-02 06:49:00', '2025-02-15 19:36:25', NULL),
+(55, 3, 1, 98, '2025-01-08', 1, 0.00, 3.00, 0.00, 6.00, NULL, 6.00, 'active', 'admin', 'admin', '2025-02-02 06:49:00', '2025-02-25 07:01:38', NULL),
 (56, 3, 9, 98, '2025-01-08', 2, 0.00, 200.00, 0.00, 30.00, NULL, 400.00, 'active', 'admin', 'admin', '2025-02-02 07:16:07', '2025-02-15 19:36:25', NULL),
 (65, 4, 9, 100, '2025-02-03', 1, 0.00, 20.00, 0.00, 30.00, NULL, 20.00, 'pending', 'admin', 'admin', '2025-02-03 18:20:56', '2025-02-05 14:30:20', NULL),
 (69, 4, 1, 100, '2025-02-03', 3, 0.00, 2.50, 0.00, 6.00, NULL, 7.50, 'pending', 'admin', 'admin', '2025-02-03 18:59:04', '2025-02-05 14:30:20', NULL),
 (70, 4, 8, 100, '2025-02-03', 5, 0.00, 2.51, 0.00, 4.00, NULL, 12.55, 'pending', 'admin', 'admin', '2025-02-03 18:59:04', '2025-02-05 14:30:40', NULL),
 (71, 1, 8, 94, '2024-10-31', 1, 0.00, 2.50, 0.00, 4.00, NULL, 2.50, 'pending', 'admin', NULL, '2025-02-12 05:36:08', '2025-02-12 05:36:08', NULL),
-(72, 3, 9, 101, '2025-02-16', 1, 0.00, 20.00, 0.00, 30.00, NULL, 20.00, 'active', 'admin', 'admin', '2025-02-16 02:43:07', '2025-02-16 02:53:52', NULL),
+(72, 3, 9, 101, '2025-02-16', 1, 0.00, 20.00, 0.00, 30.00, NULL, 20.00, 'pending', 'admin', 'admin', '2025-02-16 02:43:07', '2025-02-25 04:50:06', NULL),
 (73, 1, 8, 102, '2025-02-16', 1, 0.00, 2.50, 0.00, 4.00, NULL, 2.50, 'active', 'admin', 'admin', '2025-02-16 03:18:12', '2025-02-16 03:18:37', NULL),
-(74, 4, 9, 103, '2025-02-16', 1, 0.00, 20.00, 0.00, 30.00, NULL, 20.00, 'pending', 'admin', 'admin', '2025-02-16 03:23:04', '2025-02-16 04:55:02', NULL),
-(75, 4, 9, 104, '2025-02-16', 1, 0.00, 20.00, 0.00, 30.00, NULL, 20.00, 'pending', 'admin', 'admin', '2025-02-16 03:47:39', '2025-02-16 03:52:39', NULL),
-(76, 4, 3, 105, '2025-02-16', 1, 0.00, 10.00, 0.00, 12.00, NULL, 10.00, 'active', 'admin', 'admin', '2025-02-16 03:59:08', '2025-02-16 04:00:06', NULL);
+(74, 4, 9, 103, '2025-02-16', 1, 0.00, 30.00, 0.00, 35.00, NULL, 30.00, 'completed', 'admin', 'admin', '2025-02-16 03:23:04', '2025-02-25 13:49:31', NULL),
+(75, 4, 9, 104, '2025-02-16', 1, 0.00, 20.00, 0.00, 30.00, NULL, 20.00, 'completed', 'admin', 'admin', '2025-02-16 03:47:39', '2025-02-25 07:35:13', NULL),
+(76, 4, 3, 105, '2025-02-16', 4, 0.00, 10.00, 0.00, 12.00, NULL, 40.00, 'completed', 'admin', 'admin', '2025-02-16 03:59:08', '2025-02-25 07:28:05', NULL),
+(77, 5, 1, 106, '2025-02-25', 4, 0.00, 2.50, 0.00, 6.00, NULL, 10.00, 'completed', 'admin', 'admin', '2025-02-25 05:02:19', '2025-02-25 07:39:15', NULL),
+(78, 6, 1, 107, '2025-02-25', 5, 0.00, 3.00, 0.00, 7.00, NULL, 15.00, 'completed', 'admin', 'admin', '2025-02-25 07:40:58', '2025-02-25 13:47:52', NULL);
+
+--
+-- Triggers `purchase`
+--
+DELIMITER $$
+CREATE TRIGGER `adjust_qty_on_complete` AFTER UPDATE ON `purchase` FOR EACH ROW BEGIN
+    -- If status changes from 'active' or 'pending' to 'completed', adjust qty
+    IF NEW.status = 'completed' AND (OLD.status = 'active' OR OLD.status = 'pending') THEN
+        UPDATE products
+        SET qty = qty + NEW.qty,
+         stock = stock + NEW.qty,
+         cost_price =  NEW.cost_price,
+		 exclude_tax =  new.exclude_tax,
+		 include_tax =  new.include_tax
+        WHERE id = NEW.product_id;
+    END IF;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `adjust_qty_on_inactive` AFTER UPDATE ON `purchase` FOR EACH ROW BEGIN
+    IF OLD.status = 'completed' AND (NEW.status = 'active' OR NEW.status = 'pending') THEN
+        UPDATE products
+        SET qty = qty - NEW.qty,
+          stock = stock - NEW.qty,
+            cost_price =  NEW.cost_price,
+		 exclude_tax =  new.exclude_tax,
+		 include_tax =  new.include_tax
+        WHERE id = NEW.product_id;
+    END IF;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `after_update_qty_purchase_status_completed_` AFTER UPDATE ON `purchase` FOR EACH ROW BEGIN
+    -- Update the quantity in the products table
+     UPDATE products
+        SET qty = qty - OLD.qty + NEW.qty,
+  			stock = stock - OLD.qty + NEW.qty,
+              cost_price =  NEW.cost_price,
+		 exclude_tax =  new.exclude_tax,
+		 include_tax =  new.include_tax
+    WHERE id = NEW.product_id AND New.status ='completed'; -- Check status in the products table
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `insert_data_purchase_update_qty_product` AFTER INSERT ON `purchase` FOR EACH ROW BEGIN
+    -- Update the quantity in the products table
+    UPDATE products
+    SET qty = qty + NEW.qty,
+       stock = stock + NEW.qty,
+        cost_price =  NEW.cost_price,
+		 exclude_tax =  new.exclude_tax,
+		 include_tax =  new.include_tax
+    WHERE id = NEW.product_id AND New.status = 'completed'; -- Check status in the products table
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -831,9 +892,11 @@ INSERT INTO `purchase_detail` (`id`, `paymenttype_id`, `account_id`, `amount_tot
 (100, NULL, NULL, 40.05, 0.00, 40.05, '2025-02-03', '2025-02-03 18:20:56', '2025-02-05 14:30:40'),
 (101, NULL, 2, 20.00, 0.00, 13.00, '2025-02-16', '2025-02-16 02:43:07', '2025-02-16 02:59:21'),
 (102, NULL, 2, 2.50, 0.00, 0.50, '2025-02-16', '2025-02-16 03:18:12', '2025-02-16 03:18:12'),
-(103, NULL, 2, 20.00, 0.00, 13.00, '2025-02-16', '2025-02-16 03:23:04', '2025-02-16 04:54:46'),
-(104, NULL, 2, 20.00, 0.00, 13.00, '2025-02-16', '2025-02-16 03:47:39', '2025-02-16 03:55:50'),
-(105, NULL, NULL, 10.00, 0.00, 6.00, '2025-02-16', '2025-02-16 03:59:08', '2025-02-16 04:00:19');
+(103, NULL, 2, 30.00, 0.00, 30.00, '2025-02-16', '2025-02-16 03:23:04', '2025-02-25 13:49:09'),
+(104, NULL, 2, 20.00, 0.00, 13.00, '2025-02-16', '2025-02-16 03:47:39', '2025-02-25 07:35:13'),
+(105, NULL, NULL, 40.00, 0.00, 6.00, '2025-02-16', '2025-02-16 03:59:08', '2025-02-25 05:07:26'),
+(106, NULL, NULL, 10.00, 0.00, 10.00, '2025-02-25', '2025-02-25 05:02:19', '2025-02-25 05:02:19'),
+(107, NULL, NULL, 15.00, 0.00, 15.00, '2025-02-25', '2025-02-25 07:40:58', '2025-02-25 13:47:52');
 
 --
 -- Triggers `purchase_detail`
@@ -909,7 +972,9 @@ CREATE TABLE `supplier` (
 INSERT INTO `supplier` (`id`, `contect_type`, `contect_phone`, `mobile_phone`, `business_names`, `full_names`, `half_names`, `description`, `email`, `user_at`, `user_update`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'អជីវកម្ម', '0123456789', '0965752080', 'ហាងបាយ', '', 'SR', 'មានរស់ជាតិឆ្ងាញ់', 'nakry@example.com', 'admin', 'User', '2024-10-22 03:48:38', '2025-02-05 06:52:55', NULL),
 (3, 'អជីវកម្ម', '9654322', '', 'ហាងលក់កុំព្យូទ័រ', '', '', '', '', 'admin', 'admin', '2024-10-22 04:24:18', '2024-10-28 05:48:08', NULL),
-(4, 'ផ្ទាល់ខ្លួន', '', '098765', '', 'Shop phone', '', '', '', 'admin', 'admin', '2024-10-28 06:27:18', '2024-10-28 06:27:39', NULL);
+(4, 'ផ្ទាល់ខ្លួន', '', '098765', '', 'Shop phone', '', '', '', 'admin', 'admin', '2024-10-28 06:27:18', '2024-10-28 06:27:39', NULL),
+(5, 'ផ្ទាល់ខ្លួន', NULL, '0974882673', '', 'My shop 311', '311', 'shop', 'myshop311@gmail.com', 'admin', 'admin', '2025-02-24 13:20:20', '2025-02-24 13:28:22', NULL),
+(6, 'ផ្ទាល់ខ្លួន', NULL, '097643', '', 'LV', NULL, NULL, NULL, 'admin', NULL, '2025-02-24 13:32:09', '2025-02-24 13:32:09', NULL);
 
 -- --------------------------------------------------------
 
@@ -963,7 +1028,8 @@ INSERT INTO `users` (`id`, `user_names`, `user_email`, `user_pass`, `user_rol`, 
 (3, 'SuperAdmin', 'superadmin@gmail.com', '$2a$08$W3B2AnU2doEHxYmB4ZJtTO8tP17p6h7xbCwhcRV.ohr1ZGschdtiK', 'superadmin', '2024-10-15 13:09:51', '2024-10-15 13:09:51', NULL),
 (4, '12345678', '12345678@gmail.com', '$2a$10$qX47MIL.c9sZeStpFoHK/OgcMFSagsxJc5Q4cABCOXg2Mk2NdA50C', 'admin', '2025-02-05 03:05:48', '2025-02-05 04:36:05', NULL),
 (5, 'phong', 'phong@gmail.com', '$2a$08$3dg5l1.x2OfzBZ64.gi2rORCjQyUZLqE1ETjR/9EEiaXVy5s7r.AK', 'admin', '2025-02-09 06:25:15', '2025-02-09 06:25:15', NULL),
-(6, 'Chitra', 'Chitra@gmail.com', '$2a$08$FfklwpUYhC5hLR4G.la9AeOPbrjpnCjl6zRNwuF4WTj9uYNlcvHNS', 'admin', '2025-02-09 06:27:09', '2025-02-09 06:27:09', NULL);
+(6, 'Chitra', 'Chitra@gmail.com', '$2a$08$FfklwpUYhC5hLR4G.la9AeOPbrjpnCjl6zRNwuF4WTj9uYNlcvHNS', 'admin', '2025-02-09 06:27:09', '2025-02-09 06:27:09', NULL),
+(7, 'sale', 'sale@gmail.com', '$2a$08$Gd9SLj/WAZKt9V0XKZL8F.ZgWZrA2vR5Bt4aELz43JYc8hsidSnU6', 'cashier', '2025-02-24 13:48:19', '2025-02-24 13:48:19', NULL);
 
 -- --------------------------------------------------------
 
@@ -1409,19 +1475,19 @@ ALTER TABLE `product_discount_detail`
 -- AUTO_INCREMENT for table `purchase`
 --
 ALTER TABLE `purchase`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `purchase_detail`
 --
 ALTER TABLE `purchase_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 
 --
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `unit`
@@ -1433,7 +1499,7 @@ ALTER TABLE `unit`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `warranty`

@@ -35,7 +35,7 @@ const Register = () => {
         try {
             const response = await axios.post(`${API_URL}/api/auth/register`, { names, email, pass, rol });
             console.log('Registration successful:', response.data);
-            toast.success('Register successful!', {
+            toast.success('ចុះឈ្មោះជោគជ័យ!', {
                 position: "top-center",
                 autoClose: 3000,
             });
@@ -54,8 +54,8 @@ const Register = () => {
     return (
         <div>
             <Navbar />
-            <div className='px-6 sm:ml-64  bg-gray-200 dark:bg-gray-950'>
-                <div className="w-full grid md:grid-cols-2 bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
+            <div className='px-4 sm:ml-64  bg-gray-200 dark:bg-gray-950'>
+                <div className="w-full bg-white dark:border-gray-700 animate-fade-up animate-duration-2000 animate-ease-in-out ">
                     <div
                         className="h-screen bg-cover bg-opacity-40 bg-center bg-gray-800"
                     >
@@ -158,23 +158,7 @@ const Register = () => {
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <div
-                            className="h-screen bg-cover bg-gray-950 bg-center hidden md:block"
-                            style={{ backgroundImage: `url(${banner})` }}
-                        >
-                            <div className="h-screen mx-auto grid items-center ">
-                                <div className="">
-                                    <div className="text-center ">
-                                        <h1 className="p-6 text-8xl text-white font-bold uppercase">ហាងលក់</h1>
-                                        <h1 className="p-6 text-8xl text-white font-bold uppercase"> ទំនិញចែប៊ីម៉ាត</h1>
-
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
         </div>

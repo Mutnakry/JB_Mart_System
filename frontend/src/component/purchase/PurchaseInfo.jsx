@@ -793,6 +793,7 @@ const Dashboard = () => {
                                 </td>
                                 <td colSpan="3"></td>
                             </motion.tr>
+                            
                         </table>
 
                     </AnimatePresence>

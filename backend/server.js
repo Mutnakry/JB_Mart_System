@@ -97,6 +97,10 @@ const Dasboard_chart_Routes = require('./src/route/dasboard_chart.router');
 app.use('/api/dashbord', Dasboard_chart_Routes); 
 
 // Import and use  Payment_repay_Routes
+const Invoice_Routes = require('./src/route/invoice.router');
+app.use('/api/invoice', Invoice_Routes); 
+
+// Import and use  Payment_repay_Routes
 const Payment_repay_Routes = require('./src/route/order_repay.router');
 app.use('/api/repay', Payment_repay_Routes); 
 
