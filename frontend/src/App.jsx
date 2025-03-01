@@ -89,6 +89,7 @@ import FinhOrder from './component/order/FinhOrder'
 
 ///// invoice
 import InvocePurchase from './component/invoie/Purchase'
+import InvoceSaleAndPuchase from './component/invoie/SaleAndPuchase'
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -185,7 +186,7 @@ function App() {
 
             {/* invoive */}
             <Route path='/InvocePurchase' element={<InvocePurchase />} />
-          
+            <Route path='/InvoceSaleAndPuchase' element={<InvoceSaleAndPuchase />} />
         </Routes>
         <ToastContainer />
       </BrowserRouter>

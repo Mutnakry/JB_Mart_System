@@ -89,7 +89,7 @@ const Navbar = () => {
     const accountRoutes = ['/account', '/account_list']
     const paymentRoutes = ['/paymenttype', '/payment_list']
     const usersRoutes = ['/user', '/createuser']
-    const reportsRoutes = ['/InvocePurchase', '/report_list']
+    const reportsRoutes = ['/InvocePurchase', '/InvoceSaleAndPuchase']
     const currentcyRoutes = ['/exchange', '/currency_list']
     const ProductDisRoutes = ['/discount_product', '/create_discount_product']
 
@@ -814,7 +814,7 @@ const Navbar = () => {
                                             </svg>
                                             <p className="font-bold font-NotoSansKhmer whitespace-nowrap">របាយការណ៍ចំណេញ/ខាត</p>
                                         </NavLink>
-                                        <NavLink to="/purchase-list" className={navLinkStyle}>
+                                        <NavLink to="/InvoceSaleAndPuchase" className={navLinkStyle}>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-3 size-6">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
                                             </svg>

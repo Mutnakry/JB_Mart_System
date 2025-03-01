@@ -2,15 +2,8 @@ const db = require("../utile/db");
 
 // // sum purchase Detail 
 exports.PurchaseDetailAll = (req, res) => {
-    const sqlyear1 =
-        `  SELECT *
-FROM purchase_detail pd
-INNER JOIN purchase p ON p.purchasedetail_id = pd.id
-INNER JOIN v_nameproducts vp ON vp.id = p.product_id
-INNER JOIN supplier s on s.id = p.supplier_id  ORDER by p.date_by DESC`
-
-const sqlyear =
-`SELECT 
+    const sqlyear =
+        `SELECT 
         p.purchasedetail_id,
         p.*, su.business_names, su.full_names, pro.pro_names, pro.image, pd.amount_total, pd.amount_discount, pd.amount_pay,
         MIN(p.date_by) AS purchase_date,
@@ -50,9 +43,9 @@ exports.Sum_PurchaseDetail = (req, res) => {
     p.pay_date,
     p.create_at
 FROM purchase_detail p
-WHERE YEAR(p.pay_date) = YEAR(CURDATE());
 `
-    db.query(sqlyear, (err, results) => {
+    const sql = `SELECT * FROM purchase_detail`
+    db.query(sql, (err, results) => {
         if (err) {
             return res.status(500).send(err);
         }
@@ -60,14 +53,22 @@ WHERE YEAR(p.pay_date) = YEAR(CURDATE());
     });
 }
 
-// chart purchase sum sale in year
-exports.PurchaseSale = (req, res) => {
+// ការលក់ របាយការណ៍ ទិញ & លក់
+exports.OrderDetailAll = (req, res) => {
     const sql = `
-        SELECT SUM(p.total) AS total_amount, MONTH(p.create_at) AS month 
-        FROM purchase p 
-        WHERE YEAR(p.create_at) = YEAR(CURDATE()) 
-        GROUP BY MONTH(p.create_at)
-        ORDER BY MONTH(p.create_at);
+        SELECT * FROM order_detail
+    `;
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error("Error fetching purchase details:", err);
+            return res.status(500).json({ error: "Database error" });
+        }
+        res.json(results);
+    });
+};
+exports.OrderReturn = (req, res) => {
+    const sql = `
+        SELECT * FROM customer_payment
     `;
     db.query(sql, (err, results) => {
         if (err) {

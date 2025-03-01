@@ -1,15 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const { PurchaseDetailAll,PurchaseProduct,PurchaseSale,SumTotalSale_Dolla_INYear,CostPrice,CountProduct,Sum_PurchaseDetail,StockProduct,SaleProduct_Dolla_InDay,SumTotalSale_USD_KHR_THB_inMonth,CountProductQTYSale,CountCustomer,OrderSum,Check_NoteQTY} = require('../controller/invoice.cotroller');
+const { PurchaseDetailAll,OrderDetailAll,OrderReturn,PurchaseSale,SumTotalSale_Dolla_INYear,CostPrice,CountProduct,Sum_PurchaseDetail,StockProduct,SaleProduct_Dolla_InDay,SumTotalSale_USD_KHR_THB_inMonth,CountProductQTYSale,CountCustomer,OrderSum,Check_NoteQTY} = require('../controller/invoice.cotroller');
 
 router.get('/purchase', PurchaseDetailAll); // // sum purchase Detail 
 
 
 
-// router.get('/sum_purchase', Sum_PurchaseDetail);  ///// // // sum purchase Detail in one year
+router.get('/sum_purchase', Sum_PurchaseDetail);  ///// // // sum purchase Detail in one year
 
 
-// router.get('/product', PurchaseProduct);  /////  useing purchase_detail
+router.get('/orderdetail', OrderDetailAll);  /////  useing purchase_detail
+router.get('/orderreturn', OrderReturn);  /////  useing purchase_detail
+
+
 // router.get('/sale', PurchaseSale);    /////  count  order_detail (USD,KHR,THB)
 
 // router.get('/saleday', SaleProduct_Dolla_InDay);  // chart sale in day (USD)

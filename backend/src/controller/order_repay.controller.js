@@ -58,14 +58,14 @@ exports.CreateOrderRepay = async (req, res) => {
 
         // If customerId is not provided, create a new order repayment detail record
         if (!customerId) {
-            const { customer_id, account_id, payment_date, total_amount, discount_amount, balance_payment, user_at } = req.body;
+            const { customer_id, account_id, payment_date, total_amount, discount_amount, balance_payment,type_currency, user_at } = req.body;
 
             const sqlCustomer = `
                 INSERT INTO order_repay_detail 
-                (customer_id, account_id, payment_date, total_amount, discount_amount, balance_payment, user_at) 
+                (customer_id, account_id, payment_date, total_amount, discount_amount, balance_payment,type_currency, user_at) 
                 VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
-            const customerValues = [customer_id, account_id, payment_date, total_amount, discount_amount, balance_payment, user_at];
+            const customerValues = [customer_id, account_id, payment_date, total_amount, discount_amount, balance_payment,type_currency, user_at];
             const [customerResult] = await db.promise().query(sqlCustomer, customerValues);
 
             customerIdFromDB = customerResult.insertId;  // Store the newly created customer ID
